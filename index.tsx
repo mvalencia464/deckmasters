@@ -356,7 +356,7 @@ const core30Pages = [
             "We are particularly careful with older homes in **Government Hill** or **Downtown**. We haul away all debris immediately. Once the deck is gone, we perform a 'rot audit,' probing the **ledger board** connection points. If we find water damage, we operate on a 'Time & Material' basis to fix it properly before covering it up, ensuring the structural integrity of your home is never compromised.",
             "In the winter months, our services don't stop. We offer **Snow Plowing** and **Sand/Pea Gravel Spreading** to keep your driveway and staging area safe for our trucks and materials. We are equipped to handle excavation and dirt work if retaining walls need rebuilding during the demo phase."
           ],
-          imagePlaceholder: "/images/placeholder-crew-removing-deck.png"
+          imagePlaceholder: "/images/deck-demolition-crew.webp"
         },
         {
           title: "Framing Fundamentals: The Strength You Don't See",
@@ -373,7 +373,7 @@ const core30Pages = [
             "We provide the necessary **As-Built surveys** required by the Municipality of Anchorage to prove zoning compliance. We understand the setbacks for R-1 and R-2 zones and handle the structural inspections.",
             "We schedule the footing inspection to verify our **Helical Piles** have reached the required torque for frost-proof stability. We handle the framing inspection and the final inspection. You get a code-compliant deck that adds verified, appraisal-ready value to your home without ever having to visit the permit office yourself."
           ],
-          imagePlaceholder: "/images/placeholder-moa-inspection-tag.png"
+          imagePlaceholder: "/images/moa-inspection-permit.webp"
         },
         {
           title: "The Final Walkthrough & Polished Perfection",
