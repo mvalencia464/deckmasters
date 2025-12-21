@@ -8,7 +8,7 @@ interface AdminProjectFormProps {
   onClose: () => void;
 }
 
-const ADMIN_PIN = 'password1234'; // Simple protection for prototype. Move to env var in production.
+const ADMIN_PIN = 'deckmasters-admin-2026'; // Simple protection for prototype. Move to env var in production.
 
 const AdminProjectForm: React.FC<AdminProjectFormProps> = ({ onAddProject, onClose }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
