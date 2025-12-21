@@ -17,6 +17,8 @@ interface PageData {
   children?: string[];
 }
 
+import { useAuth } from './src/context/AuthContext';
+
 interface AdminPageProps {
   pages: PageData[];
   navigate: (path: string) => void;
@@ -24,6 +26,16 @@ interface AdminPageProps {
 
 const AdminPage: React.FC<AdminPageProps> = ({ pages, navigate }) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const { isAuthenticated, login } = useAuth();
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(false);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!login(password)) {
+      setLoginError(true);
+    }
+  };
 
   // Helper to build hierarchy tree
   const buildHierarchy = () => {
@@ -37,6 +49,39 @@ const AdminPage: React.FC<AdminPageProps> = ({ pages, navigate }) => {
   };
 
   const hierarchy = buildHierarchy();
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-stone-950 text-stone-100 flex items-center justify-center px-6">
+        <div className="max-w-md w-full bg-stone-900 border border-stone-800 p-8 rounded-sm">
+          <h1 className="text-2xl font-display font-bold uppercase mb-6 text-white text-center">
+            <span className="text-orange-600">Admin</span> Access
+          </h1>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-xs uppercase font-bold text-stone-500 mb-2">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => { setPassword(e.target.value); setLoginError(false); }}
+                className="w-full bg-stone-950 border border-stone-800 text-white px-4 py-3 focus:border-orange-600 outline-none transition-colors"
+                placeholder="Enter admin password"
+              />
+            </div>
+            {loginError && (
+              <p className="text-red-500 text-xs font-bold uppercase tracking-wider">Incorrect Password</p>
+            )}
+            <button
+              type="submit"
+              className="w-full bg-orange-600 text-white font-display font-bold uppercase tracking-widest py-3 hover:bg-orange-700 transition-colors"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100 pt-32 pb-12 px-6">

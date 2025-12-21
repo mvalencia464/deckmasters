@@ -8,6 +8,8 @@ import {
   ChevronDown, Home
 } from 'lucide-react';
 import AdminPage from './AdminPage';
+import PortfolioPage from './src/pages/PortfolioPage';
+import { AuthProvider } from './src/context/AuthContext';
 
 // --- CORE 30 DATA STRUCTURE ---
 const core30Pages = [
@@ -4824,6 +4826,8 @@ const App = () => {
           />
         ) : isAdmin ? (
           <AdminPage pages={core30Pages} navigate={navigate} />
+        ) : currentPath === '/portfolio' ? (
+          <PortfolioPage onOpenQuote={openQuoteForm} />
         ) : activePage ? (
           <ServicePageTemplate pageData={activePage} openQuoteForm={openQuoteForm} navigate={navigate} />
         ) : (
@@ -4944,5 +4948,12 @@ const App = () => {
   );
 };
 
-const root = createRoot(document.getElementById('root'));
-root.render(<App />);
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(
+  <React.StrictMode>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </React.StrictMode>
+);

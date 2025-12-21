@@ -1,0 +1,81 @@
+import { Project, ServiceNiche } from "../types/portfolio";
+export const NICHES: ServiceNiche[] = ['Kitchen', 'Bathroom', 'Living', 'Outdoor', 'Full Home', 'Roofing', 'Flooring'];
+
+export const MOCK_PROJECTS: Project[] = [
+  {
+    "id": "baron-kitchen",
+    "title": "Baron Chef's Kitchen",
+    "niche": "Kitchen",
+    "location": "Anchorage, AK",
+    "description": "A complete transformation of a dated kitchen into a modern culinary workspace. We installed custom cabinetry, high-end appliances, and durable countertops, creating a bright and functional heart for the home.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7bd2be4faeaaf3744.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af74a13d584d124f429.webp",
+    "gallery": [
+      {
+        "url": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7681f2d4b191bd959.webp",
+        "label": "Landscape View"
+      }
+    ],
+    "date": "2024-02-15",
+    "featured": true
+  },
+  {
+    "id": "baron-shower",
+    "title": "Baron Luxury Shower",
+    "niche": "Bathroom",
+    "location": "Anchorage, AK",
+    "description": "We replaced a standard tub with a custom-tiled walk-in shower, featuring modern fixtures and precision tile work. The result is a spa-like retreat that maximizes space and style.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7681f2d74071bd958.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af74a13d500e124f427.webp",
+    "gallery": [
+      {
+        "url": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7681f2d5b3d1bd95a.webp",
+        "label": "Demolition Phase"
+      },
+      {
+        "url": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af790fc437ff6b829c7.webp",
+        "label": "In Progress"
+      }
+    ],
+    "date": "2024-01-20",
+    "featured": true
+  },
+  {
+    "id": "greenscreek-shower",
+    "title": "Greenscreek Shower Remodel",
+    "niche": "Bathroom",
+    "location": "Greens Creek, AK",
+    "description": "An extensive bathroom renovation focusing on updating the shower area. We removed the old unit and installed a sleek, modern shower system with improved water efficiency and aesthetics.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/689fc814bccb2970181273f7.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/689fc814bccb2955581273f9.webp",
+    "gallery": [],
+    "date": "2023-11-10"
+  },
+  {
+    "id": "flood-restoration",
+    "title": "Emergency Flood Restoration",
+    "niche": "Flooring",
+    "location": "Eagle River, AK",
+    "description": "Rapid response to significant flood damage. We removed water-damaged flooring, dried the subfloor, and installed beautiful new hard-wearing floors, restoring the home to better-than-pre-flood condition.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7d97df52dbc67c83e.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af790fc435f1db829c5.webp",
+    "gallery": [],
+    "date": "2023-12-05"
+  },
+  {
+    "id": "window-sill",
+    "title": "Window Sill Restoration",
+    "niche": "Living",
+    "location": "Anchorage, AK",
+    "description": "Repairing and refinishing weather-damaged window sills. We removed the rot, reinforced the structure, and applied a durable finish that matches the home's interior trim.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af8681f2d348c1bd95e.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af76b97b26856fdc209.webp",
+    "gallery": [
+      {
+        "url": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/681468f25d4a8328e302f13d.webp",
+        "label": "Routing Detail"
+      }
+    ],
+    "date": "2023-10-15"
+  }
+]
