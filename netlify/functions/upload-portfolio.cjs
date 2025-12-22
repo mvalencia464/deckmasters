@@ -1,4 +1,4 @@
-const FormData = require('form-data');
+// const FormData = require('form-data'); // Removed: Using native FormData
 
 exports.handler = async (event, context) => {
   // Only allow POST requests
@@ -55,29 +55,22 @@ exports.handler = async (event, context) => {
     // Convert Base64 back to Buffer
     const buffer = Buffer.from(fileData, 'base64');
 
+    // CRITICAL FIX: Use native Blob and FormData (Node 18+)
+    // This avoids impedance mismatch between 'form-data' package and native 'fetch'
+    const blob = new Blob([buffer], { type: mimeType });
+    
     const formData = new FormData();
-    formData.append('file', buffer, {
-      filename: fileName,
-      contentType: mimeType,
-      knownLength: buffer.length // Help form-data calculate length
-    });
+    formData.append('file', blob, fileName);
 
     console.log(`Uploading ${fileName} to HighLevel...`);
-
-    // Get headers including Content-Type with boundary
-    const formHeaders = formData.getHeaders();
-    
-    // CRITICAL FIX: Calculate Content-Length explicitly. 
-    // Native fetch sometimes fails to stream form-data correctly without it.
-    const contentLength = formData.getLengthSync();
 
     const response = await fetch(`https://services.leadconnectorhq.com/medias/upload-file`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${GHL_API_KEY}`,
-        'Version': '2021-07-28',
-        'Content-Length': contentLength.toString(), // Explicitly set length
-        ...formHeaders 
+        'Version': '2021-07-28'
+        // Content-Type header (multipart/form-data; boundary=...) is set automatically by fetch
+        // Content-Length is also handled automatically
       },
       body: formData
     });
