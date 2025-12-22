@@ -21,7 +21,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = (password: string) => {
     // Single password/pin check
-    const ADMIN_PASSWORD = 'deckmasters-admin-2026';
+    const ADMIN_PASSWORD = '2026';
 
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
