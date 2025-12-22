@@ -7,8 +7,9 @@ exports.handler = async (event, context) => {
 
   const { project, projects, action } = JSON.parse(event.body);
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const REPO_OWNER = process.env.REPO_OWNER || 'mvalencia464';
-  const REPO_NAME = process.env.REPO_NAME || 'deckmasters';
+  // Support both standard names and StokeLeads Playbook names (GITHUB_REPO_*)
+  const REPO_OWNER = process.env.REPO_OWNER || process.env.GITHUB_REPO_OWNER || 'mvalencia464';
+  const REPO_NAME = process.env.REPO_NAME || process.env.GITHUB_REPO_NAME || 'deckmasters';
   const FILE_PATH = 'src/data/projects.json';
 
   if (!GITHUB_TOKEN) {
