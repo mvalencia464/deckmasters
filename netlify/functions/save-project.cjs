@@ -21,12 +21,16 @@ exports.handler = async (event, context) => {
   const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
   try {
+    console.log(`Attempting to fetch ${FILE_PATH} from ${REPO_OWNER}/${REPO_NAME}...`);
+    
     // 1. Get current file content (we need the SHA to update it)
     const { data: fileData } = await octokit.repos.getContent({
       owner: REPO_OWNER,
       repo: REPO_NAME,
       path: FILE_PATH,
     });
+
+    console.log('File fetched successfully. SHA:', fileData.sha);
 
     let updatedProjects;
     let commitMessage;
@@ -40,6 +44,9 @@ exports.handler = async (event, context) => {
     }
     // CASE 2: Add Single Project (Legacy/Default)
     else if (project) {
+      if (!fileData.content) {
+         throw new Error("File content is empty or too large to retrieve via API.");
+      }
       const content = Buffer.from(fileData.content, 'base64').toString('utf-8');
       const currentProjects = JSON.parse(content);
       updatedProjects = [project, ...currentProjects];
@@ -49,6 +56,7 @@ exports.handler = async (event, context) => {
     }
 
     // 2. Update file in GitHub
+    console.log('Attempting to write file to GitHub...');
     await octokit.repos.createOrUpdateFileContents({
       owner: REPO_OWNER,
       repo: REPO_NAME,
@@ -68,13 +76,14 @@ exports.handler = async (event, context) => {
     };
 
   } catch (error) {
-    console.error('GitHub API Error:', error);
+    console.error('GitHub API Fatal Error:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({
-        error: error.message,
-        details: error.response?.data || 'No additional details',
-        stack: error.stack
+        error: error.message || 'Unknown GitHub API Error',
+        step: error.status === 404 ? 'Fetching File (File or Repo not found)' : 'Processing/Writing',
+        repo: `${REPO_OWNER}/${REPO_NAME}`,
+        details: error.response?.data || 'No response data'
       })
     };
   }
