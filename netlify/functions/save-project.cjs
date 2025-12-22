@@ -7,8 +7,8 @@ exports.handler = async (event, context) => {
 
   const { project, projects, action } = JSON.parse(event.body);
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const REPO_OWNER = process.env.REPO_OWNER || 'mvalencia464'; // Default to your user
-  const REPO_NAME = process.env.REPO_NAME || 'deckmasters'; // Updated to your actual repo
+  const REPO_OWNER = process.env.REPO_OWNER || 'mvalencia464';
+  const REPO_NAME = process.env.REPO_NAME || 'deckmasters';
   const FILE_PATH = 'src/data/projects.json';
 
   if (!GITHUB_TOKEN) {
@@ -57,8 +57,8 @@ exports.handler = async (event, context) => {
       content: Buffer.from(JSON.stringify(updatedProjects, null, 2)).toString('base64'),
       sha: fileData.sha,
       committer: {
-        name: "EPSAK Portfolio Bot",
-        email: "bot@epsak.com"
+        name: "Deck Masters Portfolio Bot",
+        email: "bot@deckmasters.com"
       }
     });
 
@@ -71,7 +71,11 @@ exports.handler = async (event, context) => {
     console.error('GitHub API Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message })
+      body: JSON.stringify({
+        error: error.message,
+        details: error.response?.data || 'No additional details',
+        stack: error.stack
+      })
     };
   }
 };
