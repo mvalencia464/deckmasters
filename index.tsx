@@ -4146,7 +4146,7 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0 bg-stone-900">
         <img
-          src="https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce8db7e0b11dae2c6ae.webp"
+          src="https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/691fff057c2a45500192360a.webp"
           alt="Modern Deck in Anchorage"
           className="w-full h-full object-cover opacity-70 grayscale-[0.2] scale-105 animate-slow-zoom"
         />
@@ -4215,7 +4215,7 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
                   <Star key={i} className="w-3 h-3 text-orange-500 fill-orange-500" />
                 ))}
               </div>
-              <span className="text-stone-400 text-xs font-bold uppercase tracking-wider">5.0, 111 Google Reviews</span>
+              <span className="text-stone-400 text-xs font-bold uppercase tracking-wider">4.9, 122 Google Reviews</span>
             </div>
           </div>
         </div>
