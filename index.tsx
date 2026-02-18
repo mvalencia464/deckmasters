@@ -4771,15 +4771,17 @@ const App = () => {
             <a href="#/" onClick={() => setTimeout(() => document.getElementById('reviews')?.scrollIntoView(), 100)} className="hover:text-orange-500 transition-colors">Reviews</a>
           </div>
 
-          <div className="hidden md:block">
-            <button
-              onClick={openQuoteForm}
-              className="group relative px-8 py-3 bg-white text-stone-950 font-bold uppercase text-xs tracking-widest overflow-hidden transition-all hover:bg-orange-600 hover:text-white"
-            >
-              <span className="relative z-10 group-hover:translate-x-1 transition-transform inline-block">Start Project</span>
-              <div className="absolute inset-0 bg-orange-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
-            </button>
-          </div>
+          {!isAdmin && (
+            <div className="hidden md:block">
+              <button
+                onClick={openQuoteForm}
+                className="group relative px-8 py-3 bg-white text-stone-950 font-bold uppercase text-xs tracking-widest overflow-hidden transition-all hover:bg-orange-600 hover:text-white"
+              >
+                <span className="relative z-10 group-hover:translate-x-1 transition-transform inline-block">Start Project</span>
+                <div className="absolute inset-0 bg-orange-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
+              </button>
+            </div>
+          )}
 
           {/* Mobile Menu Toggle */}
           <button
@@ -4802,12 +4804,14 @@ const App = () => {
             ))}
             <a href="#work" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500 mt-8">Work</a>
             <a href="#reviews" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500">Reviews</a>
-            <button
-              onClick={openQuoteForm}
-              className="bg-orange-600 text-white w-full py-6 text-lg font-bold uppercase tracking-widest mt-8"
-            >
-              Get a Quote
-            </button>
+            {!isAdmin && (
+              <button
+                onClick={openQuoteForm}
+                className="bg-orange-600 text-white w-full py-6 text-lg font-bold uppercase tracking-widest mt-8"
+              >
+                Get a Quote
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -4842,108 +4846,110 @@ const App = () => {
       </main>
 
       {/* CTA / Footer */}
-      <footer className="bg-stone-950 pt-32 pb-12 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-900 to-transparent"></div>
+      {!isAdmin && (
+        <footer className="bg-stone-950 pt-32 pb-12 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-900 to-transparent"></div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row justify-between gap-20 mb-24">
-            <div className="lg:w-1/2">
-              <h2 className="text-6xl md:text-8xl font-display font-bold uppercase leading-[0.8] mb-12">
-                Ready to <br /> <span className="text-orange-600">Build?</span>
-              </h2>
-              <p className="text-xl text-stone-400 max-w-md mb-12">
-                Schedule your complimentary design consultation today. Let's discuss how to elevate your property value and lifestyle.
-              </p>
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="flex flex-col lg:flex-row justify-between gap-20 mb-24">
+              <div className="lg:w-1/2">
+                <h2 className="text-6xl md:text-8xl font-display font-bold uppercase leading-[0.8] mb-12">
+                  Ready to <br /> <span className="text-orange-600">Build?</span>
+                </h2>
+                <p className="text-xl text-stone-400 max-w-md mb-12">
+                  Schedule your complimentary design consultation today. Let's discuss how to elevate your property value and lifestyle.
+                </p>
 
-              <div className="flex flex-col gap-6 mb-12">
-                <div className="flex items-center gap-4 text-lg">
-                  <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <span className="font-bold tracking-wider">(907) 782-4043</span>
-                </div>
-                <div className="flex items-center gap-4 text-lg">
-                  <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <span className="font-bold tracking-wider">CONTACT@DECKMASTERSAK.COM</span>
-                </div>
-                <div className="flex items-center gap-4 text-lg">
-                  <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <span className="font-bold tracking-wider">625 W 59TH AVE UNIT J, ANCHORAGE, AK 99518</span>
-                </div>
-                <div className="flex items-center gap-4 text-lg">
-                  <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
-                    <Clock className="w-5 h-5" />
-                  </div>
-                  <span className="font-bold tracking-wider">7:30 AM - 7:00 PM, SUN - SAT</span>
-                </div>
-              </div>
-
-              {/* Branded Map Embed */}
-              <div className="w-full rounded-sm overflow-hidden border border-stone-800 relative group">
-                <div className="w-full h-64 relative grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2853.5566334411346!2d-149.8942242!3d61.1676417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x56c891cae1357399%3A0xd7b37a2095289a27!2sDeck%20Masters%20AK!5e1!3m2!1sen!2sus!4v1763737932256!5m2!1sen!2sus"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
-                </div>
-                <div className="bg-stone-900 p-4 flex justify-between items-center border-t border-stone-800">
-                  <div className="flex items-center gap-2">
-                    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png" alt="Google" className="h-5 opacity-80" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-stone-400">Business Profile</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-white">4.9</span>
-                    <div className="flex text-orange-500">
-                      {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3 h-3 fill-orange-500" />)}
+                <div className="flex flex-col gap-6 mb-12">
+                  <div className="flex items-center gap-4 text-lg">
+                    <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
+                      <Phone className="w-5 h-5" />
                     </div>
-                    <span className="text-xs text-stone-500">(120 Reviews)</span>
+                    <span className="font-bold tracking-wider">(907) 782-4043</span>
                   </div>
+                  <div className="flex items-center gap-4 text-lg">
+                    <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <span className="font-bold tracking-wider">CONTACT@DECKMASTERSAK.COM</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-lg">
+                    <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <span className="font-bold tracking-wider">625 W 59TH AVE UNIT J, ANCHORAGE, AK 99518</span>
+                  </div>
+                  <div className="flex items-center gap-4 text-lg">
+                    <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <span className="font-bold tracking-wider">7:30 AM - 7:00 PM, SUN - SAT</span>
+                  </div>
+                </div>
+
+                {/* Branded Map Embed */}
+                <div className="w-full rounded-sm overflow-hidden border border-stone-800 relative group">
+                  <div className="w-full h-64 relative grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2853.5566334411346!2d-149.8942242!3d61.1676417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x56c891cae1357399%3A0xd7b37a2095289a27!2sDeck%20Masters%20AK!5e1!3m2!1sen!2sus!4v1763737932256!5m2!1sen!2sus"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  </div>
+                  <div className="bg-stone-900 p-4 flex justify-between items-center border-t border-stone-800">
+                    <div className="flex items-center gap-2">
+                      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png" alt="Google" className="h-5 opacity-80" />
+                      <span className="text-xs font-bold uppercase tracking-wider text-stone-400">Business Profile</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-white">4.9</span>
+                      <div className="flex text-orange-500">
+                        {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3 h-3 fill-orange-500" />)}
+                      </div>
+                      <span className="text-xs text-stone-500">(120 Reviews)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:w-1/2">
+                {/* Replaced Generic Form with HeroForm */}
+                <HeroForm onSubmit={handleHeroFormSubmit} />
+
+                <div className="mt-8">
+                  <FooterTestimonials />
                 </div>
               </div>
             </div>
 
-            <div className="lg:w-1/2">
-              {/* Replaced Generic Form with HeroForm */}
-              <HeroForm onSubmit={handleHeroFormSubmit} />
+            {/* SEO Sitemap & Neighborhoods - Passed navigate function */}
+            <SeoSitemap navigate={navigate} />
 
-              <div className="mt-8">
-                <FooterTestimonials />
+            <div className="border-t border-stone-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-stone-600 text-xs uppercase tracking-widest">
+              <div className="flex items-center gap-2 font-bold text-stone-400">
+                <div className="w-4 h-4 bg-orange-600 rounded-sm rotate-45"></div>
+                DECK MASTERS
+              </div>
+              <div className="flex flex-wrap justify-center gap-8">
+                <a href="#/admin" className="hover:text-white transition-colors">Admin</a>
+                <a href="#" className="hover:text-white transition-colors">Site Info</a>
+                <a href="#" className="hover:text-white transition-colors">Alaska Service Area</a>
+                <a href="#" className="hover:text-white transition-colors">Deck Building</a>
+                <a href="#" className="hover:text-white transition-colors">Now Hiring</a>
+              </div>
+              <div className="flex gap-4">
+                <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Instagram className="w-4 h-4" /></a>
+                <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Facebook className="w-4 h-4" /></a>
+                <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Twitter className="w-4 h-4" /></a>
               </div>
             </div>
           </div>
-
-          {/* SEO Sitemap & Neighborhoods - Passed navigate function */}
-          <SeoSitemap navigate={navigate} />
-
-          <div className="border-t border-stone-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-stone-600 text-xs uppercase tracking-widest">
-            <div className="flex items-center gap-2 font-bold text-stone-400">
-              <div className="w-4 h-4 bg-orange-600 rounded-sm rotate-45"></div>
-              DECK MASTERS
-            </div>
-            <div className="flex flex-wrap justify-center gap-8">
-              <a href="#/admin" className="hover:text-white transition-colors">Admin</a>
-              <a href="#" className="hover:text-white transition-colors">Site Info</a>
-              <a href="#" className="hover:text-white transition-colors">Alaska Service Area</a>
-              <a href="#" className="hover:text-white transition-colors">Deck Building</a>
-              <a href="#" className="hover:text-white transition-colors">Now Hiring</a>
-            </div>
-            <div className="flex gap-4">
-              <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Instagram className="w-4 h-4" /></a>
-              <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Facebook className="w-4 h-4" /></a>
-              <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Twitter className="w-4 h-4" /></a>
-            </div>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      )}
     </div>
   );
 };

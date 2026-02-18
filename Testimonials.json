@@ -1,0 +1,1717 @@
+{
+  "taxId": "",
+  "aboutUs": "Deck Masters AK is a premier contracting company based in Anchorage, AK, dedicated to transforming outdoor living spaces and enhancing home exteriors. With years of experience serving the Anchorage community, we specialize in high-quality deck construction, comprehensive exterior renovations, and expert general contracting services. Our commitment to craftsmanship, integrity, and client satisfaction ensures every project, from custom wraparound decks to complex siding and structural repairs, is handled with meticulous attention to detail and unwavering professionalism. We pride ourselves on building lasting relationships and delivering results that stand the test of time, perfectly suited to Alaska's unique climate.",
+  "address": "625 W 59th Ave Unit J, Anchorage, AK 99518, USA",
+  "logoUrl": null,
+  "socials": {
+    "bbb": "",
+    "yelp": "https://www.yelp.com/biz/deck-masters-ak-anchorage",
+    "houzz": "",
+    "tiktok": "",
+    "facebook": "https://www.facebook.com/DeckMastersAK",
+    "linkedin": "https://www.linkedin.com/company/deck-masters-ak",
+    "instagram": "https://www.instagram.com/deckmastersak"
+  },
+  "tagline": "Crafting Exceptional Outdoor Spaces, Built to Endure Alaska's Beauty.",
+  "projects": [],
+  "discounts": "",
+  "needsLogo": false,
+  "ownerName": "",
+  "brandColor": "",
+  "categories": [
+    {
+      "name": "Deck Builder",
+      "services": [
+        {
+          "name": "Deck Installation",
+          "selected": true
+        },
+        {
+          "name": "Deck Repair",
+          "selected": true
+        },
+        {
+          "name": "Custom Deck Design",
+          "selected": true
+        },
+        {
+          "name": "Multi-level Decks",
+          "selected": true
+        },
+        {
+          "name": "Wraparound Decks",
+          "selected": true
+        },
+        {
+          "name": "Wood Decks",
+          "selected": false
+        },
+        {
+          "name": "Composite Decks",
+          "selected": false
+        },
+        {
+          "name": "PVC Decks",
+          "selected": false
+        },
+        {
+          "name": "Deck Resurfacing",
+          "selected": false
+        },
+        {
+          "name": "Deck Board Replacement",
+          "selected": false
+        },
+        {
+          "name": "Deck Staining & Sealing",
+          "selected": false
+        },
+        {
+          "name": "Deck Cleaning",
+          "selected": false
+        },
+        {
+          "name": "Deck Inspections",
+          "selected": false
+        },
+        {
+          "name": "Deck Footings & Foundations",
+          "selected": false
+        },
+        {
+          "name": "Deck Permits",
+          "selected": false
+        },
+        {
+          "name": "Deck Additions",
+          "selected": false
+        },
+        {
+          "name": "Deck Extensions",
+          "selected": false
+        },
+        {
+          "name": "Deck Removal",
+          "selected": false
+        },
+        {
+          "name": "Deck Maintenance",
+          "selected": false
+        },
+        {
+          "name": "Pressure Treated Decks",
+          "selected": false
+        },
+        {
+          "name": "Cedar Decks",
+          "selected": false
+        },
+        {
+          "name": "Redwood Decks",
+          "selected": false
+        },
+        {
+          "name": "Trex Decking",
+          "selected": false
+        },
+        {
+          "name": "AZEK Decking",
+          "selected": false
+        },
+        {
+          "name": "TimberTech Decking",
+          "selected": false
+        },
+        {
+          "name": "Aluminum Decking",
+          "selected": false
+        },
+        {
+          "name": "Balcony Construction",
+          "selected": false
+        },
+        {
+          "name": "Rooftop Decks",
+          "selected": false
+        },
+        {
+          "name": "Pool Decks",
+          "selected": false
+        },
+        {
+          "name": "Hot Tub Decks",
+          "selected": false
+        },
+        {
+          "name": "Deck Replacement",
+          "selected": true
+        },
+        {
+          "name": "Deck Stairs Installation",
+          "selected": true
+        },
+        {
+          "name": "Deck Underpinning/Skirting",
+          "selected": true
+        }
+      ],
+      "isPrimary": true
+    },
+    {
+      "name": "General Contracting",
+      "services": [
+        {
+          "name": "Project Management",
+          "selected": false
+        },
+        {
+          "name": "Site Preparation",
+          "selected": false
+        },
+        {
+          "name": "Foundation Work",
+          "selected": false
+        },
+        {
+          "name": "Framing",
+          "selected": false
+        },
+        {
+          "name": "Roofing",
+          "selected": true
+        },
+        {
+          "name": "Siding Installation",
+          "selected": true
+        },
+        {
+          "name": "Exterior Renovation",
+          "selected": false
+        },
+        {
+          "name": "Interior Demolition",
+          "selected": false
+        },
+        {
+          "name": "Structural Repairs",
+          "selected": true
+        },
+        {
+          "name": "Permitting Services",
+          "selected": false
+        },
+        {
+          "name": "Subcontractor Coordination",
+          "selected": false
+        },
+        {
+          "name": "Budget Management",
+          "selected": false
+        },
+        {
+          "name": "Schedule Management",
+          "selected": false
+        },
+        {
+          "name": "Quality Control",
+          "selected": false
+        },
+        {
+          "name": "Post-Construction Cleanup",
+          "selected": false
+        },
+        {
+          "name": "Water Damage Repair",
+          "selected": true
+        },
+        {
+          "name": "Mold Remediation",
+          "selected": true
+        },
+        {
+          "name": "Garage Construction",
+          "selected": false
+        },
+        {
+          "name": "Garage Renovation",
+          "selected": true
+        },
+        {
+          "name": "Home Additions",
+          "selected": false
+        },
+        {
+          "name": "Remodeling",
+          "selected": false
+        },
+        {
+          "name": "Concrete Work",
+          "selected": false
+        },
+        {
+          "name": "Fencing",
+          "selected": false
+        },
+        {
+          "name": "Landscaping Integration",
+          "selected": false
+        },
+        {
+          "name": "Exterior Painting",
+          "selected": false
+        },
+        {
+          "name": "Window & Door Installation",
+          "selected": false
+        },
+        {
+          "name": "Material Sourcing",
+          "selected": false
+        },
+        {
+          "name": "Custom Builds",
+          "selected": false
+        },
+        {
+          "name": "Design-Build Services",
+          "selected": false
+        },
+        {
+          "name": "Property Maintenance",
+          "selected": false
+        }
+      ],
+      "isPrimary": false
+    },
+    {
+      "name": "Fencing & Railing Contractor",
+      "services": [
+        {
+          "name": "Fence Installation",
+          "selected": false
+        },
+        {
+          "name": "Fence Repair",
+          "selected": false
+        },
+        {
+          "name": "Wood Fencing",
+          "selected": false
+        },
+        {
+          "name": "Vinyl Fencing",
+          "selected": false
+        },
+        {
+          "name": "Aluminum Fencing",
+          "selected": false
+        },
+        {
+          "name": "Chain Link Fencing",
+          "selected": false
+        },
+        {
+          "name": "Custom Fences",
+          "selected": false
+        },
+        {
+          "name": "Privacy Fences",
+          "selected": false
+        },
+        {
+          "name": "Picket Fences",
+          "selected": false
+        },
+        {
+          "name": "Gates Installation",
+          "selected": false
+        },
+        {
+          "name": "Gate Repair",
+          "selected": false
+        },
+        {
+          "name": "Deck Railing Installation",
+          "selected": true
+        },
+        {
+          "name": "Cable Railing Systems",
+          "selected": true
+        },
+        {
+          "name": "Glass Railing Systems",
+          "selected": false
+        },
+        {
+          "name": "Metal Railing",
+          "selected": false
+        },
+        {
+          "name": "Composite Railing",
+          "selected": false
+        },
+        {
+          "name": "Stair Railings",
+          "selected": false
+        },
+        {
+          "name": "Handrail Installation",
+          "selected": false
+        },
+        {
+          "name": "Safety Railings",
+          "selected": false
+        },
+        {
+          "name": "Pool Fencing",
+          "selected": false
+        },
+        {
+          "name": "Property Line Fencing",
+          "selected": false
+        },
+        {
+          "name": "Security Fencing",
+          "selected": false
+        },
+        {
+          "name": "Balcony Railings",
+          "selected": false
+        },
+        {
+          "name": "Porch Railings",
+          "selected": false
+        },
+        {
+          "name": "Commercial Fencing",
+          "selected": false
+        },
+        {
+          "name": "Residential Fencing",
+          "selected": false
+        },
+        {
+          "name": "Post Installation",
+          "selected": false
+        },
+        {
+          "name": "Post Repair",
+          "selected": false
+        },
+        {
+          "name": "Fence Staining",
+          "selected": false
+        },
+        {
+          "name": "Deck Railing Repair",
+          "selected": true
+        }
+      ],
+      "isPrimary": false
+    },
+    {
+      "name": "Outdoor Living Contractor",
+      "services": [
+        {
+          "name": "Patio Construction",
+          "selected": false
+        },
+        {
+          "name": "Pergola Installation",
+          "selected": false
+        },
+        {
+          "name": "Gazebo Installation",
+          "selected": false
+        },
+        {
+          "name": "Outdoor Kitchens",
+          "selected": false
+        },
+        {
+          "name": "Fire Pits",
+          "selected": false
+        },
+        {
+          "name": "Outdoor Fireplaces",
+          "selected": false
+        },
+        {
+          "name": "Retaining Walls",
+          "selected": true
+        },
+        {
+          "name": "Hardscaping",
+          "selected": false
+        },
+        {
+          "name": "Paver Installation",
+          "selected": false
+        },
+        {
+          "name": "Walkway Construction",
+          "selected": false
+        },
+        {
+          "name": "Landscaping Design",
+          "selected": false
+        },
+        {
+          "name": "Water Features",
+          "selected": false
+        },
+        {
+          "name": "Garden Beds",
+          "selected": false
+        },
+        {
+          "name": "Outdoor Lighting",
+          "selected": false
+        },
+        {
+          "name": "Shade Structures",
+          "selected": false
+        },
+        {
+          "name": "Screened Porches",
+          "selected": false
+        },
+        {
+          "name": "Sunrooms",
+          "selected": false
+        },
+        {
+          "name": "Carports",
+          "selected": false
+        },
+        {
+          "name": "Shed Construction",
+          "selected": false
+        },
+        {
+          "name": "Exterior Stairs",
+          "selected": true
+        },
+        {
+          "name": "Outdoor Shower Installation",
+          "selected": false
+        },
+        {
+          "name": "Hot Tub Surrounds",
+          "selected": false
+        },
+        {
+          "name": "Planter Boxes",
+          "selected": false
+        },
+        {
+          "name": "Deck Furniture Assembly",
+          "selected": false
+        },
+        {
+          "name": "Outdoor Flooring",
+          "selected": false
+        },
+        {
+          "name": "Privacy Screens",
+          "selected": false
+        },
+        {
+          "name": "Outdoor Sound Systems",
+          "selected": false
+        },
+        {
+          "name": "Children's Play Areas",
+          "selected": false
+        }
+      ],
+      "isPrimary": false
+    },
+    {
+      "name": "Home Exterior Renovation",
+      "services": [
+        {
+          "name": "Exterior Siding Repair",
+          "selected": true
+        },
+        {
+          "name": "Exterior Siding Replacement",
+          "selected": true
+        },
+        {
+          "name": "Window Replacement",
+          "selected": false
+        },
+        {
+          "name": "Door Replacement",
+          "selected": false
+        },
+        {
+          "name": "Exterior Painting",
+          "selected": false
+        },
+        {
+          "name": "Exterior Trim Work",
+          "selected": false
+        },
+        {
+          "name": "Fascia & Soffit Repair",
+          "selected": true
+        },
+        {
+          "name": "Fascia & Soffit Installation",
+          "selected": true
+        },
+        {
+          "name": "Gutter Installation",
+          "selected": false
+        },
+        {
+          "name": "Gutter Repair",
+          "selected": false
+        },
+        {
+          "name": "House Wrapping",
+          "selected": false
+        },
+        {
+          "name": "Weatherproofing",
+          "selected": false
+        },
+        {
+          "name": "Insulation Installation",
+          "selected": false
+        },
+        {
+          "name": "Exterior Cladding",
+          "selected": false
+        },
+        {
+          "name": "Pressure Washing",
+          "selected": false
+        },
+        {
+          "name": "Exterior Cleaning",
+          "selected": false
+        },
+        {
+          "name": "Foundation Repair",
+          "selected": false
+        },
+        {
+          "name": "Concrete Patios",
+          "selected": false
+        },
+        {
+          "name": "Driveway Repair",
+          "selected": false
+        },
+        {
+          "name": "Walkway Repair",
+          "selected": false
+        },
+        {
+          "name": "Exterior Lighting Installation",
+          "selected": false
+        },
+        {
+          "name": "Drainage Solutions",
+          "selected": false
+        },
+        {
+          "name": "Exterior Demolition",
+          "selected": false
+        },
+        {
+          "name": "Chimney Repair",
+          "selected": false
+        },
+        {
+          "name": "Roof Repair",
+          "selected": true
+        },
+        {
+          "name": "Roof Replacement",
+          "selected": true
+        },
+        {
+          "name": "Exterior Waterproofing",
+          "selected": false
+        },
+        {
+          "name": "Structural Reinforcement",
+          "selected": true
+        },
+        {
+          "name": "Masonry Repair",
+          "selected": false
+        },
+        {
+          "name": "Exterior Design Consultation",
+          "selected": false
+        }
+      ],
+      "isPrimary": false
+    }
+  ],
+  "highlights": "",
+  "rawReviews": [
+    {
+      "date": "6 months ago",
+      "text": "Had an awesome experience with Deck Masters! Very professional, Andrew made sure everything was exactly the way we wanted it! I love my new wraparound deck, and the rock face that they put underneath it! I can’t recommend them enough 5+ stars !!",
+      "author": "Connie McCoy",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "date": "5 months ago",
+      "text": "Deck masters did a wonderful job! Was getting ready to PCS and rent out my spot, Jordan and Andrew and team understood the assignment and came and got it squared away. Deck turned out beautiful, the price was right, the team was super responsive and respectful to the current tenets. 10/10 Would recommended them to anyone looking to get a deck done in Anchorage Ak.",
+      "author": "d meeks",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "date": "4 months ago",
+      "text": "We recently completed a very large, complex project with Deckmasters. Like any project of this size, there were challenges along the way, but I can confidently say we are incredibly satisfied with the end result and would highly recommend them.\n\nOur original scope was already ambitious: replacing our second-story wraparound deck, replacing the deck over our garage, and adding a brand-new first-floor deck with stairs connecting the two levels. Partway through, we expanded the project to include replacing all the exterior siding of our home, which was long overdue for repairs. These improvements were critical for both the safety of our kids and the longevity of our home.\n\nNaturally, a project of this size came with its share of hurdles—delays with siding and materials, a septic system replacement (which we handled separately), and, most significantly, discovering major water damage and black mold in the garage walls once the old deck was removed. Deckmasters stepped up in a huge way. They reconstructed the walls of our garage (remarkably without removing the interior drywall or garage doors) saving us significant time and cost. They also rebuilt the garage roof and ensured everything was structurally sound for the long term.\n\nWhat stood out most was their attention to detail and the work ethic of their crew. Absolutely 10/10. They were respectful, hardworking, and clearly cared about the quality of their work. Communication wasn’t perfect at every stage, but whenever we raised concerns, the team responded with ownership and genuine effort to resolve the issue. To improve things, they even set up weekly in-person check-ins with us, which went a long way in my book. Their commitment to doing the best job possible was evident throughout this entire experience.\n\nWe’d like to give a special shoutout to Sean, who not only treated our home as if it were his own but also personally repaired the serious issues with our garage roof and walls like a real-life magician. On top of that, he quickly became a favorite of our dogs, delivering daily attention and treats. :) It may seem like a simple thing, but our dogs are part of our family and we noticed his care for them. Jordan Webb handled some of the hardest points of the project with humility. After a roofer left us in the lurch with a sub-par job and an exposed roof in the rain, I had a full-blown anxiety attack. Jordan listened, let me vent and cry, apologized, and quickly brought in a new roofer who finished the job correctly. His integrity and the pride he takes in his work is clear, and his focus on details that affected the safety of our kids meant a lot to us.\n\nJustin deserves huge credit for meticulously replacing our siding, soffit, and fascia. Our house is an odd shape with tricky angles, but he measured and cut everything with precision so the new materials fit beautifully. He even adjusted deck boards on our back deck after I pointed out that a gap between the deck and the house wasn’t perfectly parallel (small details that made a big difference in the finished product). Robert, Quillin, and Cameron were wizards when it came to finishing touches—replacing scratched boards, repairing minor details we flagged and then some, and framing our lower deck with real craftsmanship.\n\nAbove all, every single member of this crew was kind and respectful. That goes a long way in my book. Big projects are never perfect, but Deckmasters proved themselves to be problem-solvers who care deeply about both their craft and their clients. We’re grateful for all their hard work and proud of the home we now have because of them.",
+      "author": "Rachel Blakeslee",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "date": "2 months ago",
+      "text": "My experience with Deck Masters, was overall pretty great. We had some issues with communication initially with an employee that is no longer in the role, but Jordan, Andrew, and Jackie were able to straighten everything out before the scheduled date the project was set to begin. Even companies that perform at a high level end up going through some rough spots, and in my opinion it's not whether or not those rough spots happen, but how they handle them. Deck Masters handled it fantastically.\n\nI had a simple small 2nd floor back deck that needed to be replaced, ours was original from 45yrs ago, and was in awful condition. Their demo crew came out and had it down in about an hour, and the trash gone 30min later. About 2 weeks later, their build crew came out, and had the deck done in less than 24hrs. Now my wife and I will need our front deck redone just to match! Thank you guys for helping us out. We love the New Deck.",
+      "author": "Joshua Swan",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "date": "11 months ago",
+      "text": "We had damage to our deck railing during a big wind storm. Deck Masters was able to remove the old railing and install a new, sturdier cable wire railing! We also had new stairs put in because the old ones were in an area that heaved too much in the winter. Extremely pleased with the craftsmanship of Sean, Robert and Jeff. They were fast, friendly and skilled. Would recommend Deck Masters to anyone looking for quality work.",
+      "author": "Jackie Slagle",
+      "rating": 5,
+      "source": "Google"
+    },
+    {
+      "date": 1770473288,
+      "text": "Family Pool and Spa has always done a fantastic job for us, we have been using them for about five years. They are on time and are very professional, we will always use FPS.",
+      "author": "MIke Vargason",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1770204903,
+      "text": "Family Pool & Spa is great!  We love their attitude and friendliness.  Everyone is so helpful and easy to work with.  We trust our pool to them every summer, and we have not been disappointed.",
+      "author": "Susan Ritter",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1770166751,
+      "text": "I love this store and all the employees.  Excellent customer service and always willing to share knowledge about caring for my pool.  Thank you!",
+      "author": "Julie G",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1770069068,
+      "text": "I use them for my pool purchases and repairs. They always have great sevice, timely responses, and provide guidance on issues. If any issues arise they are quick to correct it.",
+      "author": "KuhioLee",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769732330,
+      "text": "We had Hot Tub service for 3 years. The service folks were very through, polite and very professional. The service at the retail location was also polite and professional. We chose to replace our hot tube by expanding our back deck, otherwise we would have continued our service.",
+      "author": "Bob Zimmer",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769621362,
+      "text": "They provide great customer service!",
+      "author": "Dan Cantrell",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769543402,
+      "text": "Very customer oriented business!  They will take care of you every step of the way!  Nice to see a family owned business that puts service first!  They know everything when it comes to Pools and Spas!  You won't be disappointed!",
+      "author": "Roar Pool&Spa",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769542247,
+      "text": "Very Friendly\nGreat to work with!",
+      "author": "Jim Renaldi",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769535133,
+      "text": "Family Pool & Spa is our go to for all of our pool and spa needs.  They are knowledgeable on water chemistry and have done a great job with our pump replacement and installation of a great gas heater for our pool.  At 400,000 BTU, it raises the pool (20,000 gal) temperature 2° per hour.",
+      "author": "Michael Armstrong",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769534956,
+      "text": "Always great service and advice!",
+      "author": "G Mark Bowden",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769531315,
+      "text": "",
+      "author": "Brett Murphy",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769527077,
+      "text": "",
+      "author": "Kris Johnson",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769491904,
+      "text": "Have been with Family Pool and Spa for 9 years. Would not think of going anywhere else. Great service and wonderful people!",
+      "author": "Jan DeLano",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769485905,
+      "text": "I bought a Marquis hot tub from Mike about 12 years ago. I have had over 20 years experience with Marquis tubs and I know they are the very best that can be purchased. Mike has taken care of all my needs and they have been very few other than filters and some chemicals. The Marquis tub is by far the best investment you can make in hydrotherapy. I use it everyday on my arthritic body and it makes me feel great. I highly recommend these people if you are serious about purchasing a hot tub. Update, the valve that controls one side of the tubs jets broke and even though Family Pool is not a Marquis dealer they got me a replacement valve so I could repair it myself. Great people 👍",
+      "author": "Jim Getten",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1769477424,
+      "text": "",
+      "author": "Stan Moss",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767807108,
+      "text": "Family Pool and Spa are professional and friendly. Overall very satisfied with the spa. Randall was very responsive on getting back to us with all our questions.\nNote: Make sure to get the accurate information for electrical.",
+      "author": "Anais Diantoni",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767803479,
+      "text": "",
+      "author": "Nicole Stitzel",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767760017,
+      "text": "",
+      "author": "Kevin Mcdonald",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767753978,
+      "text": "Dependable loyal, always answer our calls in a quick fashion. Their work is excellent. We appreciate that.",
+      "author": "Sue Thomason",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767746707,
+      "text": "Family Pool & Spa are great! Very honest people and reasonable in prices. We used Pool Doctor and they were terrible with communication and cost a fortune. When we went here, they weren’t trying to rip us off. Great communication, no hidden costs, we know what we will pay up front. Technicians are all professionals and transparent.",
+      "author": "Giang Nguyen",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767744700,
+      "text": "Mike, one of the owners, was very helpful and knowledgeable. I will go back!",
+      "author": "Farleigh Byers",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767744183,
+      "text": "I love the service we received from family pool&Spa. Randy is always available to help us out when we have questions or problems with our pool, pool equipment and spa.",
+      "author": "Mary Cintorino",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767744101,
+      "text": "Very helpful, answered all our questions and did what they said they would do to get our Spa in place and running. Excellent!! Go get one!",
+      "author": "Jason White",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767744030,
+      "text": "I have used Family Pool and Spa for the last 4 years for every thing from basic pool service to replacement of major parts as well as maintenance, they are very reliable and fair priced as well as responsive to our needs",
+      "author": "John Edwards",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767743652,
+      "text": "I have had a pool for 30 years. Tried many pool services companies and Family is by far the best. Prompt, knowledgeable and always do what they say they will do. Highly recommended!",
+      "author": "Kevin Curtin",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767741819,
+      "text": "We have loved our hot tub. They have been so good to work with us and answer all our questions!",
+      "author": "Erika Clark",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1767741107,
+      "text": "Had the opportunity to meet the owner and get a background on his knowledge and experience with Spas. This is my 3rd Spa over 16 years do moves. This was the best experience yet.  Customer experience,  communication,  knowledge and product. We love this Spa and company.",
+      "author": "Gregg Jones",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1763755198,
+      "text": "The owner reached out and went above and beyond.",
+      "author": "RON SCHAEFER",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1759726820,
+      "text": "These guys are great! Went out of their way to find me a technician to fix my spa, even though it was not something they offered. Thank you!",
+      "author": "Seth Hopkins",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1757371983,
+      "text": "Thanks FPS team for your help assisting with my spa. Highly recommend working with this team. Lorena, Brandon & Sean are great to work with!",
+      "author": "John Flower",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1754525298,
+      "text": "As new pool owners, we’re so grateful for Family Pool and Spa! They’ve been incredibly patient with all our questions and consistently go above and beyond to help. When our Pentair pool cleaner stopped working, we were worried we'd have to replace it after less than three years. Brandon came to the rescue as he diagnosed the issue, cleaned the clogged parts, and got it running again, all at no charge. What a great experience and such a pleasant surprise!",
+      "author": "konya weber",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1750795894,
+      "text": "Amazing service! Brandon is so knowledgeable and helps us each week so willingly.\nI drive all the way from Middleton to get their expertise.",
+      "author": "Kara Steik",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1750373381,
+      "text": "Excellent, knowledgeable humans.  Not pushy at all and gave us a very fair price.  Installation was impressive and quick.  Highly recommend!",
+      "author": "Marcia Brinton",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1747150585,
+      "text": "On time,knowledgeable, competitive price",
+      "author": "bob bongiorno",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1746478848,
+      "text": "",
+      "author": "G W",
+      "rating": 1,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1746457723,
+      "text": "Terrible experience from the start..ownership doesn’t hold cleaner and service tech accountable for doing the job right the first time. Several instances of jobs being done half assed. I would expect better service and accountability from a “professional” pool cleaner. Find someone else not worth the money.",
+      "author": "Geoffrey Watson",
+      "rating": 1,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1745624456,
+      "text": "I have been a customer of Family Pools since they opened in Eagle, ID. I keep going back because I trust them for all my pool needs. The team is always ready to help me out questions on water quality, equipment issues, openings and closings. I highly recommend Family Pools and Spas.",
+      "author": "jake heusinkveld",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1745463712,
+      "text": "I met Mike at Family Pool & Spas last August and within 30 minutes of talking with him, I knew not to look anywhere else for my spa purchase!\n\nMike took the time to explain in great detail the inner workings of the VitaSpa, the benefit of not using spray foam encapsulation, the removable interior thermal blanket, quality of construction, and common replaceable parts if needed.\n\nThe in-store staff, (Mark & Brandon) are equally as helpful, always willing to answer my question's and provide great advice on maintaining disinfectant and balance of water chemistry. The ability to bring in a sample of my Spa water for in store testing is a real bonus!\n\nOur Spa is gorgeous and works perfectly! If you are looking to purchase a Spa, I would look no further than Family Pool & Spa!\n(I would give them six stars if I could!)",
+      "author": "Randy Root",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1745337829,
+      "text": "Man, Mark and lm Dave were very helpful. U have been a client for several years. But, the service that I got yesterday was super helpful. Thanks.",
+      "author": "Wilbert Warren",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1742520779,
+      "text": "My name is mike and I am patron of family pool and spa. These guys are fantastic. Every time I go in they are very professional very nice to deal with and always give me good advice. I appreciate their service and I will continue to be a customer with this company for as long as I can be heads up to them, especially Mark and Brandon. These guys are off the hook anyhow they’re really good guys. You got a great team there thank you and talk to you later.",
+      "author": "Mike Oborn",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1741391427,
+      "text": "",
+      "author": "Raymond Stagen",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1738640123,
+      "text": "The Family Pool & Spa staff is always so nice and informative every time I visit or call. Ran in tonight and Mark helped me by testing my water then made recommendations on what I should do. We bought our hot tub from Family Pool & Spa last year, and we are so pleased with our purchase and the friendly services they provide.",
+      "author": "Patty Brandt",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1737299070,
+      "text": "Very nice ppl",
+      "author": "RAMZI ABISHALOM",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1735008230,
+      "text": "Family Pool & Spa are the absolute best!  I’ve had a couple of emergency issues with my built in spa, and they have gone out of their way to repair it. Most recently was a leak in my filter, which was draining my spa. It was 2 days before Christmas, and Randal, who is awesome, came by and repaired it on his way home. Now that is what I call the most amazing customer service. Thank you Randal, and thank you Family pool & Spa!",
+      "author": "David Bart",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1733936660,
+      "text": "Brandon was amazing at customer service.\nVery knowledgeable and friendly with a smile.  Thank you!",
+      "author": "Frank Martin",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1729726155,
+      "text": "The staff at Family Pool and Spa are amazing! I have had experience with their service team, sales team and retail. In the store, they take care of my pool and spa needs (and I am one needy customer). At my home, they have opened, closed and maintained my pool and spa for years now. They have also helped replace and repair as new parts are needed. I appreciate the time and care they give me each time we interact. They truly are a family! Would recommend them to anyone in the valley who is needing pool and or spa services.",
+      "author": "Nicole Wyke",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1727616451,
+      "text": "FP&S is always great to work with; the staff is highly knowledgeable, friendly and communicative. They are extremely customer-centric, fair-priced and really focused on client satisfaction. I highly recommend Mike and Randall's services to all pool and spa owners in the valley!",
+      "author": "Jeff Cates",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1727271198,
+      "text": "Family Pool and Spa are professional and friendly. They kept a hot tub for us after we put a small deposit down for several months while we looked for a house. They were very patient. When we finally took delivery they were were quick and efficient. They also have followed up with us on any questions we have had. I would highly recommend them to anyone.",
+      "author": "dat one",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1721497758,
+      "text": "Great staff,  very helpful",
+      "author": "Kenneth Rowland",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1713545288,
+      "text": "Why do they get 5 stars? Because Mike and Randall and team are over the top in providing cost effective solutions to pool or spa problems. They have saved me $$ multiple times with solutions and fixes. Lorena works in the office and is that happy voice when you call in. I guarantee you will be delighted",
+      "author": "George Minow",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1711581468,
+      "text": "",
+      "author": "Ted Jeffcoat",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1709416855,
+      "text": "Always has my chemicals in stock. Offers free water check every time you come in.",
+      "author": "Robert Imhoff",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1692214278,
+      "text": "Look no further.  This business is top notch.  Whether you're in the store, on the phone or someone at your house they are super professional and extremely knowledgeable.   They even will text with you to get photos to help order parts or trouble shoot.\n\nPool pump broke and they were literally out the next day to fix it.  There service and maintenance value is 100% worth the cost.",
+      "author": "IdahoVibes",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1684410046,
+      "text": "",
+      "author": "C (GamingCarrot)",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1673886517,
+      "text": "Class A business for pools, and spa work. We had a lot of issues with our pool. William, Randal and Mike solved every issue we had. From the front desk as you walk in you are treated with respect and they listen! Family Pool and Spa is a great organization to depend on for all issues that manifest. I can't thank William and the entire crew enough for the care and consideration they took to resolve our problems quickly. They return phone calls promptly which is really important. Thank you to all at this class organization who deserve double the gold stars. George T. Getz",
+      "author": "Shannon Getz",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1672689749,
+      "text": "Happy with our spa but overall unhappy with an issue we had regarding our spa topper and the non-responses received once the problem arose.\n\nEarly 2022 a windstorm had blown our topper back and the cheap easy lift frame snapped.\n\nI called to ask if there was any sort of warranty, they told me \"No, but you can buy another\".\n\nI purchased the same topper from them and realized once I took the old broken frame off, that it was installed incorrectly.  The frame had snapped because the brackets were installed against the edge of the tub, and there wasn't enough overlap of the frame tubes (strengthening the frame).  I shifted the brackets over per the manufacturers guideline and wow, it's not so flimsy when installed correctly.  I now have holes in the panel where they had incorrectly installed the brackets.\n\nI went in to ask about the issue and if there was anything to be done.  They told me the owner wasn't around, and to call back.\n\nI called 3 times, left messages, never received another response from a manager, or the owner.",
+      "author": "Mica K",
+      "rating": 3,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1668905626,
+      "text": "",
+      "author": "Kevin Shauger",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1659392509,
+      "text": "",
+      "author": "K A Shauger",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1657305063,
+      "text": "The staff at Family Pool & Spa have been wonderful to work with to keep my pool sparkling clean and healthy.  I really appreciate them!!",
+      "author": "Deborah J Powell",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1654213126,
+      "text": "First visit. Was greeted warmly and friendly. Was given objective advice, even when it meant he didn't get a sale for one of the items. Looking forward to having them as our trusted neighborhood pool outfitter.\nUPDATE: It has been several years of reliable service for chemicals, products, and winterizing. Just picked up some miscellaneous items and the level of care, good explanations, and genuine friendliness was outstanding.",
+      "author": "Lee Scott",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1652566270,
+      "text": "",
+      "author": "Alan Wright",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1650490210,
+      "text": "Very, informative and knowledgeable with helping me choose the right filter to get my hot tub sparkling clean again. Thank you Gavin and Brandon!",
+      "author": "Elizabeth Hoyt",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1649386150,
+      "text": "",
+      "author": "Olivia",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1649122597,
+      "text": "William has been nothing but helpful and has gone out of his way to make sure my questions have been answered. Against my better judgement, I decided to call him fairly late in the evening with a concern and he was more than happy to help. Thank you for the great customer service.",
+      "author": "Tyler Hirschey",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1645140435,
+      "text": "Mike and his team are very knowledgeable and professional in the pool & spa world. I highly recommend you give them a visit if you’re in the market or need supplies.",
+      "author": "Tracy Tesar",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1637178153,
+      "text": "First time ever coming here and I am pleasantly surprised. They take good care of us are able to do good exchange programs with deposits and their staff is knowledgeable and helpful.",
+      "author": "MrFordman999",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1634948055,
+      "text": "Without hesitation, my husband and I give 5 stars, wishing  we could give 100!! Hands down the best service from day one. we've had our spa a little over a  year now and have had the most respectful, sometimes daily help figuring things out. Every time we walk in, we are greeted by first name and asked about our spouse if they are not with us. This family owned company makes you part of their family. When I ride my bike to get water tested, they have always allowed my dog to come in. (this alone is amazing) Thank you FPS for all you do for us. I  hope everyone buys  from you.",
+      "author": "Audra Cobler",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1634353253,
+      "text": "",
+      "author": "Kaylee Thomas",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1615690950,
+      "text": "There is not enough space to write all the amazing things about Family Pool and Spa! Randal and William have been so wonderful to work with these past couple years! They have such an awesome work ethic! They are so helpful and friendly, even going so far as to exercise GREAT patience with me as I try to learn some of the things they know in an effort to not be clueless and annoying :D.  I highly recommend them to all my clients and anyone I don't know that reads reviews! You will NOT regret this choice, Family Pool and Spa, CALL THEM!",
+      "author": "Jessyca Holbrook",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1610759301,
+      "text": "",
+      "author": "Cody Bailey",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1610751780,
+      "text": "Awesome place to get a tub!!! Ask for Gavin he is the best!",
+      "author": "John Hickman",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1610745372,
+      "text": "It is with great enthusiasm that I give Family Pool and Spa an A+!  They provided us with an exceptionally high level of service as we endeavored to fix an older, used hot tub that we had recently acquired. The onsite technician was very friendly, very professional, and very knowledgeable. Several parts had to be ordered, some of which were no longer in production, and the process was seamless.  All of this at the peak of the holiday season!  We are grateful to Mike and to the entire staff!",
+      "author": "Brad Hoyd",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1606008932,
+      "text": "These guys were very nice to work with.  We didn't buy our hot tub from them, but they spent a great deal of time teaching me about the chemicals that I needed to get the tub and and going.  They had everything we needed in stock too!  I even called back the next day because I couldn't remember what they told me and got to talk to the same person that had helped me.  I'll keep buying my supplies here!",
+      "author": "Ben Bennett",
+      "rating": 4,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1605218356,
+      "text": "I had the best experience with this company fixing my spa. I’ve searched for years to find a reliable spa company and I finally found it. Great customer service also.",
+      "author": "Kelsey Markwell",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1604793264,
+      "text": "We purchased a  Vita spa at Family Pool & Spa and had an amazing experience. They are very knowledgeable and quick to share and educate.  I highly recommend their services.",
+      "author": "Michele Smythe",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1603812715,
+      "text": "I was having trouble with my spa and contacted the the sales people I had bought the spa from, I was told that they didn't cover that spa anymore and was given the name of Family Pool and Spa to help me. Randal came out and found the problem, he contacted the manufacture and was able to get them to cover it under the warranty. We worked ibn this problem for three plus months to get the parts. Staying in contact was great. If I didn't call him, he would call me during that long parts wait time. All the employees have been great in answering my questions and relaying on messages. They have my support forever.\nDennis Kennedy",
+      "author": "Wendy Kennedy",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1603572946,
+      "text": "",
+      "author": "Brandon McBride",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1603394266,
+      "text": "Great place to do business with. Great people to work with.Gavin and Eric are awesome.",
+      "author": "Ryan Nave",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1597866412,
+      "text": "Mike, Randall and the team at Family Pool & Spa are amazing!  Their integrity and honesty along with their depth of knowledge are beyond compare.  I count on their expertise to keep my pool in the best possible condition, and they do that in spades.  The quality of service is as exceptional as it is professional and friendly.  I can't imagine going anywhere else for my pool needs, they truly are the BEST!",
+      "author": "Paula P",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1595078143,
+      "text": "LOVE this place. We had a pool built recently. They regularly help with chemicals and balancing - just a friendly Knowledgeable family owned type of store. We also had a “pool crisis” and had to drain our pool. They were there for advice and supplies. Thank you!",
+      "author": "Erica Zamorano",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1593604475,
+      "text": "",
+      "author": "Gavin Hickman",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1593534876,
+      "text": "Mike and Randal are the hardest working and most knowledgeable, honest, and ethical professionals in the business. Their foremost concern is doing right by their customers, and they work day and night to make it happen. You're in the very best hands at Family Pool & Spa!",
+      "author": "Mary Amschel Ruppert",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1593035647,
+      "text": "Best pool store in the valley, hands down. Mike and Randal are helpful, patient and gracious to all their customers!",
+      "author": "Will",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1593029501,
+      "text": "Mike and the team at Family Pool and Spa are the epitome of an honest, caring, customer service based business. I have know them for years and would recommend them to anyone looking for a professional, integrity based experience. They are knowledgeable and operate with a next-level work ethic.",
+      "author": "john werner",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1593029141,
+      "text": "",
+      "author": "Blake Bryant's hunting and fishing",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1592961557,
+      "text": "Strongly suggest going to other pool & spa companies.   Lacks knowledge and preys on customers as done in their prior businesses.\nConvenient location is offset by conflicting advice.",
+      "author": "Ron Mayhew",
+      "rating": 1,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1592160433,
+      "text": "I have been a customer for four years. Last Thursday I endured several minutes of severe verbal abuse from Mike while trying to return a defective item. I will never go back to this business or suggest it to anyone else in the future.",
+      "author": "Miriam Mayhew",
+      "rating": 1,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1591049916,
+      "text": "Super friendly. Awesome service. This is the best pool company in the valley!",
+      "author": "Mark Levinson",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1590374341,
+      "text": "Extremely happy with the guys down at Family Pool & Spa.  Great prices and very knowledgeable staff.  Our pool was very unbalanced and had a bad green tint.  They were helpful with free testing and guiding me with the correct chemicals and the right amount to get the water balanced and remove the green tint.  Highly recommend at least stopping by and talking to them!",
+      "author": "Rob Foor",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1588886148,
+      "text": "We love Family Pool and Spa!  They have answered all of our questions, been resourceful and reliable.  The thing we like most, is that they are friendly and respectful.",
+      "author": "Matt Dietz",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1585922269,
+      "text": "Best in Boise\nRandall and Mike are the owners, you get to talk with people with years of experience.  I had been to a number of places and loved the recycled plastic jugs of acid that you can buy.  Randall runs the maintainence side and he has years of experience.  He helped us with raising the acid level before we opened the pool this year and the surface is like a baby's butt now.  Go to them for spa and pool questions, no questions to big or small.",
+      "author": "George Minow",
+      "rating": 4,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1583800075,
+      "text": "Outstanding",
+      "author": "John Nixon",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1565127339,
+      "text": "Mike is a great guy and will treat you right!",
+      "author": "Moses Sohn",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1564078130,
+      "text": "We absolutely LOVE our hot tub. We shopped the whole valley looking for the perfect tub. Every single store. Then we met Mike at Family Pool and Spa and we knew we had found the perfect tub. Not the most expensive tub in town, not the cheapest tub in town. Right in the middle and we got EVERYTHING we were looking for.\n\nThe service is outstanding. The folks at Family Pool and Spa are kind of like family to us now. They help us keep our hot tub waters perfectly balanced. It's always a pleasure to pop in and say hello. We have had so many friends who have \"other hot tubs\" tell us that we did everything right when we chose ours. It's perfect for the two of us. It's perfect when grand kids come to visit. And it's perfect when friends come to hang out.\n\nIf you are thinking about purchasing a hot tub, go over and talk to Mike. You won't be sorry!",
+      "author": "Dr. Kimberly Thompson, DACM, LAc",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1562652901,
+      "text": "Mike and Randy are good to work with. Nice couple of brothers. They came out multiple times to help us with design and determining what spa to get. Thank you both!",
+      "author": "Alex Mouser",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1561596935,
+      "text": "First off, we want to let you know how much we love our hot tub!  We figured we'd like it, but it really is a treat!  Like having a vacation in your backyard.  We did a lot of research online and we visited A LOT of hot tub/spa places in the Treasure Valley.  We felt that Family Pool and Spa was the best we could find.  Randall has been so great and helped us with ALL our questions and getting the chemical balance just right.  We could not be happier with our whole experience with you all.  Thank you so very much for everything.",
+      "author": "Juli Ethington",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1553010899,
+      "text": "I have had the great pleasure of getting to know Randal with the many problems i have had with my 3 year old Maxx spa!!  He is my HERO!  They did not sell me the tub...Leasure Time did, and they are CROOKS!!  Leasure Time told me there was only a 2 year warranty on my heater!!!  Which was a TOTAL LIE!!  Flash forward 4 months later and Randal totally fixed my spa....in warranty!!!  Don't go anywhere else!!!  They are the BEST!!!  Thank you Randal you really are my HERO!!!!",
+      "author": "Robyn Lee",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1550351203,
+      "text": "",
+      "author": "John Cameron",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1544231384,
+      "text": "Mike is the GREATEST!  As a newbie pool owner, Mike was very gentle and patient with my fundamental questions.  All last summer, Mike offered excellent advise as I tried to learn how to manage the pool chemistry.  He never tried to push his products (which are far better than the big box stores), but he always explained what was happening in the pool so that I could be a part of the solution rather than the problem.  He's earned this loyal customer!",
+      "author": "Chuck King",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1543942622,
+      "text": "Family Pool and Spa is your every go to place for your all pool needs, very knowledgeable staff, and they are all very helpful.  Great place to get a spa.",
+      "author": "Melissa T.",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1543272882,
+      "text": "We recently bought a spa from Mike and his team. I've been talking with Mike for months on which models he recommended, and we finally pulled the trigger. These guys are awesome to work with, and put customer service at the forefront of everything. I'm super happy with our decision to go with Family Pool & Spa!",
+      "author": "Josh Olswanger",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1539468292,
+      "text": "Friendly, honest and very helpful.  Mike and team have suggested products  that have saved me money and time.   We enjoy our pool and the assistance from Family Pool & Spa is a big part of keeping it fun!",
+      "author": "Tod Wingfield",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1539213551,
+      "text": "",
+      "author": "Whitaker Family",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1538614662,
+      "text": "Whenever I go into family pool and spa I feel very well taken care of. They are always helpful with any of my pool and spa problems, and very knowledgeable about how to take care of them. They usually have everything I need in stock or quickly get it for me if they don't. The best thing is, I always leave there feeling they are trying to help me save money wherever possible.",
+      "author": "Jason Wilkerson",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1537543168,
+      "text": "",
+      "author": "Daris Wallace",
+      "rating": 3,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1537288621,
+      "text": "Very nice people and service.",
+      "author": "Donald Gomes",
+      "rating": 4,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1535661016,
+      "text": "Outstanding family owned company.",
+      "author": "Dennis Moren Jr.",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1534447860,
+      "text": "",
+      "author": "Esau Ambriz",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1533181815,
+      "text": "Best place in town to have any Pool or Spa work done. Most honest family in the business and i will continue to go there and refer my Family for my Spa needs and questions. The service is unbeatable!! Great job Mike and Randall 10/10 STARS",
+      "author": "Christian Libertarian Wolf",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1531398002,
+      "text": "Very knowledgeable and helpful. They took the time to offer me suggestions about how to fix my pool vacuum system without having to replace the whole system (release the air in the filter- now it works great!). Great products and prices. They also offer free water testing. Conveniently located and a great business for the treasure valley. Will come here for my future pool needs.",
+      "author": "Dana Biberston",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1530831792,
+      "text": "OK place to turn for pool and spa advise, Mike was friendly and knowledgeable.",
+      "author": "J Croix",
+      "rating": 3,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1528400197,
+      "text": "Came into the store to get an estimate for an inground pool to be installed and there was an older woman at the front desk who just sat there and didn't even acknowledge us when we came in. We made eye contact and even said hello. She never got up from her desk or even said, \"someone will be with you shortly.\" Terrible customer service. How do you not acknowledge customers when they come into your business? Your loss. We took our business to another pool installer who appreciates their customers and their business, and actually gets up and acknowledges them when they walk through the front door. If you can't even acknowledge people when they walk through your door, it kind of makes you wonder what kind of service (or lack therof) they provide when installing a pool...definitely would NOT recommend.",
+      "author": "Phillip nycole",
+      "rating": 1,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1524541561,
+      "text": "Mike did an amazing job from start to finish.  He walked me through what to look for in a hot tub and the difference between all the different styles.  Mike exceeded my expectations, he went above and beyond.",
+      "author": "Todd Chestnut",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1518395989,
+      "text": "Amazing  I highly recommend they have great customer service and at a price you can afford. They go above and beyond.",
+      "author": "Jason McClellan",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1515076247,
+      "text": "I bought a Swim Spa at the Fair and afterwards thought that might have been a bad idea.  Then I met Mike and the crew at Family pool and Spa and my worries were gone.  I have loved my new swim spa and have to say it was well worth the investment.  Mike and his crew have been there to help me all along the way and it has been the best experience at purchasing something I have ever had.  Mike and his crew are the best.",
+      "author": "K Kirkendall",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1512485314,
+      "text": "It was a  pleasure to deal with Mike.  We got a great tub (better than we expected).  We had 1 small issue that weekend and it was taken care of the following day (now that is service)!  We had looked at several other spa dealers before deciding that Family Pool and Spa was the best fit, I feel we made the right choice.",
+      "author": "Dan Ricken",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1507240999,
+      "text": "Very professional and on time fantastic deals very courteous people expert knowledge",
+      "author": "Stephen Dalien",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1503944471,
+      "text": "Nice people who really want to help.",
+      "author": "Carl Siebert",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1498435010,
+      "text": "Hard to find anything wrong with Family Pool and Spa. This family owned business treats customers with the highest degree of respect.  They bent over backwards to make sure I was satisfied. Great product and great people. Need a hot tub?....buy here...youll never be sorry.",
+      "author": "Claudia Dawson",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1497635143,
+      "text": "I used to pay twice the money to operate my pool than I do now thanks to Family Pool & Spa.   Mike \"aka the Pool Doctor\" and his staff have an approach to water chemistry as a best practice for pool care. This is really important to me to take the best care of my vinyl, salt water, and solar heated pool. It’s a big investment and I needed a \"partner\" to help me get the most enjoyment out of my pool. There is the big value:  a relationship to help you partner in keeping a happy healthy pool. They are not there to just sell you products they really are subject matter experts. They educate, coach, and have the products & services I need.  Just grab a water sample and take it to their store. See for yourself.",
+      "author": "Jay C",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1497110123,
+      "text": "Very friendly and helpful",
+      "author": "Idaho Perio Dr's Hansen, Katseanes, and Sprott",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1496000792,
+      "text": "Professional service with great products the knowledge the store owner and his employees have are priceless. This is the only company I will work with when it has to do with my pool or hot tub.",
+      "author": "Amanda M",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1495561849,
+      "text": "These guys are awesome!  They answer the phone consistently so there is no dreaded feeling of getting the voicemail every time, and if they can't answer, they call back promptly!  Great attitudes, very helpful and very patient when \"things just don't go right\", as they often do. I recommend that you make them your first call!",
+      "author": "Christin Chiaramonte",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1490570263,
+      "text": "Excellent customer service. Honest with estimates and took considerable time explaining the problem and most economical repair options.",
+      "author": "Jacob Mong",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1490404539,
+      "text": "These guys are really\nGreat. I take water samples in often and they always take the time to help me get my pool and spa figured out. I use them to maintain my spa now 100%- they come every 2 weeks and balance, clean etc.",
+      "author": "Jared B",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1490326579,
+      "text": "Purchased our tub 7 months ago and am proud to say that Mike and his crew are amazing at what they do!!  Recommend them to everyone I know whether it's your first time owning a spa and looking for a quality product made in America and second to none service to follow it up.  Thanks for everything you do and \"We Love Our New Spa\"!!!!\nRob T.  Boise Idaho",
+      "author": "Chloe Withers",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1488766393,
+      "text": "Mike and Randal go above and beyond the norm of service.  We shopped all around the valley for a hot tub and picked Family Pool and Spa because we liked their attitudes, knowledge, price and quick install schedule. They stayed in touch with us after they installed our hot tub and even came back during freezing temps a couple weeks later to help us drain and refill the tub after our first (failed) attempt at maintaining it.  We take water samples in regularly now and they test them electronically for free, then give us knowledgeable advice on any changes we should make.  I will continue to use their service and buy products from them.\n\nThe experienced electrician they recommended got us right in as well and did a professional job. Our house has a unique layout and an abnormal power panel and he knew exactly how to make it all work.",
+      "author": "Kevin Hutchison",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1486391279,
+      "text": "Our hot tub recently stopped working and Family Pool & Spa came out to recommend what it needed. Since it wasn't running and below freezing they brought a heater out to help the motor area thaw and ordered the part. They came and replaced the part and it was great...then because of the age of our hot tub, there were some issues with the heat sensor. They ordered another part to work with the initial part and fixed the issue at no charge even though it was our hot tub that was the issue due to age. They are SO helpful at the house and over the phone and I would only ever use them for any hot tub or pool needs. A genuine family business with amazing values.",
+      "author": "Heather Ferguson",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1484591135,
+      "text": "The folks at Family Pool & Spa are simply great when it comes to customer service,couple that with an an outstanding L.A.Spa and there you have it. My wife and I looked at many brands of spas exstensively and found that we kept going back to the L.A.Spa product line.The useage of our spa being mostly a medical factor for myself,as I have permanent damage in my back and neck,is the big reason we went with them.It is an investment that keeps me away from pain meds.as I am in our spa once for certain,if not twice a day. Mike & Manny gave us what we consider a great deal on an excellent product and the service beyond has been great too! My wife and would reccomend only Family Pool and Spa in Idaho. Thanks guys!",
+      "author": "Bob Kaminski",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1481842842,
+      "text": "My only experience with them is being passed by them  on the wrong side of the road in their company truck and Trailer and cutting me off nearly taking my front end off.  If they are a self entitled ass on the road chances are they are with their business too so beware!",
+      "author": "Me Myself",
+      "rating": 1,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1480727513,
+      "text": "I bought an LA Spa at the Western Idaho Fair this summer.  I was contacted by Mike, the owner of Family Pool & Spa and was told he is the local dealer and would inform me when the spa arrived and would schedule a delivery.  Once the spa arrived and the delivery scheduled, Mike and his crew arrived on schedule at my home and had the spa up and running in short order.  However a the next day I noticed a leak on the patio from the tub.  I informed Mike and he and his brother Randal came right over and attempted to fix the leak.  After two separate attempts, Mike called the LA Spa regional rep in Seattle.  Mike said that it was extremely rare to have an LA Spa leak but that he would have the factory in Chandler, AZ build an exact replacement on a RUSH order.  Again, when the tub arrived in Boise, Mike and his crew removed the original tub and installed the replacement.  All is well and the tube works perfectly and has no leaks.  It even has the latest topside digital screen control.  My hat of to Mike and Family Pool and Spa for excellent, prompt and professional sales and service.  A big THANK YOU!!",
+      "author": "Michael Smith",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1474732663,
+      "text": "Our experience with Family Pool and Spa has been and continues to be fantastic. Mike and his team, have provided fantastic support to us from when we bought our tub with them to helping us maintain our tub and water quality after.\n\nWhen buying the tub, Mike and his store relieved us with their no pressure, no haggle, sales practice. Mike has many years experience as a spa and pool tech and has worked multiple years for various notable spa companies, so it was became quickly evident after speaking with him that he really knows the technology and business. He could mention notable differences between all notable hot tub brands out there.\n\nOther local spa stores we stopped at quoted us a higher retail price in person but when we left, offered us discount incentives after to lure us back in. This was not the case with Family Pool and Spa, they cut out the haggle and offered us their best competitive pricing for each model.\n\nIn addition to working with us on the install, Family Pool and Spa has been extremely responsive with any followup help we have needed. I have  contacted them multiple times to learn more about which chemicals to add when. Also, they will test your water sample for free and tell you exactly how to resolve any water chemistry issues.  They genuinely want their customers to have a complete positive experience, even after a sale.\n\nMy wife and I are new to the area and so relieved that we chose Family Pool and Spa for our hot tub purchase.",
+      "author": "Tyler King",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1472769825,
+      "text": "I wish I could give Family Pool and Spa 10 stars! They are THE BEST. We recently bought a home and knew the first thing we wanted to take care of was the purchasing of a Hot Tub. We had both grown up with hot tubs and had seen family members go through different experiences as they purchased their tubs. That said, our expectations were high and Mike at Family Pool and Spa exceeded every single one of them. They care about us  just as much now ( 5 months after the purchase) as they did the day we walked into their store. Mike has gone out of his way to teach me to care for our pool correctly and calls me periodically to check in. He remembers my name and treats me with respect every time we have a question. Every part of our experience from choosing the tub, waiting for it to arrive ( which happened quickly), the installation, and the up-keep have gone better than we ever imagined and I would HIGHLY recommend Family Pool and Spa to anyone seeking a pool or Hot tub for their family. These guys do things the right way and care about their customers.",
+      "author": "Kandice Gines",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1470838316,
+      "text": "We LOVE our new hot tub!  Mike has been absolutely fantastic!  He is very knowledgeable and genuinely helpful with the whole process of buying, and installing our hot tub. We highly recommend Family Pool & Spa!",
+      "author": "Kim Studhalter",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1468499883,
+      "text": "I saw the signs on the street and when it was time to get more supplies for my hot tub, I stopped in.   Mike was awesome!  So refreshing to work with someone that knows what they're talking about!  I didn't know anything about spa chemicals when I arrived and I felt like an expert when I left.  he tested my water and educated me on the process. I highly recommend this company to everyone!!",
+      "author": "Cathy Pearson",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1466882069,
+      "text": "Top Notch! I knew nothing about having a pool when I moved in my house.  However, I knew I wanted to maintain the pool myself instead of paying someone to do it.  Mike has helped me through all sorts of questions/problems.  He is so helpful, knowledgeable and polite. Never pushy on buying supplies that I don’t need. He is a true professional!  I will continue to drive past a couple other pool supply stores to go to Family Pool & Spa!",
+      "author": "kathy r",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    },
+    {
+      "date": 1458759327,
+      "text": "So great to see Mike Amschel at this new new store ,a very knowledgeable man with great customer service.Hope to do all my business there .",
+      "author": "DOUG",
+      "rating": 5,
+      "source": "MoreGoodReviews"
+    }
+  ],
+  "websiteUrl": "https://deckmastersak.com/",
+  "galleryUrls": [],
+  "primaryCity": "Anchorage",
+  "railingType": "",
+  "businessName": "Deck Masters AK",
+  "deckingBrand": "",
+  "primaryEmail": "",
+  "primaryPhone": "(907) 782-4043",
+  "processSteps": [
+    "Consult & Design",
+    "Precision Build",
+    "Lifetime Enjoyment"
+  ],
+  "testimonials": [
+    {
+      "id": "testimonial1",
+      "quote": "Deck Masters exceeded expectations! Andrew ensured every detail was perfect, and I absolutely love my new wraparound deck and the beautiful rock face underneath. Truly 5+ stars!",
+      "author": "Connie McCoy",
+      "location": "Anchorage, AK"
+    },
+    {
+      "id": "testimonial2",
+      "quote": "Jordan and Andrew's team at Deck Masters did a wonderful job. Our deck turned out beautiful, the price was right, and they were incredibly responsive and respectful. Highly recommended for any deck project in Anchorage!",
+      "author": "d meeks",
+      "location": "Anchorage, AK"
+    },
+    {
+      "id": "testimonial3",
+      "quote": "Deckmasters handled a massive project for us, including a new multi-level deck, siding, and structural repairs. Despite challenges, their attention to detail, strong work ethic, and problem-solving skills were outstanding. Incredibly satisfied with the result and their care for our home.",
+      "author": "Rachel Blakeslee",
+      "location": "Anchorage, AK"
+    }
+  ],
+  "googlePlaceId": "ChIJmXM14cqRyFYRJ5oolSB6s9c",
+  "licenseNumber": "",
+  "neighborhoods": [
+    "Spenard",
+    "Midtown",
+    "Downtown",
+    "South Anchorage",
+    "Eagle River",
+    "Turnagain",
+    "Government Hill",
+    "Mountain View",
+    "University Area",
+    "Sand Lake"
+  ],
+  "termsAccepted": false,
+  "fontPreference": "Modern",
+  "foundationType": "",
+  "operatingHours": "Mon-Fri 7:30 AM - 7:00 PM, Sat-Sun Closed",
+  "shippingAddress": "",
+  "environmentalChallenges": [
+    "Extreme Cold",
+    "Heavy Snow Loads",
+    "Ice Formation",
+    "Freeze-Thaw Cycles",
+    "High Winds",
+    "Moisture Damage",
+    "UV Degradation"
+  ],
+  "googleBusinessProfileUrl": "",
+  "id": 30
+}
