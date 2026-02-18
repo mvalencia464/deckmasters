@@ -6,6 +6,7 @@ interface Script {
   title: string;
   hook: string;
   visual: string;
+  videoSrc?: string;
 }
 
 interface Angle {
@@ -38,7 +39,13 @@ Don't settle for a basic platform. Build a masterpiece.
     headline: "Design Your Dream Deck in 3D 🏡",
     cta: "Book Design Preview",
     scripts: [
-      { id: 'l1', title: "The Resort at Home", hook: "Why fly to a resort when you can walk out your back door?", visual: "Drone shot of stunning wraparound deck" },
+      { 
+        id: 'l1', 
+        title: "The Resort at Home", 
+        hook: "Why fly to a resort when you can walk out your back door?", 
+        visual: "Drone shot of stunning wraparound deck",
+        videoSrc: "/images/drone-wraparound.mp4"
+      },
       { id: 'l2', title: "The Host's Pride", hook: "Be honest. When friends come over, are you proud to show them the backyard?", visual: "POV walking onto deck with friends" },
       { id: 'l3', title: "The Visual Transformation", hook: "This... turned into THIS. (Split screen)", visual: "Fast Before/After cuts" },
       { id: 'l4', title: "The 3D Reveal", hook: "Don't build a deck until you see this.", visual: "Screen recording of 3D CAD software" },
@@ -264,11 +271,26 @@ const FacebookAdPreview: React.FC<{ angle: Angle; selectedScript: Script }> = ({
       </div>
 
       {/* Creative / Video Placeholder */}
-      <div className="w-full aspect-[4/5] bg-stone-900 relative flex flex-col items-center justify-center text-center p-6 bg-gradient-to-br from-stone-800 to-stone-900 group cursor-pointer">
-          <PlayCircle className="w-16 h-16 text-white opacity-80 group-hover:scale-110 transition-transform mb-4" />
-          <p className="text-white font-bold text-lg uppercase tracking-wider mb-1">{selectedScript.title}</p>
-          <p className="text-stone-400 text-xs uppercase tracking-widest border-t border-stone-600 pt-2 mt-2">Visual: {selectedScript.visual}</p>
-          <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded text-left border border-white/10">
+      <div className="w-full aspect-[4/5] bg-stone-900 relative flex flex-col items-center justify-center text-center p-0 bg-gradient-to-br from-stone-800 to-stone-900 group cursor-pointer overflow-hidden">
+          {selectedScript.videoSrc ? (
+            <video 
+              src={selectedScript.videoSrc} 
+              className="w-full h-full object-cover" 
+              controls 
+              autoPlay 
+              muted 
+              loop 
+              playsInline
+            />
+          ) : (
+            <div className="p-6 flex flex-col items-center justify-center w-full h-full">
+                <PlayCircle className="w-16 h-16 text-white opacity-80 group-hover:scale-110 transition-transform mb-4" />
+                <p className="text-white font-bold text-lg uppercase tracking-wider mb-1">{selectedScript.title}</p>
+                <p className="text-stone-400 text-xs uppercase tracking-widest border-t border-stone-600 pt-2 mt-2">Visual: {selectedScript.visual}</p>
+            </div>
+          )}
+          
+          <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded text-left border border-white/10 pointer-events-none">
               <p className="text-orange-400 text-xs font-bold uppercase mb-1">Hook (0-3s)</p>
               <p className="text-white text-sm italic">"{selectedScript.hook}"</p>
           </div>
