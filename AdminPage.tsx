@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Folder, FileText, ChevronRight, ChevronDown, Layout, BarChart3 } from 'lucide-react';
 import { AdvertisingPlan } from './src/components/admin/AdvertisingPlan';
 
@@ -31,6 +31,19 @@ const AdminPage: React.FC<AdminPageProps> = ({ pages, navigate }) => {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'advertising'>('overview');
+
+  useEffect(() => {
+    // Add noindex meta tag
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex';
+    document.head.appendChild(meta);
+
+    return () => {
+      // Remove noindex meta tag on unmount
+      document.head.removeChild(meta);
+    };
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
