@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Project } from '../../types/portfolio';
 import BeforeAfterSlider from './BeforeAfterSlider';
 import QuoteForm from '../QuoteForm';
+import ResponsiveImage from '../ResponsiveImage';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -112,15 +113,17 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onOpenQuo
                     <div className="grid grid-cols-2 gap-4">
                       {project.gallery.map((img, idx) => (
                         <div
-                          key={idx}
-                          className="group relative rounded-sm overflow-hidden aspect-video shadow-md cursor-pointer bg-stone-800"
-                          onClick={() => setSelectedGalleryIndex(idx)}
-                        >
-                          <img
-                            src={img.url}
-                            alt={img.label}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                          />
+                           key={idx}
+                           className="group relative rounded-sm overflow-hidden aspect-video shadow-md cursor-pointer bg-stone-800"
+                           onClick={() => setSelectedGalleryIndex(idx)}
+                         >
+                           <ResponsiveImage
+                             src={img.url}
+                             alt={img.label}
+                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                             sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, 1024px"
+                             priority={false}
+                           />
                           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <svg className="w-8 h-8 text-white scale-75 group-hover:scale-100 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
@@ -230,11 +233,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onOpenQuo
               <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 5l7 7-7 7" /></svg>
             </button>
 
-            <img
-              src={project.gallery[selectedGalleryIndex].url}
-              alt={project.gallery[selectedGalleryIndex].label}
-              className="w-full h-full object-contain select-none animate-in zoom-in-95 duration-500"
-            />
+            <ResponsiveImage
+               src={project.gallery[selectedGalleryIndex].url}
+               alt={project.gallery[selectedGalleryIndex].label}
+               className="w-full h-full object-contain select-none animate-in zoom-in-95 duration-500"
+               priority={true}
+             />
           </div>
 
           {/* Bottom Controls / Indicator */}

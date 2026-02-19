@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import ResponsiveImage from '../ResponsiveImage';
 
 interface BeforeAfterSliderProps {
   beforeUrl: string;
@@ -33,25 +34,27 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({ beforeUrl, afterU
       onTouchMove={handleMove}
     >
       {/* After Image (Always in background) */}
-      <img
-        src={afterUrl}
-        alt="After Transformation"
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-      />
+       <ResponsiveImage
+         src={afterUrl}
+         alt="After Transformation"
+         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+         priority={true}
+       />
 
-      {/* Before Image (Clipped overlay) */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          clipPath: `inset(0 ${100 - sliderPos}% 0 0)`
-        }}
-      >
-        <img
-          src={beforeUrl}
-          alt="Before Transformation"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
+       {/* Before Image (Clipped overlay) */}
+       <div
+         className="absolute inset-0 pointer-events-none"
+         style={{
+           clipPath: `inset(0 ${100 - sliderPos}% 0 0)`
+         }}
+       >
+         <ResponsiveImage
+           src={beforeUrl}
+           alt="Before Transformation"
+           className="absolute inset-0 w-full h-full object-cover"
+           priority={true}
+         />
+       </div>
 
       {/* Slider Line & Handle */}
       <div

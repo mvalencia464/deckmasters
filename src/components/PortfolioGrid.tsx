@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import ResponsiveImage from './ResponsiveImage';
 
 interface PortfolioGridProps {
   images?: string[];
@@ -191,40 +192,26 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
         </div>
 
         {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[250px]">
-          {portfolioImages.map((imageUrl, index) => {
-          // Extract filename for variant path
-          const imageFilename = imageUrl.split('/').pop();
-          const basePath = imageUrl.replace(imageFilename, '');
-          const variantPath = basePath + 'variants/';
-          const basename = imageFilename.replace('.webp', '');
-          
-          return (
-            <div
-              key={index}
-              onClick={() => handleImageClick(index)}
-              className="relative group overflow-hidden rounded-sm bg-stone-800 cursor-pointer"
-            >
-              <img
-                src={imageUrl}
-                srcSet={`
-                  ${variantPath}${basename}-320.webp 320w,
-                  ${variantPath}${basename}-640.webp 640w,
-                  ${imageUrl} 1280w
-                `}
-                sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, 1280px"
-                alt={imageCaptions[index]}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                loading="lazy"
-                decoding="async"
-              />
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[250px]">
+           {portfolioImages.map((imageUrl, index) => (
+             <div
+               key={index}
+               onClick={() => handleImageClick(index)}
+               className="relative group overflow-hidden rounded-sm bg-stone-800 cursor-pointer"
+             >
+               <ResponsiveImage
+                 src={imageUrl}
+                 alt={imageCaptions[index]}
+                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                 sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, (max-width: 1440px) 1024px, 1280px"
+                 priority={false}
+               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                 <p className="text-white text-xs font-semibold leading-tight">{imageCaptions[index]}</p>
-              </div>
-            </div>
-          );
-          })}
+                </div>
+                </div>
+                ))}
         </div>
       </div>
 
@@ -255,11 +242,11 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
 
           {/* Image Container */}
           <div className="flex flex-col items-center gap-4 max-w-4xl w-full">
-            <img
+            <ResponsiveImage
               src={selectedImage}
               alt={imageCaptions[currentImageIndex]}
               className="max-h-[75vh] max-w-[90vw] object-contain rounded-sm"
-              onClick={(e) => e.stopPropagation()}
+              priority={true}
             />
             <div className="bg-black/50 backdrop-blur-sm px-6 py-3 rounded-sm max-w-2xl">
               <p className="text-white text-sm font-semibold leading-relaxed text-center">

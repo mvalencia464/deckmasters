@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Star, ArrowRight } from 'lucide-react';
+import ResponsiveImage from './ResponsiveImage';
 
 interface PortfolioProject {
   id: string;
@@ -130,11 +131,12 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects, te
                         setCurrentImageIndex(0);
                       }}
                     >
-                      <img
-                        src={project.afterImage}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-0 group-hover:grayscale-[0.5]"
-                      />
+                       <ResponsiveImage
+                         src={project.afterImage}
+                         alt={project.title}
+                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-0 group-hover:grayscale-[0.5]"
+                         sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, 1024px"
+                       />
                       <div className="absolute inset-0 bg-stone-950/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-10">
                         <div className="mb-4 translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
                           <span className="text-orange-500 font-bold uppercase tracking-widest text-[10px] bg-orange-600/10 px-3 py-1 mb-4 inline-block">
@@ -187,11 +189,12 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects, te
               {/* Image Gallery */}
               <div>
                 <div className="relative aspect-square mb-6 overflow-hidden bg-stone-800 border border-stone-700">
-                  <img
-                    src={allGalleryImages[currentImageIndex]}
-                    alt={`${selectedProject.title} - Image ${currentImageIndex + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                    <ResponsiveImage
+                      src={allGalleryImages[currentImageIndex]}
+                      alt={`${selectedProject.title} - Image ${currentImageIndex + 1}`}
+                      className="w-full h-full object-cover"
+                      priority={true}
+                    />
 
                   {/* Image Navigation */}
                   {allGalleryImages.length > 1 && (
@@ -226,7 +229,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects, te
                           idx === currentImageIndex ? 'border-orange-600' : 'border-stone-700 hover:border-orange-600/50'
                         }`}
                       >
-                        <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
+                        <ResponsiveImage src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>

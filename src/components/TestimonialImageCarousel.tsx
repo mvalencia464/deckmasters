@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ResponsiveImage from './ResponsiveImage';
 
 interface TestimonialImageCarouselProps {
   images: string[];
@@ -63,10 +64,12 @@ export default function TestimonialImageCarousel({
     >
       {/* Main Image */}
       <div className="relative w-full aspect-video">
-        <img
+        <ResponsiveImage
           src={images[currentIndex]}
           alt={`${reviewerName} project ${currentIndex + 1}`}
           className="w-full h-full object-cover"
+          sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, 1024px"
+          priority={false}
         />
 
         {/* Image Counter */}

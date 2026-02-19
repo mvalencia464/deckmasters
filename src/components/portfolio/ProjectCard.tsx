@@ -2,6 +2,7 @@ import React from 'react';
 import { Project } from '../../types/portfolio';
 import { Trash2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import ResponsiveImage from '../ResponsiveImage';
 
 interface ProjectCardProps {
   project: Project;
@@ -18,12 +19,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, onDelete })
       className="group cursor-pointer bg-stone-900 rounded-sm overflow-hidden border border-stone-800 hover:border-orange-600 transition-all duration-300 flex flex-col h-full relative"
     >
       <div className="relative aspect-[4/3] overflow-hidden">
-        {/* Main Image */}
-        <img
-          src={project.afterImage}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 opacity-80 group-hover:opacity-100"
-        />
+         {/* Main Image */}
+         <ResponsiveImage
+           src={project.afterImage}
+           alt={project.title}
+           className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 opacity-80 group-hover:opacity-100"
+           sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, 1024px"
+           priority={false}
+         />
 
         {/* Interaction Overlay */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
