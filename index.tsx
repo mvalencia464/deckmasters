@@ -1,15 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Menu, X, ArrowRight, Shield, Hammer, Leaf,
   Star, Instagram, Facebook, Twitter, Phone,
   Mail, MapPin, ChevronRight, Quote, Ruler,
   Clock, CheckCircle2, ArrowLeft, Calendar,
-  ChevronDown, Home
+  ChevronDown, Home, Camera, ChevronLeft, ChevronRight as ChevronRightIcon
 } from 'lucide-react';
-import AdminPage from './AdminPage';
-import PortfolioPage from './src/pages/PortfolioPage';
+// Admin page removed - no longer needed
+
+// Lazy load pages - only fetched when navigated to
+const GalleryArchive = lazy(() => import('./src/pages/GalleryArchive'));
+const ProductsPage = lazy(() => import('./src/pages/ProductsPage'));
+const PrivacyPage = lazy(() => import('./src/pages/PrivacyPage'));
+const TermsPage = lazy(() => import('./src/pages/TermsPage'));
 import { AuthProvider } from './src/context/AuthContext';
+import QuoteForm from './src/components/QuoteForm';
+import testimonialsData from './Testimonials.json';
+import TestimonialImageModal from './src/components/TestimonialImageModal';
+import TestimonialVideoCard from './src/components/TestimonialVideoCard';
+import PortfolioGrid from './src/components/PortfolioGrid';
+import ProcessSection from './src/components/ProcessSection';
+import { MOCK_PROJECTS } from './src/constants/portfolio';
+import { mapAssetUrl } from './src/utils/assetMapper';
+
+// Loading fallback component for lazy-loaded pages
+const PageLoadingFallback = () => (
+  <div className="min-h-screen flex items-center justify-center bg-stone-900">
+    <div className="text-center">
+      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mb-4"></div>
+      <p className="text-stone-400 text-lg">Loading...</p>
+    </div>
+  </div>
+);
 
 // --- CORE 30 DATA STRUCTURE ---
 const core30Pages = [
@@ -168,12 +191,12 @@ const core30Pages = [
     layer: 2,
     content: {
       intro: "Alaska's climate is unforgiving to outdoor structures. In Anchorage, your deck endures frost heaves that can shift foundations, UV radiation during our extended summer days that degrades wood fibers, snow loads exceeding 50 pounds per square foot, and the relentless freeze-thaw cycle that splits boards and pops fasteners. Deck Masters specializes in diagnosing and repairing both structural and cosmetic damage across every neighborhood from **Hillside** to **Eagle River**, extending the life of your investment without the cost of a full replacement.",
-      body1: "We don't just patch problems; we engineer solutions. Whether it's a rotting joist discovered during a routine inspection in **Midtown**, a shaky railing that failed the 'grab test' in **Turnagain**, or an entire section compromised by water intrusion in **Glen Alps**, our team provides comprehensive diagnostics and rapid repairs. Many of our projects, like the emergency rot removal we completed for **Mike Shaughnessy on Martin Drive**, are finished in under 24 hours, minimizing disruption to your summer.",
+      body1: "We don't just patch problems; we engineer solutions. Whether it's a rotting joist discovered during a routine inspection in **Midtown**, a shaky railing that failed the 'grab test' in **Turnagain**, or an entire section compromised by water intrusion in **Glen Alps**, our team provides comprehensive diagnostics and rapid repairs. Many of our projects, like the emergency rot removal we completed for **Joshua Swan on Martin Drive**, are finished in under 24 hours, minimizing disruption to your summer.",
       highlightTitle: "The Repair vs. Replace Decision Matrix",
       highlightBody: "Not every damaged deck requires demolition. We use a systematic evaluation framework: if more than 40% of your deck's structural framing (joists, beams, ledger boards) shows rot or insect damage, replacement is the safer investment. However, if the damage is isolated to surface boards or railings, a targeted repair or resurfacing can save you thousands while delivering a deck that looks and performs like new. For homeowners in **Rabbit Creek** and **Southport** with older decks, we often recommend a hybrid approach—replacing the surface with low-maintenance [Trex composite](/deck-materials-components/trex-deck-installation) while reinforcing the existing framing with galvanized hardware and treated lumber.",
       localProof: {
         quote: "They quickly removed all of the rotten/ broken decking and supports... The new wood was fitted into place with what looked easy-going to me.",
-        author: "Mike Shaughnessy",
+        author: "Joshua Swan",
         location: "Martin Drive"
       },
       sections: [
@@ -2092,11 +2115,11 @@ const core30Pages = [
     title: "Professional Deck Repair Services",
     layer: 3,
     content: {
-      intro: "A rotting board isn't just an eyesore—it's a lawsuit waiting to happen. In Anchorage, where freeze-thaw cycles accelerate wood decay and moisture intrusion is constant, deck repairs are inevitable. The question isn't if your deck will need repairs, but when. Deck Masters provides rapid, professional repair services across **Hillside**, **South Anchorage**, and **Eagle River** that address both cosmetic damage and structural failures. **Mike Shaughnessy on Martin Drive** experienced our efficiency firsthand: 'They quickly removed all of the rotten/broken decking and supports.' We don't patch problems—we engineer permanent solutions that restore safety and extend your deck's lifespan.",
+      intro: "A rotting board isn't just an eyesore—it's a lawsuit waiting to happen. In Anchorage, where freeze-thaw cycles accelerate wood decay and moisture intrusion is constant, deck repairs are inevitable. The question isn't if your deck will need repairs, but when. Deck Masters provides rapid, professional repair services across **Hillside**, **South Anchorage**, and **Eagle River** that address both cosmetic damage and structural failures. **Joshua Swan on Martin Drive** experienced our efficiency firsthand: 'They quickly removed all of the rotten/broken decking and supports.' We don't patch problems—we engineer permanent solutions that restore safety and extend your deck's lifespan.",
       hook: "Professional repairs address rot, structural damage, and safety hazards before they become catastrophic failures.",
       localProof: {
         quote: "They quickly removed all of the rotten/ broken decking and supports.",
-        author: "Mike Shaughnessy",
+        author: "Joshua Swan",
         location: "Martin Drive"
       },
       sections: [
@@ -2104,7 +2127,7 @@ const core30Pages = [
           title: "Common Deck Repairs in Anchorage",
           body: [
             "After hundreds of repair calls across **Midtown**, **Turnagain**, and **Rabbit Creek**, we've identified the most common failure modes. **Rotted deck boards** are the obvious problem—soft spots, discoloration, and visible decay. We replace individual boards or entire sections, matching existing materials when possible. For composite decks, we source matching colors (Trex Enhance Toasted Sand, Foggy Wharf) to ensure seamless repairs.",
-            "**Structural rot** is more insidious. Joists, beams, and ledger boards rot from the inside out, often hidden beneath surface boards. We use moisture meters and probes to detect hidden decay during inspections. When we find compromised framing, we sister new lumber alongside damaged members or, if decay is extensive, replace entire sections. **Mike Shaughnessy** needed both decking and support removal—we completed the work in under 24 hours.",
+            "**Structural rot** is more insidious. Joists, beams, and ledger boards rot from the inside out, often hidden beneath surface boards. We use moisture meters and probes to detect hidden decay during inspections. When we find compromised framing, we sister new lumber alongside damaged members or, if decay is extensive, replace entire sections. **Joshua Swan** needed both decking and support removal—we completed the work in under 24 hours.",
             "**Loose or popped fasteners** create tripping hazards and accelerate board deterioration. Anchorage's temperature swings (70°F in summer to -10°F in winter) cause wood and composite to expand and contract, backing out screws and loosening nails. We remove surface boards, inspect framing, and reinstall with structural deck screws or hidden fastener systems that resist thermal movement.",
             "**Railing failures** are safety-critical. We've responded to calls in **Glen Alps** and **Potter Valley** where railings failed the 'grab test'—they wobble when you lean on them. This indicates loose post connections or rotted post bases. We through-bolt posts to the deck frame with 1/2-inch galvanized bolts, and if posts are rotted at ground contact, we replace them with pressure-treated or composite posts on proper footings.",
             "**Stair repairs** address worn treads, loose stringers, and missing or inadequate handrails. Stairs take more abuse than deck surfaces—constant foot traffic, snow shoveling, ice melt chemicals. We rebuild stairs to current code (consistent riser heights, graspable handrails, proper tread depth) even when repairing older structures."
@@ -2582,11 +2605,11 @@ const core30Pages = [
     title: "Deck Resurfacing Services",
     layer: 3,
     content: {
-      intro: "Your deck's bones are good—the foundation is solid, framing is sound, but the surface is worn, splintered, and ugly. Deck resurfacing replaces only the visible components (deck boards, railings, stairs) while preserving the structural framing and foundation. This approach costs 40-60% less than full replacement while delivering a 'brand new' appearance. Deck Masters specializes in resurfacing projects across **Anchorage**, **Hillside**, and **South Anchorage** where we transform aging wood decks into modern composite masterpieces without touching the foundation. **Mike Shaughnessy on Martin Drive** watched our efficiency: 'The new wood was fitted into place with what looked easy-going to me.' We make complex work look simple.",
+      intro: "Your deck's bones are good—the foundation is solid, framing is sound, but the surface is worn, splintered, and ugly. Deck resurfacing replaces only the visible components (deck boards, railings, stairs) while preserving the structural framing and foundation. This approach costs 40-60% less than full replacement while delivering a 'brand new' appearance. Deck Masters specializes in resurfacing projects across **Anchorage**, **Hillside**, and **South Anchorage** where we transform aging wood decks into modern composite masterpieces without touching the foundation. **Joshua Swan on Martin Drive** watched our efficiency: 'The new wood was fitted into place with what looked easy-going to me.' We make complex work look simple.",
       hook: "Deck resurfacing replaces surface boards and railings while keeping structural framing, saving 40-60% versus full replacement.",
       localProof: {
         quote: "The new wood was fitted into place with what, looked easy-going to me.",
-        author: "Mike Shaughnessy",
+        author: "Joshua Swan",
         location: "Martin Drive"
       },
       sections: [
@@ -2614,7 +2637,7 @@ const core30Pages = [
           body: [
             "**Step 1: Surface removal** involves carefully removing all deck boards without damaging the underlying joists. We use pry bars and reciprocating saws to cut fasteners. Old boards are hauled away for recycling (wood is chipped for landscaping mulch). This step takes 4-6 hours for a typical deck.",
             "**Step 2: Framing inspection and repair** is critical. With surface boards removed, we have full access to joists, beams, and ledger board. We use moisture meters to detect hidden rot, probe suspected areas with awls, and replace any compromised framing members. We also check joist spacing—if it's 24 inches on center (common for old wood decks), we add blocking to bring it to 16 inches for composite decking, which provides a more solid feel.",
-            "**Step 3: Surface installation** uses composite boards with hidden fastener systems (Trex Hideaway, Cortex). We install boards perpendicular to joists with proper spacing (1/8-inch gaps for thermal expansion). **Mike Shaughnessy** noted how easily the new boards fitted into place—that's the result of precise measurements and professional installation. We use color-matched edge trim to create clean, finished edges.",
+            "**Step 3: Surface installation** uses composite boards with hidden fastener systems (Trex Hideaway, Cortex). We install boards perpendicular to joists with proper spacing (1/8-inch gaps for thermal expansion). **Joshua Swan** noted how easily the new boards fitted into place—that's the result of precise measurements and professional installation. We use color-matched edge trim to create clean, finished edges.",
             "**Step 4: Railing replacement** often accompanies resurfacing. If we're replacing the deck surface, it makes sense to upgrade railings too. We remove old wood railings and install cable, aluminum, or composite systems. The labor cost is minimal since we're already working on the deck, and the visual impact is dramatic.",
             "**Step 5: Stair resurfacing** replaces worn treads and risers while keeping stringers (if they're sound). We rebuild stairs to current code even when resurfacing older structures—consistent riser heights, proper tread depth, graspable handrails."
           ]
@@ -2622,7 +2645,7 @@ const core30Pages = [
         {
           title: "Material Options for Resurfacing",
           body: [
-            "**Composite decking** is our most popular resurfacing choice. Trex Enhance ($8-$10 per square foot installed) offers 25-year fade/stain warranty and comes in popular colors like Toasted Sand and Foggy Wharf. Trex Transcends ($10-$12 per square foot) provides superior fade resistance and deeper wood-grain embossing. For **Mike Shaughnessy**, we likely used Trex Enhance—it's the sweet spot of performance and value.",
+            "**Composite decking** is our most popular resurfacing choice. Trex Enhance ($8-$10 per square foot installed) offers 25-year fade/stain warranty and comes in popular colors like Toasted Sand and Foggy Wharf. Trex Transcends ($10-$12 per square foot) provides superior fade resistance and deeper wood-grain embossing. For **Joshua Swan**, we likely used Trex Enhance—it's the sweet spot of performance and value.",
             "**PVC decking** (Azek, TimberTech AZEK) is the premium option at $12-$15 per square foot. It's 100% synthetic (no wood fibers), making it impervious to moisture, rot, and insects. PVC is ideal for coastal properties in **Bayshore** or **Potter Valley** where salt air accelerates wood decay.",
             "**Wood resurfacing** is less common but appropriate for homeowners who want to maintain a natural wood aesthetic. We use tight-knot cedar or premium pressure-treated lumber. Wood resurfacing costs $5-$7 per square foot but requires annual staining/sealing. It's popular in **Rabbit Creek** and **Glen Alps** where homeowners prefer traditional aesthetics.",
             "**Railing upgrades**: Cable railing ($25-$35 per linear foot) provides unobstructed views. Aluminum composite railing ($20-$30 per linear foot) offers zero maintenance. Glass railing ($150-$250 per linear foot) is the premium choice for properties with views worth preserving."
@@ -2634,7 +2657,7 @@ const core30Pages = [
             "**Resurface if**: Framing is structurally sound (less than 20% rot), foundation is stable (no settling or frost heave), deck size and layout meet your needs, and you want to save money. Resurfacing costs 40-60% of replacement while delivering 80-90% of the visual and functional benefits.",
             "**Replace if**: More than 30% of framing is rotted, foundation has failed, you want to change deck size or layout, or bringing the deck to current code requires extensive structural work. At that point, full replacement makes more sense.",
             "**Hybrid approach**: For decks with solid foundations but some compromised framing, we sometimes replace damaged joists/beams while keeping the foundation. This is more than resurfacing but less than full replacement. Cost is $8,000-$14,000 for a 300-square-foot deck.",
-            "We provide honest assessments during consultations. If your deck is a good candidate for resurfacing, we'll show you the cost savings. If it needs replacement, we'll explain why. **Mike Shaughnessy** trusted our recommendation because we prioritized his needs over our profit."
+            "We provide honest assessments during consultations. If your deck is a good candidate for resurfacing, we'll show you the cost savings. If it needs replacement, we'll explain why. **Joshua Swan** trusted our recommendation because we prioritized his needs over our profit."
           ]
         },
         {
@@ -3475,408 +3498,87 @@ const defaultFormData = {
   consent: false
 };
 
-const LeadCaptureModal = ({ isOpen, onClose, initialData, startStep = 1 }) => {
-  const [step, setStep] = useState(startStep);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [formData, setFormData] = useState(defaultFormData);
-
-  useEffect(() => {
-    if (isOpen) {
-      if (initialData) {
-        setFormData(prev => ({ ...prev, ...initialData }));
-        setStep(startStep);
-      } else {
-        setFormData(defaultFormData);
-        setStep(1);
-      }
-      setIsSuccess(false);
-    }
-  }, [isOpen, initialData, startStep]);
-
+const LeadCaptureModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
-
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleNext = () => {
-    if (step < 3) setStep(step + 1);
-  };
-
-  const handleBack = () => {
-    if (step > 1) setStep(step - 1);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.consent) return;
-
-    setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1500);
-  };
-
-  const totalSteps = 3;
-  const progress = (step / totalSteps) * 100;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-stone-950/90 backdrop-blur-md" onClick={onClose}></div>
 
-      <div className="relative bg-stone-900 border border-stone-800 w-full max-w-2xl shadow-2xl overflow-hidden animate-fade-in-up">
+      <div className="relative w-full max-w-2xl shadow-2xl animate-fade-in-up">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-stone-500 hover:text-white transition-colors z-20"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-[110]"
         >
           <X className="w-6 h-6" />
         </button>
 
-        {!isSuccess ? (
-          <form className="flex flex-col h-full min-h-[500px]" onSubmit={handleSubmit}>
-            {/* Hidden Inputs for Tracking */}
-            <input type="hidden" name="projectType" value={formData.projectType} />
-            <input type="hidden" name="material" value={formData.material} />
-            <input type="hidden" name="usage" value={formData.usage} />
-
-            {/* Header & Progress */}
-            <div className="bg-stone-950 p-8 border-b border-stone-800">
-              <div className="w-full bg-stone-800 h-1 mb-6 rounded-full overflow-hidden">
-                <div
-                  className="bg-orange-600 h-full transition-all duration-500 ease-out"
-                  style={{ width: `${progress}%` }}
-                ></div>
-              </div>
-              <div className="flex justify-between items-end">
-                <div>
-                  <span className="text-orange-600 font-bold uppercase tracking-widest text-xs block mb-2">
-                    Step {step} of {totalSteps}
-                  </span>
-                  <h2 className="text-3xl font-display font-bold uppercase text-white">
-                    {step === 1 && "Project Vision"}
-                    {step === 2 && "Details & Timeline"}
-                    {step === 3 && "Contact Details"}
-                  </h2>
-                </div>
-              </div>
-            </div>
-
-            {/* Form Body */}
-            <div className="p-8 flex-grow overflow-y-auto max-h-[60vh]">
-              {step === 1 && (
-                <div className="space-y-8 animate-fade-in">
-                  <p className="text-xl text-stone-400 font-light">Let's start with the basics.</p>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">What type of project is this?</label>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {[
-                        { id: 'new', label: 'New Build' },
-                        { id: 'replace', label: 'Replace Old Deck' },
-                        { id: 'resurface', label: 'Resurface / Repair' }
-                      ].map((option) => (
-                        <div
-                          key={option.id}
-                          onClick={() => handleInputChange('projectType', option.id)}
-                          className={`p-4 border cursor-pointer transition-all ${formData.projectType === option.id ? 'bg-orange-600/10 border-orange-600 text-white' : 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-600'}`}
-                        >
-                          <div className={`w-4 h-4 rounded-full border mb-2 flex items-center justify-center ${formData.projectType === option.id ? 'border-orange-600' : 'border-stone-600'}`}>
-                            {formData.projectType === option.id && <div className="w-2 h-2 bg-orange-600 rounded-full"></div>}
-                          </div>
-                          <span className="font-bold uppercase text-sm tracking-wide">{option.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Do you have a material in mind?</label>
-                    <div className="grid grid-cols-1 gap-4">
-                      {[
-                        { id: 'composite', label: 'Composite', sub: 'Low Maintenance, High Durability' },
-                        { id: 'wood', label: 'Natural Wood', sub: 'Classic Beauty, Requires Upkeep' },
-                        { id: 'unsure', label: 'I Need Advice', sub: "Help me choose what's best" }
-                      ].map((option) => (
-                        <div
-                          key={option.id}
-                          onClick={() => handleInputChange('material', option.id)}
-                          className={`p-4 border cursor-pointer transition-all flex items-center gap-4 ${formData.material === option.id ? 'bg-orange-600/10 border-orange-600 text-white' : 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-600'}`}
-                        >
-                          <div className={`w-5 h-5 rounded-full border flex-shrink-0 flex items-center justify-center ${formData.material === option.id ? 'border-orange-600' : 'border-stone-600'}`}>
-                            {formData.material === option.id && <div className="w-2.5 h-2.5 bg-orange-600 rounded-full"></div>}
-                          </div>
-                          <div>
-                            <span className="font-bold uppercase text-sm tracking-wide block">{option.label}</span>
-                            <span className="text-xs text-stone-500">{option.sub}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {step === 2 && (
-                <div className="space-y-8 animate-fade-in">
-                  <p className="text-xl text-stone-400 font-light">Tell us about your lifestyle.</p>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">What do you plan to use the deck for?</label>
-                    <div className="grid grid-cols-2 gap-4">
-                      {[
-                        { id: 'dining', label: 'Outdoor Dining' },
-                        { id: 'entertaining', label: 'Entertaining' },
-                        { id: 'relaxing', label: 'Relaxation' },
-                        { id: 'unsure', label: 'Not sure yet' }
-                      ].map((option) => (
-                        <div
-                          key={option.id}
-                          onClick={() => handleInputChange('usage', option.id)}
-                          className={`p-4 border cursor-pointer transition-all text-center ${formData.usage === option.id ? 'bg-orange-600/10 border-orange-600 text-white' : 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-600'}`}
-                        >
-                          <span className="font-bold uppercase text-sm tracking-wide">{option.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">When are you hoping to start?</label>
-                    <select
-                      name="timeline"
-                      value={formData.timeline}
-                      onChange={(e) => handleInputChange('timeline', e.target.value)}
-                      className="w-full bg-stone-950 border border-stone-800 p-4 text-white focus:outline-none focus:border-orange-600 transition-colors appearance-none"
-                    >
-                      <option value="" disabled>Select a timeline</option>
-                      <option value="asap">As soon as possible</option>
-                      <option value="1-3">1 - 3 Months</option>
-                      <option value="planning">Just planning / Budgeting</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">What is your Zip Code?</label>
-                    <input
-                      type="text"
-                      name="zipCode"
-                      inputMode="numeric"
-                      value={formData.zipCode}
-                      onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                      className="w-full bg-stone-950 border border-stone-800 p-4 text-white focus:outline-none focus:border-orange-600 transition-colors text-lg placeholder:text-stone-700"
-                      placeholder="e.g. 99501"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {step === 3 && (
-                <div className="space-y-8 animate-fade-in">
-                  <p className="text-xl text-stone-400 font-light">Where should we send your estimate? <span className="text-orange-500 font-medium">No spam—ever.</span></p>
-
-                  <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">First Name</label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={(e) => handleInputChange('firstName', e.target.value)}
-                        className="w-full bg-stone-950 border border-stone-800 p-4 text-white focus:outline-none focus:border-orange-600 transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Last Name</label>
-                      <input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={(e) => handleInputChange('lastName', e.target.value)}
-                        className="w-full bg-stone-950 border border-stone-800 p-4 text-white focus:outline-none focus:border-orange-600 transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Email Address</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="w-full bg-stone-950 border border-stone-800 p-4 text-white focus:outline-none focus:border-orange-600 transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Phone Number</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="w-full bg-stone-950 border border-stone-800 p-4 text-white focus:outline-none focus:border-orange-600 transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Address (Optional)</label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={(e) => handleInputChange('address', e.target.value)}
-                      placeholder="Helps us view satellite imagery"
-                      className="w-full bg-stone-950 border border-stone-800 p-4 text-white focus:outline-none focus:border-orange-600 transition-colors placeholder:text-stone-700"
-                    />
-                  </div>
-
-                  <div className="flex items-start gap-3 pt-2">
-                    <div className="relative flex items-center">
-                      <input
-                        type="checkbox"
-                        id="consent"
-                        name="consent"
-                        checked={formData.consent}
-                        onChange={(e) => handleInputChange('consent', e.target.checked)}
-                        className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-stone-700 bg-stone-950 checked:bg-orange-600 checked:border-orange-600 transition-all shrink-0"
-                      />
-                      <CheckCircle2 className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
-                    </div>
-                    <label htmlFor="consent" className="text-xs text-stone-500 cursor-pointer select-none leading-relaxed">
-                      I agree to receive marketing messaging from Deck Masters AK at the phone number provided above. I understand I will receive 2 messages a month, data rates may apply, reply STOP to opt out.
-                    </label>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Footer Actions */}
-            <div className="bg-stone-950 p-8 border-t border-stone-800 flex justify-between items-center">
-              {step > 1 ? (
-                <button
-                  type="button"
-                  onClick={handleBack}
-                  className="flex items-center gap-2 text-stone-500 hover:text-white font-bold uppercase text-xs tracking-widest transition-colors"
-                >
-                  <ArrowLeft className="w-4 h-4" /> Back
-                </button>
-              ) : <div></div>}
-
-              {step < 3 ? (
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="bg-white text-stone-950 hover:bg-orange-600 hover:text-white px-8 py-3 font-bold uppercase text-xs tracking-widest transition-all flex items-center gap-2"
-                >
-                  Next Step <ArrowRight className="w-4 h-4" />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isSubmitting || !formData.consent}
-                  className="bg-orange-600 text-white hover:bg-orange-700 px-8 py-3 font-bold uppercase text-xs tracking-widest transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? 'Processing...' : 'Get My Free Quote'}
-                  {!isSubmitting && <CheckCircle2 className="w-4 h-4" />}
-                </button>
-              )}
-            </div>
-          </form>
-        ) : (
-          /* Success State */
-          <div className="flex flex-col items-center justify-center h-[500px] p-12 text-center animate-fade-in">
-            <div className="w-20 h-20 bg-green-900/20 rounded-full flex items-center justify-center mb-8 border border-green-900 text-green-500">
-              <CheckCircle2 className="w-10 h-10" />
-            </div>
-            <h2 className="text-4xl font-display font-bold uppercase mb-4">Inquiry Received!</h2>
-            <p className="text-stone-400 max-w-md mb-8 leading-relaxed">
-              Thank you for trusting Deck Masters. We've sent a confirmation to <strong>{formData.email}</strong> with instructions on how to send us photos of your backyard.
-            </p>
-            <button
-              onClick={onClose}
-              className="border border-stone-700 text-white px-8 py-3 font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-stone-950 transition-all"
-            >
-              Close
-            </button>
-          </div>
-        )}
+        <QuoteForm />
       </div>
     </div>
   );
 };
 
-const HeroForm = ({ onSubmit, className = '' }) => {
-  const [data, setData] = useState({
-    projectType: '',
-    material: ''
-  });
 
-  const handleChange = (field, value) => {
-    setData(prev => ({ ...prev, [field]: value }));
-  };
 
-  const isReady = data.projectType || data.material;
+const StrategyModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
 
   return (
-    <div className={`bg-stone-950/80 backdrop-blur-md border border-stone-800 p-8 rounded-sm w-full animate-fade-in-up delay-300 ${className}`}>
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-8 h-8 bg-orange-600 flex items-center justify-center rounded-sm">
-          <Ruler className="w-4 h-4 text-white" />
-        </div>
-        <h3 className="text-xl font-display font-bold uppercase">Start Your Project</h3>
-      </div>
-
-      <div className="space-y-6">
-        <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Project Type</label>
-          <div className="grid grid-cols-3 gap-2">
-            {[
-              { id: 'new', label: 'New' },
-              { id: 'replace', label: 'Replace' },
-              { id: 'resurface', label: 'Repair' }
-            ].map((option) => (
-              <div
-                key={option.id}
-                onClick={() => handleChange('projectType', option.id)}
-                className={`p-3 border cursor-pointer text-center transition-all ${data.projectType === option.id ? 'bg-orange-600/20 border-orange-600 text-white' : 'bg-stone-900 border-stone-800 text-stone-400 hover:border-stone-600'}`}
-              >
-                <span className="font-bold uppercase text-xs tracking-wide">{option.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Material Preference</label>
-          <div className="grid grid-cols-1 gap-2">
-            {[
-              { id: 'composite', label: 'Composite', sub: 'Low Maintenance' },
-              { id: 'wood', label: 'Natural Wood', sub: 'Classic Look' },
-            ].map((option) => (
-              <div
-                key={option.id}
-                onClick={() => handleChange('material', option.id)}
-                className={`p-3 border cursor-pointer flex items-center justify-between transition-all ${data.material === option.id ? 'bg-orange-600/20 border-orange-600 text-white' : 'bg-stone-900 border-stone-800 text-stone-400 hover:border-stone-600'}`}
-              >
-                <span className="font-bold uppercase text-xs tracking-wide">{option.label}</span>
-                <span className="text-[10px] text-stone-500 uppercase tracking-wider">{option.sub}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-stone-950/95 backdrop-blur-md animate-fade-in">
+      <div className="max-w-4xl w-full bg-stone-900 border border-stone-800 rounded-sm overflow-hidden shadow-2xl relative">
         <button
-          onClick={() => onSubmit(data)}
-          className="w-full bg-orange-600 text-white hover:bg-orange-700 py-4 font-bold uppercase text-xs tracking-widest transition-all flex items-center justify-center gap-2 group mt-4"
+          onClick={onClose}
+          className="absolute top-6 right-6 text-stone-500 hover:text-white transition-colors"
         >
-          Continue to Details
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <X className="w-6 h-6" />
         </button>
+
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="p-12 border-r border-stone-800">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-[1px] w-12 bg-orange-600"></div>
+              <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-xs">The Fixed-Price System™</span>
+            </div>
+
+            <h2 className="text-4xl font-display font-bold uppercase mb-8 leading-none">
+              The No-Surprise <br />
+              <span className="text-white">Guarantee.</span>
+            </h2>
+
+            <div className="space-y-6">
+              {[
+                { title: 'Fixed-Price Contracts', desc: 'If the scope doesn\'t change, the price doesn\'t change. Period.' },
+                { title: 'Weekly Check-ins', desc: 'You\'ll never have to chase us. We host weekly in-person progress meetings.' },
+                { title: 'Clean Site Policy', desc: 'Job sites are cleared every single day. Zero nails left behind.' }
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4">
+                  <CheckCircle2 className="w-5 h-5 text-orange-600 shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-bold uppercase text-sm mb-1">{item.title}</h4>
+                    <p className="text-stone-500 text-xs leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-12 bg-stone-950/50 flex flex-col justify-center">
+            <h3 className="text-xl font-display font-bold uppercase mb-6">Experience the Difference</h3>
+            <p className="text-stone-400 text-sm leading-relaxed mb-8">
+              We've built our entire business around eliminating the "Contractor Horror Story." From 3D design renders to fixed-price guarantees, we make building easy.
+            </p>
+
+            <button
+              onClick={onClose}
+              className="bg-orange-600 text-white px-8 py-4 font-bold uppercase text-xs tracking-widest hover:bg-orange-700 transition-all flex items-center justify-center gap-2 group"
+            >
+              Start My Project
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -4139,16 +3841,131 @@ const FooterTestimonials = () => {
   );
 };
 
-const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService, setActiveService, services, portfolio }) => (
+const ReviewsGridWithModal = ({ testimonialsData }) => {
+  const [selectedReview, setSelectedReview] = useState(null);
+
+  const filteredReviews = (testimonialsData.rawReviews as Array<{ text: string; author: string; rating: number; date: string; source: string; avatarUrl?: string; images?: string[]; videoUrl?: string; videoThumbnailUrl?: string }>)
+    .filter(r => r.text && r.text.trim().length > 0 && r.rating >= 4)
+    .map(review => ({
+      ...review,
+      // Map all image URLs to local assets
+      images: review.images ? review.images.map(img => mapAssetUrl(img, false)) : []
+    }))
+    .sort((a, b) => {
+      // Sort video testimonials (Erica Leman) to the top
+      const aIsVideo = a.videoUrl ? 1 : 0;
+      const bIsVideo = b.videoUrl ? 1 : 0;
+      return bIsVideo - aIsVideo;
+    });
+
+  return (
+    <>
+      {/* Masonry grid using CSS columns — all reviews pulled verbatim from Testimonials.json */}
+      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+        {filteredReviews.map((review, i) => {
+          // Check if this is a video testimonial
+          const isVideoTestimonial = review.videoUrl && typeof review.videoUrl === 'string';
+          
+          return isVideoTestimonial ? (
+            // Video Testimonial Card
+            <TestimonialVideoCard key={i} {...review} />
+          ) : (
+            // Image/Text Testimonial Card
+            <div
+              key={i}
+              className="break-inside-avoid mb-4 bg-stone-900 border border-stone-800 overflow-hidden hover:border-orange-600/30 transition-all duration-300 group"
+            >
+              {/* Images Carousel */}
+              {review.images && review.images.length > 0 && (
+                <div 
+                  className="relative w-full bg-gray-100 cursor-pointer group/carousel"
+                  onClick={() => setSelectedReview(review)}
+                >
+                <div className="relative w-full aspect-video overflow-hidden">
+                   <img
+                     src={review.images[0]}
+                     alt={`${review.author} project`}
+                     className="w-full h-full object-cover group-hover/carousel:opacity-80 transition-opacity"
+                     loading="lazy"
+                   />
+                  {review.images.length > 1 && (
+                    <div className="absolute bottom-3 right-3 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs font-medium">
+                      1 / {review.images.length}
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover/carousel:bg-opacity-10 transition-all flex items-center justify-center">
+                    <span className="text-white opacity-0 group-hover/carousel:opacity-100 transition-opacity text-sm font-bold">Click to view</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Content */}
+            <div className="p-6">
+              {/* Stars */}
+              <div className="flex gap-1 mb-4">
+                {[...Array(review.rating)].map((_, s) => (
+                  <Star key={s} className="w-3.5 h-3.5 text-orange-500 fill-orange-500" />
+                ))}
+              </div>
+
+              {/* Quote */}
+              <p className="text-stone-300 text-sm leading-relaxed mb-5 font-light">
+                &ldquo;{review.text}&rdquo;
+              </p>
+
+              {/* Author */}
+              <div className="flex items-center gap-3 pt-4 border-t border-stone-800">
+                {/* Avatar circle */}
+                <div className="w-8 h-8 rounded-full bg-orange-600/20 border border-orange-600/30 flex items-center justify-center shrink-0 overflow-hidden">
+                  {review.avatarUrl ? (
+                    <img
+                      src={review.avatarUrl}
+                      alt={review.author}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span className="text-orange-500 text-xs font-bold uppercase">{review.author.charAt(0)}</span>
+                  )}
+                </div>
+                <div>
+                  <div className="text-white font-bold text-xs uppercase tracking-wider">{review.author}</div>
+                  <div className="text-stone-600 text-[10px] uppercase tracking-widest flex items-center gap-1 mt-0.5">
+                    <svg className="w-2.5 h-2.5 fill-current text-stone-500" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg>
+                    Google Review
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Modal */}
+      {selectedReview && selectedReview.images && (
+        <TestimonialImageModal
+          isOpen={!!selectedReview}
+          onClose={() => setSelectedReview(null)}
+          images={selectedReview.images}
+          review={selectedReview}
+        />
+      )}
+    </>
+  );
+};
+
+const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService, setActiveService, services }) => (
   <>
     {/* Hero Section */}
-    <header className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-12 lg:pt-0 lg:pb-0">
+    <header className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-48 lg:pt-0 lg:pb-0">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0 bg-stone-900">
         <img
           src="https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/691fff057c2a45500192360a.webp"
           alt="Modern Deck in Anchorage"
-          className="w-full h-full object-cover opacity-70 grayscale-[0.2] scale-105 animate-slow-zoom"
+          className="w-full h-full object-cover opacity-70 grayscale-0 scale-105 animate-slow-zoom"
         />
         <div className="absolute inset-0 bg-stone-950/50 mix-blend-multiply"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-stone-950/90 via-stone-950/40 to-stone-950"></div>
@@ -4160,21 +3977,21 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
             <div className="flex flex-col gap-2 mb-8 animate-fade-in-up">
               <div className="flex items-center gap-4">
                 <div className="h-[1px] w-12 bg-orange-600"></div>
-                <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-sm">Anchorage's Premier Builder</span>
+                <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-sm">Anchorage's #1 Rated Deck Builder</span>
               </div>
 
             </div>
 
             <h1 className="text-5xl md:text-8xl font-display font-bold leading-[0.9] tracking-tight mb-8 uppercase animate-fade-in-up delay-100">
-              Beautiful Decks. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-stone-100 to-stone-500">Trusted Craftsmanship.</span>
+              Turn Your Backyard <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-stone-100 to-stone-500">Into A Resort.</span>
             </h1>
 
             <div className="mb-12 animate-fade-in-up delay-200">
               <TestimonialRotator />
 
               <p className="text-stone-400 text-lg md:text-xl max-w-xl leading-relaxed border-l-2 border-stone-800 pl-6 mt-8">
-                We design and build bespoke decks engineered to withstand Alaskan winters and redefine your summer outdoor living.
+                Skip the contractor nightmares. Weekly check-ins, transparent pricing, and frost-proof engineering designed for Alaska's climate. Build your 21-day legacy today.
               </p>
             </div>
 
@@ -4187,18 +4004,11 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
                   Book Consultation
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
-
-                <button
-                  onClick={() => document.getElementById('work').scrollIntoView({ behavior: 'smooth' })}
-                  className="border border-stone-700 text-white px-10 py-4 font-display font-bold uppercase tracking-widest hover:border-white hover:bg-white/5 transition-all text-center"
-                >
-                  View Our Work
-                </button>
               </div>
 
-              <div className="flex items-center gap-3 text-stone-500 text-xs font-bold uppercase tracking-widest">
+              <div className="flex items-center gap-3 text-stone-500 text-xs font-bold uppercase tracking-widest flex-wrap">
                 <span className="flex items-center gap-1">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" className="w-4 h-4 grayscale opacity-50" />
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" className="w-4 h-4 opacity-70" />
                   Google Reviews
                 </span>
                 <span className="w-1 h-1 bg-stone-700 rounded-full"></span>
@@ -4207,8 +4017,17 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
             </div>
           </div>
 
-          <div className="hidden lg:block max-w-md justify-self-end w-full">
-            <HeroForm onSubmit={handleHeroFormSubmit} />
+          <div className="hidden lg:block max-w-md justify-self-end w-full relative group">
+            <QuoteForm />
+
+            {/* Playful Call-out Arrow */}
+            <div className="absolute -left-32 top-10 flex flex-col items-end animate-fade-in-up delay-700 opacity-90 rotate-[-5deg]">
+              <span className="font-handwriting text-2xl text-white mb-2 rotate-[-5deg]">Start Your Project Here!</span>
+              <svg width="60" height="40" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white drop-shadow-md">
+                <path d="M5 20C20 15 40 10 60 25C75 35 85 40 95 30M95 30L80 25M95 30L85 45" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+
             <div className="flex items-center justify-center gap-3 mt-6">
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) => (
@@ -4237,373 +4056,84 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
           </div>
         </div>
       </div>
+
+      {/* Sticky Mobile Call Button */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden pointer-events-none">
+        <a
+          href="tel:+19078918283"
+          className="bg-orange-600 text-white font-bold uppercase tracking-widest py-4 px-6 flex items-center justify-center gap-3 shadow-2xl pointer-events-auto hover:bg-orange-700 transition-colors"
+        >
+          <Phone className="w-5 h-5 fill-white" />
+          <span>Call 907.891.8283</span>
+        </a>
+      </div>
     </header>
 
-    {/* Expertise Section */}
-    <section id="expertise" className="py-32 bg-stone-950 relative overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row gap-16 items-start">
-          {/* Left: Sticky Navigation/Info */}
-          <div className="md:w-1/3 md:sticky md:top-32">
-            <h2 className="text-4xl md:text-5xl font-display font-bold uppercase mb-8 leading-none">
-              Uncompromised <br />
-              <span className="text-stone-600">Quality</span>
-            </h2>
-            <p className="text-stone-400 mb-12 leading-relaxed">
-              We don't just build decks. We engineer outdoor experiences using the finest materials available, tested for the Alaskan climate.
-            </p>
 
-            <div className="flex flex-col gap-4">
-              {services.map((s, i) => (
-                <div
-                  key={i}
-                  className={`p-6 border-l-2 cursor-pointer transition-all duration-300 ${activeService === i ? 'border-orange-600 bg-white/5' : 'border-stone-800 hover:border-stone-600'}`}
-                  onClick={() => setActiveService(i)}
-                >
-                  <h3 className="font-display font-bold uppercase text-lg tracking-wide mb-2 flex justify-between items-center">
-                    {s.title}
-                    {activeService === i && <ArrowRight className="w-4 h-4 text-orange-600" />}
-                  </h3>
-                  {activeService === i && (
-                    <p className="text-stone-400 text-sm animate-fade-in">
-                      {s.desc}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Right: Dynamic Image Display */}
-          <div className="md:w-2/3 relative h-[600px] w-full">
-            <div className="absolute inset-0 bg-stone-900 rounded-lg overflow-hidden">
-              <img
-                src={services[activeService].image}
-                alt={services[activeService].title}
-                className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent opacity-60"></div>
+    {/* Portfolio Grid - 41 Project Images */}
+    <PortfolioGrid />
 
-              <div className="absolute bottom-0 left-0 p-8">
-                <div className="flex items-center gap-2 text-orange-500 font-bold uppercase tracking-widest text-xs mb-2">
-                  <Star className="w-4 h-4" />
-                  Featured Project
-                </div>
-                <h3 className="text-3xl font-display font-bold uppercase text-white mb-2">{services[activeService].title}</h3>
-                <p className="text-stone-300 max-w-md">
-                  {services[activeService].desc}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    {/* ── REVIEWS / WALL OF LOVE ─────────────────────────────────────── */}
+    <section id="reviews" className="py-32 bg-stone-950 border-t border-stone-800 relative overflow-hidden">
+      {/* Background texture */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)', backgroundSize: '20px 20px' }} />
 
-    {/* Portfolio Grid */}
-    <section id="work" className="py-32 bg-stone-950 border-t border-stone-900">
-      <div className="container mx-auto px-6">
-        <div className="flex justify-between items-end mb-16">
-          <div>
+      <div className="container mx-auto px-6 relative z-10">
+         {/* Section header */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="max-w-2xl">
             <div className="flex items-center gap-4 mb-6">
-              <div className="h-[1px] w-12 bg-orange-600"></div>
-              <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-sm">Our Portfolio</span>
+              <div className="h-[1px] w-12 bg-orange-600" />
+              <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-sm">Reviews</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-display font-bold uppercase">
-              Recent <span className="text-stone-600">Work</span>
+            <h2 className="text-4xl md:text-7xl font-display font-bold uppercase leading-[0.8]">
+              What Anchorage <br /><span className="text-stone-500">Is Saying.</span>
             </h2>
-          </div>
-          <button className="hidden md:flex items-center gap-2 text-stone-400 hover:text-white uppercase tracking-widest text-xs font-bold transition-colors">
-            View All Projects <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {portfolio.map((item, i) => (
-            <div key={i} className="group relative aspect-[4/5] overflow-hidden bg-stone-900 cursor-pointer">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent opacity-80"></div>
-
-              <div className="absolute bottom-0 left-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <div className="text-orange-500 text-xs font-bold uppercase tracking-widest mb-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
-                  {item.category}
-                </div>
-                <h3 className="text-2xl font-display font-bold uppercase text-white mb-2">{item.title}</h3>
-                <p className="text-stone-400 text-sm line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity delay-200">
-                  {item.desc}
-                </p>
+            <div className="flex items-center gap-4 mt-8">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 text-orange-500 fill-orange-500" />
+                ))}
               </div>
+              <span className="text-stone-400 text-sm font-bold uppercase tracking-wider">4.9 Average · 122 Google Reviews</span>
             </div>
-          ))}
+          </div>
+          <a
+            href="https://www.google.com/maps/search/Deck+Masters+AK+Anchorage+reviews"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-stone-500 hover:text-white font-bold uppercase text-xs tracking-widest transition-colors flex items-center gap-2 pb-2 border-b border-stone-800 shrink-0"
+          >
+            See All Google Reviews <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
 
-        <div className="mt-12 flex justify-center md:hidden">
-          <button className="flex items-center gap-2 text-stone-400 hover:text-white uppercase tracking-widest text-xs font-bold transition-colors">
-            View All Projects <ArrowRight className="w-4 h-4" />
-          </button>
+        <ReviewsGridWithModal testimonialsData={testimonialsData} />
+
+        {/* Bottom CTA */}
+        <div className="mt-16 text-center">
+          <a
+            href="https://www.google.com/maps/search/Deck+Masters+AK+Anchorage"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-8 py-4 border border-stone-700 text-stone-400 hover:border-orange-600 hover:text-white font-bold uppercase text-xs tracking-widest transition-all duration-300"
+          >
+            <Star className="w-4 h-4 text-orange-500 fill-orange-500" />
+            Leave Us a Review on Google
+            <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </section>
 
     {/* Process Section */}
-    <section id="process" className="py-32 bg-stone-950 text-stone-100 border-y border-white/5">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold uppercase mb-12">
-              The Deck Masters <br /> Standard
-            </h2>
-
-            <div className="space-y-12">
-              <div className="flex gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-stone-900 border border-stone-800 flex items-center justify-center text-orange-600 font-bold text-xl font-display">
-                  01
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold uppercase mb-3 tracking-wide">Consult & Design</h3>
-                  <p className="text-stone-400 leading-relaxed">
-                    We start with a site visit to understand your terrain and lifestyle. Our 3D rendering team visualizes the project before a single board is cut.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-stone-900 border border-stone-800 flex items-center justify-center text-orange-600 font-bold text-xl font-display">
-                  02
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold uppercase mb-3 tracking-wide">Precision Build</h3>
-                  <p className="text-stone-400 leading-relaxed">
-                    Our master carpenters work with surgical precision. We use hidden fasteners, structural steel framing, and premium materials for a seamless finish.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-stone-900 border border-stone-800 flex items-center justify-center text-orange-600 font-bold text-xl font-display">
-                  03
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold uppercase mb-3 tracking-wide">Lifetime Enjoyment</h3>
-                  <p className="text-stone-400 leading-relaxed">
-                    We stand behind our work with a comprehensive craftsmanship warranty in addition to manufacturer material guarantees.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="border border-stone-800 p-8 relative z-10 bg-stone-950">
-              <Quote className="w-12 h-12 text-orange-600 mb-6" />
-              <h3 className="text-2xl md:text-3xl font-display font-light italic leading-snug mb-8 text-stone-200">
-                "This summer was the 2nd TREX Deck built for me by Deck Masters... It was a much larger project with two levels. I couldn't be happier."
-              </h3>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-stone-800 rounded-full overflow-hidden border border-stone-700 flex items-center justify-center">
-                  <span className="font-bold text-stone-500">RK</span>
-                </div>
-                <div>
-                  <div className="font-bold uppercase tracking-wider text-sm">Rebecca K.</div>
-                  <div className="text-stone-500 text-xs uppercase tracking-widest">Location: Abbott Loop / Sahalee</div>
-                </div>
-              </div>
-            </div>
-            {/* Decorative Element */}
-            <div className="absolute -top-4 -right-4 w-full h-full border border-orange-600/30 z-0"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <LocalReviews />
-
+    <ProcessSection />
   </>
 );
-
-const renderRichText = (text) => {
-  if (!text) return null;
-  // Simple regex to split by bold (**...**) and link ([...](...)) patterns
-  const regex = /(\*\*.*?\*\*|\[.*?\]\(.*?\))/g;
-  const parts = text.split(regex);
-
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i} className="text-white font-bold">{part.slice(2, -2)}</strong>;
-    }
-    if (part.startsWith('[') && part.endsWith(')')) {
-      const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
-      if (linkMatch) {
-        return <a key={i} href={linkMatch[2]} className="text-orange-500 hover:text-orange-400 hover:underline transition-colors font-medium">{linkMatch[1]}</a>;
-      }
-    }
-    return part;
-  });
-};
-
-const ImagePlaceholder = ({ description }) => {
-  if (description && (description.startsWith('http') || description.startsWith('/'))) {
-    return (
-      <img
-        src={description}
-        alt="Project detail"
-        className="w-full h-auto object-cover rounded-sm my-12 border border-stone-800"
-      />
-    );
-  }
-
-  return (
-    <div className="w-full h-80 bg-stone-900 border border-stone-800 rounded-sm flex flex-col items-center justify-center my-12 group cursor-default hover:border-orange-900/30 transition-colors">
-      <div className="w-16 h-16 bg-stone-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-        <span className="text-stone-600 text-2xl font-display font-bold">IMG</span>
-      </div>
-      <span className="text-stone-500 uppercase tracking-widest text-xs font-bold px-8 text-center">
-        Placeholder: {description}
-      </span>
-    </div>
-  );
-};
-
-const ServicePageTemplate = ({ pageData, openQuoteForm, navigate }) => {
-  const { content } = pageData;
-
-  return (
-    <div className="pt-32 min-h-screen bg-stone-950">
-      <div className="container mx-auto px-6">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-500 mb-8">
-          <a href="/" className="hover:text-orange-600">Home</a>
-          <ChevronRight className="w-3 h-3" />
-          <span className="text-orange-600">{pageData.title}</span>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-          <div className="lg:col-span-2">
-            <h1 className="text-5xl md:text-6xl font-display font-bold uppercase mb-8 leading-tight">
-              {pageData.title}
-            </h1>
-
-            {/* Generated Outline Content based on 'Strategy Note' */}
-            <div className="prose prose-invert prose-lg max-w-none">
-              {content?.intro && (
-                <p className="text-xl text-stone-300 mb-8 font-light border-l-4 border-orange-600 pl-6">
-                  {renderRichText(content.intro)}
-                </p>
-              )}
-
-              <div className="my-12">
-                <img
-                  src="https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/691ffdcb7d31bf633e244ca3.jpg"
-                  alt={pageData.title}
-                  className="w-full h-[400px] object-cover rounded-sm mb-8 grayscale hover:grayscale-0 transition-all duration-500"
-                />
-              </div>
-
-              {content?.body1 && <p className="text-stone-400 mb-6">{renderRichText(content.body1)}</p>}
-
-              {/* Local Proof / VOC Block */}
-              {content?.localProof && (
-                <div className="bg-stone-900 border border-stone-800 p-8 my-12 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-orange-600/10 rounded-bl-full"></div>
-                  <Quote className="w-8 h-8 text-orange-600 mb-4 relative z-10" />
-                  <blockquote className="text-xl italic text-stone-300 mb-6 relative z-10">
-                    "{content.localProof.quote}"
-                  </blockquote>
-                  <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-orange-500 relative z-10">
-                    <div className="w-8 h-1 bg-orange-600"></div>
-                    {content.localProof.author}, {content.localProof.location}
-                  </div>
-                </div>
-              )}
-
-              {content?.highlightTitle && (
-                <>
-                  <h2 className="text-3xl font-display font-bold uppercase text-white mt-12 mb-6">{content.highlightTitle}</h2>
-                  <p className="text-stone-400 mb-6">{renderRichText(content.highlightBody)}</p>
-                </>
-              )}
-
-              {/* Dynamic Long-form Sections */}
-              {content?.sections && content.sections.map((section, idx) => (
-                <div key={idx} className="mt-12">
-                  {section.title && <h3 className="text-2xl font-display font-bold uppercase text-white mb-4">{renderRichText(section.title)}</h3>}
-                  {Array.isArray(section.body) ? (
-                    section.body.map((paragraph, pIdx) => (
-                      <p key={pIdx} className="text-stone-400 mb-6 leading-relaxed">{renderRichText(paragraph)}</p>
-                    ))
-                  ) : (
-                    <p className="text-stone-400 mb-6 leading-relaxed">{renderRichText(section.body)}</p>
-                  )}
-                  {section.imagePlaceholder && <ImagePlaceholder description={section.imagePlaceholder} />}
-                </div>
-              ))}
-
-              <h3 className="text-2xl font-display font-bold uppercase text-white mt-8 mb-4">Our Process</h3>
-              <ul className="space-y-4 text-stone-400 list-none pl-0">
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-orange-600 flex-shrink-0" />
-                  <span><strong>Consultation:</strong> On-site assessment and design discussion.</span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-orange-600 flex-shrink-0" />
-                  <span><strong>Design & Permitting:</strong> Handling all MOA permits and engineering requirements.</span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-orange-600 flex-shrink-0" />
-                  <span><strong>Construction:</strong> Efficient, clean, and professional execution.</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="mt-12 p-8 border border-stone-800 bg-stone-900/50">
-              <h3 className="text-2xl font-display font-bold uppercase mb-4">Ready to start?</h3>
-              <p className="text-stone-400 mb-6">Get a comprehensive quote for your {pageData.title.toLowerCase()} project today.</p>
-              <button
-                onClick={openQuoteForm}
-                className="bg-orange-600 text-white px-8 py-4 font-bold uppercase text-xs tracking-widest hover:bg-orange-700 transition-all flex items-center gap-2"
-              >
-                Request Consultation <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          <div className="lg:col-span-1">
-            <div className="sticky top-32 space-y-8">
-              <div className="bg-stone-900 p-6 border border-stone-800">
-                <h3 className="text-lg font-bold uppercase mb-4 border-b border-stone-800 pb-2">Service Areas</h3>
-                <ul className="space-y-2 text-sm text-stone-400">
-                  <li>Anchorage Hillside</li>
-                  <li>South Anchorage</li>
-                  <li>Eagle River & Chugiak</li>
-                  <li>Midtown & Downtown</li>
-                  <li>Girdwood</li>
-                </ul>
-              </div>
-
-              <div className="bg-orange-900/10 p-6 border border-orange-900/30">
-                <Quote className="w-8 h-8 text-orange-600 mb-4" />
-                <p className="italic text-stone-300 mb-4 text-sm">
-                  "Professional, precise, prompt, perfection. That is how I would describe the team at Deck Masters."
-                </p>
-                <span className="text-xs font-bold uppercase text-orange-500">Ruth McNearney, Eagle River</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const App = () => {
   const [currentPath, setCurrentPath] = useState(window.location.hash.substring(1) || '/');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalInitialData, setModalInitialData] = useState(null);
-  const [modalStartStep, setModalStartStep] = useState(1);
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -4634,14 +4164,10 @@ const App = () => {
 
   const openQuoteForm = () => {
     setMobileMenuOpen(false);
-    setModalInitialData(null);
-    setModalStartStep(1);
     setIsModalOpen(true);
   };
 
-  const handleHeroFormSubmit = (data) => {
-    setModalInitialData(data);
-    setModalStartStep(2);
+  const handleHeroFormSubmit = () => {
     setIsModalOpen(true);
   };
 
@@ -4671,50 +4197,7 @@ const App = () => {
     }
   ];
 
-  const portfolio = [
-    {
-      id: 1,
-      title: "Hillside Mountain View Deck",
-      category: "Multi-Level Deck",
-      desc: "Custom Trex composite deck with cable railing maximizing Chugach Mountain views",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce846b2e7dc59948847.webp"
-    },
-    {
-      id: 2,
-      title: "South Anchorage Retreat",
-      category: "Covered Deck",
-      desc: "Cedar construction with integrated pergola and built-in seating",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce88e95930485eed7e9.webp"
-    },
-    {
-      id: 3,
-      title: "Turnagain Coastal Deck",
-      category: "Composite Decking",
-      desc: "Trex Enhance in Coastal Bluff with aluminum railing system",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce88e95930ecdeed7ea.webp"
-    },
-    {
-      id: 4,
-      title: "Eagle River Sanctuary",
-      category: "Wood Deck",
-      desc: "Premium Alaskan Yellow Cedar with custom privacy screens",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce8a6fefe0d974f34d8.webp"
-    },
-    {
-      id: 5,
-      title: "Midtown Modern",
-      category: "Hot Tub Deck",
-      desc: "Engineered deck with reinforced hot tub platform and LED lighting",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce9e4747c47d3daaeba.webp"
-    },
-    {
-      id: 6,
-      title: "Glen Alps Entertainer",
-      category: "Outdoor Kitchen",
-      desc: "Expansive deck with built-in grill station and dining area",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924e48946b2e7e3e1997a18.webp"
-    }
-  ];
+
 
   // Routing Logic
   const isHome = currentPath === '/' || currentPath === '/index.html' || currentPath === '';
@@ -4726,16 +4209,14 @@ const App = () => {
       <LeadCaptureModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        initialData={modalInitialData}
-        startStep={modalStartStep}
       />
 
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-stone-950/90 backdrop-blur-md py-4 border-b border-white/5' : 'bg-transparent py-8'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           <a href="#/" onClick={(e) => { if (isHome) e.preventDefault(); }} className="text-2xl font-display font-bold tracking-tight uppercase flex items-center gap-3 z-50 relative">
-            <div className="w-10 h-10 bg-orange-600 rounded-sm flex items-center justify-center">
-              <span className="text-2xl font-black text-white tracking-tighter">D</span>
+            <div className="w-12 h-12 flex items-center justify-center overflow-hidden">
+              <img src="/images/icon.webp" alt="Deck Masters" className="w-full h-full object-contain" />
             </div>
             <span className="tracking-[0.2em]">Deck Masters</span>
           </a>
@@ -4766,20 +4247,23 @@ const App = () => {
               </div>
             </div>
 
-            <a href="#/" onClick={() => setTimeout(() => document.getElementById('work')?.scrollIntoView(), 100)} className="hover:text-orange-500 transition-colors">Work</a>
+            <a href="#/" onClick={() => setTimeout(() => document.getElementById('portfolio')?.scrollIntoView(), 100)} className="hover:text-orange-500 transition-colors">Work</a>
             <a href="#/" onClick={() => setTimeout(() => document.getElementById('process')?.scrollIntoView(), 100)} className="hover:text-orange-500 transition-colors">Process</a>
             <a href="#/" onClick={() => setTimeout(() => document.getElementById('reviews')?.scrollIntoView(), 100)} className="hover:text-orange-500 transition-colors">Reviews</a>
           </div>
 
           {!isAdmin && (
             <div className="hidden md:block">
-              <button
-                onClick={openQuoteForm}
-                className="group relative px-8 py-3 bg-white text-stone-950 font-bold uppercase text-xs tracking-widest overflow-hidden transition-all hover:bg-orange-600 hover:text-white"
+              <a
+                href="tel:+19078918283"
+                className="group relative px-6 py-3 bg-white text-stone-950 font-bold uppercase text-xs tracking-widest overflow-hidden transition-all hover:bg-orange-600 hover:text-white flex items-center gap-2"
               >
-                <span className="relative z-10 group-hover:translate-x-1 transition-transform inline-block">Start Project</span>
+                <div className="relative z-10 flex items-center gap-2 group-hover:translate-x-1 transition-transform">
+                  <Phone className="w-4 h-4" />
+                  <span>(907) 891-8283</span>
+                </div>
                 <div className="absolute inset-0 bg-orange-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
-              </button>
+              </a>
             </div>
           )}
 
@@ -4793,25 +4277,47 @@ const App = () => {
         </div>
 
         {/* Mobile Menu Overlay */}
-        <div className={`fixed inset-0 bg-stone-950 z-40 flex flex-col justify-center px-8 transition-transform duration-500 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex flex-col gap-8 text-3xl font-display font-bold uppercase tracking-wide text-stone-300">
-            <button onClick={() => { navigate('/'); setMobileMenuOpen(false); }} className="text-left hover:text-orange-500">Home</button>
+        <div className={`fixed inset-0 bg-stone-950 z-[60] flex flex-col justify-start pt-32 px-8 transition-transform duration-500 ease-in-out overflow-y-auto ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <button
+            className="absolute top-8 right-8 text-white p-2 hover:text-orange-500 transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <X className="w-8 h-8" />
+          </button>
+          <div className="flex flex-col gap-6 text-xl font-display font-bold uppercase tracking-wide text-stone-300 pb-12">
+            <button onClick={() => { navigate('/'); setMobileMenuOpen(false); }} className="text-left hover:text-orange-500 border-b border-stone-800 pb-4">Home</button>
 
             {/* Mobile Services Accordion (Simplified) */}
-            <div className="text-xl text-orange-600 border-b border-stone-800 pb-4 mb-4">Services</div>
-            {core30Pages.filter(p => p.layer === 2).map(p => (
-              <button key={p.slug} onClick={() => { navigate(p.slug); setMobileMenuOpen(false); }} className="text-left text-lg text-stone-500 hover:text-white">{p.category}</button>
-            ))}
-            <a href="#work" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500 mt-8">Work</a>
-            <a href="#reviews" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500">Reviews</a>
-            {!isAdmin && (
-              <button
-                onClick={openQuoteForm}
-                className="bg-orange-600 text-white w-full py-6 text-lg font-bold uppercase tracking-widest mt-8"
+            <div className="text-sm text-orange-600 font-bold uppercase tracking-widest pt-2">Services</div>
+            <div className="flex flex-col gap-4 pl-4 border-l border-stone-800">
+              {core30Pages.filter(p => p.layer === 2).map(p => (
+                <button key={p.slug} onClick={() => { navigate(p.slug); setMobileMenuOpen(false); }} className="text-left text-lg text-stone-400 hover:text-white transition-colors">{p.category}</button>
+              ))}
+            </div>
+
+            <div className="border-t border-stone-800 pt-6 flex flex-col gap-4">
+              <a href="#work" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500">Work</a>
+              <a href="#reviews" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500">Reviews</a>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-4">
+              <a
+                href="tel:+19078918283"
+                className="bg-white text-stone-950 w-full py-5 text-lg font-bold uppercase tracking-widest hover:bg-stone-200 transition-all flex items-center justify-center gap-3 rounded-sm shadow-xl"
               >
-                Get a Quote
-              </button>
-            )}
+                <Phone className="w-5 h-5" />
+                Call (907) 891-8283
+              </a>
+
+              {!isAdmin && (
+                <button
+                  onClick={openQuoteForm}
+                  className="bg-orange-600 text-white w-full py-5 text-lg font-bold uppercase tracking-widest hover:bg-orange-700 transition-all rounded-sm shadow-xl shadow-orange-900/20"
+                >
+                  Start Project Link
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </nav>
@@ -4826,12 +4332,23 @@ const App = () => {
             activeService={activeService}
             setActiveService={setActiveService}
             services={services}
-            portfolio={portfolio}
           />
-        ) : isAdmin ? (
-          <AdminPage pages={core30Pages} navigate={navigate} />
-        ) : currentPath === '/portfolio' ? (
-          <PortfolioPage onOpenQuote={openQuoteForm} />
+        ) : currentPath === '/gallery-archive' ? (
+          <Suspense fallback={<PageLoadingFallback />}>
+            <GalleryArchive onOpenQuote={openQuoteForm} />
+          </Suspense>
+        ) : currentPath === '/products' ? (
+          <Suspense fallback={<PageLoadingFallback />}>
+            <ProductsPage onOpenQuote={openQuoteForm} navigate={navigate} />
+          </Suspense>
+        ) : currentPath === '/privacy' ? (
+          <Suspense fallback={<PageLoadingFallback />}>
+            <PrivacyPage navigate={navigate} />
+          </Suspense>
+        ) : currentPath === '/terms' ? (
+          <Suspense fallback={<PageLoadingFallback />}>
+            <TermsPage navigate={navigate} />
+          </Suspense>
         ) : activePage ? (
           <ServicePageTemplate pageData={activePage} openQuoteForm={openQuoteForm} navigate={navigate} />
         ) : (
@@ -4889,7 +4406,7 @@ const App = () => {
 
                 {/* Branded Map Embed */}
                 <div className="w-full rounded-sm overflow-hidden border border-stone-800 relative group">
-                  <div className="w-full h-64 relative grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out">
+                  <div className="w-full h-64 relative grayscale-0 group-hover:grayscale transition-all duration-500 ease-in-out">
                     <iframe
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2853.5566334411346!2d-149.8942242!3d61.1676417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x56c891cae1357399%3A0xd7b37a2095289a27!2sDeck%20Masters%20AK!5e1!3m2!1sen!2sus!4v1763737932256!5m2!1sen!2sus"
                       width="100%"
@@ -4917,8 +4434,8 @@ const App = () => {
               </div>
 
               <div className="lg:w-1/2">
-                {/* Replaced Generic Form with HeroForm */}
-                <HeroForm onSubmit={handleHeroFormSubmit} />
+                {/* Replaced Generic Form with QuoteForm */}
+                <QuoteForm />
 
                 <div className="mt-8">
                   <FooterTestimonials />
@@ -4931,7 +4448,9 @@ const App = () => {
 
             <div className="border-t border-stone-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-stone-600 text-xs uppercase tracking-widest">
               <div className="flex items-center gap-2 font-bold text-stone-400">
-                <div className="w-4 h-4 bg-orange-600 rounded-sm rotate-45"></div>
+                <div className="w-8 h-8 flex items-center justify-center overflow-hidden">
+                  <img src="/images/icon.webp" alt="Logo" className="w-full h-full object-contain" />
+                </div>
                 DECK MASTERS
               </div>
               <div className="flex flex-wrap justify-center gap-8">

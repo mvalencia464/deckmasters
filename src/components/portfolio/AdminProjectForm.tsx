@@ -31,7 +31,7 @@ const AdminProjectForm: React.FC<AdminProjectFormProps> = ({ onAddProject, onClo
     title: '',
     description: '',
     location: 'Anchorage, AK',
-    niche: 'Kitchen' as ServiceNiche,
+    niche: 'New Build' as ServiceNiche,
     date: new Date().toISOString().split('T')[0]
   });
 
@@ -197,7 +197,7 @@ const AdminProjectForm: React.FC<AdminProjectFormProps> = ({ onAddProject, onClo
         title: result.title || '',
         description: result.description || '',
         location: result.location || 'Anchorage, AK',
-        niche: (result.niche as ServiceNiche) || 'Kitchen',
+        niche: (result.niche as ServiceNiche) || 'New Build',
       });
     }
   };

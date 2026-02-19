@@ -1,81 +1,116 @@
 import { Project, ServiceNiche } from "../types/portfolio";
-export const NICHES: ServiceNiche[] = ['Kitchen', 'Bathroom', 'Living', 'Outdoor', 'Full Home', 'Roofing', 'Flooring'];
+import portfolioDataJson from "../data/portfolio-data.json";
 
-export const MOCK_PROJECTS: Project[] = [
+export const NICHES: ServiceNiche[] = ['New Build', 'Resurfacing', 'Railing', 'Covered Deck', 'Commercial'];
+
+// Combine new optimized portfolio data with legacy projects
+const legacyProjects: Project[] = [
   {
-    "id": "baron-kitchen",
-    "title": "Baron Chef's Kitchen",
-    "niche": "Kitchen",
-    "location": "Anchorage, AK",
-    "description": "A complete transformation of a dated kitchen into a modern culinary workspace. We installed custom cabinetry, high-end appliances, and durable countertops, creating a bright and functional heart for the home.",
-    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7bd2be4faeaaf3744.webp",
-    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af74a13d584d124f429.webp",
-    "gallery": [
-      {
-        "url": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7681f2d4b191bd959.webp",
-        "label": "Landscape View"
-      }
-    ],
-    "date": "2024-02-15",
-    "featured": true
-  },
-  {
-    "id": "baron-shower",
-    "title": "Baron Luxury Shower",
-    "niche": "Bathroom",
-    "location": "Anchorage, AK",
-    "description": "We replaced a standard tub with a custom-tiled walk-in shower, featuring modern fixtures and precision tile work. The result is a spa-like retreat that maximizes space and style.",
-    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7681f2d74071bd958.webp",
-    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af74a13d500e124f427.webp",
-    "gallery": [
-      {
-        "url": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7681f2d5b3d1bd95a.webp",
-        "label": "Demolition Phase"
-      },
-      {
-        "url": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af790fc437ff6b829c7.webp",
-        "label": "In Progress"
-      }
-    ],
-    "date": "2024-01-20",
-    "featured": true
-  },
-  {
-    "id": "greenscreek-shower",
-    "title": "Greenscreek Shower Remodel",
-    "niche": "Bathroom",
-    "location": "Greens Creek, AK",
-    "description": "An extensive bathroom renovation focusing on updating the shower area. We removed the old unit and installed a sleek, modern shower system with improved water efficiency and aesthetics.",
-    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/689fc814bccb2970181273f7.webp",
-    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/689fc814bccb2955581273f9.webp",
+    "id": "hillside-mountain-view",
+    "title": "Hillside Mountain View Deck",
+    "niche": "New Build",
+    "location": "Hillside",
+    "description": "Custom Trex composite deck with cable railing maximizing Chugach Mountain views. This multi-level design features seamless sightline optimization with stainless steel cable railings.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce846b2e7dc59948847.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce846b2e7dc59948847.webp",
     "gallery": [],
-    "date": "2023-11-10"
+    "date": "2024-07-15",
+    "featured": true,
+    "testimonial": {
+      "quote": "The design maximizes our mountain views perfectly. Couldn't be happier with the craftsmanship.",
+      "author": "Hillside Homeowner",
+      "rating": 5
+    }
   },
   {
-    "id": "flood-restoration",
-    "title": "Emergency Flood Restoration",
-    "niche": "Flooring",
-    "location": "Eagle River, AK",
-    "description": "Rapid response to significant flood damage. We removed water-damaged flooring, dried the subfloor, and installed beautiful new hard-wearing floors, restoring the home to better-than-pre-flood condition.",
-    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af7d97df52dbc67c83e.webp",
-    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af790fc435f1db829c5.webp",
+    "id": "south-anchorage-retreat",
+    "title": "South Anchorage Retreat",
+    "niche": "Covered Deck",
+    "location": "South Anchorage",
+    "description": "Cedar construction with integrated pergola and built-in seating. A complete outdoor living transformation with superior weather protection and entertaining space.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce88e95930485eed7e9.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce88e95930485eed7e9.webp",
     "gallery": [],
-    "date": "2023-12-05"
+    "date": "2024-06-20",
+    "featured": true,
+    "testimonial": {
+      "quote": "Our backyard is now our favorite room in the house. The pergola provides the perfect shade.",
+      "author": "South Anchorage Family",
+      "rating": 5
+    }
   },
   {
-    "id": "window-sill",
-    "title": "Window Sill Restoration",
-    "niche": "Living",
-    "location": "Anchorage, AK",
-    "description": "Repairing and refinishing weather-damaged window sills. We removed the rot, reinforced the structure, and applied a durable finish that matches the home's interior trim.",
-    "beforeImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af8681f2d348c1bd95e.webp",
-    "afterImage": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/68507af76b97b26856fdc209.webp",
-    "gallery": [
-      {
-        "url": "https://storage.googleapis.com/msgsndr/ZvYXEcu0DmkCtuv5cGcG/media/681468f25d4a8328e302f13d.webp",
-        "label": "Routing Detail"
-      }
-    ],
-    "date": "2023-10-15"
+    "id": "turnagain-coastal",
+    "title": "Turnagain Coastal Deck",
+    "niche": "Resurfacing",
+    "location": "Turnagain",
+    "description": "Trex Enhance in Coastal Bluff with aluminum railing system. A complete resurfacing that transformed an aging deck into a modern masterpiece.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce88e95930ecdeed7ea.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce88e95930ecdeed7ea.webp",
+    "gallery": [],
+    "date": "2024-05-30",
+    "featured": false,
+    "testimonial": {
+      "quote": "The transformation was amazing. We didn't realize how much better it could look.",
+      "author": "Turnagain Homeowner",
+      "rating": 5
+    }
+  },
+  {
+    "id": "eagle-river-sanctuary",
+    "title": "Eagle River Sanctuary",
+    "niche": "New Build",
+    "location": "Eagle River",
+    "description": "Premium Alaskan Yellow Cedar with custom privacy screens. A natural wood masterpiece that blends seamlessly with the surrounding landscape.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce8a6fefe0d974f34d8.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce8a6fefe0d974f34d8.webp",
+    "gallery": [],
+    "date": "2024-08-10",
+    "featured": false,
+    "testimonial": {
+      "quote": "The cedar deck smells amazing and looks even better. Worth every penny.",
+      "author": "Eagle River Owner",
+      "rating": 5
+    }
+  },
+  {
+    "id": "midtown-modern",
+    "title": "Midtown Modern",
+    "niche": "New Build",
+    "location": "Midtown Anchorage",
+    "description": "Engineered deck with reinforced hot tub platform and LED lighting. A contemporary design perfect for entertaining with integrated luxury amenities.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce9e4747c47d3daaeba.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924dce9e4747c47d3daaeba.webp",
+    "gallery": [],
+    "date": "2024-07-05",
+    "featured": true,
+    "testimonial": {
+      "quote": "Our hot tub deck is the envy of the neighborhood. The engineering is rock solid.",
+      "author": "Midtown Resident",
+      "rating": 5
+    }
+  },
+  {
+    "id": "glen-alps-entertainer",
+    "title": "Glen Alps Entertainer",
+    "niche": "Covered Deck",
+    "location": "Glen Alps",
+    "description": "Expansive deck with built-in grill station and dining area. An outdoor kitchen paradise designed for large gatherings and entertaining.",
+    "beforeImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924e48946b2e7e3e1997a18.webp",
+    "afterImage": "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924e48946b2e7e3e1997a18.webp",
+    "gallery": [],
+    "date": "2024-06-15",
+    "featured": true,
+    "testimonial": {
+      "quote": "Hosting on our deck is now a dream. The grill station is perfectly integrated.",
+      "author": "Glen Alps Entertainer",
+      "rating": 5
+    }
   }
-]
+];
+
+// Merge legacy projects with new optimized portfolio data
+export const MOCK_PROJECTS: Project[] = [
+  ...legacyProjects,
+  ...(portfolioDataJson as Project[])
+];

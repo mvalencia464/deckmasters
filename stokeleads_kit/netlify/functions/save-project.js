@@ -8,7 +8,7 @@ exports.handler = async (event, context) => {
   const { project, projects, action } = JSON.parse(event.body);
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const REPO_OWNER = process.env.REPO_OWNER || 'mvalencia464'; // Default to your user
-  const REPO_NAME = process.env.REPO_NAME || '001-epsak'; // Updated to your actual repo
+  const REPO_NAME = process.env.REPO_NAME || 'deckmasters'; // Updated for Deckmasters
   const FILE_PATH = 'src/data/projects.json';
 
   if (!GITHUB_TOKEN) {
@@ -34,10 +34,10 @@ exports.handler = async (event, context) => {
     // CASE 1: Overwrite (Delete or Reorder)
     if (projects && Array.isArray(projects)) {
       updatedProjects = projects;
-      commitMessage = action === 'delete' 
+      commitMessage = action === 'delete'
         ? 'fix(portfolio): remove project via Admin UI'
         : 'chore(portfolio): update project list via Admin UI';
-    } 
+    }
     // CASE 2: Add Single Project (Legacy/Default)
     else if (project) {
       const content = Buffer.from(fileData.content, 'base64').toString('utf-8');
@@ -57,8 +57,8 @@ exports.handler = async (event, context) => {
       content: Buffer.from(JSON.stringify(updatedProjects, null, 2)).toString('base64'),
       sha: fileData.sha,
       committer: {
-        name: "EPSAK Portfolio Bot",
-        email: "bot@epsak.com"
+        name: "Deckmasters Portfolio Bot",
+        email: "bot@anchorage-deckmasters.com"
       }
     });
 

@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
-      localStorage.setItem('epsak_admin_auth', 'true');
+      localStorage.setItem('deckmasters_admin_auth', 'true');
       return true;
     }
     return false;
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('epsak_admin_auth');
+    localStorage.removeItem('deckmasters_admin_auth');
   };
 
   return (

@@ -18,7 +18,7 @@ declare global {
 const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, onError }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  
+
   // Use refs for callbacks to avoid re-rendering loop when parent passes inline functions
   const onVerifyRef = useRef(onVerify);
   const onErrorRef = useRef(onError);
@@ -64,7 +64,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
           renderWidget();
         }
       }, 100);
-      
+
       return () => clearInterval(interval);
     }
 
@@ -77,7 +77,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
     };
   }, [siteKey]); // Only re-run if siteKey changes
 
-  return <div ref={containerRef} className="my-4 min-h-[65px]" />;
+  return <div ref={containerRef} className="min-h-0" />;
 };
 
 export default TurnstileWidget;

@@ -17,6 +17,15 @@ export interface FormData {
   projectImage?: File | null;
 }
 
+export interface SimpleFormData {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  consent: boolean;
+  marketingConsent: boolean;
+}
+
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -126,6 +135,81 @@ export const validateForm = (formData: FormData): FormValidationResult => {
   };
 };
 
+export const validateSimpleForm = (formData: SimpleFormData): FormValidationResult => {
+  const errors: ValidationError[] = [];
+
+  // Name validation
+  if (!formData.name.trim()) {
+    errors.push({
+      field: 'name',
+      message: 'Full name is required'
+    });
+  } else if (formData.name.trim().length < 2) {
+    errors.push({
+      field: 'name',
+      message: 'Name must be at least 2 characters long'
+    });
+  }
+
+  // Email validation
+  if (!formData.email.trim()) {
+    errors.push({
+      field: 'email',
+      message: 'Email address is required'
+    });
+  } else if (!EMAIL_REGEX.test(formData.email.trim())) {
+    errors.push({
+      field: 'email',
+      message: 'Please enter a valid email address'
+    });
+  }
+
+  // Phone validation
+  if (!formData.phone.trim()) {
+    errors.push({
+      field: 'phone',
+      message: 'Phone number is required'
+    });
+  } else {
+    const cleanPhone = formData.phone.replace(/[\s\-\(\)\.]/g, '');
+    if (cleanPhone.length < 10) {
+      errors.push({
+        field: 'phone',
+        message: 'Phone number must be at least 10 digits'
+      });
+    }
+  }
+
+  // Address validation
+  if (!formData.address.trim()) {
+    errors.push({
+      field: 'address',
+      message: 'Address is required'
+    });
+  }
+
+  // Consent validation
+  if (!formData.consent) {
+    errors.push({
+      field: 'consent',
+      message: 'You must agree to the terms to continue'
+    });
+  }
+
+  // Marketing consent validation
+  if (!formData.marketingConsent) {
+    errors.push({
+      field: 'marketingConsent',
+      message: 'You must consent to marketing messages to continue'
+    });
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
+};
+
 export const sanitizeFormData = (formData: FormData): FormData => {
   return {
     name: formData.name.trim(),
@@ -137,25 +221,36 @@ export const sanitizeFormData = (formData: FormData): FormData => {
   };
 };
 
+export const sanitizeSimpleFormData = (formData: SimpleFormData): SimpleFormData => {
+  return {
+    name: formData.name.trim(),
+    email: formData.email.trim().toLowerCase(),
+    phone: formData.phone.trim(),
+    address: formData.address.trim(),
+    consent: formData.consent,
+    marketingConsent: formData.marketingConsent
+  };
+};
+
 export const formatPhoneNumber = (phone: string): string => {
   // Remove all non-digit characters except +
   const cleaned = phone.replace(/[^\d+]/g, '');
-  
+
   // If it starts with +1, keep it
   if (cleaned.startsWith('+1')) {
     return cleaned;
   }
-  
+
   // If it's a 10-digit US number, add +1
   if (cleaned.length === 10 && !cleaned.startsWith('+')) {
     return `+1${cleaned}`;
   }
-  
+
   // If it's 11 digits starting with 1, add +
   if (cleaned.length === 11 && cleaned.startsWith('1')) {
     return `+${cleaned}`;
   }
-  
+
   // Otherwise return as is
   return cleaned;
 };

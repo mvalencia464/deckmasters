@@ -35,7 +35,7 @@ export const analyzeProjectImage = async (base64Image: string, mimeType: string)
             - title: A catchy, high-end project title.
             - description: A poetic 2-sentence description of the transformation and benefits.
             - location: A plausible high-end city/area name.
-            - niche: The most likely category from this list: Kitchen, Bathroom, Living, Outdoor, Full Home, Roofing, Flooring.
+            - niche: The most likely category from this list: New Build, Resurfacing, Railing, Covered Deck, Commercial.
             - benefits: A short list of 3 benefits this renovation provides (e.g., "Increased natural light").`,
           }
         ]

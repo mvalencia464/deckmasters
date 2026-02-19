@@ -13,7 +13,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     // Check local storage on mount
-    const storedAuth = localStorage.getItem('epsak_admin_auth');
+    const storedAuth = localStorage.getItem('deckmasters_admin_auth');
     if (storedAuth === 'true') {
       setIsAuthenticated(true);
     }
@@ -21,11 +21,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = (password: string) => {
     // Single password/pin check
-    const ADMIN_PASSWORD = 'epsak-admin-2026'; 
+    const ADMIN_PASSWORD = 'deckmasters-admin-2026';
 
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
-      localStorage.setItem('epsak_admin_auth', 'true');
+      localStorage.setItem('deckmasters_admin_auth', 'true');
       return true;
     }
     return false;
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('epsak_admin_auth');
+    localStorage.removeItem('deckmasters_admin_auth');
   };
 
   return (
