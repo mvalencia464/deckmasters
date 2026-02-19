@@ -23,6 +23,7 @@ import PortfolioGrid from './src/components/PortfolioGrid';
 import ProcessSection from './src/components/ProcessSection';
 import { MOCK_PROJECTS } from './src/constants/portfolio';
 import { mapAssetUrl } from './src/utils/assetMapper';
+import FloatingActionButton from './src/components/FloatingActionButton';
 
 // Loading fallback component for lazy-loaded pages
 const PageLoadingFallback = () => (

@@ -1,0 +1,13 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="100" fill="#1a1a1a"/>
+  
+  <!-- Orange right chevron/checkmark (top right) -->
+  <polygon points="100,50 160,100 100,150" fill="#FF6600"/>
+  
+  <!-- White left triangle (left side) -->
+  <polygon points="60,60 100,100 60,140" fill="#ffffff"/>
+  
+  <!-- Orange accent lower right -->
+  <polygon points="110,130 150,130 110,170" fill="#FF8800"/>
+</svg>
