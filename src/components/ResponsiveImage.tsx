@@ -32,9 +32,16 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    if (imgRef.current && imgRef.current.complete) {
-      setIsLoading(false);
-      onLoad?.();
+    const img = imgRef.current;
+    if (img) {
+      // Check if already cached/loaded
+      if (img.complete) {
+        setIsLoading(false);
+        onLoad?.();
+      } else {
+        // Image is loading
+        setIsLoading(true);
+      }
     }
   }, [src, onLoad]);
 
@@ -56,6 +63,11 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     onLoad?.();
   };
 
+  const handleError = () => {
+    setIsLoading(false);
+    console.warn(`Failed to load image: ${src}`);
+  };
+
   return (
     <div className={`relative ${containerClassName || 'w-full h-full'}`}>
       <img
@@ -68,6 +80,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         onLoad={handleLoad}
+        onError={handleError}
       />
       {isLoading && (
         <div className="absolute inset-0 bg-stone-800 animate-pulse" />
