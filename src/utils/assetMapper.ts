@@ -1,9 +1,9 @@
 /**
  * Asset Mapper - Maps local asset paths to external CDN URLs
- * For Google compliance, images are served from img.stokeleads.com
+ * For Google compliance, images are served from images.stokeleads.com
  */
 
-const CDN_BASE = 'https://img.stokeleads.com';
+const CDN_BASE = 'https://images.stokeleads.com';
 
 /**
  * Maps local asset URLs to external CDN URLs
