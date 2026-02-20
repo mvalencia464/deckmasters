@@ -3949,6 +3949,36 @@ const ReviewsGridWithModal = ({ testimonialsData }) => {
   );
 };
 
+// Simple markdown parser for bold and italic - zero dependencies
+const parseMarkdown = (text) => {
+  if (!text) return text;
+  const parts = [];
+  let lastIndex = 0;
+  const regex = /\*\*([^*]+)\*\*|\*([^*]+)\*/g;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    // Add text before match
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    // Add formatted text
+    if (match[1]) {
+      parts.push(<strong key={`${match.index}-bold`}>{match[1]}</strong>);
+    } else if (match[2]) {
+      parts.push(<em key={`${match.index}-italic`}>{match[2]}</em>);
+    }
+    lastIndex = regex.lastIndex;
+  }
+
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length === 0 ? text : parts;
+};
+
 const ServicePageTemplate = ({ pageData, openQuoteForm, navigate }) => {
   if (!pageData) return <PageLoadingFallback />;
 
@@ -3966,7 +3996,7 @@ const ServicePageTemplate = ({ pageData, openQuoteForm, navigate }) => {
               {pageData.title}
             </h1>
             <p className="text-xl text-stone-400 mb-8 leading-relaxed">
-              {pageData.content.intro}
+              {parseMarkdown(pageData.content.intro)}
             </p>
           </div>
         </div>
@@ -3980,14 +4010,14 @@ const ServicePageTemplate = ({ pageData, openQuoteForm, navigate }) => {
               <h2 className="text-3xl font-display font-bold uppercase mb-6">{section.title}</h2>
               <div className="space-y-6">
                 {Array.isArray(section.body) ? (
-                  section.body.map((paragraph, pIdx) => (
-                    <p key={pIdx} className="text-stone-400 leading-relaxed text-lg">
-                      {paragraph}
-                    </p>
-                  ))
-                ) : (
-                  <p className="text-stone-400 leading-relaxed text-lg">{section.body}</p>
-                )}
+                    section.body.map((paragraph, pIdx) => (
+                      <p key={pIdx} className="text-stone-400 leading-relaxed text-lg">
+                        {parseMarkdown(paragraph)}
+                      </p>
+                    ))
+                  ) : (
+                    <p className="text-stone-400 leading-relaxed text-lg">{parseMarkdown(section.body)}</p>
+                  )}
               </div>
               {section.imagePlaceholder && (
                 <div className="mt-8 rounded-lg overflow-hidden border border-stone-800 h-64 bg-stone-900">
