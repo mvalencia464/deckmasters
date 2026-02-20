@@ -74,6 +74,7 @@ export const handler: Handler = async (event) => {
     if (!ghlResponse.ok) {
       const errorText = await ghlResponse.text();
       console.error(`GHL Integration Error (${ghlResponse.status}):`, errorText);
+      console.error('GHL Request Payload:', contactPayload);
       throw new Error(`Failed to forward lead to CRM: ${ghlResponse.statusText}`);
     }
 
