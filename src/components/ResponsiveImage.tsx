@@ -28,43 +28,33 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   priority = false,
   onLoad,
 }) => {
-  const [isLoading, setIsLoading] = useState(!priority);
+  const [isLoading, setIsLoading] = useState(priority ? false : true);
+  const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    setIsLoading(priority ? false : true);
+    setHasError(false);
+    
     const img = imgRef.current;
-    if (img) {
-      // Check if already cached/loaded
-      if (img.complete) {
-        setIsLoading(false);
-        onLoad?.();
-      } else {
-        // Image is loading
-        setIsLoading(true);
-      }
+    if (img && img.complete) {
+      setIsLoading(false);
+      onLoad?.();
     }
-  }, [src, onLoad]);
+  }, [src, priority, onLoad]);
 
-  // Extract the base path and filename
-  const parts = src.split('/');
-  const filename = parts[parts.length - 1];
-  const basePath = src.replace(filename, '');
-  const basename = filename.replace(/\.[^.]+$/, ''); // Remove extension
-  const ext = filename.slice(filename.lastIndexOf('.'));
-
-  // Generate srcset with responsive variants
-  // Note: Some images may not have all variants, so we list the main image for all sizes as fallback
-  const srcSet = [
-    `${src} 320w, ${src} 640w, ${src} 1024w, ${src} 1440w`,
-  ].join(', ');
+  // Simple srcset - browser will handle selection
+  const srcSet = `${src}`;
 
   const handleLoad = () => {
     setIsLoading(false);
+    setHasError(false);
     onLoad?.();
   };
 
   const handleError = () => {
     setIsLoading(false);
+    setHasError(true);
     console.warn(`Failed to load image: ${src}`);
   };
 
@@ -82,8 +72,13 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
         onLoad={handleLoad}
         onError={handleError}
       />
-      {isLoading && (
+      {isLoading && !hasError && (
         <div className="absolute inset-0 bg-stone-800 animate-pulse" />
+      )}
+      {hasError && (
+        <div className="absolute inset-0 bg-stone-800 flex items-center justify-center">
+          <span className="text-stone-600 text-xs">Image unavailable</span>
+        </div>
       )}
     </div>
   );

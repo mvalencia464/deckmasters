@@ -3879,31 +3879,19 @@ const ReviewsGridWithModal = ({ testimonialsData }) => {
               key={i}
               className="break-inside-avoid mb-4 bg-stone-900 border border-stone-800 overflow-hidden hover:border-orange-600/30 transition-all duration-300 group"
             >
-              {/* Images Carousel */}
+              {/* Images Carousel - SIMPLIFIED */}
               {review.images && review.images.length > 0 && (
                 <div 
-                  className="relative w-full bg-gray-100 cursor-pointer group/carousel"
+                  className="w-full aspect-video cursor-pointer"
                   onClick={() => setSelectedReview(review)}
                 >
-                <div className="relative w-full aspect-video overflow-hidden bg-stone-800">
-                   <ResponsiveImage
+                   <img
                      src={review.images[0]}
                      alt={`${review.author} project`}
-                     className="w-full h-full object-cover group-hover/carousel:opacity-80 transition-opacity"
-                     containerClassName="w-full h-full"
-                     sizes="(max-width: 640px) 320px, (max-width: 1024px) 512px, 640px"
+                     className="w-full h-full object-cover"
                    />
-                   {review.images.length > 1 && (
-                     <div className="absolute bottom-3 right-3 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs font-medium">
-                       1 / {review.images.length}
-                     </div>
-                   )}
-                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover/carousel:bg-opacity-10 transition-all flex items-center justify-center">
-                     <span className="text-white opacity-0 group-hover/carousel:opacity-100 transition-opacity text-sm font-bold">Click to view</span>
-                   </div>
-                 </div>
-              </div>
-            )}
+                </div>
+              )}
 
             {/* Content */}
             <div className="p-6">

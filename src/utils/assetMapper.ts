@@ -1,28 +1,27 @@
 /**
- * Asset Mapper - Maps local asset paths to external CDN URLs
- * For Google compliance, images are served from images.stokeleads.com
+ * Asset Mapper - Maps local asset paths
+ * Testimonials images are served locally from /public/assets/
+ * Avatar URLs come from external CDN (images.stokeleads.com)
  */
 
-const CDN_BASE = 'https://images.stokeleads.com';
-
 /**
- * Maps local asset URLs to external CDN URLs
+ * Maps local asset URLs - keeps testimonial images local
  * @param url - The asset URL (local or absolute)
  * @param highRes - Optional flag for high-res variant (not currently used)
- * @returns The CDN URL or original if already external
+ * @returns The URL (local or CDN as-is)
  */
 export function mapAssetUrl(url: string, highRes?: boolean): string {
   if (!url) return '';
   
-  // If already an external URL, return as-is
+  // If already an external URL, return as-is (avatars, etc.)
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return url;
   }
   
-  // Convert local paths to CDN URLs
-  // /assets/testimonials/images/filename.webp -> https://img.stokeleads.com/assets/testimonials/images/filename.webp
+  // Keep local asset paths as-is - they're served from public/assets/
+  // The testimonial images exist in public/assets/testimonials/images/
   if (url.startsWith('/assets/')) {
-    return `${CDN_BASE}${url}`;
+    return url;
   }
   
   return url;

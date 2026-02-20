@@ -30,23 +30,24 @@ export default function TestimonialImageModal({
 
   // Get high-res image URL - uses local assets if available
   const getHighResImage = (url: string) => {
-    // The image should already be mapped to local path from ReviewsGridWithModal
-    // But map again just to be safe for fallback scenarios
+    // Map the asset URL (will return local or external as-is)
     const localUrl = mapAssetUrl(url, true);
     
-    // If it's a local asset, return as is (already full quality)
+    // Local assets are already full quality - return as is
     if (localUrl.startsWith('/assets/')) {
       return localUrl;
     }
     
-    // For remote URLs, try to increase resolution
+    // For remote URLs (avatars, etc.), try to increase resolution if it supports query params
     if (localUrl.includes('?width=')) {
       return localUrl.replace(/\?width=\d+/, '?width=1200');
     }
     if (localUrl.includes('?')) {
       return localUrl + '&width=1200';
     }
-    return localUrl + '?width=1200';
+    
+    // Return as-is if no width parameter support
+    return localUrl;
   };
 
   const goToPrevious = () => {
