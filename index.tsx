@@ -3889,6 +3889,10 @@ const ReviewsGridWithModal = ({ testimonialsData }) => {
                      alt={`${review.author} project`}
                      className="w-full h-full object-cover group-hover/carousel:opacity-80 transition-opacity"
                      loading="lazy"
+                     onError={(e) => { 
+                       const container = e.currentTarget.closest('.group\\/carousel');
+                       if (container instanceof HTMLElement) container.style.display = 'none';
+                     }}
                    />
                   {review.images.length > 1 && (
                     <div className="absolute bottom-3 right-3 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs font-medium">
@@ -3919,17 +3923,19 @@ const ReviewsGridWithModal = ({ testimonialsData }) => {
               {/* Author */}
               <div className="flex items-center gap-3 pt-4 border-t border-stone-800">
                 {/* Avatar circle */}
-                <div className="w-8 h-8 rounded-full bg-orange-600/20 border border-orange-600/30 flex items-center justify-center shrink-0 overflow-hidden">
-                  {review.avatarUrl ? (
+                <div className="w-8 h-8 rounded-full bg-orange-600/20 border border-orange-600/30 flex items-center justify-center shrink-0 overflow-hidden relative">
+                  {review.avatarUrl && (
                     <img
                       src={review.avatarUrl}
                       alt={review.author}
-                      className="w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover z-10"
                       loading="lazy"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
                     />
-                  ) : (
-                    <span className="text-orange-500 text-xs font-bold uppercase">{review.author.charAt(0)}</span>
                   )}
+                  <span className="text-orange-500 text-xs font-bold uppercase z-0">
+                    {review.author ? review.author.charAt(0) : '?'}
+                  </span>
                 </div>
                 <div>
                   <div className="text-white font-bold text-xs uppercase tracking-wider">{review.author}</div>
@@ -4089,7 +4095,7 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
               <div className="h-[1px] w-12 bg-orange-600" />
               <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-sm">Reviews</span>
             </div>
-            <h2 className="text-4xl md:text-7xl font-display font-bold uppercase leading-[0.8]">
+            <h2 className="text-4xl md:text-7xl font-display font-bold uppercase leading-[1.1] md:leading-[0.8]">
               What Anchorage <br /><span className="text-stone-500">Is Saying.</span>
             </h2>
             <div className="flex items-center gap-4 mt-8">
@@ -4221,7 +4227,7 @@ const App = () => {
       />
 
       {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-stone-950/90 backdrop-blur-md py-4 border-b border-white/5' : 'bg-transparent py-8'}`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-stone-950/90 backdrop-blur-md py-4 border-b border-white/5' : 'bg-transparent py-8'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           <a href="#/" onClick={(e) => { if (isHome) e.preventDefault(); }} className="text-2xl font-display font-bold tracking-tight uppercase flex items-center gap-3 z-50 relative">
             <div className="w-12 h-12 flex items-center justify-center overflow-hidden">
@@ -4414,11 +4420,11 @@ const App = () => {
                     </div>
                     <span className="font-bold tracking-wider">(907) 782-4043</span>
                   </div>
-                  <div className="flex items-center gap-4 text-lg">
+                  <div className="flex items-center gap-4 text-base md:text-lg">
                     <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
                       <Mail className="w-5 h-5" />
                     </div>
-                    <span className="font-bold tracking-wider">CONTACT@DECKMASTERSAK.COM</span>
+                    <span className="font-bold tracking-wide break-all">CONTACT@DECKMASTERSAK.COM</span>
                   </div>
                   <div className="flex items-center gap-4 text-lg">
                     <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">

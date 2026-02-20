@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface ResponsiveImageProps {
   src: string;
@@ -29,6 +29,14 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   onLoad,
 }) => {
   const [isLoading, setIsLoading] = useState(!priority);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete) {
+      setIsLoading(false);
+      onLoad?.();
+    }
+  }, [src, onLoad]);
 
   // Extract the base path and filename
   const parts = src.split('/');
@@ -49,8 +57,9 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   };
 
   return (
-    <div className={containerClassName}>
+    <div className={`relative ${containerClassName || 'w-full h-full'}`}>
       <img
+        ref={imgRef}
         src={src}
         srcSet={srcSet}
         sizes={sizes}

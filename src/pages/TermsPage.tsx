@@ -38,7 +38,7 @@ const TermsPage = ({ navigate }: { navigate: (path: string) => void }) => {
                         <h2 className="text-2xl font-display font-bold uppercase text-white border-b border-stone-900 pb-4">1. Service Estimates & Proposals</h2>
                         <div className="space-y-4 text-stone-400">
                             <p>
-                                Estimates provided through our online "Stoke Planner" or quote forms are preliminary projections based on user-submitted data. These figures are for informational purposes and do not constitute a binding contract.
+                                Estimates provided through our online quote forms are preliminary projections based on user-submitted data. These figures are for informational purposes and do not constitute a binding contract.
                             </p>
                             <div className="bg-stone-900/50 p-6 rounded-sm border-l-4 border-orange-600">
                                 <p className="text-stone-300 font-bold mb-2 uppercase text-xs tracking-widest">Final Pricing Factors:</p>
