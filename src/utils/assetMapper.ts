@@ -8,9 +8,10 @@ const CDN_BASE = 'https://img.stokeleads.com';
 /**
  * Maps local asset URLs to external CDN URLs
  * @param url - The asset URL (local or absolute)
+ * @param highRes - Optional flag for high-res variant (not currently used)
  * @returns The CDN URL or original if already external
  */
-export function mapAssetUrl(url: string): string {
+export function mapAssetUrl(url: string, highRes?: boolean): string {
   if (!url) return '';
   
   // If already an external URL, return as-is
