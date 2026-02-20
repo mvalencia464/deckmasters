@@ -66,8 +66,3 @@
   for = "*.webp"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/feedback.html"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
