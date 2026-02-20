@@ -4,6 +4,7 @@ interface TurnstileWidgetProps {
   siteKey: string;
   onVerify: (token: string) => void;
   onError?: (error: any) => void;
+  invisible?: boolean;
 }
 
 declare global {
@@ -15,7 +16,7 @@ declare global {
   }
 }
 
-const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, onError }) => {
+const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, onError, invisible = false }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
   
@@ -37,6 +38,8 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
         try {
           const id = window.turnstile.render(containerRef.current, {
             sitekey: siteKey,
+            theme: invisible ? 'light' : 'light',
+            size: invisible ? 'invisible' : 'normal',
             callback: (token: string) => {
               if (onVerifyRef.current) onVerifyRef.current(token);
             },
@@ -77,7 +80,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
     };
   }, [siteKey]); // Only re-run if siteKey changes
 
-  return <div ref={containerRef} className="my-4 min-h-[65px]" />;
+  return <div ref={containerRef} className={invisible ? 'hidden' : 'my-4 min-h-[65px]'} />;
 };
 
 export default TurnstileWidget;

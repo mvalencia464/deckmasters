@@ -363,14 +363,13 @@ const QuoteForm = () => {
           )}
         </div>
 
-        {/* Turnstile Widget */}
-        <div className="flex justify-center">
-          <TurnstileWidget
-            siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"}
-            onVerify={(token) => setTurnstileToken(token)}
-            onError={(err) => console.error('Turnstile Error:', err)}
-          />
-        </div>
+        {/* Turnstile Widget - Invisible Mode */}
+        <TurnstileWidget
+          siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"}
+          onVerify={(token) => setTurnstileToken(token)}
+          onError={(err) => console.error('Turnstile Error:', err)}
+          invisible={true}
+        />
         {getFieldError('turnstile') && (
           <p className="text-center text-sm text-red-600">{getFieldError('turnstile')}</p>
         )}
