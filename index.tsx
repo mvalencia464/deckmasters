@@ -4081,7 +4081,7 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
               <div className="h-[1px] w-12 bg-orange-600" />
               <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-sm">Reviews</span>
             </div>
-            <h2 className="text-4xl md:text-7xl font-display font-bold uppercase leading-[1.1] md:leading-[0.8]">
+            <h2 className="text-4xl md:text-7xl font-display font-bold uppercase leading-[1.1] md:leading-[0.95]">
               What Anchorage <br /><span className="text-stone-500">Is Saying.</span>
             </h2>
             <div className="flex items-center gap-4 mt-8">

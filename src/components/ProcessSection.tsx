@@ -44,7 +44,7 @@ const ProcessSection = () => {
             <div className="h-[1px] w-12 bg-orange-600"></div>
             <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-sm">Our Process</span>
           </div>
-          <h2 className="text-4xl md:text-7xl font-display font-bold uppercase leading-[0.8] mb-6">
+          <h2 className="text-4xl md:text-7xl font-display font-bold uppercase leading-[1.1] md:leading-[0.95] mb-6">
             Built Right, <br /> <span className="text-stone-500">Built Fast.</span>
           </h2>
           <p className="text-stone-400 text-lg max-w-2xl">
