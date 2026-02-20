@@ -4062,7 +4062,7 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0 bg-stone-900">
         <ResponsiveImage
-          src="/images/portfolio/001-aerial-wraparound.webp"
+          src="/images/portfolio/002-aerial-overview.webp"
           alt="Modern Deck in Anchorage"
           className="w-full h-full object-cover opacity-70 grayscale-0 scale-105 animate-slow-zoom"
           containerClassName="absolute inset-0 w-full h-full"
