@@ -13,8 +13,14 @@ interface ResponsiveImageProps {
 /**
  * ResponsiveImage Component
  * 
- * Automatically generates responsive image variants using srcset.
- * Supports lazy loading and provides loading states.
+ * Handles image loading with lazy loading and error states.
+ * 
+ * Portfolio images: Uses base image only (no responsive variants generated)
+ * Other images: Attempts srcset if variants exist, falls back to base
+ * 
+ * Standard:
+ * - Portfolio images: Single base file (e.g., 001-aerial-wraparound.webp)
+ * - Other images: Base + optional variants (-320.webp, -640.webp, etc.)
  * 
  * Example:
  * <ResponsiveImage src="/images/portfolio/001-aerial-wraparound.webp" alt="Project" />
