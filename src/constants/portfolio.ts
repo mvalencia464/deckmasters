@@ -1,10 +1,8 @@
 import { Project, ServiceNiche } from "../types/portfolio";
-import portfolioDataJson from "../data/portfolio-data.json";
 
 export const NICHES: ServiceNiche[] = ['New Build', 'Resurfacing', 'Railing', 'Covered Deck', 'Commercial'];
 
-// Combine new optimized portfolio data with legacy projects
-const legacyProjects: Project[] = [
+const projects: Project[] = [
   {
     "id": "hillside-mountain-view",
     "title": "Hillside Mountain View Deck",
@@ -109,8 +107,4 @@ const legacyProjects: Project[] = [
   }
 ];
 
-// Merge legacy projects with new optimized portfolio data
-export const MOCK_PROJECTS: Project[] = [
-  ...legacyProjects,
-  ...(portfolioDataJson as Project[])
-];
+export const MOCK_PROJECTS: Project[] = projects;

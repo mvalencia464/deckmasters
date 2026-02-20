@@ -1,7 +1,6 @@
 # Deck Masters - Allow all search engines to crawl
 User-agent: *
 Allow: /
-Disallow: /admin/
 Disallow: /.git/
 Disallow: /.netlify/
 Disallow: /node_modules/

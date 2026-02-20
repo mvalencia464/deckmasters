@@ -8,7 +8,6 @@ import {
   Clock, CheckCircle2, ArrowLeft, Calendar,
   ChevronDown, Home, Camera, ChevronLeft, ChevronRight as ChevronRightIcon
 } from 'lucide-react';
-// Admin page removed - no longer needed
 
 // Lazy load pages - only fetched when navigated to
 const ProductsPage = lazy(() => import('./src/pages/ProductsPage'));
