@@ -43,8 +43,27 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     }
   }, [src, priority, onLoad]);
 
-  // Simple srcset - browser will handle selection
-  const srcSet = `${src}`;
+  // Generate responsive srcset with available image variants
+  const generateSrcSet = (imagePath: string): string => {
+    // Extract base path without extension
+    const basePath = imagePath.replace(/\.webp$/, '');
+    
+    // Check if this is a portfolio image that has variants
+    if (basePath.includes('/portfolio/')) {
+      return `${basePath}-320.webp 320w, ${basePath}-640.webp 640w, ${basePath}-1024.webp 1024w, ${basePath}.webp 1440w`;
+    }
+    
+    // Check if this is a non-portfolio image that has variants
+    if (basePath.match(/-(320|640|1024)$/)) {
+      // Already a specific size variant, don't modify
+      return imagePath;
+    }
+    
+    // For other images, check if they have variants
+    return `${basePath}-320.webp 320w, ${basePath}-640.webp 640w, ${basePath}.webp 1024w`;
+  };
+
+  const srcSet = generateSrcSet(src);
 
   const handleLoad = () => {
     setIsLoading(false);

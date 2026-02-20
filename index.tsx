@@ -64,7 +64,7 @@ const core30Pages = [
             "**Seismic activity** is another non-negotiable factor. Since the 2018 earthquake, code requirements have tightened, but we have always built beyond the minimum. Our hardware packages include tension ties, hurricane clips, and lateral load connectors that ensure your deck remains attached to your home during violent shaking. We don't rely on gravity; we rely on galvanized steel engineering.",
             "Finally, the **snow load** in Anchorage can exceed 50 pounds per square foot, and in areas like Glen Alps, it can be double that. A standard builder might space joists at 16 inches on center. For our composite builds in heavy snow zones, we often tighten that to 12 inches on center. This rigidity prevents the 'trampoline effect' and ensures that even with three feet of wet, heavy snow, your deck structure remains uncompromised."
           ],
-          imagePlaceholder: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/692128a0090c4aeb361d4e93.png"
+          imagePlaceholder: "/images/content/frost-heave-engineering.webp"
         },
         {
           title: "Material Selection: Wood vs. Composite in the Last Frontier",
@@ -73,7 +73,7 @@ const core30Pages = [
             "[Alaskan Yellow Cedar and Red Cedar](/deck-materials-components/cedar-decking) are the traditional choices. They offer that undeniable aromatic scent and rustic aesthetic that fits perfectly with a log home or timber-frame structure in Girdwood or Eagle River. However, wood is organic. In our climate, it absorbs moisture, freezes, thaws, and is bombarded by UV radiation during our long summer days. To keep a wood deck looking 'new,' you must commit to annual staining and sealing. Without this, it will turn gray and eventually succumb to rot.",
             "[Composite decking](/deck-materials-components/composite-decking), particularly high-performance lines from [Trex](/deck-materials-components/trex-deck-installation) and TimberTech, has revolutionized Alaskan outdoor living. Modern composites are capped with a polymer shell that is virtually impervious to our weather. They do not rot, warp, crack, or splinter. They never need sanding or staining. For a busy family in South Anchorage or a retiree in Bayshore who wants to spend their summer fishing rather than painting, composite is the superior investment. While the upfront cost is higher, the 25-year cost of ownership is significantly lower when you factor in the price of stain, sealers, and your own labor."
           ],
-          imagePlaceholder: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6921213447e1031c6472684f.webp"
+          imagePlaceholder: "/images/content/materials-comparison.webp"
         },
         {
           title: "Neighborhood-Specific Design Considerations",
@@ -211,7 +211,7 @@ const core30Pages = [
             "**Joist Rot at Ground Contact** occurs when deck joists are too close to soil or vegetation. We frequently encounter this in older **Spenard** and **Government Hill** homes where the original builder didn't account for Alaska's wet springs. Moisture wicks up into untreated lumber, creating a perfect environment for decay fungi. Our fix involves sistering new pressure-treated joists alongside the damaged ones, raising the deck height if necessary, and installing a vapor barrier beneath the structure.",
             "**Fastener Failure and 'Nail Pops'** are accelerated by our temperature swings. A deck built in July at 70°F will contract significantly when winter hits -10°F. Nails lose their grip, and screws back out. We've seen entire deck surfaces on **Hillside** properties become hazardous 'tripping zones' due to raised fastener heads. Our resurfacing service includes removing all surface boards, inspecting the framing, and reinstalling with hidden fastener systems (for composite) or structural deck screws (for wood) that resist thermal movement."
           ],
-          imagePlaceholder: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/692128a0090c4ae84c1d4e92.png"
+          imagePlaceholder: "/images/content/common-failures.webp"
         },
         {
           title: "Preventive Maintenance: The Anchorage Deck Survival Schedule",
@@ -430,7 +430,7 @@ const core30Pages = [
             "Historically used for boat building and totem poles by indigenous peoples, Yellow Cedar contains powerful natural tannins and oils that act as a built-in preservative against rot and insects. You don't *need* to treat it chemically. If left uncoated, it weathers gracefully from a pale lemon-yellow to a distinguished, silvery-gray patina that blends perfectly with the slate and stone often found in Alaskan landscaping.",
             "For homes in **Girdwood** or rustic properties on the **Hillside**, cedar bridges the gap between nature and architecture. We source high-grade, 'Architect Knotty' or 'Clear' vertical-grain cedar that minimizes warping. The aroma of fresh-cut Yellow Cedar during installation is a bonus that our clients love, a scent that defines the Alaskan summer."
           ],
-          imagePlaceholder: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/692128a05408c6549c1b9eea.png"
+          imagePlaceholder: "/images/content/cedar-decking.webp"
         },
         {
           title: "The Unseen Engineering: Building Beyond Code for Alaska",
@@ -956,7 +956,7 @@ const core30Pages = [
             "The first decision is fuel. **Wood fires** offer the crackle and the smell, but they come with smoke, sparks, and 'Burn Ban' restrictions during dry Anchorage summers. They also require significant clearance from the house.",
             "**Natural Gas or Propane** fire pits are becoming the standard for decks. They turn on instantly with a switch, produce no smoke or sparks (safe for roof overhangs), and can be used even during most burn bans. We coordinate the plumbing of the gas line directly to the pit, hiding it inside the deck frame so you never see a hose."
           ],
-          imagePlaceholder: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/692128a05408c646761b9eeb.png"
+          imagePlaceholder: "/images/content/fire-pit-fuel.webp"
         },
         {
           title: "The Unseen Engineering: Building Beyond Code for Alaska",
@@ -1134,7 +1134,7 @@ const core30Pages = [
             "Building a multi-level deck on a slope requires a higher level of engineering than a standard ground-level platform. The forces at play are exponential. Gravity isn't just pulling down; the slope is trying to pull the deck 'downhill.' We utilize specialized lateral load anchors and cross-bracing techniques that tie the deck structure back into the house's foundation and deep into the earth with [helical piers](/deck-materials-components/deck-footings-framing). This ensures that even during a 7.0 magnitude earthquake, your multi-story structure moves as one cohesive unit with the home, rather than shearing away.",
             "We specialize in transforming 'useless' steep backyards into tiered entertainment zones. By terracing the deck levels, we can create a dining area on the top level right off the kitchen, a lounging/fire-pit area on the mid-level, and a hot tub zone on the lower level, all connected by safe, navigable stairs."
           ],
-          imagePlaceholder: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/692128a030b57f2ce33f9c40.png"
+          imagePlaceholder: "/images/content/multi-level-design.webp"
         },
         {
           title: "The Unseen Engineering: Building Beyond Code for Alaska",
@@ -2695,7 +2695,7 @@ const core30Pages = [
             "**UV protection**: Alaska's extended summer daylight (19+ hours in June) means intense UV exposure. UV radiation breaks down lignin—the natural polymer that gives wood its color and strength. Unsealed cedar turns silver-gray within one season. Unsealed pressure-treated lumber fades to washed-out tan. Quality sealers contain UV inhibitors that block 90%+ of damaging radiation, keeping wood looking fresh for years.",
             "**Mildew and algae prevention**: Shaded decks in **Midtown**, **Spenard**, and **Turnagain** grow black mildew and green algae on unsealed wood. These organisms aren't just ugly—they hold moisture against the wood surface, accelerating rot. Sealers with mildewcides prevent growth, keeping your deck clean and dry."
           ],
-          imagePlaceholder: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/692128a047e10316a67351a1.png"
+          imagePlaceholder: "/images/content/railing-options.webp"
         },
         {
           title: "The Unseen Engineering: Building Beyond Code for Alaska",
@@ -4061,10 +4061,13 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
     <header className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-48 lg:pt-0 lg:pb-0">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0 bg-stone-900">
-        <img
-          src="https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/691fff057c2a45500192360a.webp"
+        <ResponsiveImage
+          src="/images/portfolio/001-aerial-wraparound.webp"
           alt="Modern Deck in Anchorage"
           className="w-full h-full object-cover opacity-70 grayscale-0 scale-105 animate-slow-zoom"
+          containerClassName="absolute inset-0 w-full h-full"
+          sizes="(max-width: 640px) 640px, (max-width: 1024px) 1024px, 1440px"
+          priority={true}
         />
         <div className="absolute inset-0 bg-stone-950/50 mix-blend-multiply"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-stone-950/90 via-stone-950/40 to-stone-950"></div>
@@ -4297,17 +4300,17 @@ const App = () => {
     {
       title: "Composite Decking",
       desc: "Low maintenance, high durability premium composite solutions from Trex and TimberTech.",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/691fff057c2a45500192360a.webp"
+      image: "/images/portfolio/001-aerial-wraparound.webp"
     },
     {
       title: "Hardwood Crafts",
       desc: "Exotic Ipe, Tigerwood, and Cedar decks for those who appreciate natural beauty and aging.",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/69200575a1976e306df71089.webp"
+      image: "/images/content/hardwood-crafts.webp"
     },
     {
       title: "Outdoor Living",
       desc: "Complete outdoor kitchens, fire pits, and pergolas to extend your living space.",
-      image: "https://storage.googleapis.com/msgsndr/tV8qFLdWkBLBfjh64cFV/media/6924e48946b2e7e3e1997a18.webp"
+      image: "/images/portfolio/glen-alps-entertainer.webp"
     }
   ];
 

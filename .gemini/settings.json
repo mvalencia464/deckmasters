@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "augment-local": {
+      "command": "",
+      "args": [
+        "/usr/local/bin/auggie",
+        "serve",
+        "--mcp"
+      ]
+    }
+  }
+}
