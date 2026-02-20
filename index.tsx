@@ -4402,7 +4402,7 @@ const App = () => {
           <div className="container mx-auto px-6 relative z-10">
             <div className="flex flex-col lg:flex-row justify-between gap-20 mb-24">
               <div className="lg:w-1/2">
-                <h2 className="text-6xl md:text-8xl font-display font-bold uppercase leading-[0.8] mb-12">
+                <h2 className="text-6xl md:text-8xl font-display font-bold uppercase leading-[1.1] md:leading-[0.95] mb-12">
                   Ready to <br /> <span className="text-orange-600">Build?</span>
                 </h2>
                 <p className="text-xl text-stone-400 max-w-md mb-12">
