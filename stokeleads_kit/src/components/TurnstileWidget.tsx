@@ -19,6 +19,7 @@ declare global {
 const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, onError, invisible = false }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
+  const hiddenContainerRef = useRef<HTMLDivElement>(null);
   
   // Use refs for callbacks to avoid re-rendering loop when parent passes inline functions
   const onVerifyRef = useRef(onVerify);
@@ -30,17 +31,18 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
   }, [onVerify, onError]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    // Determine which container to render to
+    const targetContainer = invisible ? hiddenContainerRef.current : containerRef.current;
+    if (!targetContainer) return;
 
     // Function to render the widget
     const renderWidget = () => {
-      if (window.turnstile && containerRef.current && !widgetIdRef.current) {
+      if (window.turnstile && targetContainer && !widgetIdRef.current) {
         try {
-          const id = window.turnstile.render(containerRef.current, {
+          const id = window.turnstile.render(targetContainer, {
             sitekey: siteKey,
             theme: 'light',
-            size: invisible ? 'invisible' : 'normal',
-            appearance: invisible ? 'none' : 'always',
+            size: 'invisible',
             callback: (token: string) => {
               if (onVerifyRef.current) onVerifyRef.current(token);
             },
@@ -79,33 +81,13 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
         widgetIdRef.current = null;
       }
     };
-  }, [siteKey]); // Only re-run if siteKey changes
+  }, [siteKey, invisible]); // Re-run if siteKey or invisible changes
 
-  return (
-    <>
-      <style>{`
-        ${invisible ? `
-          [data-turnstile] {
-            display: none !important;
-            visibility: hidden !important;
-            height: 0 !important;
-            width: 0 !important;
-          }
-          .cf-turnstile {
-            display: none !important;
-            visibility: hidden !important;
-            height: 0 !important;
-            width: 0 !important;
-          }
-        ` : ''}
-      `}</style>
-      <div 
-        ref={containerRef} 
-        className={invisible ? 'pointer-events-none' : 'my-4 min-h-[65px]'}
-        style={invisible ? { display: 'none' } : undefined}
-      />
-    </>
-  );
+  if (invisible) {
+    return <div ref={hiddenContainerRef} style={{ display: 'none' }} />;
+  }
+
+  return <div ref={containerRef} className="my-4 min-h-[65px]" />;
 };
 
 export default TurnstileWidget;
