@@ -4536,6 +4536,7 @@ const App = () => {
                 <div className="w-full rounded-sm overflow-hidden border border-stone-800 relative group">
                   <div className="w-full h-64 relative grayscale-0 group-hover:grayscale transition-all duration-500 ease-in-out">
                     <iframe
+                      title="Deck Masters location in Anchorage, Alaska on Google Maps"
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2853.5566334411346!2d-149.8942242!3d61.1676417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x56c891cae1357399%3A0xd7b37a2095289a27!2sDeck%20Masters%20AK!5e1!3m2!1sen!2sus!4v1763737932256!5m2!1sen!2sus"
                       width="100%"
                       height="100%"

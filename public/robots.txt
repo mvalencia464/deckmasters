@@ -1,0 +1,16 @@
+# Deck Masters - Allow all search engines to crawl
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /.netlify/
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /?*sort=
+Disallow: /?*filter=
+
+# Sitemaps
+Sitemap: https://deckmasters.netlify.app/sitemap.xml
+
+# Crawl delay for all robots (optional - remove if not needed)
+# Crawl-delay: 1
