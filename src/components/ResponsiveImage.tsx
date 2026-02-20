@@ -48,9 +48,10 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     // Extract base path without extension
     const basePath = imagePath.replace(/\.webp$/, '');
     
-    // Check if this is a portfolio image that has variants
+    // For portfolio images, just use the base image without srcset variants
+    // This avoids 404s for missing responsive variants
     if (basePath.includes('/portfolio/')) {
-      return `${basePath}-320.webp 320w, ${basePath}-640.webp 640w, ${basePath}-1024.webp 1024w, ${basePath}.webp 1440w`;
+      return imagePath;
     }
     
     // Check if this is a non-portfolio image that has variants
