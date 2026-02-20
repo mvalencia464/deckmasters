@@ -31,6 +31,7 @@ const QuoteForm = () => {
 
   useEffect(() => {
     let checkInterval: NodeJS.Timeout;
+    let scriptLoaded = false;
 
     const initAutocomplete = () => {
       if (window.google && window.google.maps && window.google.maps.places && addressInputRef.current) {
@@ -52,15 +53,45 @@ const QuoteForm = () => {
         if (checkInterval) {
           clearInterval(checkInterval);
         }
+        scriptLoaded = true;
       }
     };
 
-    // Try immediately
-    initAutocomplete();
+    // Check if script is already loaded
+    if (window.google && window.google.maps) {
+      initAutocomplete();
+      scriptLoaded = true;
+    } else {
+      // Lazy-load Google Maps API only when this component mounts
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''}&libraries=places`;
+      script.async = true;
+      script.defer = true;
 
-    // If not ready, poll every 100ms until the script loads
-    if (!window.google || !window.google.maps) {
-      checkInterval = setInterval(initAutocomplete, 100);
+      script.onload = () => {
+        // Once script loads, initialize autocomplete
+        let retries = 0;
+        const waitForGoogle = setInterval(() => {
+          if (window.google && window.google.maps && window.google.maps.places) {
+            clearInterval(waitForGoogle);
+            initAutocomplete();
+            scriptLoaded = true;
+          }
+          retries++;
+          if (retries > 50) clearInterval(waitForGoogle); // Timeout after 5s
+        }, 100);
+      };
+
+      script.onerror = () => {
+        console.error('Failed to load Google Maps API');
+      };
+
+      document.head.appendChild(script);
+
+      // Poll as fallback in case script was already in process of loading
+      if (!scriptLoaded) {
+        checkInterval = setInterval(initAutocomplete, 100);
+      }
     }
 
     return () => {
