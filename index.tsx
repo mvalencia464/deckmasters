@@ -23,6 +23,7 @@ import TestimonialImageModal from './src/components/TestimonialImageModal';
 import TestimonialVideoCard from './src/components/TestimonialVideoCard';
 import PortfolioGrid from './src/components/PortfolioGrid';
 import ProcessSection from './src/components/ProcessSection';
+import ResponsiveImage from './src/components/ResponsiveImage';
 import { MOCK_PROJECTS } from './src/constants/portfolio';
 import { mapAssetUrl } from './src/utils/assetMapper';
 import { analytics } from './src/utils/analyticsTracker';
@@ -3884,26 +3885,23 @@ const ReviewsGridWithModal = ({ testimonialsData }) => {
                   className="relative w-full bg-gray-100 cursor-pointer group/carousel"
                   onClick={() => setSelectedReview(review)}
                 >
-                <div className="relative w-full aspect-video overflow-hidden">
-                   <img
+                <div className="relative w-full aspect-video overflow-hidden bg-stone-800">
+                   <ResponsiveImage
                      src={review.images[0]}
                      alt={`${review.author} project`}
                      className="w-full h-full object-cover group-hover/carousel:opacity-80 transition-opacity"
-                     loading="lazy"
-                     onError={(e) => { 
-                       const container = e.currentTarget.closest('.group\\/carousel');
-                       if (container instanceof HTMLElement) container.style.display = 'none';
-                     }}
+                     containerClassName="w-full h-full"
+                     sizes="(max-width: 640px) 320px, (max-width: 1024px) 512px, 640px"
                    />
-                  {review.images.length > 1 && (
-                    <div className="absolute bottom-3 right-3 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs font-medium">
-                      1 / {review.images.length}
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover/carousel:bg-opacity-10 transition-all flex items-center justify-center">
-                    <span className="text-white opacity-0 group-hover/carousel:opacity-100 transition-opacity text-sm font-bold">Click to view</span>
-                  </div>
-                </div>
+                   {review.images.length > 1 && (
+                     <div className="absolute bottom-3 right-3 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs font-medium">
+                       1 / {review.images.length}
+                     </div>
+                   )}
+                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover/carousel:bg-opacity-10 transition-all flex items-center justify-center">
+                     <span className="text-white opacity-0 group-hover/carousel:opacity-100 transition-opacity text-sm font-bold">Click to view</span>
+                   </div>
+                 </div>
               </div>
             )}
 
