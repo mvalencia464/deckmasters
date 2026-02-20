@@ -204,7 +204,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
                  alt={imageCaptions[index]}
                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                  containerClassName="absolute inset-0 w-full h-full"
-                 sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) calc(50vw - 24px), calc(33.33vw - 16px)"
+                 sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, (max-width: 1440px) 1024px, 640px"
                  priority={false}
                />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
