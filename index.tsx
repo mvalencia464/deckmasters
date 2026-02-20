@@ -1,3 +1,4 @@
+import './src/index.css';
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
