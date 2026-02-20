@@ -38,8 +38,9 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
         try {
           const id = window.turnstile.render(containerRef.current, {
             sitekey: siteKey,
-            theme: invisible ? 'light' : 'light',
+            theme: 'light',
             size: invisible ? 'invisible' : 'normal',
+            appearance: invisible ? 'none' : 'always',
             callback: (token: string) => {
               if (onVerifyRef.current) onVerifyRef.current(token);
             },
@@ -80,7 +81,21 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
     };
   }, [siteKey]); // Only re-run if siteKey changes
 
-  return <div ref={containerRef} className={invisible ? 'hidden' : 'my-4 min-h-[65px]'} />;
+  return (
+    <>
+      <style>{`
+        ${invisible ? `
+          .cf-turnstile {
+            display: none !important;
+          }
+          [data-testid="cf-turnstile-container"] {
+            display: none !important;
+          }
+        ` : ''}
+      `}</style>
+      <div ref={containerRef} className={invisible ? 'h-0 overflow-hidden' : 'my-4 min-h-[65px]'} />
+    </>
+  );
 };
 
 export default TurnstileWidget;
