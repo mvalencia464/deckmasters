@@ -85,15 +85,25 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
     <>
       <style>{`
         ${invisible ? `
+          [data-turnstile] {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
+          }
           .cf-turnstile {
             display: none !important;
-          }
-          [data-testid="cf-turnstile-container"] {
-            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
           }
         ` : ''}
       `}</style>
-      <div ref={containerRef} className={invisible ? 'h-0 overflow-hidden' : 'my-4 min-h-[65px]'} />
+      <div 
+        ref={containerRef} 
+        className={invisible ? 'pointer-events-none' : 'my-4 min-h-[65px]'}
+        style={invisible ? { display: 'none' } : undefined}
+      />
     </>
   );
 };
