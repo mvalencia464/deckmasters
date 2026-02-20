@@ -30,23 +30,44 @@ const QuoteForm = () => {
   const addressInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // Initialize Google Places Autocomplete
-    if (window.google && window.google.maps && window.google.maps.places && addressInputRef.current) {
-      const autocomplete = new window.google.maps.places.Autocomplete(addressInputRef.current, {
-        types: ['address'],
-        componentRestrictions: { country: 'us' }, // Restrict to US
-        fields: ['formatted_address', 'geometry']
-      });
+    let checkInterval: NodeJS.Timeout;
 
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        if (place.formatted_address) {
-          setFormData(prev => ({ ...prev, address: place.formatted_address }));
-          // Clear address error if exists
-          setValidationErrors(prev => prev.filter(error => error.field !== 'address'));
+    const initAutocomplete = () => {
+      if (window.google && window.google.maps && window.google.maps.places && addressInputRef.current) {
+        const autocomplete = new window.google.maps.places.Autocomplete(addressInputRef.current, {
+          types: ['address'],
+          componentRestrictions: { country: 'us' }, // Restrict to US
+          fields: ['formatted_address', 'geometry']
+        });
+
+        autocomplete.addListener('place_changed', () => {
+          const place = autocomplete.getPlace();
+          if (place.formatted_address) {
+            setFormData(prev => ({ ...prev, address: place.formatted_address }));
+            // Clear address error if exists
+            setValidationErrors(prev => prev.filter(error => error.field !== 'address'));
+          }
+        });
+
+        if (checkInterval) {
+          clearInterval(checkInterval);
         }
-      });
+      }
+    };
+
+    // Try immediately
+    initAutocomplete();
+
+    // If not ready, poll every 100ms until the script loads
+    if (!window.google || !window.google.maps) {
+      checkInterval = setInterval(initAutocomplete, 100);
     }
+
+    return () => {
+      if (checkInterval) {
+        clearInterval(checkInterval);
+      }
+    };
   }, []);
 
   const getFieldError = (fieldName: string): string | undefined => {
