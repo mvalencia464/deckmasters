@@ -4373,8 +4373,7 @@ const App = () => {
       </main>
 
       {/* CTA / Footer */}
-      {!isAdmin && (
-        <footer className="bg-stone-950 pt-32 pb-12 relative overflow-hidden">
+      <footer className="bg-stone-950 pt-32 pb-12 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-900 to-transparent"></div>
 
           <div className="container mx-auto px-6 relative z-10">
@@ -4477,7 +4476,6 @@ const App = () => {
             </div>
           </div>
         </footer>
-      )}
     </div>
   );
 };
