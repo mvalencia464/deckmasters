@@ -15,6 +15,7 @@ const GalleryArchive = lazy(() => import('./src/pages/GalleryArchive'));
 const ProductsPage = lazy(() => import('./src/pages/ProductsPage'));
 const PrivacyPage = lazy(() => import('./src/pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./src/pages/TermsPage'));
+const AdminProjectForm = lazy(() => import('./src/components/portfolio/AdminProjectForm'));
 import { AuthProvider } from './src/context/AuthContext';
 import QuoteForm from './src/components/QuoteForm';
 import testimonialsData from './Testimonials.json';
@@ -3930,7 +3931,6 @@ const ReviewsGridWithModal = ({ testimonialsData }) => {
                       alt={review.author}
                       className="absolute inset-0 w-full h-full object-cover z-10"
                       loading="lazy"
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
                     />
                   )}
                   <span className="text-orange-500 text-xs font-bold uppercase z-0">
@@ -4369,6 +4369,16 @@ const App = () => {
             setActiveService={setActiveService}
             services={services}
           />
+        ) : isAdmin ? (
+          <Suspense fallback={<PageLoadingFallback />}>
+            <AdminProjectForm
+              onAddProject={(project) => {
+                console.log('Project added:', project);
+                navigate('/');
+              }}
+              onClose={() => navigate('/')}
+            />
+          </Suspense>
         ) : currentPath === '/gallery-archive' ? (
           <Suspense fallback={<PageLoadingFallback />}>
             <GalleryArchive onOpenQuote={openQuoteForm} />

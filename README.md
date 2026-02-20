@@ -1,20 +1,69 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# DeckMasters - Professional Deck Building & Restoration
 
-# Run and deploy your AI Studio app
+Portfolio website for DeckMasters, showcasing deck construction, restoration, and outdoor living services in Anchorage, Alaska.
 
-This contains everything you need to run your app locally.
+## Quick Start
 
-View your app in AI Studio: https://ai.studio/apps/drive/1OnP6BkjzNdgeV6-9dprKdB75chX1x820
+**Prerequisites:** Node.js 16+
 
-## Run Locally
+```bash
+npm install
+npm run dev
+```
 
-**Prerequisites:**  Node.js
+Opens at `http://localhost:5173`
 
+## Project Structure
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```
+├── src/
+│   ├── components/          # React components
+│   ├── utils/               # Helper functions (assetMapper, etc)
+│   ├── styles/              # Global styles
+│   └── App.tsx
+├── public/
+│   ├── assets/testimonials/ # Customer review images & videos
+│   └── favicon files
+├── Testimonials.json        # Review data (text, ratings, images, videos)
+├── netlify.toml            # Deployment config
+└── vite.config.ts          # Build config
+```
+
+## Key Features
+
+- **Responsive Design** - Mobile-first, works on all devices
+- **Image Optimization** - Local asset serving + lazy loading
+- **Video Testimonials** - Embedded video player for customer reviews
+- **Photo Gallery** - Portfolio grid with image modal
+- **Contact Form** - Quote requests with Cloudflare Turnstile verification
+- **Performance** - Optimized images, code splitting, caching
+
+## Development
+
+- **Build:** `npm run build` (creates `dist/` folder)
+- **Format:** TypeScript, React with Tailwind CSS
+- **Linting:** ESLint configured
+
+## Deployment
+
+Deployed on **Netlify** via GitHub push.
+
+**Build command:** `npm run build`  
+**Publish directory:** `dist/`
+
+See `netlify.toml` for configuration.
+
+## Data
+
+**Testimonials:** `Testimonials.json` contains customer reviews with text, ratings, avatars, images, and optional video.
+
+**Images:** Stored locally in `public/assets/testimonials/images/` for fast loading.
+
+**Videos:** Customer testimonial videos in `public/assets/testimonials/videos/`
+
+## Important Files
+
+- `src/components/TestimonialImageModal.tsx` - Image viewer for reviews
+- `src/components/TestimonialVideoCard.tsx` - Video player for testimonials
+- `src/utils/assetMapper.ts` - Maps testimonial URLs to local assets
+- `index.tsx` - Main app component with all sections
