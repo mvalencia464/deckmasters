@@ -1,7 +1,5 @@
 import React from 'react';
 import { Project } from '../../types/portfolio';
-import { Trash2 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
 import ResponsiveImage from '../ResponsiveImage';
 
 interface ProjectCardProps {
@@ -11,8 +9,6 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, onDelete }) => {
-  const { isAuthenticated } = useAuth();
-
   return (
     <div
       onClick={() => onClick(project)}
@@ -44,19 +40,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, onDelete })
           </span>
         </div>
 
-        {/* Admin Delete Button */}
-        {isAuthenticated && onDelete && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete(project);
-            }}
-            className="absolute top-6 right-6 z-20 bg-stone-950/90 text-red-500 p-2.5 rounded-full shadow-lg hover:bg-red-500 hover:text-white transition-all duration-300 border border-stone-800 hover:border-red-500"
-            title="Delete Project"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        )}
+
 
         {project.featured && (
           <div className="absolute bottom-6 left-6">

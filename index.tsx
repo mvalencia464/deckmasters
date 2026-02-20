@@ -11,12 +11,9 @@ import {
 // Admin page removed - no longer needed
 
 // Lazy load pages - only fetched when navigated to
-const GalleryArchive = lazy(() => import('./src/pages/GalleryArchive'));
 const ProductsPage = lazy(() => import('./src/pages/ProductsPage'));
 const PrivacyPage = lazy(() => import('./src/pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./src/pages/TermsPage'));
-const AdminProjectForm = lazy(() => import('./src/components/portfolio/AdminProjectForm'));
-import { AuthProvider } from './src/context/AuthContext';
 import QuoteForm from './src/components/QuoteForm';
 import testimonialsData from './Testimonials.json';
 import TestimonialImageModal from './src/components/TestimonialImageModal';
@@ -4202,7 +4199,6 @@ const App = () => {
 
   // Routing Logic
   const isHome = currentPath === '/' || currentPath === '/index.html' || currentPath === '';
-  const isAdmin = currentPath === '/admin';
   const activePage = core30Pages.find(p => p.slug === currentPath);
 
   return (
@@ -4253,8 +4249,7 @@ const App = () => {
             <a href="#/" onClick={() => setTimeout(() => document.getElementById('reviews')?.scrollIntoView(), 100)} className="hover:text-orange-500 transition-colors">Reviews</a>
           </div>
 
-          {!isAdmin && (
-            <div className="hidden md:block">
+          <div className="hidden md:block">
               <a
                 href="tel:+19078918283"
                 className="group relative px-6 py-3 bg-white text-stone-950 font-bold uppercase text-xs tracking-widest overflow-hidden transition-all hover:bg-orange-600 hover:text-white flex items-center gap-2"
@@ -4266,7 +4261,6 @@ const App = () => {
                 <div className="absolute inset-0 bg-orange-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
               </a>
             </div>
-          )}
 
           {/* Mobile Menu Toggle */}
           <button
@@ -4329,14 +4323,12 @@ const App = () => {
                     Call (907) 891-8283
                   </a>
 
-                  {!isAdmin && (
-                    <button
-                      onClick={() => { openQuoteForm(); setMobileMenuOpen(false); }}
-                      className="bg-orange-600 text-white w-full py-4 text-lg font-bold uppercase tracking-widest hover:bg-orange-700 transition-all rounded-sm shadow-lg"
-                    >
-                      Get My Quote
-                    </button>
-                  )}
+                  <button
+                    onClick={() => { openQuoteForm(); setMobileMenuOpen(false); }}
+                    className="bg-orange-600 text-white w-full py-4 text-lg font-bold uppercase tracking-widest hover:bg-orange-700 transition-all rounded-sm shadow-lg"
+                  >
+                    Get My Quote
+                  </button>
                 </div>
               </div>
             </div>
@@ -4355,20 +4347,6 @@ const App = () => {
             setActiveService={setActiveService}
             services={services}
           />
-        ) : isAdmin ? (
-          <Suspense fallback={<PageLoadingFallback />}>
-            <AdminProjectForm
-              onAddProject={(project) => {
-                console.log('Project added:', project);
-                navigate('/');
-              }}
-              onClose={() => navigate('/')}
-            />
-          </Suspense>
-        ) : currentPath === '/gallery-archive' ? (
-          <Suspense fallback={<PageLoadingFallback />}>
-            <GalleryArchive onOpenQuote={openQuoteForm} />
-          </Suspense>
         ) : currentPath === '/products' ? (
           <Suspense fallback={<PageLoadingFallback />}>
             <ProductsPage onOpenQuote={openQuoteForm} navigate={navigate} />
@@ -4486,7 +4464,6 @@ const App = () => {
                 DECK MASTERS
               </div>
               <div className="flex flex-wrap justify-center gap-8">
-                <a href="#/admin" className="hover:text-white transition-colors">Admin</a>
                 <a href="#" className="hover:text-white transition-colors">Site Info</a>
                 <a href="#" className="hover:text-white transition-colors">Alaska Service Area</a>
                 <a href="#" className="hover:text-white transition-colors">Deck Building</a>
@@ -4509,8 +4486,6 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <App />
   </React.StrictMode>
 );
