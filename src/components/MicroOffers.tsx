@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Shield, Thermometer, Eye, ArrowRight } from 'lucide-react';
-import { MICRO_OFFERS } from '../config/migrationConfig';
+import { MICRO_OFFERS } from '../config/microOffers';
 import { analytics } from '../utils/analyticsTracker';
 
 interface MicroOffersProps {
