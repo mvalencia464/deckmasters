@@ -10,16 +10,13 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
-  // Generate list of 41 portfolio images (001-029, 043-054)
+  // Generate list of 38 portfolio images (001-029, 043-054 minus 003, 004, 007)
   const imageFiles = [
-    // Aerial (001-008)
+    // Aerial (001-008, excluding 003, 004, 007)
     '001-aerial-wraparound.webp',
     '002-aerial-overview.webp',
-    '003-aerial-detail.webp',
-    '004-aerial-landscape.webp',
     '005-aerial-wide.webp',
     '006-aerial-composite.webp',
-    '007-aerial-luxury.webp',
     '008-aerial-elevated.webp',
     // Masterpiece (009-012)
     '009-masterpiece-main.webp',
@@ -63,14 +60,11 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
   ];
 
   const imageCaptions = [
-    // Aerial (001-008)
+    // Aerial (001-008, excluding 003, 004, 007)
     "Why fly to Hawaii? Walk out your back door instead.",
     "The most impressive room in your house... isn't inside.",
-    "Turn your backyard into the private resort your neighbors envy.",
-    "Resort-style living, engineered for Alaska winters.",
     "Wraparound dreams. Custom built. 21-day guarantee.",
     "Premium composite that won't rot, warp, or splinter.",
-    "Unobstructed views. Wind-rated cable railing perfection.",
     "From concept to completion. No surprises. Just results.",
     // Masterpiece (009-012)
     "Hillside masterpiece. Built to outlast a lifetime.",
