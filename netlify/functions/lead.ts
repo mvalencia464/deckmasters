@@ -41,11 +41,11 @@ export const handler: Handler = async (event) => {
     }
 
     // 4. Forward data to GoHighLevel (GHL)
-    const ghlApiKey = process.env.VITE_HIGHLEVEL_TOKEN;
-    const ghlLocationId = process.env.VITE_HIGHLEVEL_LOCATION_ID;
+    const ghlApiKey = process.env.HIGHLEVEL_TOKEN || process.env.VITE_HIGHLEVEL_TOKEN;
+    const ghlLocationId = process.env.HIGHLEVEL_LOCATION_ID || process.env.VITE_HIGHLEVEL_LOCATION_ID;
 
     if (!ghlApiKey || !ghlLocationId) {
-       console.error('Configuration Error: VITE_HIGHLEVEL_TOKEN or VITE_HIGHLEVEL_LOCATION_ID is missing');
+       console.error('Configuration Error: HIGHLEVEL_TOKEN or HIGHLEVEL_LOCATION_ID is missing');
        throw new Error('Server configuration error');
     }
 

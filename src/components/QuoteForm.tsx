@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, CheckCircle, AlertCircle } from 'lucide-react';
 import { validateSimpleForm, sanitizeSimpleFormData, formatPhoneNumber, type SimpleFormData, type ValidationError } from '../utils/formValidation';
 import { submitLeadWithTurnstile, type LeadData } from '../utils/leadSubmission';
+import { analytics } from '../utils/analyticsTracker';
 import TurnstileWidget from './TurnstileWidget';
 
 // Declare google types globally if needed, or rely on runtime check
@@ -112,6 +113,10 @@ const QuoteForm = () => {
 
       if (result.success) {
         setIsSubmitted(true);
+        analytics.trackLead('website_quote_form', 'Quote Request');
+        analytics.trackFormSubmission('Quote Request Form', {
+          source: 'website'
+        });
         setFormData({
           name: '',
           email: '',
