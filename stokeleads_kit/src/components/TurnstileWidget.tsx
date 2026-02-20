@@ -4,7 +4,6 @@ interface TurnstileWidgetProps {
   siteKey: string;
   onVerify: (token: string) => void;
   onError?: (error: any) => void;
-  invisible?: boolean;
 }
 
 declare global {
@@ -16,10 +15,9 @@ declare global {
   }
 }
 
-const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, onError, invisible = false }) => {
+const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, onError }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  const hiddenContainerRef = useRef<HTMLDivElement>(null);
   
   // Use refs for callbacks to avoid re-rendering loop when parent passes inline functions
   const onVerifyRef = useRef(onVerify);
@@ -31,18 +29,15 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
   }, [onVerify, onError]);
 
   useEffect(() => {
-    // Determine which container to render to
-    const targetContainer = invisible ? hiddenContainerRef.current : containerRef.current;
-    if (!targetContainer) return;
+    if (!containerRef.current) return;
 
     // Function to render the widget
     const renderWidget = () => {
-      if (window.turnstile && targetContainer && !widgetIdRef.current) {
+      if (window.turnstile && containerRef.current && !widgetIdRef.current) {
         try {
-          const id = window.turnstile.render(targetContainer, {
+          const id = window.turnstile.render(containerRef.current, {
             sitekey: siteKey,
             theme: 'light',
-            size: 'invisible',
             callback: (token: string) => {
               if (onVerifyRef.current) onVerifyRef.current(token);
             },
@@ -81,11 +76,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ siteKey, onVerify, on
         widgetIdRef.current = null;
       }
     };
-  }, [siteKey, invisible]); // Re-run if siteKey or invisible changes
-
-  if (invisible) {
-    return <div ref={hiddenContainerRef} style={{ display: 'none' }} />;
-  }
+  }, [siteKey]);
 
   return <div ref={containerRef} className="my-4 min-h-[65px]" />;
 };
