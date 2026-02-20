@@ -42,20 +42,11 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
     '027-custom-sunset.webp',
     '028-custom-evening.webp',
     '029-custom-premium.webp',
-    // New Premium Images (043-054)
-    '043-premium-detail-1.webp',
-    '044-premium-detail-2.webp',
+    // New Premium Images (043-049)
     '045-wraparound-angle.webp',
-    '046-ground-level-1.webp',
-    '047-ground-level-2.webp',
     '048-lighting-detail.webp',
     '049-small-project.webp',
-    '050-bonus-1.webp',
-    '051-bonus-2.webp',
-    '052-bonus-3.webp',
-    '053-bonus-4.webp',
-    '054-bonus-5.webp',
-    // Final Image (055)
+    // Final Image
     'IMG_1055.webp',
   ];
 
@@ -90,20 +81,11 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
     "Sunset views. Stress-free living. No maintenance.",
     "Evening entertainment. Zero surprises. Pure joy.",
     "Premium custom design. Your vision. Our expertise.",
-    // Premium New Images (043-054)
-    "Handcrafted details that command attention.",
-    "Composite perfection. The finish you deserve.",
+    // Premium New Images (043-049)
     "Wraparound possibility. Resort living awaits.",
-    "Ground-level elegance. Entertaining made easy.",
-    "Multi-level design. Multiple dream spaces.",
     "Lighting that transforms day into magic.",
     "Every size deck deserves premium engineering.",
-    "Portfolio showcase. Proof of excellence.",
-    "Real results. Real homeowners. Real satisfaction.",
-    "Your backyard dream. Our specialty.",
-    "Built to impress. Built to last.",
-    "This could be your next Anchorage dream.",
-    // Final Image (055)
+    // Final Image
     "The finishing touch. Your deck complete.",
   ];
 
