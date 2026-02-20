@@ -38,11 +38,9 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   const ext = filename.slice(filename.lastIndexOf('.'));
 
   // Generate srcset with responsive variants
+  // Note: Some images may not have all variants, so we list the main image for all sizes as fallback
   const srcSet = [
-    `${basePath}${basename}-320${ext} 320w`,
-    `${basePath}${basename}-640${ext} 640w`,
-    `${basePath}${basename}-1024${ext} 1024w`,
-    `${src} 1440w`,
+    `${src} 320w, ${src} 640w, ${src} 1024w, ${src} 1440w`,
   ].join(', ');
 
   const handleLoad = () => {

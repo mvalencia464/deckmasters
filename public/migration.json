@@ -1,0 +1,58 @@
+{
+  "project_metadata": {
+    "brand": "Deck Masters AK",
+    "market": "Anchorage, Alaska",
+    "target_year": 2026,
+    "tech_stack": {
+      "frontend": "TypeScript, Vite, React",
+      "rendering": "SSR/SSG (Priority for SEO Preservation)",
+      "analytics": "Meta Pixel + GTM (SPA-safe routing)"
+    }
+  },
+  "seo_preservation_priority_urls": [
+    {
+      "path": "/",
+      "priority": "critical",
+      "gsc_clicks": 1103,
+      "target_keywords": ["deck builders anchorage", "anchorage deck builders"],
+      "andromeda_angle": "Angle 1: Premium Outdoor Luxury"
+    },
+    {
+      "path": "/is-trex-decking-right-for-you/",
+      "priority": "high",
+      "gsc_impressions": 48433,
+      "action": "Update to 2026 Alaska Specs",
+      "andromeda_angle": "Angle 4: Smart Investment"
+    },
+    {
+      "path": "/deck-repair/",
+      "priority": "high",
+      "gsc_position": 1.72,
+      "intent": "emergency/repair",
+      "andromeda_angle": "Angle 3: Trust/Fixed-Price"
+    }
+  ],
+  "conversion_components": {
+    "micro_offers": [
+      { "id": "safety_insp", "label": "Free Structural Safety Inspection", "trigger": "Trust Angle" },
+      { "id": "frost_heave", "label": "Free Frost-Heave Assessment", "trigger": "Value Angle" },
+      { "id": "3d_render", "label": "Free 3D Design Preview", "trigger": "Luxury Angle" }
+    ],
+    "sticky_cta": {
+      "mobile_only": true,
+      "label": "Get My Quote",
+      "goal": "Improve 1.77% Mobile CTR"
+    }
+  },
+  "meta_ads_integration": {
+    "tracking_requirements": "Ensure route-change listeners trigger 'Lead' events",
+    "campaign_sync": [
+      { "name": "Andromeda Matrix", "type": "ABO Testing", "angles": 5 }
+    ]
+  },
+  "migration_safety_checks": {
+    "301_redirects": "Strict 1:1 mapping required for all Signal Pages",
+    "pruning": "Delete /tag/ and /author/ pages with 0 clicks",
+    "benchmarking": "Pre-migration export of GSC rankings for 1.02-2.33 position terms"
+  }
+}

@@ -23,7 +23,7 @@ import PortfolioGrid from './src/components/PortfolioGrid';
 import ProcessSection from './src/components/ProcessSection';
 import { MOCK_PROJECTS } from './src/constants/portfolio';
 import { mapAssetUrl } from './src/utils/assetMapper';
-import FloatingActionButton from './src/components/FloatingActionButton';
+import { analytics } from './src/utils/analyticsTracker';
 
 // Loading fallback component for lazy-loaded pages
 const PageLoadingFallback = () => (
@@ -4145,15 +4145,22 @@ const App = () => {
 
   useEffect(() => {
     const onHashChange = () => {
-      setCurrentPath(getHashPath());
+      const newPath = getHashPath();
+      setCurrentPath(newPath);
       window.scrollTo(0, 0);
       setMobileMenuOpen(false);
+      
+      // Track page view with analytics
+      analytics.trackPageView(newPath, document.title);
     };
 
     // Ensure initial state matches URL
     if (!window.location.hash) {
       // Optional: force hash if needed, but better to let "/" handle it
     }
+
+    // Track initial page load
+    analytics.trackPageView(getHashPath(), document.title);
 
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
@@ -4278,49 +4285,70 @@ const App = () => {
         </div>
 
         {/* Mobile Menu Overlay */}
-        <div className={`fixed inset-0 bg-stone-950 z-[60] flex flex-col justify-start pt-32 px-8 transition-transform duration-500 ease-in-out overflow-y-auto ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <button
-            className="absolute top-8 right-8 text-white p-2 hover:text-orange-500 transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            <X className="w-8 h-8" />
-          </button>
-          <div className="flex flex-col gap-6 text-xl font-display font-bold uppercase tracking-wide text-stone-300 pb-12">
-            <button onClick={() => { navigate('/'); setMobileMenuOpen(false); }} className="text-left hover:text-orange-500 border-b border-stone-800 pb-4">Home</button>
-
-            {/* Mobile Services Accordion (Simplified) */}
-            <div className="text-sm text-orange-600 font-bold uppercase tracking-widest pt-2">Services</div>
-            <div className="flex flex-col gap-4 pl-4 border-l border-stone-800">
-              {core30Pages.filter(p => p.layer === 2).map(p => (
-                <button key={p.slug} onClick={() => { navigate(p.slug); setMobileMenuOpen(false); }} className="text-left text-lg text-stone-400 hover:text-white transition-colors">{p.category}</button>
-              ))}
-            </div>
-
-            <div className="border-t border-stone-800 pt-6 flex flex-col gap-4">
-              <a href="#work" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500">Work</a>
-              <a href="#reviews" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500">Reviews</a>
-            </div>
-
-            <div className="mt-8 flex flex-col gap-4">
-              <a
-                href="tel:+19078918283"
-                className="bg-white text-stone-950 w-full py-5 text-lg font-bold uppercase tracking-widest hover:bg-stone-200 transition-all flex items-center justify-center gap-3 rounded-sm shadow-xl"
-              >
-                <Phone className="w-5 h-5" />
-                Call (907) 891-8283
-              </a>
-
-              {!isAdmin && (
-                <button
-                  onClick={openQuoteForm}
-                  className="bg-orange-600 text-white w-full py-5 text-lg font-bold uppercase tracking-widest hover:bg-orange-700 transition-all rounded-sm shadow-xl shadow-orange-900/20"
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 bg-stone-950 z-40 md:hidden overflow-y-auto">
+            <div className="pt-24 px-6 pb-24">
+              <div className="flex flex-col gap-6">
+                <button 
+                  onClick={() => { navigate('/'); setMobileMenuOpen(false); }} 
+                  className="text-left text-2xl font-display font-bold uppercase text-white hover:text-orange-500 border-b border-stone-800 pb-4"
                 >
-                  Start Project Link
+                  Home
                 </button>
-              )}
+
+                {/* Mobile Services List */}
+                <div>
+                  <div className="text-sm text-orange-600 font-bold uppercase tracking-widest mb-4">Services</div>
+                  <div className="flex flex-col gap-3 pl-4 border-l border-stone-800">
+                    {core30Pages.filter(p => p.layer === 2).map(p => (
+                      <button 
+                        key={p.slug} 
+                        onClick={() => { navigate(p.slug); setMobileMenuOpen(false); }} 
+                        className="text-left text-lg text-stone-400 hover:text-white hover:text-orange-500 transition-colors font-bold uppercase tracking-wide"
+                      >
+                        {p.category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="border-t border-stone-800 pt-6 flex flex-col gap-4">
+                  <button 
+                    onClick={() => { setMobileMenuOpen(false); setTimeout(() => document.getElementById('portfolio')?.scrollIntoView(), 100); }} 
+                    className="text-left text-xl font-display font-bold uppercase text-stone-300 hover:text-orange-500 transition-colors"
+                  >
+                    Work
+                  </button>
+                  <button 
+                    onClick={() => { setMobileMenuOpen(false); setTimeout(() => document.getElementById('reviews')?.scrollIntoView(), 100); }} 
+                    className="text-left text-xl font-display font-bold uppercase text-stone-300 hover:text-orange-500 transition-colors"
+                  >
+                    Reviews
+                  </button>
+                </div>
+
+                <div className="mt-8 flex flex-col gap-3 border-t border-stone-800 pt-6">
+                  <a
+                    href="tel:+19078918283"
+                    className="bg-white text-stone-950 w-full py-4 text-lg font-bold uppercase tracking-widest hover:bg-stone-200 transition-all flex items-center justify-center gap-3 rounded-sm shadow-lg"
+                  >
+                    <Phone className="w-5 h-5" />
+                    Call (907) 891-8283
+                  </a>
+
+                  {!isAdmin && (
+                    <button
+                      onClick={() => { openQuoteForm(); setMobileMenuOpen(false); }}
+                      className="bg-orange-600 text-white w-full py-4 text-lg font-bold uppercase tracking-widest hover:bg-orange-700 transition-all rounded-sm shadow-lg"
+                    >
+                      Get My Quote
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </nav>
 
       {/* Main Content Router */}

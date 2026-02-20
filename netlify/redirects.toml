@@ -1,0 +1,270 @@
+# SEO Preservation Redirects
+# 301 Redirects for GSC Signal Pages & URL migrations
+# Based on migration.json analysis
+
+# ==============================================================================
+# CRITICAL PRIORITY REDIRECTS (1:1 signal preservation)
+# ==============================================================================
+
+# Homepage - Always critical
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = false
+
+# ==============================================================================
+# HIGH PRIORITY REDIRECTS (High GSC Clicks/Impressions)
+# ==============================================================================
+
+# Trex decking article - 48,433 impressions, major ranking asset
+[[redirects]]
+  from = "/is-trex-decking-right-for-you"
+  to = "/deck-materials-components/trex-deck-installation"
+  status = 301
+  force = false
+
+# Deck repair landing - Position 1.72, emergency intent
+[[redirects]]
+  from = "/deck-repair"
+  to = "/deck-repair-maintenance/deck-repair"
+  status = 301
+  force = false
+
+# Dock building service page
+[[redirects]]
+  from = "/dock-building"
+  to = "/dock-building/"
+  status = 301
+  force = false
+
+# Custom deck design service
+[[redirects]]
+  from = "/custom-deck-design"
+  to = "/custom-deck-design/"
+  status = 301
+  force = false
+
+# ==============================================================================
+# CONTENT TYPE CONSOLIDATION (Services to Layer 2 Categories)
+# ==============================================================================
+
+# New construction variations consolidated to main category
+[[redirects]]
+  from = "/new-deck-construction-services"
+  to = "/new-deck-construction"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/deck-building-services"
+  to = "/new-deck-construction"
+  status = 301
+  force = false
+
+# ==============================================================================
+# PRUNING REDIRECTS (0 GSC signals - delete /tag/ and /author/)
+# ==============================================================================
+
+# Tag archive pages - no organic value
+[[redirects]]
+  from = "/tag/*"
+  to = "/"
+  status = 301
+  force = false
+
+# Author archive pages - no organic value
+[[redirects]]
+  from = "/author/*"
+  to = "/"
+  status = 301
+  force = false
+
+# Category archive pages - consolidate to main categories
+[[redirects]]
+  from = "/category/deck-design/*"
+  to = "/custom-deck-design"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/category/deck-repair/*"
+  to = "/deck-repair-maintenance"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/category/*"
+  to = "/"
+  status = 301
+  force = false
+
+# ==============================================================================
+# MATERIAL CONSOLIDATION (All composites → /deck-materials-components/)
+# ==============================================================================
+
+[[redirects]]
+  from = "/composite-decking"
+  to = "/deck-materials-components/composite-decking"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/pressure-treated-decking"
+  to = "/deck-materials-components/pressure-treated-decks"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/cedar-deck"
+  to = "/deck-materials-components/cedar-decking"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/trex-decking"
+  to = "/deck-materials-components/trex-deck-installation"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/vinyl-decking"
+  to = "/deck-materials-components/vinyl-decking"
+  status = 301
+  force = false
+
+# ==============================================================================
+# REPAIR & MAINTENANCE CONSOLIDATION
+# ==============================================================================
+
+[[redirects]]
+  from = "/deck-maintenance"
+  to = "/deck-repair-maintenance"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/deck-restoration"
+  to = "/deck-repair-maintenance/deck-repair"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/deck-staining-sealing"
+  to = "/deck-repair-maintenance/deck-staining"
+  status = 301
+  force = false
+
+# ==============================================================================
+# BLOG → LAYER 2 CONTENT MIGRATION
+# ==============================================================================
+
+# Frost heave content
+[[redirects]]
+  from = "/blog/frost-heave-decks"
+  to = "/new-deck-construction"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/blog/anchorage-deck-frost"
+  to = "/deck-repair-maintenance"
+  status = 301
+  force = false
+
+# Material comparison articles
+[[redirects]]
+  from = "/blog/wood-vs-composite"
+  to = "/deck-materials-components"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/blog/deck-maintenance-guide"
+  to = "/deck-repair-maintenance"
+  status = 301
+  force = false
+
+# Design articles
+[[redirects]]
+  from = "/blog/deck-design-tips"
+  to = "/custom-deck-design"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/blog/outdoor-living"
+  to = "/custom-deck-design"
+  status = 301
+  force = false
+
+# General blog archive cleanup
+[[redirects]]
+  from = "/blog/*"
+  to = "/"
+  status = 301
+  force = false
+
+# ==============================================================================
+# LOCATION PAGE CONSOLIDATION
+# ==============================================================================
+
+# Alaska service area pages - consolidate to main service pages
+[[redirects]]
+  from = "/anchorage-decks"
+  to = "/new-deck-construction"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/eagle-river-decks"
+  to = "/new-deck-construction"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/chugiak-decks"
+  to = "/new-deck-construction"
+  status = 301
+  force = false
+
+# ==============================================================================
+# TRAILING SLASH NORMALIZATION
+# ==============================================================================
+
+# Enforce trailing slashes for consistency
+[[redirects]]
+  from = "/new-deck-construction"
+  to = "/new-deck-construction/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/custom-deck-design"
+  to = "/custom-deck-design/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/deck-repair-maintenance"
+  to = "/deck-repair-maintenance/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/deck-materials-components"
+  to = "/deck-materials-components/"
+  status = 301
+  force = true
+
+# ==============================================================================
+# LEGACY 404 SAFETY NET
+# ==============================================================================
+
+# Catch-all for other old domain patterns
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 301
+  force = false
+  conditions = { Host = ["deckmastersak-old.com", "www.deckmastersak-old.com"] }
