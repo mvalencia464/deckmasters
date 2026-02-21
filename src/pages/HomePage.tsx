@@ -5,9 +5,7 @@ import TestimonialRotator from '../components/TestimonialRotator';
 import QuoteForm from '../components/QuoteForm';
 import PortfolioGrid from '../components/PortfolioGrid';
 import ReviewsGridWithModal from '../components/ReviewsGridWithModal';
-import FAQSection from '../components/FAQSection';
 import ProcessSection from '../components/ProcessSection';
-import { HOME_PAGE_FAQS } from '../data/faqs';
 import testimonialsData from '../data/testimonials.json';
 
 const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService, setActiveService, services }) => (
@@ -183,14 +181,6 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
         </div>
       </div>
     </section>
-
-    {/* FAQ Section */}
-    <FAQSection
-      items={HOME_PAGE_FAQS}
-      title="Questions About Our Process?"
-      subtitle="We believe in transparency. Here are the answers to our most common questions about timeline, pricing, and quality."
-      className="bg-stone-50"
-    />
 
     {/* Process Section */}
     <ProcessSection />

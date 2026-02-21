@@ -30,41 +30,44 @@ const FAQSection: React.FC<FAQSectionProps> = ({
   };
 
   return (
-    <section className={`py-20 px-6 ${className}`}>
+    <section className={`py-20 px-6 bg-stone-950 border-t border-stone-800 ${className}`}>
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-16 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-4">
+        <div className="mb-16">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-[1px] w-12 bg-orange-600" />
+            <span className="text-orange-500 font-bold uppercase tracking-[0.3em] text-sm">FAQ</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-display font-bold uppercase text-white mb-4">
             {title}
           </h2>
-          {subtitle && <p className="text-xl text-stone-600">{subtitle}</p>}
+          {subtitle && <p className="text-stone-400 text-lg max-w-2xl">{subtitle}</p>}
         </div>
 
         {/* FAQ Items */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {items.map((item) => (
             <div
               key={item.id}
-              className="border border-stone-300 rounded-lg overflow-hidden hover:border-orange-600 transition-colors"
+              className="border border-stone-800 overflow-hidden hover:border-orange-600/50 transition-colors duration-300"
             >
               <button
                 onClick={() => toggleExpanded(item.id)}
-                className="w-full px-6 py-5 flex items-start justify-between gap-4 bg-white hover:bg-stone-50 transition-colors text-left"
+                className="w-full px-6 py-5 flex items-start justify-between gap-4 bg-stone-900/50 hover:bg-stone-900 transition-colors text-left"
               >
-                <span className="text-lg font-semibold text-stone-900 flex-1">
+                <span className="text-base md:text-lg font-semibold text-white flex-1">
                   {item.question}
                 </span>
                 <ChevronDown
-                  className={`w-6 h-6 text-orange-600 flex-shrink-0 transition-transform duration-300 ${
-                    expandedId === item.id ? "rotate-180" : ""
-                  }`}
+                  className={`w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5 transition-transform duration-300 ${expandedId === item.id ? "rotate-180" : ""
+                    }`}
                 />
               </button>
 
               {/* Answer */}
               {expandedId === item.id && (
-                <div className="px-6 py-5 bg-stone-50 border-t border-stone-300">
-                  <div className="text-stone-700 leading-relaxed space-y-3">
+                <div className="px-6 py-5 bg-stone-900 border-t border-stone-800">
+                  <div className="text-stone-400 leading-relaxed space-y-3">
                     {item.answer.split("\n\n").map((paragraph, idx) => (
                       <p key={idx}>{paragraph}</p>
                     ))}

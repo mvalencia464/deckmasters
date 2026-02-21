@@ -1,10 +1,27 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import PageLoadingFallback from './PageLoadingFallback';
+import FAQSection from './FAQSection';
 import parseMarkdown from '../utils/markdown';
+import {
+    NEW_CONSTRUCTION_FAQS,
+    MATERIALS_FAQS,
+    MAINTENANCE_FAQS,
+    TRUST_FAQS,
+} from '../data/faqs';
+
+// Map Layer 2 slugs to their specific FAQ sets
+const LAYER2_FAQS: Record<string, typeof NEW_CONSTRUCTION_FAQS> = {
+    '/new-deck-construction': NEW_CONSTRUCTION_FAQS,
+    '/deck-repair-maintenance': MAINTENANCE_FAQS,
+    '/custom-deck-design': TRUST_FAQS,
+    '/deck-materials-components': MATERIALS_FAQS,
+};
 
 const ServicePageTemplate = ({ pageData, openQuoteForm, navigate }) => {
     if (!pageData) return <PageLoadingFallback />;
+
+    const categoryFAQs = pageData.layer === 2 ? LAYER2_FAQS[pageData.slug] : null;
 
     return (
         <>
@@ -59,6 +76,15 @@ const ServicePageTemplate = ({ pageData, openQuoteForm, navigate }) => {
                     ))}
                 </div>
             </section>
+
+            {/* FAQ Section — Layer 2 pages only */}
+            {categoryFAQs && categoryFAQs.length > 0 && (
+                <FAQSection
+                    items={categoryFAQs}
+                    title="Common Questions"
+                    subtitle="Straight answers to the most common questions we hear on this topic."
+                />
+            )}
 
             {/* CTA */}
             <section className="py-20 bg-stone-900 border-t border-stone-800">
