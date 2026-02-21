@@ -108,3 +108,42 @@ const projects: Project[] = [
 ];
 
 export const MOCK_PROJECTS: Project[] = projects;
+
+export const PORTFOLIO_GALLERY = [
+  // Aerial
+  { src: '/images/portfolio/001-aerial-wraparound.webp', caption: "Why fly to Hawaii? Walk out your back door instead." },
+  { src: '/images/portfolio/002-aerial-overview.webp', caption: "The most impressive room in your house... isn't inside." },
+  { src: '/images/portfolio/005-aerial-wide.webp', caption: "Wraparound dreams. Custom built. 21-day guarantee." },
+  { src: '/images/portfolio/006-aerial-composite.webp', caption: "Premium composite that won't rot, warp, or splinter." },
+  { src: '/images/portfolio/008-aerial-elevated.webp', caption: "From concept to completion. No surprises. Just results." },
+  // Masterpiece
+  { src: '/images/portfolio/009-masterpiece-main.webp', caption: "Hillside masterpiece. Built to outlast a lifetime." },
+  { src: '/images/portfolio/010-masterpiece-detail.webp', caption: "Precision craftsmanship in every hidden fastener." },
+  { src: '/images/portfolio/011-masterpiece-railing.webp', caption: "Cable railing. Flawless views. Absolute confidence." },
+  { src: '/images/portfolio/012-masterpiece-lighting.webp', caption: "Integrated lighting that transforms your evenings." },
+  // Contemporary
+  { src: '/images/portfolio/013-contemporary-covered.webp', caption: "Year-round outdoor living. Covered. Protected. Yours." },
+  { src: '/images/portfolio/014-contemporary-outdoor.webp', caption: "Where entertaining becomes art. Where summer never ends." },
+  { src: '/images/portfolio/015-contemporary-seating.webp', caption: "Built-in seating for the entertaining life you deserve." },
+  { src: '/images/portfolio/016-contemporary-angle.webp', caption: "Modern design meets Alaska engineering excellence." },
+  { src: '/images/portfolio/017-contemporary-design.webp', caption: "Contemporary beauty. Frost-heave resistant. Built right." },
+  { src: '/images/portfolio/018-contemporary-modern.webp', caption: "Composite elegance. No maintenance. All luxury." },
+  { src: '/images/portfolio/019-contemporary-finish.webp', caption: "Finished to perfection. Ready to host. Ready to impress." },
+  { src: '/images/portfolio/020-contemporary-full.webp', caption: "The view from here? Priceless. The deck? An investment." },
+  // Custom
+  { src: '/images/portfolio/021-custom-entrance.webp', caption: "Custom entrance to your outdoor sanctuary." },
+  { src: '/images/portfolio/022-custom-stairs.webp', caption: "Engineered stairs. Designed for confidence." },
+  { src: '/images/portfolio/023-custom-railing.webp', caption: "Cable railing that preserves every mountain view." },
+  { src: '/images/portfolio/024-custom-platform.webp', caption: "The platform for your best summer memories." },
+  { src: '/images/portfolio/025-custom-ambiance.webp', caption: "Twilight ambiance. Your personal resort." },
+  { src: '/images/portfolio/026-custom-landscape.webp', caption: "Landscape integration. Seamless beauty." },
+  { src: '/images/portfolio/027-custom-sunset.webp', caption: "Sunset views. Stress-free living. No maintenance." },
+  { src: '/images/portfolio/028-custom-evening.webp', caption: "Evening entertainment. Zero surprises. Pure joy." },
+  { src: '/images/portfolio/029-custom-premium.webp', caption: "Premium custom design. Your vision. Our expertise." },
+  // Premium New Images
+  { src: '/images/portfolio/045-wraparound-angle.webp', caption: "Wraparound possibility. Resort living awaits." },
+  { src: '/images/portfolio/048-lighting-detail.webp', caption: "Lighting that transforms day into magic." },
+  { src: '/images/portfolio/049-small-project.webp', caption: "Every size deck deserves premium engineering." },
+  // Final Image
+  { src: '/images/portfolio/IMG_1055.webp', caption: "The finishing touch. Your deck complete." }
+];

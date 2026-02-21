@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import ResponsiveImage from './ResponsiveImage';
+import { PORTFOLIO_GALLERY } from '../constants/portfolio';
 
 interface PortfolioGridProps {
   images?: string[];
@@ -9,87 +10,14 @@ interface PortfolioGridProps {
 export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  // Generate list of 38 portfolio images (001-029, 043-054 minus 003, 004, 007)
-  const imageFiles = [
-    // Aerial (001-008, excluding 003, 004, 007)
-    '001-aerial-wraparound.webp',
-    '002-aerial-overview.webp',
-    '005-aerial-wide.webp',
-    '006-aerial-composite.webp',
-    '008-aerial-elevated.webp',
-    // Masterpiece (009-012)
-    '009-masterpiece-main.webp',
-    '010-masterpiece-detail.webp',
-    '011-masterpiece-railing.webp',
-    '012-masterpiece-lighting.webp',
-    // Contemporary (013-020)
-    '013-contemporary-covered.webp',
-    '014-contemporary-outdoor.webp',
-    '015-contemporary-seating.webp',
-    '016-contemporary-angle.webp',
-    '017-contemporary-design.webp',
-    '018-contemporary-modern.webp',
-    '019-contemporary-finish.webp',
-    '020-contemporary-full.webp',
-    // Custom (021-029)
-    '021-custom-entrance.webp',
-    '022-custom-stairs.webp',
-    '023-custom-railing.webp',
-    '024-custom-platform.webp',
-    '025-custom-ambiance.webp',
-    '026-custom-landscape.webp',
-    '027-custom-sunset.webp',
-    '028-custom-evening.webp',
-    '029-custom-premium.webp',
-    // New Premium Images (043-049)
-    '045-wraparound-angle.webp',
-    '048-lighting-detail.webp',
-    '049-small-project.webp',
-    // Final Image
-    'IMG_1055.webp',
-  ];
 
-  const imageCaptions = [
-    // Aerial (001-008, excluding 003, 004, 007)
-    "Why fly to Hawaii? Walk out your back door instead.",
-    "The most impressive room in your house... isn't inside.",
-    "Wraparound dreams. Custom built. 21-day guarantee.",
-    "Premium composite that won't rot, warp, or splinter.",
-    "From concept to completion. No surprises. Just results.",
-    // Masterpiece (009-012)
-    "Hillside masterpiece. Built to outlast a lifetime.",
-    "Precision craftsmanship in every hidden fastener.",
-    "Cable railing. Flawless views. Absolute confidence.",
-    "Integrated lighting that transforms your evenings.",
-    // Contemporary (013-020)
-    "Year-round outdoor living. Covered. Protected. Yours.",
-    "Where entertaining becomes art. Where summer never ends.",
-    "Built-in seating for the entertaining life you deserve.",
-    "Modern design meets Alaska engineering excellence.",
-    "Contemporary beauty. Frost-heave resistant. Built right.",
-    "Composite elegance. No maintenance. All luxury.",
-    "Finished to perfection. Ready to host. Ready to impress.",
-    "The view from here? Priceless. The deck? An investment.",
-    // Custom (021-029)
-    "Custom entrance to your outdoor sanctuary.",
-    "Engineered stairs. Designed for confidence.",
-    "Cable railing that preserves every mountain view.",
-    "The platform for your best summer memories.",
-    "Twilight ambiance. Your personal resort.",
-    "Landscape integration. Seamless beauty.",
-    "Sunset views. Stress-free living. No maintenance.",
-    "Evening entertainment. Zero surprises. Pure joy.",
-    "Premium custom design. Your vision. Our expertise.",
-    // Premium New Images (043-049)
-    "Wraparound possibility. Resort living awaits.",
-    "Lighting that transforms day into magic.",
-    "Every size deck deserves premium engineering.",
-    // Final Image
-    "The finishing touch. Your deck complete.",
-  ];
+  const portfolioImages = images || PORTFOLIO_GALLERY.map(item => item.src);
 
-  const portfolioImages = images || imageFiles.map(filename => `/images/portfolio/${filename}`);
+  const getCaption = (index: number) => {
+    if (images) return `Project Image ${index + 1}`;
+    return PORTFOLIO_GALLERY[index]?.caption || '';
+  };
+
 
   const handleImageClick = (index: number) => {
     setSelectedImage(portfolioImages[index]);
@@ -101,11 +29,11 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
   const preloadAdjacentImages = (currentIndex: number) => {
     const nextIndex = (currentIndex + 1) % portfolioImages.length;
     const prevIndex = (currentIndex - 1 + portfolioImages.length) % portfolioImages.length;
-    
+
     // Preload in background
     const nextImg = new Image();
     nextImg.src = portfolioImages[nextIndex];
-    
+
     const prevImg = new Image();
     prevImg.src = portfolioImages[prevIndex];
   };
@@ -128,7 +56,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (!selectedImage) return;
-      
+
       if (e.key === 'ArrowRight') {
         e.preventDefault();
         handleNextImage();
@@ -168,27 +96,27 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
         </div>
 
         {/* Image Grid */}
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[250px]">
-           {portfolioImages.map((imageUrl, index) => (
-             <div
-               key={index}
-               onClick={() => handleImageClick(index)}
-               className="relative group overflow-hidden rounded-sm bg-stone-800 cursor-pointer"
-             >
-               <ResponsiveImage
-                 src={imageUrl}
-                 alt={imageCaptions[index]}
-                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                 containerClassName="absolute inset-0 w-full h-full"
-                 sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, (max-width: 1440px) 1024px, 640px"
-                 priority={false}
-               />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[250px]">
+          {portfolioImages.map((imageUrl, index) => (
+            <div
+              key={index}
+              onClick={() => handleImageClick(index)}
+              className="relative group overflow-hidden rounded-sm bg-stone-800 cursor-pointer"
+            >
+              <ResponsiveImage
+                src={imageUrl}
+                alt={getCaption(index)}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                containerClassName="absolute inset-0 w-full h-full"
+                sizes="(max-width: 640px) 320px, (max-width: 1024px) 640px, (max-width: 1440px) 1024px, 640px"
+                priority={false}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <p className="text-white text-xs font-semibold leading-tight">{imageCaptions[index]}</p>
-                </div>
-                </div>
-                ))}
+                <p className="text-white text-xs font-semibold leading-tight">{getCaption(index)}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -221,13 +149,13 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ images }) => {
           <div className="flex flex-col items-center gap-4 max-w-4xl w-full">
             <ResponsiveImage
               src={selectedImage}
-              alt={imageCaptions[currentImageIndex]}
+              alt={getCaption(currentImageIndex)}
               className="max-h-[75vh] max-w-[90vw] object-contain rounded-sm"
               priority={true}
             />
             <div className="bg-black/50 backdrop-blur-sm px-6 py-3 rounded-sm max-w-2xl">
               <p className="text-white text-sm font-semibold leading-relaxed text-center">
-                {imageCaptions[currentImageIndex]}
+                {getCaption(currentImageIndex)}
               </p>
               <p className="text-stone-400 text-xs text-center mt-2 font-medium">
                 Image {currentImageIndex + 1} of {portfolioImages.length}

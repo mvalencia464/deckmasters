@@ -41,7 +41,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   useEffect(() => {
     setIsLoading(priority ? false : true);
     setHasError(false);
-    
+
     const img = imgRef.current;
     if (img && img.complete) {
       setIsLoading(false);
@@ -50,22 +50,22 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   }, [src, priority, onLoad]);
 
   // Generate responsive srcset with available image variants
-  const generateSrcSet = (imagePath: string): string => {
+  const generateSrcSet = (imagePath: string): string | undefined => {
     // Extract base path without extension
     const basePath = imagePath.replace(/\.webp$/, '');
-    
+
     // For portfolio images, just use the base image without srcset variants
     // This avoids 404s for missing responsive variants
     if (basePath.includes('/portfolio/')) {
-      return imagePath;
+      return undefined;
     }
-    
+
     // Check if this is a non-portfolio image that has variants
     if (basePath.match(/-(320|640|1024)$/)) {
       // Already a specific size variant, don't modify
-      return imagePath;
+      return undefined;
     }
-    
+
     // For other images, check if they have variants
     return `${basePath}-320.webp 320w, ${basePath}-640.webp 640w, ${basePath}.webp 1024w`;
   };
@@ -90,7 +90,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
         ref={imgRef}
         src={src}
         srcSet={srcSet}
-        sizes={sizes}
+        sizes={srcSet ? sizes : undefined}
         alt={alt}
         className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${className}`}
         loading={priority ? 'eager' : 'lazy'}

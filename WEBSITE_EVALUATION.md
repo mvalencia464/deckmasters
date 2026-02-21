@@ -74,7 +74,7 @@ Here is the breakdown of the high-end infrastructure and engineering that powers
 
 ### ✅ Optimizations Completed:
 *   **Removed Unused Admin Infrastructure:** Deleted `/advertising/` directory (8 files including marketing strategies, meta ads guides, and performance data) and `/src/components/admin/AdvertisingPlan.tsx` component—reducing cognitive load and bundle bloat.
-*   **Consolidated Portfolio Data:** Removed redundant `portfolio-data.json` and `projects.json` files. The homepage now uses a single, optimized image gallery display with hardcoded project references.
+*   **Consolidated Portfolio Data:** Refactored the UI to use a centralized `PORTFOLIO_GALLERY` constant instead of hardcoded component data. Safely removed the unused `PortfolioSection.tsx` component, further reducing JavaScript bundle bloat.
 *   **Cleaned Reference Files:** Updated `robots.txt` (removed `/admin/` disallow) and `index.tsx` (removed admin comments) for a clean codebase with zero dead references.
 *   **Result:** ~3,800 lines of code removed, zero functionality loss, improved maintainability.
 
