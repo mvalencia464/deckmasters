@@ -36,6 +36,77 @@ const PageLoadingFallback = () => (
   </div>
 );
 
+const MobileMenu = React.memo(({ isOpen, onClose, navigate, openQuoteForm, pages }) => {
+  return (
+    <div
+      className={`fixed inset-0 z-[100] transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+    >
+      <div className="absolute inset-0 bg-stone-950/80 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className={`absolute top-0 right-0 w-full max-w-sm h-full bg-stone-950 border-l border-white/10 shadow-2xl flex flex-col transition-transform duration-300 ease-out delay-75 ${isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+      >
+        <div className="flex justify-between items-center p-6 border-b border-white/5">
+          <span className="text-sm font-display font-bold uppercase tracking-[0.2em] text-white">Menu</span>
+          <button onClick={onClose} className="text-stone-400 hover:text-white transition-colors">
+            <X className="w-8 h-8" />
+          </button>
+        </div>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            <button
+              onClick={() => { navigate('/'); onClose(); }}
+              className="text-left text-2xl font-display font-bold uppercase text-white hover:text-orange-500 transition-colors"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => { onClose(); setTimeout(() => document.getElementById('portfolio')?.scrollIntoView(), 100); }}
+              className="text-left text-2xl font-display font-bold uppercase text-stone-300 hover:text-orange-500 transition-colors"
+            >
+              Work
+            </button>
+            <button
+              onClick={() => { onClose(); setTimeout(() => document.getElementById('reviews')?.scrollIntoView(), 100); }}
+              className="text-left text-2xl font-display font-bold uppercase text-stone-300 hover:text-orange-500 transition-colors"
+            >
+              Reviews
+            </button>
+          </div>
+
+          <div className="pt-6 border-t border-white/5">
+            <span className="text-xs text-orange-600 font-bold uppercase tracking-widest block mb-4">Services</span>
+            <div className="flex flex-col gap-4">
+              {pages.map(p => (
+                <button
+                  key={p.slug}
+                  onClick={() => { navigate(p.slug); onClose(); }}
+                  className="text-left text-sm text-stone-400 hover:text-orange-500 transition-colors font-bold uppercase tracking-wide"
+                >
+                  {p.category}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Sticky Bottom CTA */}
+        <div className="p-6 border-t border-white/5 bg-stone-950">
+          <button
+            onClick={() => { openQuoteForm(); onClose(); }}
+            className="w-full bg-orange-600 text-white py-4 font-bold uppercase tracking-widest hover:bg-orange-700 transition-colors"
+          >
+            Get Free Quote
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
 // --- CORE 30 DATA STRUCTURE ---
 const core30Pages = [
   // Layer 2 Categories
@@ -3867,7 +3938,7 @@ const ReviewsGridWithModal = ({ testimonialsData }) => {
         {filteredReviews.map((review, i) => {
           // Check if this is a video testimonial
           const isVideoTestimonial = review.videoUrl && typeof review.videoUrl === 'string';
-          
+
           return isVideoTestimonial ? (
             // Video Testimonial Card
             <TestimonialVideoCard key={i} {...review} />
@@ -3879,57 +3950,57 @@ const ReviewsGridWithModal = ({ testimonialsData }) => {
             >
               {/* Images Carousel - SIMPLIFIED */}
               {review.images && review.images.length > 0 && (
-                <div 
+                <div
                   className="w-full aspect-video cursor-pointer"
                   onClick={() => setSelectedReview(review)}
                 >
-                   <img
-                     src={review.images[0]}
-                     alt={`${review.author} project`}
-                     className="w-full h-full object-cover"
-                   />
+                  <img
+                    src={review.images[0]}
+                    alt={`${review.author} project`}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               )}
 
-            {/* Content */}
-            <div className="p-6">
-              {/* Stars */}
-              <div className="flex gap-1 mb-4">
-                {[...Array(review.rating)].map((_, s) => (
-                  <Star key={s} className="w-3.5 h-3.5 text-orange-500 fill-orange-500" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="text-stone-300 text-sm leading-relaxed mb-5 font-light">
-                &ldquo;{review.text}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-4 border-t border-stone-800">
-                {/* Avatar circle */}
-                <div className="w-8 h-8 rounded-full bg-orange-600/20 border border-orange-600/30 flex items-center justify-center shrink-0 overflow-hidden relative">
-                  {review.avatarUrl && (
-                    <img
-                      src={review.avatarUrl}
-                      alt={review.author}
-                      className="absolute inset-0 w-full h-full object-cover z-10"
-                      loading="lazy"
-                    />
-                  )}
-                  <span className="text-orange-500 text-xs font-bold uppercase z-0">
-                    {review.author ? review.author.charAt(0) : '?'}
-                  </span>
+              {/* Content */}
+              <div className="p-6">
+                {/* Stars */}
+                <div className="flex gap-1 mb-4">
+                  {[...Array(review.rating)].map((_, s) => (
+                    <Star key={s} className="w-3.5 h-3.5 text-orange-500 fill-orange-500" />
+                  ))}
                 </div>
-                <div>
-                  <div className="text-white font-bold text-xs uppercase tracking-wider">{review.author}</div>
-                  <div className="text-stone-600 text-[10px] uppercase tracking-widest flex items-center gap-1 mt-0.5">
-                    <svg className="w-2.5 h-2.5 fill-current text-stone-500" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg>
-                    Google Review
+
+                {/* Quote */}
+                <p className="text-stone-300 text-sm leading-relaxed mb-5 font-light">
+                  &ldquo;{review.text}&rdquo;
+                </p>
+
+                {/* Author */}
+                <div className="flex items-center gap-3 pt-4 border-t border-stone-800">
+                  {/* Avatar circle */}
+                  <div className="w-8 h-8 rounded-full bg-orange-600/20 border border-orange-600/30 flex items-center justify-center shrink-0 overflow-hidden relative">
+                    {review.avatarUrl && (
+                      <img
+                        src={review.avatarUrl}
+                        alt={review.author}
+                        className="absolute inset-0 w-full h-full object-cover z-10"
+                        loading="lazy"
+                      />
+                    )}
+                    <span className="text-orange-500 text-xs font-bold uppercase z-0">
+                      {review.author ? review.author.charAt(0) : '?'}
+                    </span>
+                  </div>
+                  <div>
+                    <div className="text-white font-bold text-xs uppercase tracking-wider">{review.author}</div>
+                    <div className="text-stone-600 text-[10px] uppercase tracking-widest flex items-center gap-1 mt-0.5">
+                      <svg className="w-2.5 h-2.5 fill-current text-stone-500" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg>
+                      Google Review
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             </div>
           );
         })}
@@ -4009,19 +4080,19 @@ const ServicePageTemplate = ({ pageData, openQuoteForm, navigate }) => {
               <h2 className="text-3xl font-display font-bold uppercase mb-6">{section.title}</h2>
               <div className="space-y-6">
                 {Array.isArray(section.body) ? (
-                    section.body.map((paragraph, pIdx) => (
-                      <p key={pIdx} className="text-stone-400 leading-relaxed text-lg">
-                        {parseMarkdown(paragraph)}
-                      </p>
-                    ))
-                  ) : (
-                    <p className="text-stone-400 leading-relaxed text-lg">{parseMarkdown(section.body)}</p>
-                  )}
+                  section.body.map((paragraph, pIdx) => (
+                    <p key={pIdx} className="text-stone-400 leading-relaxed text-lg">
+                      {parseMarkdown(paragraph)}
+                    </p>
+                  ))
+                ) : (
+                  <p className="text-stone-400 leading-relaxed text-lg">{parseMarkdown(section.body)}</p>
+                )}
               </div>
               {section.imagePlaceholder && (
                 <div className="mt-8 rounded-lg overflow-hidden border border-stone-800 h-64 bg-stone-900">
-                  <img 
-                    src={section.imagePlaceholder} 
+                  <img
+                    src={section.imagePlaceholder}
                     alt={section.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
@@ -4181,7 +4252,7 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)', backgroundSize: '20px 20px' }} />
 
       <div className="container mx-auto px-6 relative z-10">
-         {/* Section header */}
+        {/* Section header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div className="max-w-2xl">
             <div className="flex items-center gap-4 mb-6">
@@ -4229,7 +4300,7 @@ const HomePage = ({ openQuoteForm, handleHeroFormSubmit, navigate, activeService
     </section>
 
     {/* FAQ Section */}
-    <FAQSection 
+    <FAQSection
       items={HOME_PAGE_FAQS}
       title="Questions About Our Process?"
       subtitle="We believe in transparency. Here are the answers to our most common questions about timeline, pricing, and quality."
@@ -4257,7 +4328,7 @@ const App = () => {
       setCurrentPath(newPath);
       window.scrollTo(0, 0);
       setMobileMenuOpen(false);
-      
+
       // Track page view with analytics
       analytics.trackPageView(newPath, document.title);
     };
@@ -4274,6 +4345,18 @@ const App = () => {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   const navigate = (path) => {
     window.location.hash = path;
   };
@@ -4288,14 +4371,22 @@ const App = () => {
   };
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const services = [
+  // Memoize services and layer 2 pages to prevent unnecessary re-renders
+  const services = React.useMemo(() => [
     {
       title: "Composite Decking",
       desc: "Low maintenance, high durability premium composite solutions from Trex and TimberTech.",
@@ -4311,7 +4402,9 @@ const App = () => {
       desc: "Complete outdoor kitchens, fire pits, and pergolas to extend your living space.",
       image: "/images/portfolio/glen-alps-entertainer.webp"
     }
-  ];
+  ], []);
+
+  const layer2Pages = React.useMemo(() => core30Pages.filter(p => p.layer === 2), []);
 
 
 
@@ -4368,91 +4461,36 @@ const App = () => {
           </div>
 
           <div className="hidden md:block">
-              <a
-                href="tel:+19078918283"
-                className="group relative px-6 py-3 bg-white text-stone-950 font-bold uppercase text-xs tracking-widest overflow-hidden transition-all hover:bg-orange-600 hover:text-white flex items-center gap-2"
-              >
-                <div className="relative z-10 flex items-center gap-2 group-hover:translate-x-1 transition-transform">
-                  <Phone className="w-4 h-4" />
-                  <span>(907) 891-8283</span>
-                </div>
-                <div className="absolute inset-0 bg-orange-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
-              </a>
-            </div>
+            <a
+              href="tel:+19078918283"
+              className="group relative px-6 py-3 bg-white text-stone-950 font-bold uppercase text-xs tracking-widest overflow-hidden transition-all hover:bg-orange-600 hover:text-white flex items-center gap-2"
+            >
+              <div className="relative z-10 flex items-center gap-2 group-hover:translate-x-1 transition-transform">
+                <Phone className="w-4 h-4" />
+                <span>(907) 891-8283</span>
+              </div>
+              <div className="absolute inset-0 bg-orange-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
+            </a>
+          </div>
 
           {/* Mobile Menu Toggle */}
           <button
             className="md:hidden text-white z-50 relative"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+            {mobileMenuOpen ? null : <Menu className="w-8 h-8" />}
           </button>
         </div>
-
-        {/* Mobile Menu Overlay */}
-        {mobileMenuOpen && (
-          <div className="fixed inset-0 bg-stone-950 z-40 md:hidden overflow-y-auto">
-            <div className="pt-24 px-6 pb-24">
-              <div className="flex flex-col gap-6">
-                <button 
-                  onClick={() => { navigate('/'); setMobileMenuOpen(false); }} 
-                  className="text-left text-2xl font-display font-bold uppercase text-white hover:text-orange-500 border-b border-stone-800 pb-4"
-                >
-                  Home
-                </button>
-
-                {/* Mobile Services List */}
-                <div>
-                  <div className="text-sm text-orange-600 font-bold uppercase tracking-widest mb-4">Services</div>
-                  <div className="flex flex-col gap-3 pl-4 border-l border-stone-800">
-                    {core30Pages.filter(p => p.layer === 2).map(p => (
-                      <button 
-                        key={p.slug} 
-                        onClick={() => { navigate(p.slug); setMobileMenuOpen(false); }} 
-                        className="text-left text-lg text-stone-400 hover:text-white hover:text-orange-500 transition-colors font-bold uppercase tracking-wide"
-                      >
-                        {p.category}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="border-t border-stone-800 pt-6 flex flex-col gap-4">
-                  <button 
-                    onClick={() => { setMobileMenuOpen(false); setTimeout(() => document.getElementById('portfolio')?.scrollIntoView(), 100); }} 
-                    className="text-left text-xl font-display font-bold uppercase text-stone-300 hover:text-orange-500 transition-colors"
-                  >
-                    Work
-                  </button>
-                  <button 
-                    onClick={() => { setMobileMenuOpen(false); setTimeout(() => document.getElementById('reviews')?.scrollIntoView(), 100); }} 
-                    className="text-left text-xl font-display font-bold uppercase text-stone-300 hover:text-orange-500 transition-colors"
-                  >
-                    Reviews
-                  </button>
-                </div>
-
-                <div className="mt-8 flex flex-col gap-3 border-t border-stone-800 pt-6">
-                  <a
-                    href="tel:+19078918283"
-                    className="bg-white text-stone-950 w-full py-4 text-lg font-bold uppercase tracking-widest hover:bg-stone-200 transition-all flex items-center justify-center gap-3 rounded-sm shadow-lg"
-                  >
-                    <Phone className="w-5 h-5" />
-                    Call (907) 891-8283
-                  </a>
-
-                  <button
-                    onClick={() => { openQuoteForm(); setMobileMenuOpen(false); }}
-                    className="bg-orange-600 text-white w-full py-4 text-lg font-bold uppercase tracking-widest hover:bg-orange-700 transition-all rounded-sm shadow-lg"
-                  >
-                    Get My Quote
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </nav>
+
+      {/* Mobile Menu */}
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        navigate={navigate}
+        openQuoteForm={openQuoteForm}
+        pages={layer2Pages}
+      />
 
       {/* Main Content Router */}
       <main>
@@ -4492,109 +4530,109 @@ const App = () => {
 
       {/* CTA / Footer */}
       <footer className="bg-stone-950 pt-32 pb-12 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-900 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-900 to-transparent"></div>
 
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="flex flex-col lg:flex-row justify-between gap-20 mb-24">
-              <div className="lg:w-1/2">
-                <h2 className="text-6xl md:text-8xl font-display font-bold uppercase leading-[1.1] md:leading-[0.95] mb-12">
-                  Ready to <br /> <span className="text-orange-600">Build?</span>
-                </h2>
-                <p className="text-xl text-stone-400 max-w-md mb-12">
-                  Schedule your complimentary design consultation today. Let's discuss how to elevate your property value and lifestyle.
-                </p>
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row justify-between gap-20 mb-24">
+            <div className="lg:w-1/2">
+              <h2 className="text-6xl md:text-8xl font-display font-bold uppercase leading-[1.1] md:leading-[0.95] mb-12">
+                Ready to <br /> <span className="text-orange-600">Build?</span>
+              </h2>
+              <p className="text-xl text-stone-400 max-w-md mb-12">
+                Schedule your complimentary design consultation today. Let's discuss how to elevate your property value and lifestyle.
+              </p>
 
-                <div className="flex flex-col gap-6 mb-12">
-                  <div className="flex items-center gap-4 text-lg">
-                    <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <span className="font-bold tracking-wider">(907) 782-4043</span>
+              <div className="flex flex-col gap-6 mb-12">
+                <div className="flex items-center gap-4 text-lg">
+                  <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
+                    <Phone className="w-5 h-5" />
                   </div>
-                  <div className="flex items-center gap-4 text-base md:text-lg">
-                    <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
-                      <Mail className="w-5 h-5" />
-                    </div>
-                    <span className="font-bold tracking-wide break-all">CONTACT@DECKMASTERSAK.COM</span>
-                  </div>
-                  <div className="flex items-center gap-4 text-lg">
-                    <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
-                      <MapPin className="w-5 h-5" />
-                    </div>
-                    <span className="font-bold tracking-wider">625 W 59TH AVE UNIT J, ANCHORAGE, AK 99518</span>
-                  </div>
-                  <div className="flex items-center gap-4 text-lg">
-                    <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
-                      <Clock className="w-5 h-5" />
-                    </div>
-                    <span className="font-bold tracking-wider">7:30 AM - 7:00 PM, SUN - SAT</span>
-                  </div>
+                  <span className="font-bold tracking-wider">(907) 782-4043</span>
                 </div>
-
-                {/* Branded Map Embed */}
-                <div className="w-full rounded-sm overflow-hidden border border-stone-800 relative group">
-                  <div className="w-full h-64 relative grayscale-0 group-hover:grayscale transition-all duration-500 ease-in-out">
-                    <iframe
-                      title="Deck Masters location in Anchorage, Alaska on Google Maps"
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2853.5566334411346!2d-149.8942242!3d61.1676417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x56c891cae1357399%3A0xd7b37a2095289a27!2sDeck%20Masters%20AK!5e1!3m2!1sen!2sus!4v1763737932256!5m2!1sen!2sus"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    ></iframe>
+                <div className="flex items-center gap-4 text-base md:text-lg">
+                  <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
+                    <Mail className="w-5 h-5" />
                   </div>
-                  <div className="bg-stone-900 p-4 flex justify-between items-center border-t border-stone-800">
-                    <div className="flex items-center gap-2">
-                      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png" alt="Google" className="h-5 opacity-80" />
-                      <span className="text-xs font-bold uppercase tracking-wider text-stone-400">Business Profile</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-white">4.9</span>
-                      <div className="flex text-orange-500">
-                        {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3 h-3 fill-orange-500" />)}
-                      </div>
-                      <span className="text-xs text-stone-500">(120 Reviews)</span>
-                    </div>
+                  <span className="font-bold tracking-wide break-all">CONTACT@DECKMASTERSAK.COM</span>
+                </div>
+                <div className="flex items-center gap-4 text-lg">
+                  <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
+                    <MapPin className="w-5 h-5" />
                   </div>
+                  <span className="font-bold tracking-wider">625 W 59TH AVE UNIT J, ANCHORAGE, AK 99518</span>
+                </div>
+                <div className="flex items-center gap-4 text-lg">
+                  <div className="w-10 h-10 bg-stone-900 flex items-center justify-center rounded-full text-orange-500 shrink-0">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <span className="font-bold tracking-wider">7:30 AM - 7:00 PM, SUN - SAT</span>
                 </div>
               </div>
 
-              <div className="lg:w-1/2">
-                {/* Replaced Generic Form with QuoteForm */}
-                <QuoteForm />
-
-                <div className="mt-8">
-                  <FooterTestimonials />
+              {/* Branded Map Embed */}
+              <div className="w-full rounded-sm overflow-hidden border border-stone-800 relative group">
+                <div className="w-full h-64 relative grayscale-0 group-hover:grayscale transition-all duration-500 ease-in-out">
+                  <iframe
+                    title="Deck Masters location in Anchorage, Alaska on Google Maps"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2853.5566334411346!2d-149.8942242!3d61.1676417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x56c891cae1357399%3A0xd7b37a2095289a27!2sDeck%20Masters%20AK!5e1!3m2!1sen!2sus!4v1763737932256!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+                <div className="bg-stone-900 p-4 flex justify-between items-center border-t border-stone-800">
+                  <div className="flex items-center gap-2">
+                    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png" alt="Google" className="h-5 opacity-80" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-stone-400">Business Profile</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-white">4.9</span>
+                    <div className="flex text-orange-500">
+                      {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3 h-3 fill-orange-500" />)}
+                    </div>
+                    <span className="text-xs text-stone-500">(120 Reviews)</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* SEO Sitemap & Neighborhoods - Passed navigate function */}
-            <SeoSitemap navigate={navigate} />
+            <div className="lg:w-1/2">
+              {/* Replaced Generic Form with QuoteForm */}
+              <QuoteForm />
 
-            <div className="border-t border-stone-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-stone-600 text-xs uppercase tracking-widest">
-              <div className="flex items-center gap-2 font-bold text-stone-400">
-                <div className="w-8 h-8 flex items-center justify-center overflow-hidden">
-                  <img src="/images/icon.webp" alt="Logo" className="w-full h-full object-contain" />
-                </div>
-                DECK MASTERS
-              </div>
-              <div className="flex flex-wrap justify-center gap-8">
-                <a href="#" className="hover:text-white transition-colors">Site Info</a>
-                <a href="#" className="hover:text-white transition-colors">Alaska Service Area</a>
-                <a href="#" className="hover:text-white transition-colors">Deck Building</a>
-                <a href="#" className="hover:text-white transition-colors">Now Hiring</a>
-              </div>
-              <div className="flex gap-4">
-                <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Instagram className="w-4 h-4" /></a>
-                <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Facebook className="w-4 h-4" /></a>
-                <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Twitter className="w-4 h-4" /></a>
+              <div className="mt-8">
+                <FooterTestimonials />
               </div>
             </div>
           </div>
-        </footer>
+
+          {/* SEO Sitemap & Neighborhoods - Passed navigate function */}
+          <SeoSitemap navigate={navigate} />
+
+          <div className="border-t border-stone-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-stone-600 text-xs uppercase tracking-widest">
+            <div className="flex items-center gap-2 font-bold text-stone-400">
+              <div className="w-8 h-8 flex items-center justify-center overflow-hidden">
+                <img src="/images/icon.webp" alt="Logo" className="w-full h-full object-contain" />
+              </div>
+              DECK MASTERS
+            </div>
+            <div className="flex flex-wrap justify-center gap-8">
+              <a href="#" className="hover:text-white transition-colors">Site Info</a>
+              <a href="#" className="hover:text-white transition-colors">Alaska Service Area</a>
+              <a href="#" className="hover:text-white transition-colors">Deck Building</a>
+              <a href="#" className="hover:text-white transition-colors">Now Hiring</a>
+            </div>
+            <div className="flex gap-4">
+              <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Instagram className="w-4 h-4" /></a>
+              <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Facebook className="w-4 h-4" /></a>
+              <a href="#" className="w-8 h-8 border border-stone-800 flex items-center justify-center rounded-full hover:bg-orange-600 hover:border-orange-600 hover:text-white transition-all"><Twitter className="w-4 h-4" /></a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
