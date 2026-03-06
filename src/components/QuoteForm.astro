@@ -110,15 +110,15 @@ const neighborhoods = siteData.neighborhoods as string[];
   const form = document.getElementById('quote-form');
   const submitBtn = document.getElementById('quote-submit-btn');
   const messageEl = document.getElementById('form-message');
-  if (!form || !messageEl) return;
 
-  function showMessage(text, isError) {
-    messageEl.textContent = text;
-    messageEl.classList.remove('hidden', 'text-accent-dark', 'text-red-600');
-    messageEl.classList.add(isError ? 'text-red-600' : 'text-accent-dark');
-  }
+  if (form && messageEl) {
+    function showMessage(text, isError) {
+      messageEl.textContent = text;
+      messageEl.classList.remove('hidden', 'text-accent-dark', 'text-red-600');
+      messageEl.classList.add(isError ? 'text-red-600' : 'text-accent-dark');
+    }
 
-  form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (submitBtn) submitBtn.disabled = true;
     messageEl.classList.add('hidden');
@@ -151,4 +151,5 @@ const neighborhoods = siteData.neighborhoods as string[];
       if (submitBtn) submitBtn.disabled = false;
     }
   });
+  }
 </script>
