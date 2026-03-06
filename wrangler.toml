@@ -1,0 +1,14 @@
+# Cloudflare Workers Static Assets — deploy Astro static build (./dist)
+# Usage: npm run build && npx wrangler pages deploy dist (or use Workers Static Assets)
+name = "outdoor-living-contractor"
+compatibility_date = "2024-01-01"
+
+# Static Assets configuration
+# Deploy with: npx wrangler pages deploy dist
+# Or configure as Workers Static Assets with directory: ./dist
+[site]
+bucket = "./dist"
+
+# Optional: single-page-app style 404 handling (serve index.html for unknown routes)
+# For static Astro sites with client-side routing, set not_found_handling if using Pages
+# Pages: use 404.html in dist if generated; else this is handled by Cloudflare Pages defaults

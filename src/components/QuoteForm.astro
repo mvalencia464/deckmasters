@@ -1,0 +1,120 @@
+---
+/**
+ * Quote form island — use client:idle where imported for minimal JS impact.
+ * GHL integration + server action will be added in phase 2 once API keys are available.
+ */
+import siteData from '../data/site.json';
+
+// Build flat list of selected service names from all categories for dropdown
+const serviceOptions = siteData.categories.flatMap((cat: { services: { name: string; selected: boolean }[] }) =>
+  cat.services.filter((s: { selected: boolean }) => s.selected).map((s: { name: string }) => s.name)
+);
+const neighborhoods = siteData.neighborhoods as string[];
+---
+
+<form
+  id="quote-form"
+  class="space-y-6 rounded-2xl border border-neutral-200 bg-surface-elevated p-8"
+  aria-label="Request a quote"
+>
+  <h2 class="text-xl font-semibold text-neutral-800">Request a Quote</h2>
+  <p class="text-sm text-neutral-600">
+    Fill out the form below and we'll get back to you with a free estimate.
+  </p>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <label class="block">
+      <span class="block text-sm font-medium text-neutral-700">Name</span>
+      <input
+        type="text"
+        name="name"
+        required
+        autocomplete="name"
+        class="mt-1 block w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-800 shadow-sm focus:border-accent focus:ring-1 focus:ring-accent"
+      />
+    </label>
+    <label class="block">
+      <span class="block text-sm font-medium text-neutral-700">Phone</span>
+      <input
+        type="tel"
+        name="phone"
+        required
+        autocomplete="tel"
+        class="mt-1 block w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-800 shadow-sm focus:border-accent focus:ring-1 focus:ring-accent"
+      />
+    </label>
+  </div>
+
+  <label class="block">
+    <span class="block text-sm font-medium text-neutral-700">Email</span>
+    <input
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      class="mt-1 block w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-800 shadow-sm focus:border-accent focus:ring-1 focus:ring-accent"
+    />
+  </label>
+
+  <label class="block">
+    <span class="block text-sm font-medium text-neutral-700">Service type</span>
+    <select
+      name="serviceType"
+      required
+      class="mt-1 block w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-800 shadow-sm focus:border-accent focus:ring-1 focus:ring-accent"
+    >
+      <option value="">Select a service</option>
+      {serviceOptions.map((name) => (
+        <option value={name}>{name}</option>
+      ))}
+    </select>
+  </label>
+
+  <label class="block">
+    <span class="block text-sm font-medium text-neutral-700">Project description</span>
+    <textarea
+      name="projectDescription"
+      rows={4}
+      required
+      class="mt-1 block w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-800 shadow-sm focus:border-accent focus:ring-1 focus:ring-accent"
+    />
+  </label>
+
+  <label class="block">
+    <span class="block text-sm font-medium text-neutral-700">Address / neighborhood (optional)</span>
+    <select
+      name="neighborhood"
+      class="mt-1 block w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-800 shadow-sm focus:border-accent focus:ring-1 focus:ring-accent"
+    >
+      <option value="">Select if applicable</option>
+      {neighborhoods.map((n) => (
+        <option value={n}>{n}</option>
+      ))}
+    </select>
+  </label>
+
+  <button
+    type="submit"
+    class="w-full rounded-lg bg-accent px-4 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-accent-dark focus-ring"
+  >
+    Submit request
+  </button>
+
+  <p class="text-xs text-neutral-500">
+    By submitting you agree to be contacted about your project. We do not share your information.
+  </p>
+  <p id="form-stub-message" class="hidden text-sm text-accent-dark mt-2" role="status"></p>
+</form>
+
+<script>
+  // Stub: GHL integration + server action will be added in phase 2 once API keys are available.
+  const form = document.getElementById('quote-form');
+  const messageEl = document.getElementById('form-stub-message');
+  if (form && messageEl) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      messageEl.classList.remove('hidden');
+      messageEl.textContent = 'Form submission will be enabled in phase 2 (secure GHL integration). Thank you for your interest.';
+    });
+  }
+</script>

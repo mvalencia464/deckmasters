@@ -1,0 +1,22 @@
+---
+const site = (await import('../data/site.json')).default;
+const badges = [
+  'Free estimates',
+  'Satisfaction guarantee',
+  'Licensed & insured',
+  'Climate-durable builds',
+];
+---
+
+<section class="bg-surface-muted border-y border-neutral-200 py-6" aria-label="Trust badges">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <ul class="flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-sm text-neutral-600">
+      {badges.map((label) => (
+        <li class="flex items-center gap-2">
+          <span class="h-1.5 w-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
+          {label}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

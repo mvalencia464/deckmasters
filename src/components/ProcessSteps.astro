@@ -1,0 +1,32 @@
+---
+const site = (await import('../data/site.json')).default;
+const steps = site.processSteps;
+---
+
+<section class="py-20 lg:py-28 bg-surface">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-semibold text-neutral-800 text-center">How We Work</h2>
+    <p class="mt-3 text-neutral-600 text-center max-w-xl mx-auto">
+      A straightforward process from consultation to completion.
+    </p>
+    <ul class="mt-16 grid gap-8 md:grid-cols-3" role="list">
+      {steps.map((step, i) => (
+        <li class="relative flex flex-col items-center text-center">
+          <span
+            class="flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent font-semibold text-lg"
+            aria-hidden="true"
+          >
+            {i + 1}
+          </span>
+          <h3 class="mt-4 text-xl font-semibold text-neutral-800">{step}</h3>
+          {i < steps.length - 1 && (
+            <span
+              class="hidden md:block absolute top-7 left-[calc(50%+2rem)] w-[calc(100%-4rem)] h-0.5 bg-neutral-200"
+              aria-hidden="true"
+            />
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+
+const site = (await import('../data/site.json')).default;
+// Placeholder: client will provide hero image; use high-quality durable deck / winter setting
+const heroImageUrl = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80';
+---
+
+<section class="relative min-h-[85vh] flex flex-col justify-end overflow-hidden">
+  <div class="absolute inset-0 bg-neutral-900/40 z-10" aria-hidden="true" />
+  <Image
+    src={heroImageUrl}
+    alt="Durable deck and outdoor living space in a cold-climate setting"
+    width={1600}
+    height={1067}
+    class="absolute inset-0 w-full h-full object-cover"
+    fetchpriority="high"
+    loading="eager"
+    format="avif"
+  />
+  <div class="relative z-20 mx-auto max-w-6xl w-full px-4 sm:px-6 lg:px-8 pb-24 pt-32">
+    <p class="text-accent-muted font-medium text-sm uppercase tracking-widest mb-4">{site.primaryCity} · Outdoor Living</p>
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-tight max-w-2xl">
+      {site.tagline}
+    </h1>
+    <p class="mt-6 text-lg text-neutral-200 max-w-xl">
+      Free estimates. Climate-durable craftsmanship. From custom decks to repairs and exterior renovations.
+    </p>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a
+        href="/contact#quote"
+        class="inline-flex items-center rounded-lg bg-accent px-6 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-accent-dark focus-ring"
+      >
+        Get Free Quote
+      </a>
+      <a
+        href="/services"
+        class="inline-flex items-center rounded-lg border border-white/60 bg-white/10 px-6 py-3 text-base font-medium text-white backdrop-blur-sm transition-colors duration-200 hover:bg-white/20 focus-ring"
+      >
+        View Services
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Gallery from '../components/Gallery.astro';
+
+const site = (await import('../data/site.json')).default;
+const title = `Services | Decks, Repairs & Outdoor Living in ${site.primaryCity}`;
+const description = `Custom deck design, deck replacement, composite decking, railing, siding, structural repairs. Serving ${site.primaryCity}, AK. Free estimates.`;
+---
+
+<Layout title={title} description={description}>
+  <section class="py-20 lg:py-28 bg-surface">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-semibold text-neutral-800">Our Services</h1>
+      <p class="mt-4 text-lg text-neutral-600 max-w-2xl">
+        Full-service deck building, repair, and general contracting — selected services below. All work built for cold-climate durability.
+      </p>
+      {site.categories.map((cat: { name: string; services: { name: string; selected: boolean }[] }) => {
+        const selected = cat.services.filter((s: { selected: boolean }) => s.selected);
+        if (selected.length === 0) return null;
+        return (
+          <div class="mt-16">
+            <h2 class="text-2xl font-semibold text-neutral-800 border-b border-neutral-200 pb-3">{cat.name}</h2>
+            <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+              {selected.map((s: { name: string }) => (
+                <li>
+                  <ServiceCard title={s.name} href="/contact#quote" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+  <Gallery />
+  <section class="py-20 bg-surface-muted">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-600">Ready to start your project?</p>
+      <a
+        href="/contact#quote"
+        class="mt-4 inline-flex rounded-lg bg-accent px-6 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-accent-dark focus-ring"
+      >
+        Get a free quote
+      </a>
+    </div>
+  </section>
+</Layout>

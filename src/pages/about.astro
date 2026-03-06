@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const site = (await import('../data/site.json')).default;
+const title = `About | ${site.businessName} — ${site.primaryCity}`;
+const description = `${site.aboutUs}`;
+const challenges = site.environmentalChallenges as string[];
+---
+
+<Layout title={title} description={description}>
+  <section class="py-20 lg:py-28 bg-surface">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-semibold text-neutral-800">About Us</h1>
+      <div class="mt-8 prose prose-neutral max-w-none">
+        <p class="text-neutral-600 leading-relaxed">{site.aboutUs}</p>
+      </div>
+    </div>
+  </section>
+  <section class="py-20 lg:py-28 bg-surface-muted border-y border-neutral-200">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-semibold text-neutral-800">Climate resilience</h2>
+      <p class="mt-4 text-neutral-600 leading-relaxed">
+        In {site.primaryCity} and similar cold-climate regions, outdoor structures face unique challenges: freeze-thaw cycles, heavy snow, high winds, and moisture. We design and build with these conditions in mind — from footings and framing to materials and finishes — so your deck or renovation stands up for years.
+      </p>
+      <p class="mt-4 text-neutral-600 leading-relaxed">
+        We address the full range of environmental factors that affect durability:
+      </p>
+      <ul class="mt-6 grid gap-2 sm:grid-cols-2" role="list">
+        {challenges.map((c) => (
+          <li class="flex items-center gap-2 text-neutral-600">
+            <span class="h-1.5 w-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
+            {c}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <section class="py-20 lg:py-28 bg-surface">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-600">Get a free estimate for your project.</p>
+      <a
+        href="/contact#quote"
+        class="mt-4 inline-flex rounded-lg bg-accent px-6 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-accent-dark focus-ring"
+      >
+        Request a quote
+      </a>
+    </div>
+  </section>
+</Layout>

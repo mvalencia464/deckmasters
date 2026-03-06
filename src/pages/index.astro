@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import TrustBar from '../components/TrustBar.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Gallery from '../components/Gallery.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+
+const site = (await import('../data/site.json')).default;
+const primaryCategory = site.categories.find((c: { isPrimary: boolean }) => c.isPrimary);
+const featuredServices = primaryCategory
+  ? primaryCategory.services
+      .filter((s: { selected: boolean }) => s.selected)
+      .slice(0, 6)
+      .map((s: { name: string }) => s.name)
+  : [];
+const title = `Custom Decks & Repairs in ${site.primaryCity}, AK`;
+const description = `${site.tagline} ${site.businessName} — decks, outdoor living, repairs. Free estimates.`;
+---
+
+<Layout title={title} description={description}>
+  <Hero />
+  <TrustBar />
+  <section class="py-20 lg:py-28 bg-surface">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-semibold text-neutral-800 text-center">Our Services</h2>
+      <p class="mt-3 text-neutral-600 text-center max-w-xl mx-auto">
+        From custom decks to repairs and general contracting — built for {site.primaryCity}'s climate.
+      </p>
+      <ul class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {featuredServices.map((name) => (
+          <li>
+            <ServiceCard title={name} href="/services" />
+          </li>
+        ))}
+      </ul>
+      <p class="mt-10 text-center">
+        <a href="/services" class="text-accent font-medium hover:text-accent-dark transition-colors duration-200">
+          View all services →
+        </a>
+      </p>
+    </div>
+  </section>
+  <Gallery />
+  <ProcessSteps />
+  <section class="py-20 lg:py-28 bg-surface-muted" aria-label="Testimonials">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-semibold text-neutral-800 text-center">What Our Clients Say</h2>
+      <p class="mt-3 text-neutral-600 text-center max-w-xl mx-auto">
+        Real feedback from homeowners we've worked with.
+      </p>
+      <ul class="mt-12 grid gap-8 md:grid-cols-3" role="list">
+        {site.testimonials.map((t: { id: string; quote: string; author: string; location: string }) => (
+          <li>
+            <ReviewCard quote={t.quote} author={t.author} location={t.location} id={t.id} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <section class="py-20 lg:py-28 bg-surface">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-semibold text-neutral-800 text-center">About Us</h2>
+      <p class="mt-6 text-neutral-600 max-w-2xl mx-auto text-center leading-relaxed">
+        {site.aboutUs}
+      </p>
+      <p class="mt-8 text-center">
+        <a href="/about" class="text-accent font-medium hover:text-accent-dark transition-colors duration-200">
+          Learn more →
+        </a>
+      </p>
+    </div>
+  </section>
+  <QuoteSection />
+</Layout>

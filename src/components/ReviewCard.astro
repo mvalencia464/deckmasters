@@ -1,0 +1,27 @@
+---
+interface Props {
+  quote: string;
+  author: string;
+  location: string;
+  id?: string;
+}
+
+const { quote, author, location, id } = Astro.props;
+---
+
+<blockquote
+  id={id}
+  class="rounded-2xl border border-neutral-200 bg-surface-elevated p-8 text-neutral-700"
+  cite="#"
+>
+  <p class="text-lg leading-relaxed">"{quote}"</p>
+  <footer class="mt-6 flex items-center gap-3">
+    <span class="h-10 w-10 rounded-full bg-wood-light flex items-center justify-center text-wood-muted text-sm font-medium" aria-hidden="true">
+      {author.charAt(0)}
+    </span>
+    <div>
+      <cite class="font-medium text-neutral-800 not-italic">{author}</cite>
+      <p class="text-sm text-neutral-500">{location}</p>
+    </div>
+  </footer>
+</blockquote>

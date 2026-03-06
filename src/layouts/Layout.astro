@@ -1,0 +1,113 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const site = (await import('../data/site.json')).default;
+const fullTitle = `${title} | ${site.businessName}`;
+const metaDescription = description ?? `${site.tagline} Custom decks, repairs & outdoor living in ${site.primaryCity}, AK. Free estimates.`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={metaDescription} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <header class="sticky top-0 z-50 bg-surface-elevated/95 backdrop-blur-sm border-b border-neutral-200">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="relative flex h-18 items-center justify-between gap-4">
+          <a href="/" class="flex items-center gap-2 transition-opacity duration-200 hover:opacity-80 focus-ring rounded">
+            <span class="text-xl font-semibold tracking-tight text-neutral-800">{site.businessName}</span>
+          </a>
+          <nav class="hidden md:flex items-center gap-8" aria-label="Main">
+            <a href="/" class="text-neutral-600 hover:text-accent transition-colors duration-200 text-sm font-medium">Home</a>
+            <a href="/services" class="text-neutral-600 hover:text-accent transition-colors duration-200 text-sm font-medium">Services</a>
+            <a href="/about" class="text-neutral-600 hover:text-accent transition-colors duration-200 text-sm font-medium">About</a>
+            <a href="/contact" class="text-neutral-600 hover:text-accent transition-colors duration-200 text-sm font-medium">Contact</a>
+          </nav>
+          <details class="md:hidden group">
+            <summary class="list-none cursor-pointer text-neutral-600 hover:text-accent text-sm font-medium py-2">Menu</summary>
+            <ul class="absolute top-full left-0 right-0 bg-surface-elevated border-b border-neutral-200 px-4 py-4 flex flex-col gap-2">
+              <li><a href="/" class="block py-2 text-neutral-600 hover:text-accent text-sm font-medium">Home</a></li>
+              <li><a href="/services" class="block py-2 text-neutral-600 hover:text-accent text-sm font-medium">Services</a></li>
+              <li><a href="/about" class="block py-2 text-neutral-600 hover:text-accent text-sm font-medium">About</a></li>
+              <li><a href="/contact" class="block py-2 text-neutral-600 hover:text-accent text-sm font-medium">Contact</a></li>
+            </ul>
+          </details>
+          <a
+            href={`tel:${site.primaryPhone.replace(/\D/g, '')}`}
+            class="shrink-0 rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-accent-dark focus-ring"
+          >
+            {site.primaryPhone}
+          </a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="bg-neutral-100 border-t border-neutral-200">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <p class="font-semibold text-neutral-800">{site.businessName}</p>
+            <p class="mt-2 text-sm text-neutral-600">{site.tagline}</p>
+          </div>
+          <div>
+            <p class="font-medium text-neutral-800">Hours</p>
+            <p class="mt-2 text-sm text-neutral-600">{site.operatingHours}</p>
+          </div>
+          <div>
+            <p class="font-medium text-neutral-800">Address</p>
+            <p class="mt-2 text-sm text-neutral-600">{site.address}</p>
+          </div>
+          <div>
+            <p class="font-medium text-neutral-800">Connect</p>
+            <div class="mt-2 flex gap-4">
+              {site.socials.facebook && (
+                <a href={site.socials.facebook} class="text-neutral-500 hover:text-accent transition-colors duration-200" aria-label="Facebook">Facebook</a>
+              )}
+              {site.socials.instagram && (
+                <a href={site.socials.instagram} class="text-neutral-500 hover:text-accent transition-colors duration-200" aria-label="Instagram">Instagram</a>
+              )}
+              {site.socials.bbb && (
+                <a href={site.socials.bbb} class="text-neutral-500 hover:text-accent transition-colors duration-200" aria-label="BBB">BBB</a>
+              )}
+            </div>
+          </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-neutral-200 flex flex-wrap items-center justify-between gap-4">
+          <p class="text-sm text-neutral-500">© {new Date().getFullYear()} {site.businessName}. All rights reserved.</p>
+          <div class="flex flex-wrap gap-6 text-sm text-neutral-500">
+            <span>Free estimates</span>
+            <span>Climate-durable builds</span>
+            <span>Satisfaction guarantee</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
