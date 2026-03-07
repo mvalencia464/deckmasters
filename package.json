@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy": "npm run build && npx wrangler pages deploy dist"
+    "deploy": "npm run build && npx wrangler pages deploy dist",
+    "sync-reviews": "node --env-file=.env scripts/sync-reviews.js"
   },
   "dependencies": {
     "astro": "^5.0.0"

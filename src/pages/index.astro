@@ -7,6 +7,7 @@ import Gallery from '../components/Gallery.astro';
 import ProcessSteps from '../components/ProcessSteps.astro';
 import GoogleReviewCard from '../components/GoogleReviewCard.astro';
 import ReviewCtaCard from '../components/ReviewCtaCard.astro';
+import ReviewsExperimental from '../components/ReviewsExperimental.astro';
 
 const site = (await import('../data/site.json')).default;
 const reviewsData = (await import('../data/reviews.json')).default;
@@ -124,6 +125,7 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
       </div>
     </div>
   </section>
+  <ReviewsExperimental />
   <section class="py-20 lg:py-28 bg-surface">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <h2 class="text-3xl font-semibold text-neutral-800 text-center">About Us</h2>

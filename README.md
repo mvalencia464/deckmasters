@@ -21,7 +21,7 @@ Cloudflare builds and deploys automatically on push. Ensure `wrangler.toml` has 
 
 ## Hero image
 
-`public/hero.png` is loaded **only on desktop** (via `<picture>` + `media="(min-width: 1024px)"`); mobile uses a gradient so LCP stays fast. For best desktop LCP, use an optimized image (e.g. WebP, ~1600px wide) and replace or add `public/hero.webp` and a matching `<source>` in `Hero.astro`.
+`public/newhero.avif` and `public/newhero.png` are loaded **only on desktop** (via `<picture>` + `media="(min-width: 1024px)"` in `Hero.astro`); mobile uses a gradient so LCP stays fast. For best desktop LCP, keep the AVIF as primary; the PNG is fallback.
 
 ## Project structure
 

@@ -20,7 +20,7 @@ const initial = (author || '?').charAt(0).toUpperCase();
   <p class="text-neutral-700 text-sm leading-relaxed mb-4 whitespace-pre-line">{text}</p>
   <footer class="flex items-center gap-3 pt-2 border-t border-neutral-100">
     {avatarUrl ? (
-      <img src={avatarUrl} alt="" class="h-10 w-10 rounded-full object-cover" width="40" height="40" loading="lazy" />
+      <img src={avatarUrl} alt="" class="h-10 w-10 rounded-full object-cover" width="40" height="40" loading="lazy" decoding="async" />
     ) : (
       <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-200 text-sm font-semibold text-neutral-600" aria-hidden="true">{initial}</span>
     )}

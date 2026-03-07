@@ -1,0 +1,69 @@
+---
+/**
+ * Experimental reviews section: data from DataForSEO sync (google-reviews.json).
+ * Zero client-side JS; same card layout as main reviews for 100 Lighthouse.
+ * Avatars from sync-reviews.js are in src/assets/avatars/ and optimized at build via astro:assets.
+ */
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import GoogleReviewCard from './GoogleReviewCard.astro';
+
+const data = (await import('../data/google-reviews.json')).default;
+const rawReviews = data?.rawReviews ?? [];
+const withText = rawReviews.filter((r: { text?: string }) => (r.text || '').trim().length > 0);
+const displayReviews = withText;
+
+const avatarGlob = import.meta.glob<{ default: ImageMetadata }>('../assets/avatars/*.{jpg,jpeg,png,webp}');
+const resolveAvatar = async (filename: string): Promise<string | undefined> => {
+  if (!filename) return undefined;
+  const key = Object.keys(avatarGlob).find((k) => k.endsWith(filename));
+  if (!key || typeof avatarGlob[key] !== 'function') return undefined;
+  const mod = await (avatarGlob[key] as () => Promise<{ default: ImageMetadata }>)();
+  const img = await getImage({ src: mod.default, width: 40, height: 40 });
+  return img.src;
+};
+
+const reviewsWithAvatars = await Promise.all(
+  displayReviews.map(async (r) => ({
+    ...r,
+    avatarUrl: r.avatarUrl ? await resolveAvatar(r.avatarUrl) : undefined,
+  }))
+);
+
+const averageRating = rawReviews.length
+  ? (rawReviews.reduce((a: number, r: { rating: number }) => a + r.rating, 0) / rawReviews.length).toFixed(1)
+  : '0';
+const googleCount = rawReviews.filter((r: { source?: string }) => r.source === 'Google').length;
+---
+
+<section id="reviews-experimental" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Reviews (Experimental)">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Reviews (Experimental)</p>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">DataForSEO Google Reviews.</h2>
+      </div>
+      <div class="flex flex-wrap items-center gap-4 text-sm">
+        <div class="flex items-center gap-2">
+          <span class="text-amber-500 text-lg" aria-hidden="true">★★★★★</span>
+          <span class="font-bold text-neutral-800">{averageRating}</span>
+          <span class="text-neutral-500 uppercase font-semibold">Average</span>
+        </div>
+        <span class="text-neutral-300">|</span>
+        <span class="text-neutral-600 font-semibold">{googleCount} Google Reviews</span>
+        <a href="https://www.google.com/search?q=deckmasters+anchorage+reviews" target="_blank" rel="noopener" class="text-brand-orange font-bold hover:underline uppercase text-xs tracking-wider">See All Google Reviews →</a>
+      </div>
+    </div>
+    <div class="columns-1 md:columns-4 column-gap-4">
+      {reviewsWithAvatars.map((r) => (
+        <GoogleReviewCard
+          text={r.text}
+          author={r.author}
+          rating={r.rating}
+          source={r.source ?? 'Google'}
+          avatarUrl={r.avatarUrl}
+        />
+      ))}
+    </div>
+  </div>
+</section>

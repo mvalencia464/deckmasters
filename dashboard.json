@@ -1,0 +1,253 @@
+{
+    "id": "03072203-1167-0572-0000-e4a8c1ab6ee7",
+    "status_code": 20000,
+    "status_message": "Ok.",
+    "time": "12.1021 sec.",
+    "cost": 0.0054,
+    "result_count": 1,
+    "path": [
+      "v3",
+      "business_data",
+      "google",
+      "my_business_info",
+      "live"
+    ],
+    "data": {
+      "api": "business_data",
+      "function": "my_business_info",
+      "se": "google",
+      "keyword": "deck masters ak",
+      "location_code": 2840,
+      "language_code": "en",
+      "se_type": "my_business_info",
+      "device": "desktop",
+      "os": "windows"
+    },
+    "result": [
+      {
+        "keyword": "deck masters ak",
+        "se_domain": "google.com",
+        "location_code": 2840,
+        "language_code": "en",
+        "check_url": "https://www.google.com/maps?cid=15542901019345721895&hl=en&gl=US",
+        "datetime": "2026-03-07 20:03:38 +00:00",
+        "item_types": [
+          "google_business_info"
+        ],
+        "items_count": 1,
+        "items": [
+          {
+            "type": "google_business_info",
+            "rank_group": 1,
+            "rank_absolute": 1,
+            "position": "left",
+            "title": "Deck Masters AK",
+            "original_title": null,
+            "description": "You want reasonable prices, quality craftsmanship, professionalism in business and very strong customer reviews. Guess what? Read our reviews and you'll see why we're the highest rated deck builder in Anchorage.\n\nWe've built hundreds of decks in Alaska and we're excited to build you the deck of your dreams. Our deck engineer will collaborate with you every step of the way.",
+            "category": "Deck builder",
+            "category_ids": [
+              "deck_builder",
+              "general_contractor",
+              "observation_deck"
+            ],
+            "additional_categories": [
+              "General contractor",
+              "Observation deck"
+            ],
+            "cid": "15542901019345721895",
+            "feature_id": "0x56c891cae1357399:0xd7b37a2095289a27",
+            "address": "625 W 59th Ave Unit J, Anchorage, AK 99518",
+            "address_info": {
+              "borough": "Taku / Campbell",
+              "address": "625 W 59th Ave Unit J",
+              "city": "Anchorage",
+              "zip": "99518",
+              "region": "Alaska",
+              "country_code": "US"
+            },
+            "place_id": "ChIJmXM14cqRyFYRJ5oolSB6s9c",
+            "phone": "+1907-782-4043",
+            "url": "https://deckmastersak.com/",
+            "contact_url": null,
+            "contributor_url": "https://maps.google.com/maps/contrib/101270002391505716447",
+            "book_online_url": "https://api.leadconnectorhq.com/widget/group/lRPTWeS8cLH3NGI0yq1Q?rwg_token=AFd1xnESiXi4lbXwez10t6MIOZRDikMQL9ka_FJVVzyACrObsYYwdQKN46C6RXw7y6JZxIihDQDPtZKVDxzeEkLXMkw_4s8doQ%3D%3D",
+            "domain": "deckmastersak.com",
+            "logo": "https://lh5.googleusercontent.com/-W6Lh91ov2IU/AAAAAAAAAAI/AAAAAAAAAAA/Pj1Do0v1Fd8/s44-p-k-no-ns-nd/photo.jpg",
+            "main_image": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwer2aO999b-P3PFvKJ0N20g5LlUY4xJUcrk4ITzz1xxgjvVbLRPUzeQ0Lri_5TU7jOJEfP7tG4T2RziF0MxerPuzXVIk7ZFx-MJA6w5rVHQjWu6YTLQrw7SDoQKyofwQT__ynCJC=w408-h544-k-no",
+            "total_photos": 70,
+            "snippet": "625 W 59th Ave Unit J, Anchorage, AK 99518",
+            "latitude": 61.1676417,
+            "longitude": -149.8942242,
+            "is_claimed": true,
+            "questions_and_answers_count": null,
+            "attributes": {
+              "available_attributes": {
+                "service_options": [
+                  "offers_online_estimates",
+                  "has_onsite_services"
+                ]
+              },
+              "unavailable_attributes": null
+            },
+            "place_topics": {
+              "crew": 19,
+              "company": 16,
+              "plan": 13,
+              "railing": 17,
+              "stairs": 28,
+              "seasons": 7,
+              "meeting": 7,
+              "porch": 26,
+              "integrity": 5,
+              "winter": 10
+            },
+            "rating": {
+              "rating_type": "Max5",
+              "value": 4.9,
+              "votes_count": 125,
+              "rating_max": null
+            },
+            "hotel_rating": null,
+            "price_level": null,
+            "rating_distribution": {
+              "1": 1,
+              "2": 0,
+              "3": 0,
+              "4": 8,
+              "5": 116
+            },
+            "people_also_search": [
+              {
+                "cid": "10261072119632651649",
+                "feature_id": "0x0:0x8e66a6ba315e6581",
+                "title": "FWD Construction",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": 140,
+                  "rating_max": null
+                }
+              },
+              {
+                "cid": "6950094481192399323",
+                "feature_id": "0x0:0x6073b21b82e031db",
+                "title": "Master Fencing",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": null,
+                  "votes_count": null,
+                  "rating_max": null
+                }
+              },
+              {
+                "cid": "4855774919019900127",
+                "feature_id": "0x0:0x43632d8fd56eacdf",
+                "title": "Alaska Hammer & Home",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": null,
+                  "votes_count": null,
+                  "rating_max": null
+                }
+              },
+              {
+                "cid": "11968779161303249639",
+                "feature_id": "0x0:0xa619a53be093f2e7",
+                "title": "Avalanche Construction Inc.",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 4.8,
+                  "votes_count": 79,
+                  "rating_max": null
+                }
+              },
+              {
+                "cid": "7071197963565086502",
+                "feature_id": "0x0:0x6221f11542c33726",
+                "title": "Alaskan Fencing LLC",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": 4,
+                  "rating_max": null
+                }
+              }
+            ],
+            "work_time": {
+              "work_hours": {
+                "timetable": {
+                  "sunday": null,
+                  "monday": [
+                    {
+                      "open": {
+                        "hour": 7,
+                        "minute": 30
+                      },
+                      "close": {
+                        "hour": 19,
+                        "minute": 0
+                      }
+                    }
+                  ],
+                  "tuesday": [
+                    {
+                      "open": {
+                        "hour": 7,
+                        "minute": 30
+                      },
+                      "close": {
+                        "hour": 19,
+                        "minute": 0
+                      }
+                    }
+                  ],
+                  "wednesday": [
+                    {
+                      "open": {
+                        "hour": 7,
+                        "minute": 30
+                      },
+                      "close": {
+                        "hour": 19,
+                        "minute": 0
+                      }
+                    }
+                  ],
+                  "thursday": [
+                    {
+                      "open": {
+                        "hour": 7,
+                        "minute": 30
+                      },
+                      "close": {
+                        "hour": 19,
+                        "minute": 0
+                      }
+                    }
+                  ],
+                  "friday": [
+                    {
+                      "open": {
+                        "hour": 7,
+                        "minute": 30
+                      },
+                      "close": {
+                        "hour": 19,
+                        "minute": 0
+                      }
+                    }
+                  ],
+                  "saturday": null
+                },
+                "current_status": "close"
+              }
+            },
+            "popular_times": null,
+            "local_business_links": null,
+            "is_directory_item": false,
+            "directory": null
+          }
+        ]
+      }
+    ]
+  }
