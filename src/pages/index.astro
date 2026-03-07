@@ -6,6 +6,7 @@ import ServiceCard from '../components/ServiceCard.astro';
 import Gallery from '../components/Gallery.astro';
 import ProcessSteps from '../components/ProcessSteps.astro';
 import GoogleReviewCard from '../components/GoogleReviewCard.astro';
+import ReviewCtaCard from '../components/ReviewCtaCard.astro';
 
 const site = (await import('../data/site.json')).default;
 const reviewsData = (await import('../data/reviews.json')).default;
@@ -24,6 +25,24 @@ const displayReviews = maryBerger
   ? [...rest.slice(0, insertAt), maryBerger, ...rest.slice(insertAt)]
   : rest;
 
+// Interleave exactly 3 CTA cards at random positions so they scatter in the masonry (not aligned)
+const n = displayReviews.length;
+const minGap = Math.floor(n / 6);
+const pool = Array.from({ length: n - 2 * minGap }, (_, i) => i + minGap);
+const shuffle = <T,>(arr: T[]): T[] => arr.slice().sort(() => Math.random() - 0.5);
+const CTA_POSITIONS = shuffle(pool)
+  .slice(0, 3)
+  .sort((a, b) => a - b);
+type ReviewItem = { type: 'review'; r: (typeof rest)[0] };
+type CtaItem = { type: 'cta' };
+const reviewAndCtaItems: (ReviewItem | CtaItem)[] = [];
+displayReviews.forEach((r: (typeof rest)[0], i: number) => {
+  reviewAndCtaItems.push({ type: 'review', r });
+  if (CTA_POSITIONS.includes(i + 1)) {
+    reviewAndCtaItems.push({ type: 'cta' });
+  }
+});
+
 const primaryCategory = site.categories.find((c: { isPrimary: boolean }) => c.isPrimary);
 const featuredServices = primaryCategory
   ? primaryCategory.services
@@ -38,21 +57,24 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
 <Layout title={title} description={description}>
   <Hero />
   <TrustBar />
-  <section class="py-20 lg:py-28 bg-surface">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-semibold text-neutral-800 text-center">Our Services</h2>
-      <p class="mt-3 text-neutral-600 text-center max-w-xl mx-auto">
-        From custom decks to repairs and general contracting — built for {site.primaryCity}'s climate.
-      </p>
-      <ul class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
+  <section class="py-12 sm:py-16 lg:py-24 bg-surface border-t border-neutral-200" aria-label="Services">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Services</p>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">What We Build.</h2>
+        <p class="mt-3 text-neutral-600 max-w-xl">
+          From custom decks to repairs and general contracting — built for {site.primaryCity}'s climate.
+        </p>
+      </div>
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
         {featuredServices.map((name) => (
           <li>
             <ServiceCard title={name} href="/services" />
           </li>
         ))}
       </ul>
-      <p class="mt-10 text-center">
-        <a href="/services" class="text-accent font-medium hover:text-accent-dark transition-colors duration-200">
+      <p class="mt-10">
+        <a href="/services" class="text-brand-orange font-bold hover:underline uppercase text-xs tracking-wider">
           View all services →
         </a>
       </p>
@@ -60,7 +82,7 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
   </section>
   <Gallery />
   <ProcessSteps />
-  <section id="reviews" class="py-16 lg:py-24 bg-surface-muted border-t border-neutral-200" aria-label="Reviews">
+  <section id="reviews" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Reviews">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
         <div>
@@ -92,9 +114,13 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
             </video>
           </div>
         )}
-        {displayReviews.map((r: { text: string; author: string; rating: number; source: string; avatarUrl?: string }) => (
-          <GoogleReviewCard text={r.text} author={r.author} rating={r.rating} source={r.source || 'Google'} avatarUrl={r.avatarUrl} />
-        ))}
+        {reviewAndCtaItems.map((item) =>
+          item.type === 'review' ? (
+            <GoogleReviewCard text={item.r.text} author={item.r.author} rating={item.r.rating} source={item.r.source || 'Google'} avatarUrl={item.r.avatarUrl} />
+          ) : (
+            <ReviewCtaCard />
+          )
+        )}
       </div>
     </div>
   </section>

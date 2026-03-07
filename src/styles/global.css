@@ -17,3 +17,15 @@
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
   }
 }
+
+/* Reviews section: lightweight diagonal line background (CSS only) */
+.reviews-diagonal-bg {
+  background-color: #f5f5f4; /* surface-muted */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 5px,
+    rgba(0, 0, 0, 0.035) 5px,
+    rgba(0, 0, 0, 0.035) 6px
+  );
+}
