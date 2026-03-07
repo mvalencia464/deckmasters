@@ -2,17 +2,13 @@
 /**
  * Portfolio gallery: real project images from public/projects.
  * Uses local avif/webp with <picture> for best performance and Lighthouse scores.
- * Lightbox modal reuses same URLs (cached); minimal vanilla JS.
+ * Lazy loading and explicit dimensions prevent CLS.
  */
 const projectsData = (await import('../data/projects.json')).default;
 const images = projectsData.images ?? [];
 ---
 
-<section
-  class="gallery-section py-12 sm:py-16 lg:py-24 bg-surface-muted border-t border-neutral-200"
-  aria-label="Project gallery"
-  data-images={JSON.stringify(images)}
->
+<section class="py-12 sm:py-16 lg:py-24 bg-surface-muted border-t border-neutral-200" aria-label="Project gallery">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="mb-10">
       <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Portfolio</p>
@@ -22,149 +18,23 @@ const images = projectsData.images ?? [];
       </p>
     </div>
     <ul class="grid grid-cols-2 md:grid-cols-3 gap-4" role="list">
-      {images.map((img: { slug: string; alt: string }, i: number) => (
+      {images.map((img: { slug: string; alt: string }) => (
         <li>
-          <button
-            type="button"
-            class="gallery-item w-full text-left rounded-none border border-neutral-200 shadow-sm overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
-            data-index={i}
-            aria-label={`View ${img.alt}`}
-          >
-            <picture>
-              <source type="image/avif" srcset={`/projects/${img.slug}.avif`} />
-              <source type="image/webp" srcset={`/projects/${img.slug}.webp`} />
-              <img
-                src={`/projects/${img.slug}.webp`}
-                alt={img.alt}
-                width={600}
-                height={400}
-                loading="lazy"
-                decoding="async"
-                class="w-full aspect-[3/2] object-cover pointer-events-none"
-              />
-            </picture>
-          </button>
+          <picture>
+            <source type="image/avif" srcset={`/projects/${img.slug}.avif`} />
+            <source type="image/webp" srcset={`/projects/${img.slug}.webp`} />
+            <img
+              src={`/projects/${img.slug}.webp`}
+              alt={img.alt}
+              width={600}
+              height={400}
+              loading="lazy"
+              decoding="async"
+              class="rounded-none w-full aspect-[3/2] object-cover border border-neutral-200 shadow-sm"
+            />
+          </picture>
         </li>
       ))}
     </ul>
   </div>
-
-  <!-- Lightbox modal: same image URLs (cached), no extra requests -->
-  <div
-    id="gallery-modal"
-    class="gallery-modal fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Image viewer"
-    aria-hidden="true"
-  >
-    <button
-      type="button"
-      class="gallery-modal-close absolute top-4 right-4 z-10 rounded-none bg-white/10 p-2 text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
-      aria-label="Close"
-    >
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-    <button
-      type="button"
-      class="gallery-modal-prev absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-none bg-white/10 p-2 text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
-      aria-label="Previous image"
-    >
-      <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
-    <button
-      type="button"
-      class="gallery-modal-next absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-none bg-white/10 p-2 text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
-      aria-label="Next image"
-    >
-      <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-    </button>
-    <div class="gallery-modal-backdrop absolute inset-0" aria-hidden="true"></div>
-    <div class="relative z-10 max-h-[90vh] max-w-[90vw]">
-      <picture class="gallery-modal-picture block">
-        <source type="image/avif" class="gallery-modal-source-avif" />
-        <source type="image/webp" class="gallery-modal-source-webp" />
-        <img
-          class="gallery-modal-img max-h-[90vh] w-auto rounded-none object-contain"
-          alt=""
-          width="1200"
-          height="800"
-          loading="eager"
-          decoding="async"
-        />
-      </picture>
-    </div>
-  </div>
 </section>
-
-<script define:vars={{ imageCount: images.length }}>
-  (function () {
-    const section = document.querySelector('.gallery-section');
-    if (!section || imageCount === 0) return;
-
-    const images = JSON.parse(section.getAttribute('data-images') || '[]');
-    const modal = document.getElementById('gallery-modal');
-    const backdrop = modal?.querySelector('.gallery-modal-backdrop');
-    const closeBtn = modal?.querySelector('.gallery-modal-close');
-    const prevBtn = modal?.querySelector('.gallery-modal-prev');
-    const nextBtn = modal?.querySelector('.gallery-modal-next');
-    const sourceAvif = modal?.querySelector('.gallery-modal-source-avif');
-    const sourceWebp = modal?.querySelector('.gallery-modal-source-webp');
-    const img = modal?.querySelector('.gallery-modal-img');
-
-    if (!modal || !img || !sourceAvif || !sourceWebp) return;
-
-    let currentIndex = 0;
-
-    function setModalImage(index) {
-      const i = ((index % imageCount) + imageCount) % imageCount;
-      currentIndex = i;
-      const item = images[i];
-      if (!item) return;
-      const base = '/projects/' + item.slug;
-      sourceAvif.setAttribute('srcset', base + '.avif');
-      sourceWebp.setAttribute('srcset', base + '.webp');
-      img.src = base + '.webp';
-      img.alt = item.alt;
-    }
-
-    function openModal(index) {
-      currentIndex = index;
-      setModalImage(currentIndex);
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      closeBtn?.focus();
-    }
-
-    function closeModal() {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    section.querySelectorAll('.gallery-item').forEach((btn, index) => {
-      btn.addEventListener('click', () => openModal(index));
-    });
-
-    closeBtn?.addEventListener('click', closeModal);
-    backdrop?.addEventListener('click', closeModal);
-    prevBtn?.addEventListener('click', () => { setModalImage(currentIndex - 1); prevBtn.focus(); });
-    nextBtn?.addEventListener('click', () => { setModalImage(currentIndex + 1); nextBtn.focus(); });
-
-    document.addEventListener('keydown', (e) => {
-      if (modal.classList.contains('hidden')) return;
-      if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowLeft') setModalImage(currentIndex - 1);
-      if (e.key === 'ArrowRight') setModalImage(currentIndex + 1);
-    });
-  })();
-</script>
