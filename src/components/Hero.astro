@@ -1,8 +1,7 @@
 ---
 /**
- * Hero: two-column layout (content left, quote form right). Copy and style
- * match reference: #1 rated badge, "Turn your backyard into a resort", form card.
- * Desktop: hero image (picture/source media only). Mobile: gradient only for LCP.
+ * Hero: social-proof angle (120+ five-star reviews, trust, reliability).
+ * Two-column layout: copy left, quote form right. Overcomes contractor anxiety.
  */
 import QuoteForm from './QuoteForm.astro';
 const site = (await import('../data/site.json')).default;
@@ -34,22 +33,25 @@ const tinyPlaceholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAA
         <div class="flex items-center gap-4 mb-6">
           <span class="h-px w-12 bg-brand-orange" aria-hidden="true" />
           <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange">
-            {city.toUpperCase()}'S #1 RATED DECK BUILDER
+            120+ FIVE-STAR REVIEWS
           </p>
         </div>
-        <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] font-bold text-brand-wood mb-6 uppercase tracking-tighter">
-          Turn Your<br /><span class="text-brand-dark">Backyard<br />Into A Resort.</span>
+        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] font-bold text-brand-wood mb-6 uppercase tracking-tight">
+          The {city} Deck Builder with 120+ Five-Star Reviews.
         </h1>
-        <p class="text-xl md:text-2xl font-semibold text-brand-wood mb-10 italic">
-          {city}'s #1 Rated Deck Builder
+        <p class="max-w-xl text-neutral-700 text-lg md:text-xl leading-relaxed mb-6">
+          We don't just build decks; we <span class="text-brand-orange font-semibold">build trust</span>. From the first call to the final nail, experience why Anchorage homeowners consistently rank DeckMasters as the city's <span class="text-brand-orange font-semibold">most reliable crew</span>.
         </p>
-        <p class="max-w-lg text-neutral-700 text-lg leading-relaxed mb-8">
-          Skip the contractor nightmares. Weekly check-ins, transparent pricing, and frost-proof engineering designed for Alaska's climate. Build your 21-day legacy today.
+        <p class="max-w-lg text-neutral-600 text-base mb-8 uppercase tracking-wide">
+          No more contractor anxiety—just a crew that <span class="text-brand-orange font-semibold">shows up, communicates, and delivers</span>.
         </p>
-        <div class="hidden lg:flex items-center gap-3">
-          <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" width="74" height="24" class="h-6 w-auto" loading="lazy" />
-          <span class="text-[10px] font-bold uppercase text-neutral-600 tracking-wider">4.9, 122 Google Reviews</span>
-        </div>
+        <a href="https://www.google.com/search?q=deckmasters+anchorage+reviews" target="_blank" rel="noopener" class="inline-flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:px-4 sm:py-2.5 bg-white border border-neutral-200/80 rounded-none shadow-sm hover:shadow-md hover:border-neutral-300/80 transition-all duration-200 w-fit">
+          <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" width="74" height="24" class="h-4 sm:h-5 w-auto" loading="lazy" />
+          <span class="flex items-center gap-0.5 text-amber-500 text-xs sm:text-sm" aria-hidden="true">★★★★★</span>
+          <span class="text-[11px] sm:text-xs font-semibold text-neutral-700 tracking-wide">4.9</span>
+          <span class="text-neutral-400" aria-hidden="true">·</span>
+          <span class="text-[11px] sm:text-xs font-medium text-neutral-600">122 Google Reviews</span>
+        </a>
       </div>
 
       <!-- Right: form card (reference style: white, dark border, shadow) -->

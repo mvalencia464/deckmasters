@@ -1,14 +1,11 @@
 ---
-import { Image } from 'astro:assets';
-// Placeholder gallery: 4–6 images. Client will provide fresh photos later.
-const images = [
-  { src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=75', alt: 'Custom deck and outdoor living space' },
-  { src: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=75', alt: 'Deck with railing and mountain view' },
-  { src: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&q=75', alt: 'Modern deck and exterior' },
-  { src: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=75', alt: 'Composite deck and stairs' },
-  { src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600&q=75', alt: 'Deck repair and railing' },
-  { src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=75', alt: 'Outdoor structure and deck' },
-];
+/**
+ * Portfolio gallery: real project images from public/projects.
+ * Uses local avif/webp with <picture> for best performance and Lighthouse scores.
+ * Lazy loading and explicit dimensions prevent CLS.
+ */
+const projectsData = (await import('../data/projects.json')).default;
+const images = projectsData.images ?? [];
 ---
 
 <section class="py-12 sm:py-16 lg:py-24 bg-surface-muted border-t border-neutral-200" aria-label="Project gallery">
@@ -21,17 +18,21 @@ const images = [
       </p>
     </div>
     <ul class="grid grid-cols-2 md:grid-cols-3 gap-4" role="list">
-      {images.map((img) => (
+      {images.map((img: { slug: string; alt: string }) => (
         <li>
-          <Image
-            src={img.src}
-            alt={img.alt}
-            width={600}
-            height={400}
-            class="rounded-none w-full aspect-[3/2] object-cover border border-neutral-200 shadow-sm"
-            loading="lazy"
-            format="avif"
-          />
+          <picture>
+            <source type="image/avif" srcset={`/projects/${img.slug}.avif`} />
+            <source type="image/webp" srcset={`/projects/${img.slug}.webp`} />
+            <img
+              src={`/projects/${img.slug}.webp`}
+              alt={img.alt}
+              width={600}
+              height={400}
+              loading="lazy"
+              decoding="async"
+              class="rounded-none w-full aspect-[3/2] object-cover border border-neutral-200 shadow-sm"
+            />
+          </picture>
         </li>
       ))}
     </ul>
