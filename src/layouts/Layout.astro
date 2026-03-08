@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import iconSvg from '../assets/icon.svg';
 
 interface Props {
   title: string;
@@ -9,7 +10,11 @@ interface Props {
 const { title, description } = Astro.props;
 const site = (await import('../data/site.json')).default;
 const fullTitle = `${title} | ${site.businessName}`;
-const metaDescription = description ?? `${site.tagline} Custom decks, repairs & outdoor living in ${site.primaryCity}, AK. Free estimates.`;
+const metaDescription = description ?? `${site.tagline} Custom decks, repairs & outdoor living in ${site.primaryCity}. Free estimates.`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
+const logoParts = site.businessName.split(' ').filter((p: string) => p !== 'AK');
+const logoFirst = logoParts[0] ?? '';
+const logoRest = logoParts.slice(1).join('');
 ---
 
 <!doctype html>
@@ -17,7 +22,16 @@ const metaDescription = description ?? `${site.tagline} Custom decks, repairs & 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{fullTitle}</title>
     <meta name="description" content={metaDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={metaDescription} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,13 +47,13 @@ const metaDescription = description ?? `${site.tagline} Custom decks, repairs & 
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap"
       />
     </noscript>
-    <title>{fullTitle}</title>
-  </head>
+    </head>
   <body>
     <header class="sticky top-0 z-50 w-full bg-white border-b border-neutral-200/80">
       <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <a href="/" class="flex items-center transition-opacity duration-200 hover:opacity-90 focus-ring rounded-sm">
-          <span class="font-display text-2xl tracking-tighter font-bold text-brand-wood">{site.businessName.split(' ')[0]} <span class="text-brand-orange">{site.businessName.split(' ').slice(1).join(' ')}</span></span>
+        <a href="/" class="flex items-center gap-2 sm:gap-2.5 transition-opacity duration-200 hover:opacity-90 focus-ring rounded-sm overflow-visible">
+          <img src={iconSvg} alt="" width="36" height="32" class="h-8 w-auto shrink-0" fetchpriority="high" />
+          <span class="font-display text-2xl font-bold text-brand-wood uppercase tracking-tight pr-px overflow-visible">{logoFirst}<span class="brand-text-gradient">{logoRest}</span></span>
         </a>
         <div class="hidden md:flex items-center gap-8 font-medium text-xs uppercase tracking-[0.2em] text-neutral-600">
           <a href="/" class="hover:text-brand-orange transition-colors duration-200">Home</a>
@@ -116,21 +130,6 @@ const metaDescription = description ?? `${site.tagline} Custom decks, repairs & 
               {site.socials.linkedin && (
                 <a href={site.socials.linkedin} target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-brand-orange transition-colors duration-200 p-1 -m-1 rounded focus-ring" aria-label="LinkedIn">
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                </a>
-              )}
-              {site.socials.yelp && (
-                <a href={site.socials.yelp} target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-brand-orange transition-colors duration-200 p-1 -m-1 rounded focus-ring" aria-label="Yelp">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.16 12.594l-4.995 1.433c-.96.276-1.74-.8-1.176-1.63l2.905-4.308a1.072 1.072 0 0 0-.182-1.496 1.03 1.03 0 0 0-1.473.184L11.99 12.33c-.767 1.065-2.43.814-2.43-.485V4.575a1.03 1.03 0 0 0-.672-.954 1.03 1.03 0 0 0-1.392.675l-1.155 4.33c-.255.957-.558 1.888-.91 2.796-.35.903-.763 1.776-1.234 2.614a1.03 1.03 0 0 0 .566 1.455l4.994 1.433c.96.276 1.74-.8 1.176-1.63L5.5 12.33a1.072 1.072 0 0 0 .182-1.496 1.03 1.03 0 0 0-1.473-.184L.85 15.598c-.767 1.065-.764 2.54.006 3.602.77 1.06 2.206 1.595 3.415 1.072l4.995-1.433c.96-.276 1.74.8 1.176 1.63l-2.905 4.308a1.072 1.072 0 0 0 .182 1.496 1.03 1.03 0 0 0 1.473-.184l2.905-4.308c.767-1.065 2.43-.814 2.43.485v6.775a1.03 1.03 0 0 0 .672.954 1.03 1.03 0 0 0 1.392-.675l1.155-4.33c.255-.957.558-1.888.91-2.796.35-.903.763-1.776 1.234-2.614a1.03 1.03 0 0 0-.566-1.455l-4.994-1.433c-.96-.276-1.74.8-1.176 1.63l2.905 4.308a1.072 1.072 0 0 1-.182 1.496 1.03 1.03 0 0 1-1.473-.184l-2.905-4.308c-.767-1.065-.764-2.54-.006-3.602.77-1.06 2.206-1.595 3.415-1.072l4.995 1.433c.96.276 1.74-.8 1.176-1.63l2.905-4.308a1.072 1.072 0 0 0-.182-1.496 1.03 1.03 0 0 0-1.473.184L12.01 11.67c-.767-1.065-2.43-.814-2.43.485v6.775a1.03 1.03 0 0 0 .672.954 1.03 1.03 0 0 0 1.392-.675l1.155-4.33c.255-.957.558-1.888.91-2.796.35-.903.763-1.776 1.234-2.614a1.03 1.03 0 0 0-.566-1.455z"/></svg>
-                </a>
-              )}
-              {site.socials.houzz && (
-                <a href={site.socials.houzz} target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-brand-orange transition-colors duration-200 p-1 -m-1 rounded focus-ring" aria-label="Houzz">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l2.363 2.363a1.053 1.053 0 0 1-.006 1.489l-2.35 2.35h4.667a10.017 10.017 0 0 0 7.343 3.176 10.03 10.03 0 0 0 7.344-3.176h4.666l-2.35-2.35a1.053 1.053 0 0 1-.006-1.49l2.363-2.362h-4.361a10.016 10.016 0 0 0-7.645-2.353zM12 8.255c-1.067 0-2.077.208-3 .585l3 5.196 3-5.196a5.475 5.475 0 0 0-3-.585zm0 8.49l-3-5.196a5.468 5.468 0 0 0 6 0zm10.006-4.295c-2.67 0-5.338.784-7.645 2.353H12l2.363 2.363a1.053 1.053 0 0 1-.006 1.489l-2.35 2.35h4.667a10.017 10.017 0 0 0 7.343 3.176 10.03 10.03 0 0 0 7.344-3.176H24l-2.35-2.35a1.053 1.053 0 0 1-.006-1.49l2.363-2.362z"/></svg>
-                </a>
-              )}
-              {site.socials.bbb && (
-                <a href={site.socials.bbb} target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-brand-orange transition-colors duration-200 p-1 -m-1 rounded focus-ring" aria-label="Better Business Bureau">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/></svg>
                 </a>
               )}
             </div>

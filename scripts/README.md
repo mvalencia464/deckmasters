@@ -55,6 +55,9 @@ node --env-file=.env scripts/sync-reviews.js acme-contracting
 1. **task_post** — Creates a task with keyword + location + language.
 2. **Poll task_get** — Waits until the task is done (polling every few seconds).
 3. **Download avatars** — Saves profile images under `outputAvatarsDir` (filename = review id).
-4. **Map & write** — Maps DataForSEO fields to your `rawReviews` schema and writes `outputJson`.
+4. **Download review project images** — For reviews that include photos, downloads up to 6 per review to `outputReviewImagesDir` (default `src/assets/review-images`). These are optimized at build (AVIF thumbnails) and shown in the Experimental section with `loading="lazy"` so they don’t hurt performance.
+5. **Map & write** — Maps DataForSEO fields to your `rawReviews` schema and writes `outputJson`.
 
 The homepage “Experimental” reviews section reads `src/data/google-reviews.json`; point it at a client-specific file if you use multiple clients.
+
+**Reference data** — `scripts/reference/` holds sample API responses (e.g. DataForSEO my_business_info for Deck Masters). See `scripts/reference/README.md`.

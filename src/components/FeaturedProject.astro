@@ -1,0 +1,80 @@
+---
+/**
+ * Featured project: Erica Leman video + Joseph Leman review + project images.
+ * Data comes from reviews.json (video + Joseph Leman entry with images).
+ */
+import GoogleReviewCard from './GoogleReviewCard.astro';
+
+interface VideoReview {
+  videoUrl?: string;
+  videoThumbnailUrl?: string;
+}
+
+interface JosephReview {
+  text: string;
+  author: string;
+  rating: number;
+  source: string;
+  avatarUrl?: string;
+  images?: string[];
+}
+
+interface Props {
+  videoReview: VideoReview | null;
+  josephReview: JosephReview | null;
+}
+
+const { videoReview, josephReview } = Astro.props;
+const projectImages = josephReview?.images ?? [];
+const coverImage = projectImages[0];
+const restImages = projectImages.slice(1);
+---
+
+<section id="featured-project" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Featured project">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Featured Project</p>
+    <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight mb-8">Our Featured Project.</h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      {videoReview?.videoUrl && (
+        <div class="lg:col-span-2 rounded-none border border-neutral-200 bg-neutral-200 overflow-hidden shadow-sm aspect-[9/16] w-full max-w-sm mx-auto lg:mx-0">
+          <video
+            class="w-full h-full object-cover"
+            poster={videoReview.videoThumbnailUrl || ''}
+            controls
+            preload="metadata"
+            playsinline
+          >
+            <source src={videoReview.videoUrl} type="video/mp4" />
+          </video>
+        </div>
+      )}
+      <div class={videoReview?.videoUrl ? 'lg:col-span-3' : 'lg:col-span-5'}>
+        {josephReview && (
+          <GoogleReviewCard
+            text={josephReview.text}
+            author={josephReview.author}
+            rating={josephReview.rating}
+            source={josephReview.source}
+            avatarUrl={josephReview.avatarUrl}
+            projectImageUrls={projectImages.length > 0 ? projectImages : undefined}
+          />
+        )}
+        {projectImages.length > 0 && !josephReview && (
+          <div class="rounded-none border border-neutral-200 bg-surface-elevated overflow-hidden">
+            {coverImage && (
+              <img src={coverImage} alt="" class="w-full aspect-video object-cover" width="600" height="338" loading="lazy" decoding="async" />
+            )}
+            {restImages.length > 0 && (
+              <div class="grid grid-cols-2 gap-0.5 p-0">
+                {restImages.map((url) => (
+                  <img src={url} alt="" class="w-full aspect-video object-cover" width="300" height="169" loading="lazy" decoding="async" />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

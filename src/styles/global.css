@@ -18,6 +18,21 @@
   }
 }
 
+/* Brand gradient text (CSS only); padding prevents clip from cutting off K's and other glyphs */
+.brand-text-gradient {
+  color: #E85A07;
+  padding-right: 2px;
+  display: inline-block;
+}
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .brand-text-gradient {
+    background: linear-gradient(135deg, #E85A07 0%, #c2410c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
 /* Reviews section: lightweight diagonal line background (CSS only) */
 .reviews-diagonal-bg {
   background-color: #f5f5f4; /* surface-muted */

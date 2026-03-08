@@ -33,8 +33,8 @@ export default {
           muted: '#5EEAD4',
           dark: '#0F766E',
         },
-        // Reference hero/form: orange CTA, dark borders, wood tone headlines
-        'brand-orange': '#c2410c',
+        // Brand: #E85A07 (icon, CTA, accents)
+        'brand-orange': '#E85A07',
         'brand-dark': '#262626',
         'brand-wood': '#4a3728',
       },

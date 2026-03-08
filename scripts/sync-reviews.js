@@ -21,8 +21,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 const API_REVIEWS = 'https://api.dataforseo.com/v3/business_data/google/reviews';
-const POLL_INTERVAL_MS = 2500;
-const POLL_MAX_ATTEMPTS = 20;
+const POLL_INTERVAL_MS = 3000;
+const POLL_MAX_ATTEMPTS = 30;
 
 function getAuthHeader() {
   const login = process.env.DATAFORSEO_LOGIN;
@@ -124,13 +124,14 @@ async function pollUntilReady(taskId) {
     const task = body?.tasks?.[0];
     const result = task?.result;
     const status = task?.status_code;
+    const msg = task?.status_message ?? body?.status_message ?? '';
     if (status === 20000 && Array.isArray(result) && result.length > 0) {
       return body;
     }
-    if (status !== 20000 && status !== 20100 && status !== 20200) {
-      throw new Error(`Task failed: ${task?.status_message ?? body?.status_message ?? 'Unknown'}`);
-    }
+    // Don't throw on "Task In Queue" or any intermediate status — just keep polling.
+    // Only give up when we've used all attempts.
     if (attempt < POLL_MAX_ATTEMPTS - 1) {
+      console.log(`  Waiting for task... (${attempt + 1}/${POLL_MAX_ATTEMPTS}) ${msg || 'in progress'}`);
       await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
     }
   }
@@ -154,7 +155,7 @@ async function downloadAvatar(url, filepath) {
   return true;
 }
 
-function mapItemToReview(item, avatarFilename) {
+function mapItemToReview(item, avatarFilename, projectImageFilenames = []) {
   const rating = item?.rating?.value;
   const numRating = typeof rating === 'number' ? Math.round(rating) : 5;
   return {
@@ -164,6 +165,7 @@ function mapItemToReview(item, avatarFilename) {
     rating: numRating,
     source: 'Google',
     avatarUrl: avatarFilename || '',
+    images: Array.isArray(projectImageFilenames) ? projectImageFilenames : [],
   };
 }
 
@@ -187,8 +189,11 @@ async function main() {
   }
 
   const avatarsDir = path.join(ROOT, client.outputAvatarsDir || 'src/assets/avatars');
+  const reviewImagesDir = path.join(ROOT, client.outputReviewImagesDir || 'src/assets/review-images');
   fs.mkdirSync(avatarsDir, { recursive: true });
+  fs.mkdirSync(reviewImagesDir, { recursive: true });
   const rawReviews = [];
+  const MAX_PROJECT_IMAGES_PER_REVIEW = 6;
 
   for (const item of items) {
     const reviewId = item?.review_id;
@@ -208,7 +213,26 @@ async function main() {
       }
     }
 
-    rawReviews.push(mapItemToReview(item, avatarFilename));
+    const projectImageFilenames = [];
+    const reviewImages = item?.images;
+    if (Array.isArray(reviewImages) && reviewImages.length > 0 && reviewId) {
+      const base = safeFilename(reviewId);
+      const toDownload = reviewImages.slice(0, MAX_PROJECT_IMAGES_PER_REVIEW);
+      for (let i = 0; i < toDownload.length; i++) {
+        const imgUrl = toDownload[i]?.image_url;
+        if (!imgUrl) continue;
+        const filename = `${base}_${i}.jpg`;
+        const filepath = path.join(reviewImagesDir, filename);
+        try {
+          const ok = await downloadAvatar(imgUrl, filepath);
+          if (ok) projectImageFilenames.push(filename);
+        } catch (e) {
+          console.warn(`Review image download failed ${reviewId} [${i}]:`, e.message);
+        }
+      }
+    }
+
+    rawReviews.push(mapItemToReview(item, avatarFilename, projectImageFilenames));
   }
 
   const outPath = path.join(ROOT, client.outputJson || 'src/data/google-reviews.json');

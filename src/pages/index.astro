@@ -5,44 +5,14 @@ import TrustBar from '../components/TrustBar.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import Gallery from '../components/Gallery.astro';
 import ProcessSteps from '../components/ProcessSteps.astro';
-import GoogleReviewCard from '../components/GoogleReviewCard.astro';
-import ReviewCtaCard from '../components/ReviewCtaCard.astro';
+import FeaturedProject from '../components/FeaturedProject.astro';
 import ReviewsExperimental from '../components/ReviewsExperimental.astro';
 
 const site = (await import('../data/site.json')).default;
 const reviewsData = (await import('../data/reviews.json')).default;
 const rawReviews = reviewsData.rawReviews ?? [];
-const withText = rawReviews.filter((r: { text?: string }) => (r.text || '').trim().length > 0);
-const textReviews = withText.filter((r: { videoUrl?: string; videoThumbnailUrl?: string }) => !r.videoUrl && !r.videoThumbnailUrl);
-const videoReview = rawReviews.find((r: { videoUrl?: string; videoThumbnailUrl?: string }) => r.videoUrl || r.videoThumbnailUrl);
-const averageRating = rawReviews.length ? (rawReviews.reduce((a: number, r: { rating: number }) => a + r.rating, 0) / rawReviews.length).toFixed(1) : '0';
-const googleCount = rawReviews.filter((r: { source?: string }) => r.source === 'Google').length;
-
-// Show all text reviews; move Mary Berger (4-star) to ~80% down for trust-building
-const maryBerger = textReviews.find((r: { author: string; rating: number }) => r.author === 'Mary Berger' && r.rating === 4);
-const rest = textReviews.filter((r: { author: string; rating: number }) => !(r.author === 'Mary Berger' && r.rating === 4));
-const insertAt = Math.floor(rest.length * 0.8);
-const displayReviews = maryBerger
-  ? [...rest.slice(0, insertAt), maryBerger, ...rest.slice(insertAt)]
-  : rest;
-
-// Interleave exactly 3 CTA cards at random positions so they scatter in the masonry (not aligned)
-const n = displayReviews.length;
-const minGap = Math.floor(n / 6);
-const pool = Array.from({ length: n - 2 * minGap }, (_, i) => i + minGap);
-const shuffle = <T,>(arr: T[]): T[] => arr.slice().sort(() => Math.random() - 0.5);
-const CTA_POSITIONS = shuffle(pool)
-  .slice(0, 3)
-  .sort((a, b) => a - b);
-type ReviewItem = { type: 'review'; r: (typeof rest)[0] };
-type CtaItem = { type: 'cta' };
-const reviewAndCtaItems: (ReviewItem | CtaItem)[] = [];
-displayReviews.forEach((r: (typeof rest)[0], i: number) => {
-  reviewAndCtaItems.push({ type: 'review', r });
-  if (CTA_POSITIONS.includes(i + 1)) {
-    reviewAndCtaItems.push({ type: 'cta' });
-  }
-});
+const videoReview = rawReviews.find((r: { videoUrl?: string; videoThumbnailUrl?: string }) => r.videoUrl || r.videoThumbnailUrl) ?? null;
+const josephLeman = rawReviews.find((r: { author: string }) => r.author === 'Joseph Leman') ?? null;
 
 const primaryCategory = site.categories.find((c: { isPrimary: boolean }) => c.isPrimary);
 const featuredServices = primaryCategory
@@ -51,7 +21,7 @@ const featuredServices = primaryCategory
       .slice(0, 6)
       .map((s: { name: string }) => s.name)
   : [];
-const title = `Custom Decks & Repairs in ${site.primaryCity}, AK`;
+const title = `Custom Decks & Repairs in ${site.primaryCity}`;
 const description = `${site.tagline} ${site.businessName} — decks, outdoor living, repairs. Free estimates.`;
 ---
 
@@ -83,48 +53,7 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
   </section>
   <Gallery />
   <ProcessSteps />
-  <section id="reviews" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Reviews">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
-        <div>
-          <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Reviews</p>
-          <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">What Anchorage Is Saying.</h2>
-        </div>
-        <div class="flex flex-wrap items-center gap-4 text-sm">
-          <div class="flex items-center gap-2">
-            <span class="text-amber-500 text-lg" aria-hidden="true">★★★★★</span>
-            <span class="font-bold text-neutral-800">{averageRating}</span>
-            <span class="text-neutral-500 uppercase font-semibold">Average</span>
-          </div>
-          <span class="text-neutral-300">|</span>
-          <span class="text-neutral-600 font-semibold">{googleCount} Google Reviews</span>
-          <a href="https://www.google.com/search?q=deckmasters+anchorage+reviews" target="_blank" rel="noopener" class="text-brand-orange font-bold hover:underline uppercase text-xs tracking-wider">See All Google Reviews →</a>
-        </div>
-      </div>
-      <div class="columns-1 md:columns-4 column-gap-4">
-        {videoReview && (
-          <div class="rounded-none border border-neutral-200 bg-neutral-200 overflow-hidden shadow-sm break-inside-avoid mb-4 aspect-[9/16] w-full">
-            <video
-              class="w-full h-full object-cover"
-              poster={videoReview.videoThumbnailUrl || ''}
-              controls
-              preload="metadata"
-              playsinline
-            >
-              <source src={videoReview.videoUrl || ''} type="video/mp4" />
-            </video>
-          </div>
-        )}
-        {reviewAndCtaItems.map((item) =>
-          item.type === 'review' ? (
-            <GoogleReviewCard text={item.r.text} author={item.r.author} rating={item.r.rating} source={item.r.source || 'Google'} avatarUrl={item.r.avatarUrl} />
-          ) : (
-            <ReviewCtaCard />
-          )
-        )}
-      </div>
-    </div>
-  </section>
+  <FeaturedProject videoReview={videoReview} josephReview={josephLeman} />
   <ReviewsExperimental />
   <section class="py-20 lg:py-28 bg-surface">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

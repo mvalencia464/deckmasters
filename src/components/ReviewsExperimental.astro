@@ -2,7 +2,7 @@
 /**
  * Experimental reviews section: data from DataForSEO sync (google-reviews.json).
  * Zero client-side JS; same card layout as main reviews for 100 Lighthouse.
- * Avatars from sync-reviews.js are in src/assets/avatars/ and optimized at build via astro:assets.
+ * Avatars and review project images from sync-reviews.js are optimized at build via astro:assets.
  */
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
@@ -14,34 +14,48 @@ const withText = rawReviews.filter((r: { text?: string }) => (r.text || '').trim
 const displayReviews = withText;
 
 const avatarGlob = import.meta.glob<{ default: ImageMetadata }>('../assets/avatars/*.{jpg,jpeg,png,webp}');
+const reviewImagesGlob = import.meta.glob<{ default: ImageMetadata }>('../assets/review-images/*.{jpg,jpeg,png,webp}');
+
 const resolveAvatar = async (filename: string): Promise<string | undefined> => {
   if (!filename) return undefined;
   const key = Object.keys(avatarGlob).find((k) => k.endsWith(filename));
   if (!key || typeof avatarGlob[key] !== 'function') return undefined;
   const mod = await (avatarGlob[key] as () => Promise<{ default: ImageMetadata }>)();
-  const img = await getImage({ src: mod.default, width: 40, height: 40 });
+  const img = await getImage({ src: mod.default, width: 40, height: 40, format: 'avif' });
+  return img.src;
+};
+
+const resolveReviewImage = async (filename: string): Promise<string | undefined> => {
+  if (!filename) return undefined;
+  const key = Object.keys(reviewImagesGlob).find((k) => k.endsWith(filename));
+  if (!key || typeof reviewImagesGlob[key] !== 'function') return undefined;
+  const mod = await (reviewImagesGlob[key] as () => Promise<{ default: ImageMetadata }>)();
+  const img = await getImage({ src: mod.default, width: 160, height: 120, format: 'avif' });
   return img.src;
 };
 
 const reviewsWithAvatars = await Promise.all(
-  displayReviews.map(async (r) => ({
-    ...r,
-    avatarUrl: r.avatarUrl ? await resolveAvatar(r.avatarUrl) : undefined,
-  }))
+  displayReviews.map(async (r) => {
+    const avatarUrl = r.avatarUrl ? await resolveAvatar(r.avatarUrl) : undefined;
+    const images = r.images ?? [];
+    const projectImageUrls = images.length > 0
+      ? (await Promise.all(images.map((f: string) => resolveReviewImage(f)))).filter((u): u is string => !!u)
+      : undefined;
+    return { ...r, avatarUrl, projectImageUrls };
+  })
 );
 
 const averageRating = rawReviews.length
   ? (rawReviews.reduce((a: number, r: { rating: number }) => a + r.rating, 0) / rawReviews.length).toFixed(1)
   : '0';
-const googleCount = rawReviews.filter((r: { source?: string }) => r.source === 'Google').length;
 ---
 
-<section id="reviews-experimental" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Reviews (Experimental)">
+<section id="reviews" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Reviews">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
       <div>
-        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Reviews (Experimental)</p>
-        <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">DataForSEO Google Reviews.</h2>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Reviews</p>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">What Anchorage Is Saying.</h2>
       </div>
       <div class="flex flex-wrap items-center gap-4 text-sm">
         <div class="flex items-center gap-2">
@@ -50,7 +64,7 @@ const googleCount = rawReviews.filter((r: { source?: string }) => r.source === '
           <span class="text-neutral-500 uppercase font-semibold">Average</span>
         </div>
         <span class="text-neutral-300">|</span>
-        <span class="text-neutral-600 font-semibold">{googleCount} Google Reviews</span>
+        <span class="text-neutral-600 font-semibold">125 Google Reviews</span>
         <a href="https://www.google.com/search?q=deckmasters+anchorage+reviews" target="_blank" rel="noopener" class="text-brand-orange font-bold hover:underline uppercase text-xs tracking-wider">See All Google Reviews →</a>
       </div>
     </div>
@@ -62,6 +76,7 @@ const googleCount = rawReviews.filter((r: { source?: string }) => r.source === '
           rating={r.rating}
           source={r.source ?? 'Google'}
           avatarUrl={r.avatarUrl}
+          projectImageUrls={r.projectImageUrls}
         />
       ))}
     </div>
