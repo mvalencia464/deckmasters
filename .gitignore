@@ -17,3 +17,6 @@ dist/
 
 # Wrangler
 .wrangler/
+
+# Large media (tracked via external storage)
+public/Keller-video.mov

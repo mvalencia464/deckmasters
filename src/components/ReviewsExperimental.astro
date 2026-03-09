@@ -11,7 +11,26 @@ import GoogleReviewCard from './GoogleReviewCard.astro';
 const data = (await import('../data/google-reviews.json')).default;
 const rawReviews = data?.rawReviews ?? [];
 const withText = rawReviews.filter((r: { text?: string }) => (r.text || '').trim().length > 0);
-const displayReviews = withText;
+// Reorder so our single 1-star review (Matthew Moglianesi) doesn't always appear last,
+// but still remains visible in the list.
+let displayReviews = withText.slice();
+// Ensure the video testimonial (Erica/Jessica Leman) appears first in the list.
+const videoIndex = displayReviews.findIndex(
+  (r: { videoUrl?: string; videoThumbnailUrl?: string; author?: string }) =>
+    !!(r.videoUrl || r.videoThumbnailUrl) || (r.author || '').includes('Leman')
+);
+if (videoIndex > 0) {
+  const [videoReview] = displayReviews.splice(videoIndex, 1);
+  displayReviews.unshift(videoReview);
+}
+const oneStarIndex = displayReviews.findIndex(
+  (r: { author?: string; rating?: number }) => r.author === 'Matthew Moglianesi' && r.rating === 1
+);
+if (oneStarIndex > -1) {
+  const [oneStar] = displayReviews.splice(oneStarIndex, 1);
+  const insertIndex = Math.floor(displayReviews.length * 0.65);
+  displayReviews.splice(insertIndex, 0, oneStar);
+}
 
 const avatarGlob = import.meta.glob<{ default: ImageMetadata }>('../assets/avatars/*.{jpg,jpeg,png,webp}');
 const reviewImagesGlob = import.meta.glob<{ default: ImageMetadata }>('../assets/review-images/*.{jpg,jpeg,png,webp}');
@@ -35,14 +54,27 @@ const resolveReviewImage = async (filename: string): Promise<string | undefined>
 };
 
 const reviewsWithAvatars = await Promise.all(
-  displayReviews.map(async (r) => {
-    const avatarUrl = r.avatarUrl ? await resolveAvatar(r.avatarUrl) : undefined;
-    const images = r.images ?? [];
-    const projectImageUrls = images.length > 0
-      ? (await Promise.all(images.map((f: string) => resolveReviewImage(f)))).filter((u): u is string => !!u)
-      : undefined;
-    return { ...r, avatarUrl, projectImageUrls };
-  })
+  displayReviews.map(
+    async (
+      r: {
+        text: string;
+        author: string;
+        rating: number;
+        source: string;
+        avatarUrl?: string;
+        images?: string[];
+        videoUrl?: string;
+        videoThumbnailUrl?: string;
+      }
+    ) => {
+      const avatarUrl = r.avatarUrl ? await resolveAvatar(r.avatarUrl) : undefined;
+      const images = r.images ?? [];
+      const projectImageUrls = images.length > 0
+        ? (await Promise.all(images.map((f: string) => resolveReviewImage(f)))).filter((u): u is string => !!u)
+        : undefined;
+      return { ...r, avatarUrl, projectImageUrls };
+    }
+  )
 );
 
 const averageRating = rawReviews.length
@@ -77,6 +109,8 @@ const averageRating = rawReviews.length
           source={r.source ?? 'Google'}
           avatarUrl={r.avatarUrl}
           projectImageUrls={r.projectImageUrls}
+          videoUrl={r.videoUrl}
+          videoThumbnailUrl={r.videoThumbnailUrl}
         />
       ))}
     </div>

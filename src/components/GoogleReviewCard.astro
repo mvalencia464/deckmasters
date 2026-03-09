@@ -6,13 +6,16 @@ interface Props {
   source: string;
   avatarUrl?: string;
   projectImageUrls?: string[];
+  videoUrl?: string;
+  videoThumbnailUrl?: string;
 }
 
-const { text, author, rating, source, avatarUrl, projectImageUrls } = Astro.props;
+const { text, author, rating, source, avatarUrl, projectImageUrls, videoUrl, videoThumbnailUrl } = Astro.props;
 const initial = (author || '?').charAt(0).toUpperCase();
 const hasProjectImages = Array.isArray(projectImageUrls) && projectImageUrls.length > 0;
 const coverImage = hasProjectImages ? projectImageUrls[0] : null;
 const restImages = hasProjectImages && projectImageUrls.length > 1 ? projectImageUrls.slice(1) : [];
+const isVideoReview = !!videoUrl;
 ---
 
 <div class="flex flex-col rounded-none border border-neutral-200 bg-surface-elevated p-5 shadow-sm break-inside-avoid mb-4">
@@ -22,7 +25,20 @@ const restImages = hasProjectImages && projectImageUrls.length > 1 ? projectImag
     ))}
   </div>
   <p class="text-neutral-700 text-sm leading-relaxed mb-4 whitespace-pre-line">{text}</p>
-  {coverImage && (
+  {isVideoReview && videoUrl && (
+    <div class="-mx-5 mb-4 border-y border-neutral-200 bg-black">
+      <video
+        class="w-full aspect-video max-h-[360px] object-cover"
+        poster={videoThumbnailUrl || ''}
+        controls
+        preload="metadata"
+        playsinline
+      >
+        <source src={videoUrl} type="video/mp4" />
+      </video>
+    </div>
+  )}
+  {!isVideoReview && coverImage && (
     <div class="-mx-5 mb-4" aria-label="Project photos">
       <img src={coverImage} alt="" class="w-full aspect-video object-cover" width="400" height="225" loading="lazy" decoding="async" />
       {restImages.length > 0 && (

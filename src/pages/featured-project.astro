@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Featured Project Video';
+const description = 'Watch a full Deck Masters build from start to finish.';
+const projectsData = (await import('../data/projects.json')).default;
+const allImages = projectsData.images ?? [];
+const galleryImages = allImages.slice(0, 29);
+---
+
+<Layout title={title} description={description}>
+  <section class="py-12 sm:py-16 lg:py-20 bg-surface">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <a
+        href="/#featured-project"
+        class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500 hover:text-brand-orange transition-colors"
+      >
+        <span aria-hidden="true">←</span>
+        Back to homepage
+      </a>
+
+      <header class="mt-6 sm:mt-8">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Featured Project</p>
+        <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 tracking-tight">
+          Keller Deck Build Walkthrough
+        </h1>
+        <p class="mt-3 text-sm sm:text-base text-neutral-600 max-w-2xl">
+          A start-to-finish look at how we approach structure, details, and client experience on one of our recent
+          projects.
+        </p>
+      </header>
+
+      <div class="mt-8 sm:mt-10 rounded-none border border-neutral-200 bg-black shadow-sm overflow-hidden">
+        <video
+          class="w-full h-full max-h-[70vh] object-contain bg-black"
+          controls
+          preload="metadata"
+          playsinline
+        >
+          <source src="/Keller-video.mov" type="video/quicktime" />
+          <source src="/Keller-video.mov" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="mt-10 grid gap-8 md:grid-cols-[minmax(0,1.7fr),minmax(0,1.1fr)] md:items-start">
+        <div class="space-y-4 text-sm leading-relaxed text-neutral-700">
+          <h2 class="font-semibold text-neutral-900 text-base">What you&apos;ll see in this build</h2>
+          <p>
+            This featured project walks through a complete deck build—from foundation and framing to railing, lighting,
+            and final details. It&apos;s a good snapshot of how our team communicates, solves problems on site, and
+            obsesses over the small details that make a deck feel finished for decades, not seasons.
+          </p>
+          <p>
+            We filmed this project to give you a clear sense of what it&apos;s like to have Deck Masters on your
+            property: how we protect your home, keep the site clean, and keep you in the loop at each stage.
+          </p>
+        </div>
+
+        <aside class="space-y-5 rounded-none border border-neutral-200 bg-surface-elevated p-5 text-sm">
+          <div>
+            <h2 class="font-semibold text-neutral-900 text-base">Project snapshot</h2>
+            <dl class="mt-3 space-y-2 text-neutral-700">
+              <div class="flex justify-between gap-4">
+                <dt class="text-neutral-500">Location</dt>
+                <dd class="font-medium text-neutral-800 text-right">Anchorage, Alaska</dd>
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-neutral-500">Deck type</dt>
+                <dd class="font-medium text-neutral-800 text-right">Elevated composite deck</dd>
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-neutral-500">Key features</dt>
+                <dd class="font-medium text-neutral-800 text-right">Cable railing, integrated lighting, weather-ready framing</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="border-t border-neutral-200 pt-4">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500 mb-2">
+              Considering a project like this?
+            </p>
+            <p class="text-sm text-neutral-700">
+              When you&apos;re ready, head back to the homepage and request an estimate. We&apos;ll walk the site with
+              you, talk through options, and give you a clear, written plan—no surprises.
+            </p>
+            <a
+              href="/#quote"
+              class="mt-4 inline-flex items-center justify-center px-4 py-2 bg-brand-orange hover:bg-orange-800 text-white text-xs font-bold uppercase tracking-[0.18em] rounded-none shadow-sm transition-colors focus-ring"
+            >
+              Request An Estimate →
+            </a>
+          </div>
+        </aside>
+      </div>
+      {galleryImages.length > 0 && (
+        <section class="mt-12 sm:mt-14 border-t border-neutral-200 pt-8 sm:pt-10">
+          <div class="flex items-end justify-between gap-4 mb-5">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-orange mb-1">
+                Project Gallery
+              </p>
+              <h2 class="font-display text-xl sm:text-2xl font-semibold text-neutral-900 tracking-tight">
+                360° view of this build
+              </h2>
+            </div>
+            <p class="hidden sm:block text-[11px] text-neutral-500 max-w-xs text-right">
+              These photos are all from the same project you saw in the video—showing how it comes together from every
+              angle.
+            </p>
+          </div>
+          <ul class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4" role="list">
+            {galleryImages.map((img: { slug: string; alt: string }) => (
+              <li>
+                <picture>
+                  <source type="image/avif" srcset={`/projects/${img.slug}.avif`} />
+                  <source type="image/webp" srcset={`/projects/${img.slug}.webp`} />
+                  <img
+                    src={`/projects/${img.slug}.webp`}
+                    alt={img.alt}
+                    width={640}
+                    height={426}
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full aspect-[3/2] object-cover border border-neutral-200 bg-neutral-100 shadow-sm"
+                  />
+                </picture>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  </section>
+</Layout>

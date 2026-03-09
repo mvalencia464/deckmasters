@@ -57,6 +57,35 @@ const inputClass =
     <textarea name="projectDescription" rows={4} required class={inputClass} placeholder="Project description *"></textarea>
   </label>
 
+  <div class="mt-4 space-y-3 text-[11px] leading-snug text-neutral-300">
+    <label class="flex items-start gap-2">
+      <input
+        type="checkbox"
+        name="termsConsent"
+        required
+        class="mt-0.5 h-3.5 w-3.5 rounded-none border border-neutral-600 bg-neutral-900 text-brand-orange focus:ring-1 focus:ring-brand-orange"
+      />
+      <span>
+        By checking this box I agree to Deck Masters&apos;{' '}
+        <a href="/terms" class="underline hover:text-brand-orange">Terms</a> &amp;{' '}
+        <a href="/privacy" class="underline hover:text-brand-orange">Privacy Policy</a> and consent to receive SMS messages
+        about my project. Msg &amp; data rates may apply. Reply STOP to opt out. *
+      </span>
+    </label>
+
+    <label class="flex items-start gap-2">
+      <input
+        type="checkbox"
+        name="marketingConsent"
+        class="mt-0.5 h-3.5 w-3.5 rounded-none border border-neutral-600 bg-neutral-900 text-brand-orange focus:ring-1 focus:ring-brand-orange"
+      />
+      <span>
+        I consent to receive recurring automated marketing texts (promos, offers) from Deck Masters. Consent is not required
+        to purchase. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to cancel. *
+      </span>
+    </label>
+  </div>
+
   <button
     type="submit"
     id="quote-submit-btn"
@@ -123,12 +152,19 @@ const inputClass =
         return field?.value?.trim() || '';
       };
 
+      const getChecked = (selector: string) => {
+        const field = formEl.querySelector(selector) as HTMLInputElement | null;
+        return !!field?.checked;
+      };
+
       const payload = {
         name: getValue('[name="name"]'),
         email: getValue('[name="email"]'),
         phone: getValue('[name="phone"]'),
         serviceType: getValue('[name="serviceType"]'),
         projectDescription: getValue('[name="projectDescription"]'),
+        termsConsent: getChecked('[name="termsConsent"]'),
+        marketingConsent: getChecked('[name="marketingConsent"]'),
       };
 
       try {
