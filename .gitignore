@@ -21,3 +21,4 @@ dist/
 # Large media (tracked via external storage - served from R2)
 public/Keller-video.mov
 public/keller.mov
+public/keller.mp4
