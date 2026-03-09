@@ -85,12 +85,15 @@ const inputClass =
     Your Customer Success Manager
   </p>
   <div class="flex items-center gap-4">
-    <img
-      src="/jackie.png"
-      alt="Jackie Slagle, Customer Success Manager at DeckMasters"
-      class="w-14 h-14 rounded-md object-cover border border-neutral-700 bg-neutral-800"
-      loading="lazy"
-    />
+    <picture class="shrink-0">
+      <source srcset="/jackie.avif" type="image/avif" />
+      <img
+        src="/jackie.png"
+        alt="Jackie Slagle, Customer Success Manager at DeckMasters"
+        class="w-14 h-14 rounded-md object-cover border border-neutral-700 bg-neutral-800"
+        loading="lazy"
+      />
+    </picture>
     <div>
       <p class="font-semibold text-sm text-neutral-50">Jackie Slagle</p>
       <p class="text-xs text-neutral-400">Customer Success Manager</p>
