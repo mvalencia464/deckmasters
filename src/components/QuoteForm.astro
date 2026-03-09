@@ -2,6 +2,7 @@
 /**
  * Quote form — submits to /api/submit-quote (GHL). High-level service options only.
  */
+import CustomerSuccessManager from './CustomerSuccessManager.astro';
 
 const serviceOptions = [
   'Custom Deck Design',
@@ -77,64 +78,8 @@ const inputClass =
   <p id="form-message" class="hidden text-sm mt-2" role="status" aria-live="polite"></p>
 </form>
 
-<div
-  id="quote-success-panel"
-  class="hidden mt-6 border border-neutral-700 bg-neutral-900/80 px-4 py-4 rounded-none"
->
-  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-400 mb-3">
-    Your Customer Success Manager
-  </p>
-  <div class="flex items-center gap-4">
-    <picture class="shrink-0">
-      <source srcset="/jackie.avif" type="image/avif" />
-      <img
-        src="/jackie.png"
-        alt="Jackie Slagle, Customer Success Manager at DeckMasters"
-        class="w-14 h-14 rounded-md object-cover border border-neutral-700 bg-neutral-800"
-        loading="lazy"
-      />
-    </picture>
-    <div>
-      <p class="font-semibold text-sm text-neutral-50">Jackie Slagle</p>
-      <p class="text-xs text-neutral-400">Customer Success Manager</p>
-      <p class="mt-1 text-xs text-neutral-300">
-        <span class="font-medium">Phone:</span> (907) 891-8283
-      </p>
-      <p class="text-xs text-neutral-300">
-        <span class="font-medium">Email:</span> meeting@deckmastersak.com
-      </p>
-    </div>
-  </div>
-  <div class="mt-4 flex flex-col sm:flex-row sm:flex-nowrap gap-2 sm:gap-3">
-    <a
-      href="sms:+19078918283"
-      class="inline-flex items-center justify-center px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] bg-brand-orange text-white hover:bg-orange-800 rounded-none focus-ring"
-      aria-label="Text Jackie"
-    >
-      Text
-    </a>
-    <a
-      href="tel:+19078918283"
-      class="inline-flex items-center justify-center px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] border border-neutral-600 text-neutral-100 hover:bg-neutral-800 rounded-none focus-ring"
-      aria-label="Call Jackie"
-    >
-      Call
-    </a>
-    <a
-      href="mailto:meeting@deckmastersak.com"
-      class="inline-flex items-center justify-center px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] border border-neutral-600 text-neutral-100 hover:bg-neutral-800 rounded-none focus-ring"
-      aria-label="Email Jackie"
-    >
-      Email
-    </a>
-  </div>
-  <button
-    id="quote-reset-btn"
-    type="button"
-    class="mt-4 text-[11px] text-neutral-400 underline underline-offset-2 hover:text-neutral-200"
-  >
-    Submit another request
-  </button>
+<div id="quote-success-panel" class="hidden mt-6">
+  <CustomerSuccessManager />
 </div>
 
 <script>
@@ -142,7 +87,6 @@ const inputClass =
   const submitBtn = document.getElementById('quote-submit-btn') as HTMLButtonElement | null;
   const messageEl = document.getElementById('form-message') as HTMLParagraphElement | null;
   const successPanel = document.getElementById('quote-success-panel') as HTMLDivElement | null;
-  const resetBtn = document.getElementById('quote-reset-btn') as HTMLButtonElement | null;
 
   if (form && messageEl) {
     const formEl = form as HTMLFormElement;
@@ -210,13 +154,5 @@ const inputClass =
       }
     });
 
-    if (resetBtn && successPanel) {
-      resetBtn.addEventListener('click', () => {
-        successPanel.classList.add('hidden');
-        formEl.classList.remove('hidden');
-        messageEl.classList.add('hidden');
-        formEl.reset();
-      });
-    }
   }
 </script>
