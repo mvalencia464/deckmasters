@@ -9,9 +9,9 @@ const site = (await import('../data/site.json')).default;
 const city = site.primaryCity;
 ---
 
-<section class="relative min-h-[min(85vh,800px)] overflow-hidden" aria-label="Hero">
-  <div class="absolute inset-0 bg-gradient-to-b from-wood-light/90 via-surface-muted to-surface z-0" aria-hidden="true" />
-  <picture class="absolute inset-0 z-0 hidden lg:block" aria-hidden="true">
+<section class="relative min-h-[min(85vh,800px)] overflow-hidden bg-white" aria-label="Hero">
+  <div class="absolute inset-0 bg-white z-0" aria-hidden="true" />
+  <picture class="absolute inset-0 z-0 hidden lg:block opacity-80" aria-hidden="true">
     <source type="image/avif" media="(min-width: 1024px)" srcset="/newhero.avif" />
     <source type="image/png" media="(min-width: 1024px)" srcset="/newhero.png" />
     <img
@@ -19,12 +19,10 @@ const city = site.primaryCity;
       alt=""
       decoding="async"
       class="w-full h-full object-cover"
-      width="2910"
-      height="1472"
+      width="2750"
+      height="1396"
     />
   </picture>
-  <!-- White overlay: left almost fully white per reference -->
-  <div class="absolute inset-0 z-[1] bg-gradient-to-r from-white/90 via-white/50 to-white/25" aria-hidden="true" />
   <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
     <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
       <!-- Left: copy (screenshot standard) -->
