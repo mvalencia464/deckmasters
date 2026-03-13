@@ -17,37 +17,47 @@ export async function onRequestPost(context) {
     );
   }
 
-  let formData;
+  const contentType = request.headers.get('content-type') || '';
+  let data = {};
+  let photoFile = null;
+
   try {
-    formData = await request.formData();
-  } catch {
+    if (contentType.includes('multipart/form-data')) {
+      const formData = await request.formData();
+      photoFile = formData.get('photo');
+      for (const [key, value] of formData.entries()) {
+        if (key !== 'photo') data[key] = value;
+      }
+    } else {
+      data = await request.json();
+    }
+  } catch (err) {
     return new Response(
-      JSON.stringify({ success: false, error: 'Invalid form data' }),
+      JSON.stringify({ success: false, error: 'Invalid request body', debug: String(err) }),
       { status: 400, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
-  const name = String(formData.get('name') || '').trim();
-  const email = String(formData.get('email') || '').trim();
-  const phone = String(formData.get('phone') || '').trim();
-  const serviceType = String(formData.get('serviceType') || '').trim();
-  let projectDescription = String(formData.get('projectDescription') || '').trim();
-  const neighborhood = String(formData.get('neighborhood') || '').trim();
-  const photo = formData.get('photo');
+  const name = String(data.name || '').trim();
+  const email = String(data.email || '').trim();
+  const phone = String(data.phone || '').trim();
+  const serviceType = String(data.serviceType || '').trim();
+  let projectDescription = String(data.projectDescription || '').trim();
+  const neighborhood = String(data.neighborhood || '').trim();
 
-  if (photo && photo.name && photo.size > 0) {
-    if (env.IMG_BUCKET) {
-      const ext = photo.name.split('.').pop() || 'jpg';
-      const filename = `quote-uploads/${crypto.randomUUID()}.${ext}`;
-      try {
-        await env.IMG_BUCKET.put(filename, photo.stream(), {
-          httpMetadata: { contentType: photo.type || 'application/octet-stream' },
-        });
-        const fileUrl = `https://pub-199d68b182e5418180128341149a9402.r2.dev/${filename}`;
-        projectDescription += `\n\nUploaded Photo: ${fileUrl}`;
-      } catch (err) {
-        console.error('Failed to upload photo to R2:', err);
-      }
+  // Handle Photo Upload (R2)
+  if (photoFile && photoFile.name && photoFile.size > 0 && env.IMG_BUCKET) {
+    const ext = photoFile.name.split('.').pop() || 'jpg';
+    const filename = `quote-uploads/${crypto.randomUUID()}.${ext}`;
+    try {
+      await env.IMG_BUCKET.put(filename, photoFile.stream(), {
+        httpMetadata: { contentType: photoFile.type || 'application/octet-stream' },
+      });
+      // Note: This public URL might need to be an env var if the bucket hash changes
+      const fileUrl = `https://pub-199d68b182e5418180128341149a9402.r2.dev/${filename}`;
+      projectDescription += `\n\nUploaded Photo: ${fileUrl}`;
+    } catch (err) {
+      console.error('R2 Upload Failed:', err);
     }
   }
 
@@ -76,15 +86,10 @@ export async function onRequestPost(context) {
     tags,
   };
 
-  // Add project description to notes so it always lands in GHL
-  if (projectDescription.trim()) {
-    basePayload.notes = projectDescription.trim();
-  }
-
   const projectDescriptionFieldId = env.HIGHLEVEL_CUSTOM_FIELD_PROJECT_DESCRIPTION;
-  if (projectDescriptionFieldId && projectDescription.trim()) {
+  if (projectDescriptionFieldId && projectDescription) {
     basePayload.customFields = [
-      { id: projectDescriptionFieldId, value: projectDescription.trim() },
+      { id: projectDescriptionFieldId, value: projectDescription },
     ];
   }
 
@@ -100,28 +105,27 @@ export async function onRequestPost(context) {
       headers,
       body: JSON.stringify(payload),
     });
-    const data = await res.json().catch(() => ({}));
-    return { res, data };
+    const result = await res.json().catch(() => ({}));
+    return { res, data: result };
   };
 
   try {
-    let { res, data } = await postToGHL(basePayload);
+    let { res, data: ghlData } = await postToGHL(basePayload);
 
-    // If GHL rejected (likely bad customField ID), retry without customFields
+    // Fallback if custom field ID is wrong (common source of 400s)
     if (!res.ok && basePayload.customFields) {
       const fallbackPayload = { ...basePayload };
       delete fallbackPayload.customFields;
       const retry = await postToGHL(fallbackPayload);
       res = retry.res;
-      data = retry.data;
+      ghlData = retry.data;
     }
 
     if (!res.ok) {
       return new Response(
         JSON.stringify({
           success: false,
-          error: data.message || data.error || `GHL API error (${res.status})`,
-          debug: { status: res.status, body: data },
+          error: ghlData.message || ghlData.error || `GHL API Error (${res.status})`,
         }),
         { status: 502, headers: { 'Content-Type': 'application/json' } }
       );
@@ -133,8 +137,9 @@ export async function onRequestPost(context) {
     );
   } catch (err) {
     return new Response(
-      JSON.stringify({ success: false, error: 'Submission failed. Please try again or call us.', debug: String(err) }),
+      JSON.stringify({ success: false, error: 'Submission failed. Please try again.', debug: String(err) }),
       { status: 502, headers: { 'Content-Type': 'application/json' } }
     );
   }
 }
+
