@@ -48,18 +48,33 @@ export async function onRequestPost(context) {
   // Handle Photo Upload (R2)
   if (photoFile && photoFile.name && photoFile.size > 0 && env.IMG_BUCKET) {
     const ext = photoFile.name.split('.').pop() || 'jpg';
-    const filename = `quote-uploads/${crypto.randomUUID()}.${ext}`;
+    
+    // Generate a unique filename using crypto or fallback to timestamp
+    let uuid;
     try {
-      await env.IMG_BUCKET.put(filename, photoFile.stream(), {
+      uuid = crypto.randomUUID();
+    } catch {
+      uuid = `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+    }
+    
+    const filename = `quote-uploads/${uuid}.${ext}`;
+    
+    try {
+      // Passing the File object directly to .put() is often more robust than .stream()
+      await env.IMG_BUCKET.put(filename, photoFile, {
         httpMetadata: { contentType: photoFile.type || 'application/octet-stream' },
       });
-      // Note: This public URL might need to be an env var if the bucket hash changes
+      
       const fileUrl = `https://pub-199d68b182e5418180128341149a9402.r2.dev/${filename}`;
       projectDescription += `\n\nUploaded Photo: ${fileUrl}`;
+      console.log(`R2 Success: ${filename}`);
     } catch (err) {
       console.error('R2 Upload Failed:', err);
+      // We don't crash the whole submission, but we note it for debugging
+      projectDescription += `\n\n(Photo upload failed: ${String(err)})`;
     }
   }
+
 
   if (!name || !email || !phone) {
     return new Response(
