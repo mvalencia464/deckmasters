@@ -1,6 +1,48 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-white: #F9F6F0;
+  
+  --color-surface: #F9F6F0;
+  --color-surface-muted: #EFEBE4;
+  --color-surface-elevated: #FCFBF8;
+
+  --color-neutral-50: #FAFAF9;
+  --color-neutral-100: #F5F5F4;
+  --color-neutral-200: #E7E5E4;
+  --color-neutral-300: #D6D3D1;
+  --color-neutral-400: #A8A29E;
+  --color-neutral-500: #78716C;
+  --color-neutral-600: #57534E;
+  --color-neutral-700: #44403C;
+  --color-neutral-800: #292524;
+  --color-neutral-900: #1C1917;
+
+  --color-wood-light: #E7DFD8;
+  --color-wood: #C4B5A8;
+  --color-wood-muted: #A89F94;
+
+  --color-accent: #0D9488;
+  --color-accent-light: #14B8A6;
+  --color-accent-muted: #5EEAD4;
+  --color-accent-dark: #0F766E;
+
+  --color-brand-orange: #E85A07;
+  --color-brand-dark: #262626;
+  --color-brand-wood: #4a3728;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Oswald", system-ui, sans-serif;
+
+  --radius-sharp: 0;
+
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-30: 7.5rem;
+
+  --default-transition-duration: 200ms;
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 @layer base {
   html {

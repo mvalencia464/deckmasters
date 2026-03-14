@@ -10,11 +10,11 @@
     "sync-reviews": "node --env-file=.env scripts/sync-reviews.js"
   },
   "dependencies": {
-    "astro": "^5.0.0"
+    "astro": "^6.0.4",
+    "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
-    "@astrojs/tailwind": "^5.1.0",
-    "tailwindcss": "^3.4.0",
+    "@tailwindcss/vite": "^4.0.0",
     "typescript": "^5.0.0"
   }
 }
