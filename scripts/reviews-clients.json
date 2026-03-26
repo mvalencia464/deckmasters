@@ -1,0 +1,17 @@
+{
+  "defaultSlug": "deck-masters",
+  "clients": [
+    {
+      "slug": "deck-masters",
+      "name": "Deck Masters AK",
+      "keyword": "deck masters ak",
+      "location_code": 2840,
+      "language_code": "en",
+      "depth": 130,
+      "sort_by": "highest_rating",
+      "outputJson": "src/data/google-reviews.json",
+      "outputAvatarsDir": "src/assets/avatars",
+      "outputReviewImagesDir": "src/assets/review-images"
+    }
+  ]
+}

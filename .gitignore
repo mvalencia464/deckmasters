@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+.astro/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.DS_Store
+*.log
+.cache
+
+# Wrangler
+.wrangler/
+
+# Large media (tracked via external storage - served from R2)
+public/Keller-video.mov
+public/keller.mov
+public/keller.mp4

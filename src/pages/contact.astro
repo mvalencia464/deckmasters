@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+
+const site = (await import('../data/site.json')).default;
+const title = `Contact | Get a Free Quote — ${site.primaryCity}`;
+const description = `Contact ${site.businessName} for a free quote. ${site.primaryPhone}. ${site.address}.`;
+---
+
+<Layout title={title} description={description}>
+  <section class="py-20 lg:py-28 bg-surface">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-semibold text-neutral-800">Contact Us</h1>
+      <p class="mt-4 text-lg text-neutral-600">
+        Request a free quote or get in touch. We'll respond as soon as we can.
+      </p>
+      <div class="mt-12 grid gap-12 lg:grid-cols-5">
+        <div class="lg:col-span-2 space-y-8">
+          <div>
+            <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-wider">Phone</h2>
+            <a href={`tel:${site.primaryPhone.replace(/\D/g, '')}`} class="mt-1 block text-lg font-medium text-neutral-800 hover:text-brand-orange transition-colors duration-200">
+              {site.primaryPhone}
+            </a>
+          </div>
+          {site.primaryEmail && (
+            <div>
+              <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-wider">Email</h2>
+              <a href={`mailto:${site.primaryEmail}`} class="mt-1 block text-lg font-medium text-neutral-800 hover:text-brand-orange transition-colors duration-200">
+                {site.primaryEmail}
+              </a>
+            </div>
+          )}
+          <div>
+            <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-wider">Address</h2>
+            <p class="mt-1 text-neutral-600">{site.address}</p>
+          </div>
+          <div>
+            <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-wider">Hours</h2>
+            <p class="mt-1 text-neutral-600">{site.operatingHours || 'Contact for availability'}</p>
+          </div>
+        </div>
+        <div class="lg:col-span-3" id="quote">
+          <div class="bg-neutral-900 border-[3px] border-neutral-700 p-8 rounded-none max-w-xl shadow-xl shadow-black/40">
+            <QuoteForm />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

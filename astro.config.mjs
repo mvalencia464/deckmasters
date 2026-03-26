@@ -1,0 +1,15 @@
+import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  output: 'static',
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  build: {
+    inlineStylesheets: 'auto',
+  },
+  image: {
+    formats: ['avif', 'webp'],
+  },
+});

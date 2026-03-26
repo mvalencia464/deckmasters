@@ -1,0 +1,71 @@
+---
+/**
+ * Hero: social-proof angle (116 five-star reviews, trust, reliability).
+ * Two-column layout: copy left, quote form right. Overcomes contractor anxiety.
+ */
+import QuoteForm from './QuoteForm.astro';
+import SocialProofPill from './SocialProofPill.astro';
+const site = (await import('../data/site.json')).default;
+const city = site.primaryCity;
+const mgrData = (await import('../data/reviews.json')).default;
+const mgrRawReviews = mgrData?.rawReviews ?? [];
+const mgrGoogleReviews = mgrRawReviews.filter((r: { source?: string; rating?: number }) =>
+  String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
+);
+const googleFiveStarReviewCount = mgrGoogleReviews.filter((r: { rating?: number }) => Number(r.rating) >= 5).length;
+---
+
+<section class="relative min-h-[min(85vh,800px)] overflow-hidden bg-white" aria-label="Hero">
+  <picture class="absolute inset-0 z-0 hidden lg:block" aria-hidden="true">
+    <source type="image/avif" media="(min-width: 1024px)" srcset="/projects/009-masterpiece-main.avif" />
+    <img
+      src="/projects/009-masterpiece-main.avif"
+      alt=""
+      decoding="async"
+      class="w-full h-full object-cover"
+      width="1200"
+      height="800"
+    />
+  </picture>
+  <div class="absolute inset-0 z-[1] bg-white/75 pointer-events-none" aria-hidden="true" />
+  <div
+    class="absolute inset-0 z-[1] pointer-events-none hidden lg:block"
+    aria-hidden="true"
+    style="background-image: linear-gradient(to right, rgba(255,255,255,0.85) 0%, transparent 35%), linear-gradient(to left, rgba(255,255,255,0.85) 0%, transparent 35%);"
+  />
+  <!-- Blur blob behind text -->
+  <div
+    class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-[10%] w-[70%] max-w-3xl aspect-[5/4] rounded-[40%_60%_70%_30%_/50%_40%_60%_50%] bg-white/85 blur-[80px] pointer-events-none z-[2] hidden lg:block"
+    aria-hidden="true"
+  />
+  <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
+    <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+      <!-- Left: copy (screenshot standard) -->
+      <div class="w-full lg:w-3/5 flex-shrink-0">
+        <div class="flex items-center gap-4 mb-6">
+          <span class="h-px w-12 bg-brand-orange" aria-hidden="true" />
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange">
+            {googleFiveStarReviewCount} FIVE-STAR REVIEWS
+          </p>
+        </div>
+        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] font-bold text-neutral-800 mb-6 uppercase tracking-tight">
+          The {city} Deck Builder with {googleFiveStarReviewCount} Five-Star Reviews.
+        </h1>
+        <p class="max-w-xl text-neutral-700 text-lg md:text-xl leading-relaxed mb-6">
+          We don't just build decks; we <span class="text-brand-orange font-semibold">build trust</span>. From the first call to the final nail, experience why Anchorage homeowners consistently rank DeckMasters as the city's <span class="text-brand-orange font-semibold">most reliable crew</span>.
+        </p>
+        <p class="max-w-lg text-neutral-600 text-base mb-6 uppercase tracking-wide">
+          No more contractor anxiety—just a crew that <span class="text-brand-orange font-semibold">shows up, communicates, and delivers</span>.
+        </p>
+        <SocialProofPill />
+      </div>
+
+      <!-- Right: form card (reference style: white, dark border, shadow) -->
+      <div class="w-full lg:w-2/5 flex-shrink-0 lg:sticky lg:top-28" id="quote">
+        <div class="bg-neutral-900 border-[3px] border-neutral-700 p-8 md:p-10 rounded-none shadow-xl shadow-black/40">
+          <QuoteForm />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

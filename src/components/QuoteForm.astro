@@ -1,0 +1,232 @@
+---
+/**
+ * Quote form — submits to /api/submit-quote (GHL). Simplified: no service selection.
+ */
+import CustomerSuccessManager from './CustomerSuccessManager.astro';
+
+const inputClass =
+  'w-full border-2 border-neutral-700 bg-neutral-900/80 p-3 text-sm font-medium text-neutral-100 placeholder-neutral-500 focus:border-brand-orange focus:ring-0 outline-none rounded-none';
+
+const mgrData = (await import('../data/reviews.json')).default;
+const mgrRawReviews = mgrData?.rawReviews ?? [];
+const mgrGoogleReviews = mgrRawReviews.filter((r: { source?: string; rating?: number }) =>
+  String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
+);
+const googleReviewCount = mgrGoogleReviews.length;
+const googleAverageRating = mgrGoogleReviews.length
+  ? (mgrGoogleReviews.reduce((a: number, r: { rating?: number }) => a + Number(r.rating), 0) / googleReviewCount).toFixed(1)
+  : '0';
+---
+
+<form
+  id="quote-form"
+  class="space-y-4 rounded-none text-neutral-100"
+  aria-label="Request a quote"
+>
+  <h2 class="font-display text-3xl font-bold uppercase mb-1 text-center text-neutral-50">Request Estimate</h2>
+  <p class="text-center text-[10px] font-bold tracking-widest text-neutral-400 mb-8 border-b border-neutral-700 pb-4">
+    THE NO-SURPRISE GUARANTEE
+  </p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <label class="block">
+      <span class="sr-only">Full Name</span>
+      <input type="text" name="name" required autocomplete="name" class={inputClass} placeholder="Full Name*" />
+    </label>
+    <label class="block">
+      <span class="sr-only">Phone Number</span>
+      <input type="tel" name="phone" required autocomplete="tel" class={inputClass} placeholder="Phone Number*" />
+    </label>
+  </div>
+
+  <label class="block">
+    <span class="sr-only">Email</span>
+    <input type="email" name="email" required autocomplete="email" class={inputClass} placeholder="Email Address*" />
+  </label>
+
+  <label class="block">
+    <span class="sr-only">Project description</span>
+    <textarea name="projectDescription" rows={1} required class={inputClass} placeholder="Project description *"></textarea>
+  </label>
+
+  <div class="block">
+    <div id="dropzone" class="border-2 border-dashed border-neutral-600 p-4 text-center cursor-pointer hover:border-brand-orange hover:bg-neutral-800 transition-colors">
+      <p class="text-xs text-neutral-400" id="dropzone-text">Click or drag a photo of your project area (optional)</p>
+      <input type="file" id="photo-upload" name="photo" accept="image/*" class="hidden" />
+    </div>
+  </div>
+
+  <div class="mt-4 space-y-3 text-[11px] leading-snug text-neutral-300">
+    <label class="flex items-start gap-2">
+      <input
+        type="checkbox"
+        name="termsConsent"
+        required
+        class="mt-0.5 h-3.5 w-3.5 rounded-none border border-neutral-600 bg-neutral-900 text-brand-orange focus:ring-1 focus:ring-brand-orange"
+      />
+      <span>
+        By checking this box I agree to Deck Masters&apos;{' '}
+        <a href="/terms" class="underline hover:text-brand-orange">Terms</a> &amp;{' '}
+        <a href="/privacy" class="underline hover:text-brand-orange">Privacy Policy</a> and consent to receive SMS messages
+        about my project. Msg &amp; data rates may apply. Reply STOP to opt out. *
+      </span>
+    </label>
+
+    <label class="flex items-start gap-2">
+      <input
+        type="checkbox"
+        name="marketingConsent"
+        class="mt-0.5 h-3.5 w-3.5 rounded-none border border-neutral-600 bg-neutral-900 text-brand-orange focus:ring-1 focus:ring-brand-orange"
+      />
+      <span>
+        I consent to receive recurring automated marketing texts (promos, offers) from Deck Masters. Consent is not required
+        to purchase. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to cancel. *
+      </span>
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    id="quote-submit-btn"
+    class="w-full bg-brand-orange hover:bg-orange-800 text-white font-bold py-3 px-3 sm:py-4 sm:px-4 text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors mt-6 shadow-md rounded-none focus-ring disabled:opacity-70 disabled:cursor-not-allowed"
+  >
+    <span class="sm:hidden">Get Quote →</span>
+    <span class="hidden sm:inline">Check Availability & Get Quote →</span>
+  </button>
+
+  <p class="text-xs text-neutral-400 mt-4">
+    By submitting you agree to be contacted about your project. We do not share your information.
+  </p>
+
+  <div class="mt-8 flex items-center justify-center gap-2">
+    <span class="flex items-center gap-0.5 text-brand-orange text-sm" aria-hidden="true">★ ★ ★ ★ ★</span>
+    <span class="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+      {googleAverageRating}, {googleReviewCount} Google Reviews
+    </span>
+  </div>
+
+  <p id="form-message" class="hidden text-sm mt-2" role="status" aria-live="polite"></p>
+</form>
+
+<div id="quote-success-panel" class="hidden mt-6">
+  <CustomerSuccessManager />
+</div>
+
+<script>
+  const form = document.getElementById('quote-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('quote-submit-btn') as HTMLButtonElement | null;
+  const messageEl = document.getElementById('form-message') as HTMLParagraphElement | null;
+  const successPanel = document.getElementById('quote-success-panel') as HTMLDivElement | null;
+  const dropzone = document.getElementById('dropzone') as HTMLDivElement | null;
+  const photoUpload = document.getElementById('photo-upload') as HTMLInputElement | null;
+  const dropzoneText = document.getElementById('dropzone-text') as HTMLParagraphElement | null;
+
+  if (form && messageEl) {
+    const formEl = form as HTMLFormElement;
+
+    if (dropzone && photoUpload && dropzoneText) {
+      dropzone.addEventListener('click', () => photoUpload.click());
+      
+      photoUpload.addEventListener('change', () => {
+        if (photoUpload.files && photoUpload.files.length > 0) {
+          dropzoneText.textContent = `Selected: ${photoUpload.files[0].name}`;
+        }
+      });
+
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('border-brand-orange', 'bg-neutral-800');
+      });
+
+      dropzone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('border-brand-orange', 'bg-neutral-800');
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('border-brand-orange', 'bg-neutral-800');
+        if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+          photoUpload.files = e.dataTransfer.files;
+          dropzoneText.textContent = `Selected: ${e.dataTransfer.files[0].name}`;
+        }
+      });
+    }
+
+    function showMessage(text: string, isError: boolean) {
+      if (!messageEl) return;
+      messageEl.textContent = text;
+      messageEl.classList.remove('hidden', 'text-brand-orange', 'text-red-600');
+      messageEl.classList.add(isError ? 'text-red-600' : 'text-brand-orange');
+      if (successPanel) {
+        if (isError) {
+          successPanel.classList.add('hidden');
+          formEl.classList.remove('hidden');
+        } else {
+          successPanel.classList.remove('hidden');
+          formEl.classList.add('hidden');
+        }
+      }
+    }
+
+    formEl.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!messageEl) return;
+      if (submitBtn) submitBtn.disabled = true;
+      messageEl.classList.add('hidden');
+      if (successPanel) successPanel.classList.add('hidden');
+
+      const getValue = (selector: string) => {
+        const field = formEl.querySelector(selector) as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | null;
+        return field?.value?.trim() || '';
+      };
+
+      const getChecked = (selector: string) => {
+        const field = formEl.querySelector(selector) as HTMLInputElement | null;
+        return !!field?.checked;
+      };
+
+      const payload = new FormData();
+      payload.append('name', getValue('[name="name"]'));
+      payload.append('email', getValue('[name="email"]'));
+      payload.append('phone', getValue('[name="phone"]'));
+      payload.append('projectDescription', getValue('[name="projectDescription"]'));
+      payload.append('termsConsent', getChecked('[name="termsConsent"]') ? 'true' : '');
+      payload.append('marketingConsent', getChecked('[name="marketingConsent"]') ? 'true' : '');
+      
+      const photoInput = document.getElementById('photo-upload') as HTMLInputElement | null;
+      if (photoInput && photoInput.files && photoInput.files[0]) {
+        payload.append('photo', photoInput.files[0]);
+      }
+
+      try {
+        const res = await fetch('/api/submit-quote', {
+          method: 'POST',
+          body: payload,
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          showMessage(
+            data.message || "Thank you! You're all set — meet your customer success manager below.",
+            false
+          );
+          formEl.reset();
+          const dropText = document.getElementById('dropzone-text');
+          if (dropText) dropText.textContent = 'Click or drag a photo of your project area (optional)';
+
+        } else {
+          showMessage(data.error || 'Something went wrong. Please try again or call us.', true);
+        }
+      } catch {
+        showMessage('Network error. Please try again or call us.', true);
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+
+  }
+</script>

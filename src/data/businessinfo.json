@@ -1,0 +1,49 @@
+{
+    "businessName": "Deck Masters AK",
+    "ownerName": "Jordan Webb",
+    "tagline": "",
+    "primaryPhone": "(907) 891-8283",
+    "address": "625 W 59th Ave Unit J, Anchorage, AK 99518, USA",
+    "websiteUrl": "https://deckmastersak.com/",
+    "brandColor": "#8B4513",
+"primaryCity": "Anchorage",
+    "neighborhoods": [
+      "Spenard",
+      "Fairview",
+      "Downtown Anchorage",
+      "Midtown Anchorage",
+      "Sand Lake",
+      "South Addition",
+      "Turnagain",
+      "Government Hill",
+      "Mountain View",
+      "Hillside"
+    ],
+    "environmentalChallenges": [
+      "Extreme Cold",
+      "Heavy Snowfall",
+      "Ice Accumulation",
+      "Freeze-Thaw Cycles",
+      "High Winds",
+      "Moisture Damage"
+    ],
+    "categories": [],
+    "deckingBrand": "",
+    "railingType": "",
+    "foundationType": "",
+    "projects": [],
+    "galleryUrls": [],
+    "processSteps": [
+      "Consult & Design",
+      "Precision Build",
+      "Lifetime Enjoyment"
+    ],
+    "termsAccepted": false,
+    "socials": {
+      "instagram": "https://www.instagram.com/DeckMastersAK",
+      "facebook": "https://www.facebook.com/DeckMastersAK",
+      "linkedin": "https://www.linkedin.com/company/deck-masters-ak",
+      "tiktok": ""
+    },
+    "googlePlaceId": "ChIJmXM14cqRyFYRJ5oolSB6s9c"
+  }

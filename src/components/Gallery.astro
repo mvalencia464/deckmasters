@@ -1,0 +1,40 @@
+---
+/**
+ * Portfolio gallery: real project images from public/projects.
+ * Uses local avif/webp with <picture> for best performance and Lighthouse scores.
+ * Lazy loading and explicit dimensions prevent CLS.
+ */
+const projectsData = (await import('../data/projects.json')).default;
+const images = projectsData.images ?? [];
+---
+
+<section class="py-12 sm:py-16 lg:py-24 bg-surface-muted border-t border-neutral-200" aria-label="Project gallery">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-10">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Portfolio</p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">Our Work.</h2>
+      <p class="mt-3 text-neutral-600 max-w-xl">
+        Durable decks and outdoor spaces built for cold-climate living.
+      </p>
+    </div>
+    <ul class="grid grid-cols-2 md:grid-cols-3 gap-4" role="list">
+      {images.map((img: { slug: string; alt: string }) => (
+        <li>
+          <picture>
+            <source type="image/avif" srcset={`/projects/${img.slug}.avif`} />
+            <source type="image/webp" srcset={`/projects/${img.slug}.webp`} />
+            <img
+              src={`/projects/${img.slug}.webp`}
+              alt={img.alt}
+              width={600}
+              height={400}
+              loading="lazy"
+              decoding="async"
+              class="rounded-none w-full aspect-[3/2] object-cover border border-neutral-200 shadow-sm"
+            />
+          </picture>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

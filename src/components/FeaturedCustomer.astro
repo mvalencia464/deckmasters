@@ -1,0 +1,103 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import GoogleReviewCard from './GoogleReviewCard.astro';
+
+interface VideoReview {
+  videoUrl?: string;
+  videoThumbnailUrl?: string;
+}
+
+interface JosephReview {
+  text: string;
+  author: string;
+  rating: number;
+  source: string;
+  avatarUrl?: string;
+}
+
+interface Props {
+  videoReview: VideoReview | null;
+  josephReview: JosephReview | null;
+}
+
+const { videoReview, josephReview } = Astro.props;
+
+const avatarGlob = import.meta.glob<{ default: ImageMetadata }>('../assets/avatars/*.{jpg,jpeg,png,webp}');
+
+const resolveAvatar = async (filename: string): Promise<string | undefined> => {
+  if (!filename) return undefined;
+  const key = Object.keys(avatarGlob).find((k) => k.endsWith(filename));
+  if (!key || typeof avatarGlob[key] !== 'function') return undefined;
+  const mod = await (avatarGlob[key] as () => Promise<{ default: ImageMetadata }>)();
+  const img = await getImage({ src: mod.default, width: 40, height: 40, format: 'avif' });
+  return img.src;
+};
+
+const resolvedJosephAvatar = josephReview?.avatarUrl ? await resolveAvatar(josephReview.avatarUrl) : undefined;
+---
+
+<section class="py-10 sm:py-12 lg:py-14 bg-surface border-t border-neutral-200" aria-label="Featured customer story">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <header class="mb-7 sm:mb-9 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-1">Featured Customer</p>
+        <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight">
+          The Leman Family&apos;s Deck Story
+        </h2>
+      </div>
+      <p class="text-xs sm:text-[11px] text-neutral-600 max-w-md">
+        A flagship project that shows what it looks like when design, build quality, and communication all come together.
+      </p>
+    </header>
+
+    <div class="grid gap-8 lg:grid-cols-[minmax(0,1.4fr),minmax(0,1.2fr)] lg:items-start">
+      {videoReview?.videoUrl && (
+        <div class="space-y-3">
+          <div class="rounded-none border border-neutral-200 bg-black shadow-sm overflow-hidden">
+            <video
+              class="w-full h-full max-h-[360px] object-contain bg-black"
+              controls
+              preload="metadata"
+              playsinline
+              poster={videoReview.videoThumbnailUrl || ''}
+            >
+              <source src={videoReview.videoUrl} type="video/mp4" />
+            </video>
+          </div>
+          <p class="text-xs text-neutral-600">
+            Hear directly from the homeowner about what it was like to work with Deck Masters on this project.
+          </p>
+        </div>
+      )}
+
+      <div class="space-y-4">
+        {josephReview && (
+          <GoogleReviewCard
+            text={josephReview.text}
+            author={josephReview.author}
+            rating={josephReview.rating}
+            source={josephReview.source}
+            avatarUrl={resolvedJosephAvatar}
+          />
+        )}
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-[10px] sm:text-xs text-neutral-500">
+          <div class="h-20 sm:h-24 bg-neutral-50 border border-dashed border-neutral-300 flex items-center justify-center text-center px-3">
+            Project photos coming soon
+          </div>
+          <div class="h-20 sm:h-24 bg-neutral-50 border border-dashed border-neutral-300 flex items-center justify-center text-center px-3">
+            Before &amp; after coming soon
+          </div>
+          <div class="h-20 sm:h-24 bg-neutral-50 border border-dashed border-neutral-300 flex items-center justify-center text-center px-3">
+            Night lighting view coming soon
+          </div>
+          <div class="h-20 sm:h-24 bg-neutral-50 border border-dashed border-neutral-300 flex items-center justify-center text-center px-3">
+            Close-up details coming soon
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

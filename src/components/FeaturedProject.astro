@@ -1,0 +1,90 @@
+---
+/**
+ * Featured project: hero teaser + flagship project images.
+ * Collage images are manually selected from a single flagship project.
+ */
+
+interface Props {
+  josephReview: unknown | null;
+}
+
+const {} = Astro.props;
+const projectImages = [
+  '/projects/001-aerial-wraparound.avif',
+  '/projects/002-aerial-view-new.avif',
+  '/projects/003-aerial-detail.avif',
+  '/projects/004-aerial-landscape.avif',
+  '/projects/005-aerial-wide.avif',
+  '/projects/006-aerial-composite.avif',
+  '/projects/007-aerial-luxury.avif',
+  '/projects/008-aerial-elevated.avif',
+  '/projects/009-masterpiece-main.avif',
+];
+const hasProjectImages = projectImages.length > 0;
+---
+
+<section id="featured-project" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Featured project">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Featured Project</p>
+    <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight mb-8">Our Featured Project.</h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <a
+        href="/featured-project"
+        class="group lg:col-span-2 rounded-none border border-neutral-200 bg-neutral-200 overflow-hidden shadow-sm aspect-[9/16] w-full max-w-sm mx-auto lg:mx-0 focus-ring"
+      >
+        <div class="relative h-full w-full">
+          <img
+            src={projectImages[0]}
+            alt="Watch the full featured deck build"
+            class="w-full h-full object-cover"
+            width="540"
+            height="960"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="absolute inset-0 bg-black/35 group-hover:bg-black/45 transition-colors flex flex-col items-center justify-center gap-3 text-center text-neutral-50 px-6">
+            <div class="relative flex items-center justify-center h-16 w-16 rounded-full bg-brand-orange text-white shadow-lg shadow-black/30 ring-4 ring-white/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl group-hover:ring-white/30">
+              <svg class="h-7 w-7 ml-0.5" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-orange">Watch The Build</p>
+              <p class="mt-1 text-sm sm:text-base font-semibold">See a full Deck Masters project walkthrough.</p>
+            </div>
+          </div>
+        </div>
+      </a>
+      <div class="lg:col-span-3">
+        {hasProjectImages && (
+          <div class="mt-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {projectImages.map((url) => (
+                <figure class="overflow-hidden rounded-sm border border-neutral-200 bg-neutral-100">
+                  <img
+                    src={url}
+                    alt=""
+                    class="w-full h-full object-cover aspect-[4/3]"
+                    width="360"
+                    height="270"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ))}
+            </div>
+            <p class="mt-5">
+              <a
+                href="/featured-project"
+                class="inline-flex items-center text-brand-orange font-bold hover:underline uppercase text-xs tracking-wider"
+              >
+                View Featured Project →
+              </a>
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
