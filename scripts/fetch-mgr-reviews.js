@@ -23,9 +23,78 @@ function formatDate(unixSec) {
   return d.toISOString().replace('T', ' ').slice(0, 19);
 }
 
+const MAX_REVIEW_IMAGES = 6;
+
+/** Skip non-photo URLs sometimes embedded in API payloads (rating emoji assets, etc.). */
+function isLikelyPhotoUrl(u) {
+  if (!u || typeof u !== 'string') return false;
+  if (!/^https?:\/\//i.test(u.trim())) return false;
+  const s = u.toLowerCase();
+  if (s.includes('/img/face-') && s.includes('customers.stokeleads.com')) return false;
+  return true;
+}
+
+function pushUniquePhotoUrl(out, url) {
+  const u = typeof url === 'string' ? url.trim() : '';
+  if (!isLikelyPhotoUrl(u) || out.includes(u)) return;
+  out.push(u);
+  if (out.length >= MAX_REVIEW_IMAGES) return true;
+  return false;
+}
+
+function collectPhotoUrlsFromValue(val, out) {
+  if (out.length >= MAX_REVIEW_IMAGES) return;
+  if (val == null) return;
+  if (typeof val === 'string') {
+    pushUniquePhotoUrl(out, val);
+    return;
+  }
+  if (Array.isArray(val)) {
+    for (const item of val) {
+      collectPhotoUrlsFromValue(item, out);
+      if (out.length >= MAX_REVIEW_IMAGES) return;
+    }
+    return;
+  }
+  if (typeof val === 'object') {
+    for (const k of ['link', 'url', 'src', 'href', 'file_url', 'photo_url', 'path']) {
+      if (typeof val[k] === 'string') pushUniquePhotoUrl(out, val[k]);
+      if (out.length >= MAX_REVIEW_IMAGES) return;
+    }
+    for (const k of Object.keys(val)) {
+      if (['link', 'url', 'src', 'href'].includes(k)) continue;
+      collectPhotoUrlsFromValue(val[k], out);
+      if (out.length >= MAX_REVIEW_IMAGES) return;
+    }
+  }
+}
+
+/**
+ * Review-level photos (separate from reviewer avatar). Shape varies by MGR version / field config.
+ */
+function extractReviewImages(row) {
+  const out = [];
+  if (Array.isArray(row?.photos)) collectPhotoUrlsFromValue(row.photos, out);
+  if (Array.isArray(row?.images)) collectPhotoUrlsFromValue(row.images, out);
+  if (Array.isArray(row?.attachments)) collectPhotoUrlsFromValue(row.attachments, out);
+  if (Array.isArray(row?.media)) collectPhotoUrlsFromValue(row.media, out);
+  if (Array.isArray(row?.fields)) {
+    for (const f of row.fields) {
+      if (out.length >= MAX_REVIEW_IMAGES) break;
+      collectPhotoUrlsFromValue(f?.value, out);
+      collectPhotoUrlsFromValue(f?.values, out);
+      collectPhotoUrlsFromValue(f?.files, out);
+      collectPhotoUrlsFromValue(f?.attachments, out);
+      collectPhotoUrlsFromValue(f?.photos, out);
+    }
+  }
+  return out;
+}
+
 function mapRow(row) {
   if (!row || row.is_hidden || row.is_duplicate) return null;
   const rating = Number(row.score ?? row.rating?.score ?? 0);
+  const images = extractReviewImages(row);
   return {
     date: formatDate(row.created_at),
     text: String(row.review ?? '').trim(),
@@ -33,6 +102,7 @@ function mapRow(row) {
     rating: Number.isFinite(rating) ? rating : 0,
     source: row.source?.name?.trim() || 'Google',
     avatarUrl: row.reviewer?.photo?.link?.trim() || '',
+    ...(images.length > 0 ? { images } : {}),
   };
 }
 

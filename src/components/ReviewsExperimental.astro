@@ -1,20 +1,29 @@
 ---
 /**
- * Experimental reviews section: data from DataForSEO sync (google-reviews.json).
- * Zero client-side JS; same card layout as main reviews for 100 Lighthouse.
- * Avatars and review project images from sync-reviews.js are optimized at build via astro:assets.
+ * Reviews masonry: More Good Reviews data (reviews.json), refreshed at build via fetch-mgr-reviews.js.
+ * Avatars / project photos: HTTPS URLs from MGR are used as-is; local filenames still resolve via astro:assets.
  */
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
 import GoogleReviewCard from './GoogleReviewCard.astro';
 
-const data = (await import('../data/google-reviews.json')).default;
+const data = (await import('../data/reviews.json')).default;
 const rawReviews = data?.rawReviews ?? [];
+
+const mgrGoogleReviews = rawReviews.filter((r: { source?: string; rating?: number }) =>
+  String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
+);
+const googleReviewCount = mgrGoogleReviews.length;
+const averageRating = googleReviewCount
+  ? (
+      mgrGoogleReviews.reduce((a: number, r: { rating?: number }) => a + Number(r.rating), 0) /
+      googleReviewCount
+    ).toFixed(1)
+  : '0';
+
 const withText = rawReviews.filter((r: { text?: string }) => (r.text || '').trim().length > 0);
-// Reorder so our single 1-star review (Matthew Moglianesi) doesn't always appear last,
-// but still remains visible in the list.
 let displayReviews = withText.slice();
-// Ensure the video testimonial (Erica/Jessica Leman) appears first in the list.
+
 const videoIndex = displayReviews.findIndex(
   (r: { videoUrl?: string; videoThumbnailUrl?: string; author?: string }) =>
     !!(r.videoUrl || r.videoThumbnailUrl) || (r.author || '').includes('Leman')
@@ -35,18 +44,25 @@ if (oneStarIndex > -1) {
 const avatarGlob = import.meta.glob<{ default: ImageMetadata }>('../assets/avatars/*.{jpg,jpeg,png,webp}');
 const reviewImagesGlob = import.meta.glob<{ default: ImageMetadata }>('../assets/review-images/*.{jpg,jpeg,png,webp}');
 
-const resolveAvatar = async (filename: string): Promise<string | undefined> => {
-  if (!filename) return undefined;
-  const key = Object.keys(avatarGlob).find((k) => k.endsWith(filename));
+const isRemoteOrPublicPath = (ref: string) => {
+  const t = ref.trim();
+  return /^https?:\/\//i.test(t) || t.startsWith('/');
+};
+
+const resolveAvatar = async (ref: string): Promise<string | undefined> => {
+  if (!ref) return undefined;
+  if (isRemoteOrPublicPath(ref)) return ref.trim();
+  const key = Object.keys(avatarGlob).find((k) => k.endsWith(ref));
   if (!key || typeof avatarGlob[key] !== 'function') return undefined;
   const mod = await (avatarGlob[key] as () => Promise<{ default: ImageMetadata }>)();
   const img = await getImage({ src: mod.default, width: 40, height: 40, format: 'avif' });
   return img.src;
 };
 
-const resolveReviewImage = async (filename: string): Promise<string | undefined> => {
-  if (!filename) return undefined;
-  const key = Object.keys(reviewImagesGlob).find((k) => k.endsWith(filename));
+const resolveReviewImage = async (ref: string): Promise<string | undefined> => {
+  if (!ref) return undefined;
+  if (isRemoteOrPublicPath(ref)) return ref.trim();
+  const key = Object.keys(reviewImagesGlob).find((k) => k.endsWith(ref));
   if (!key || typeof reviewImagesGlob[key] !== 'function') return undefined;
   const mod = await (reviewImagesGlob[key] as () => Promise<{ default: ImageMetadata }>)();
   const img = await getImage({ src: mod.default, width: 160, height: 120, format: 'avif' });
@@ -69,17 +85,14 @@ const reviewsWithAvatars = await Promise.all(
     ) => {
       const avatarUrl = r.avatarUrl ? await resolveAvatar(r.avatarUrl) : undefined;
       const images = r.images ?? [];
-      const projectImageUrls = images.length > 0
-        ? (await Promise.all(images.map((f: string) => resolveReviewImage(f)))).filter((u): u is string => !!u)
-        : undefined;
+      const projectImageUrls =
+        images.length > 0
+          ? (await Promise.all(images.map((f: string) => resolveReviewImage(f)))).filter((u): u is string => !!u)
+          : undefined;
       return { ...r, avatarUrl, projectImageUrls };
     }
   )
 );
-
-const averageRating = rawReviews.length
-  ? (rawReviews.reduce((a: number, r: { rating: number }) => a + r.rating, 0) / rawReviews.length).toFixed(1)
-  : '0';
 ---
 
 <section id="reviews" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Reviews">
@@ -96,7 +109,7 @@ const averageRating = rawReviews.length
           <span class="text-neutral-500 uppercase font-semibold">Average</span>
         </div>
         <span class="text-neutral-300">|</span>
-        <span class="text-neutral-600 font-semibold">125 Google Reviews</span>
+        <span class="text-neutral-600 font-semibold">{googleReviewCount} Google Reviews</span>
         <a href="https://www.google.com/search?q=deckmasters+anchorage+reviews" target="_blank" rel="noopener" class="text-brand-orange font-bold hover:underline uppercase text-xs tracking-wider">See All Google Reviews →</a>
       </div>
     </div>
