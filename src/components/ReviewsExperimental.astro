@@ -23,16 +23,18 @@ const averageRating = googleReviewCount
     ).toFixed(1)
   : '0';
 
-const withText = rawReviews.filter((r: { text?: string }) => (r.text || '').trim().length > 0);
-let displayReviews = withText.slice();
+const isEricaVideoReview = (r: { videoUrl?: string; author?: string; source?: string }) =>
+  !!r.videoUrl &&
+  (/erica\s+le?hman/i.test(String(r.author ?? '')) ||
+    /video testimonial/i.test(String(r.source ?? '')));
 
-const ericaIndex = displayReviews.findIndex(
-  (r: { videoUrl?: string; author?: string }) =>
-    !!r.videoUrl && /erica\s+le?hman/i.test(String(r.author ?? ''))
+const ericaVideoReview = rawReviews.find(isEricaVideoReview);
+const withText = rawReviews.filter((r: { text?: string }) => (r.text || '').trim().length > 0);
+let displayReviews = withText.filter(
+  (r: { videoUrl?: string; author?: string; source?: string }) => !isEricaVideoReview(r)
 );
-if (ericaIndex > 0) {
-  const [ericaReview] = displayReviews.splice(ericaIndex, 1);
-  displayReviews.unshift(ericaReview);
+if (ericaVideoReview) {
+  displayReviews.unshift(ericaVideoReview);
 }
 const oneStarIndex = displayReviews.findIndex(
   (r: { author?: string; rating?: number }) => r.author === 'Matthew Moglianesi' && r.rating === 1

@@ -16,7 +16,9 @@ const hasProjectImages = Array.isArray(projectImageUrls) && projectImageUrls.len
 const coverImage = hasProjectImages ? projectImageUrls[0] : null;
 const restImages = hasProjectImages && projectImageUrls.length > 1 ? projectImageUrls.slice(1) : [];
 const isVideoReview = !!videoUrl;
-const isEricaVerticalVideo = isVideoReview && /erica\s+le?hman/i.test(author || '');
+const isEricaVerticalVideo =
+  isVideoReview &&
+  (/erica\s+le?hman/i.test(author || '') || /video testimonial/i.test(source || ''));
 ---
 
 <div class="flex flex-col rounded-none border border-neutral-200 bg-surface-elevated p-5 shadow-sm break-inside-avoid mb-4">
