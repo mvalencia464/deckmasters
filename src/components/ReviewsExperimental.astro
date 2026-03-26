@@ -1,7 +1,9 @@
 ---
 /**
  * Reviews masonry: More Good Reviews data (reviews.json), refreshed at build via fetch-mgr-reviews.js.
- * Avatars / project photos: HTTPS URLs from MGR are used as-is; local filenames still resolve via astro:assets.
+ * Avatar: MGR provides reviewer.profile URL only (HTTPS) — used as-is.
+ * `images[]` (local filenames in src/assets/review-images): merged at build from legacy
+ * `google-reviews.json` when author + rating + text match; new-only MGR reviews have no images.
  */
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';

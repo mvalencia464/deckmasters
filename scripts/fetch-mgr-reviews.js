@@ -3,6 +3,13 @@
  * Run automatically before astro build when MGR_API_KEY is set (e.g. Cloudflare Pages build).
  * Locally: node --env-file=.env scripts/fetch-mgr-reviews.js
  *
+ * Media:
+ * - Avatar: from MGR `reviewer.photo.link`.
+ * - Project photos (`images[]` with local filenames under src/assets/review-images): MGR does not sync
+ *   Google customer photo attachments. We re-attach them from:
+ *   (1) `src/data/manual-matches.json` (explicit mgrReviewId -> image list override map), then
+ *   (2) `src/data/google-reviews.json` fuzzy match (normalized author + rating + full review text).
+ *
  * Preserves curated entries that include videoUrl / videoThumbnailUrl (site-hosted testimonials).
  */
 import fs from 'fs';
@@ -12,6 +19,8 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const OUT_PATH = path.join(ROOT, 'src/data/reviews.json');
+const LEGACY_GOOGLE_REVIEWS_PATH = path.join(ROOT, 'src/data/google-reviews.json');
+const MANUAL_MATCHES_PATH = path.join(ROOT, 'src/data/manual-matches.json');
 const API_BASE = 'https://api.moregoodreviews.com/beacon/reviews/';
 
 function formatDate(unixSec) {
@@ -23,87 +32,98 @@ function formatDate(unixSec) {
   return d.toISOString().replace('T', ' ').slice(0, 19);
 }
 
-const MAX_REVIEW_IMAGES = 6;
-
-/** Skip non-photo URLs sometimes embedded in API payloads (rating emoji assets, etc.). */
-function isLikelyPhotoUrl(u) {
-  if (!u || typeof u !== 'string') return false;
-  if (!/^https?:\/\//i.test(u.trim())) return false;
-  const s = u.toLowerCase();
-  if (s.includes('/img/face-') && s.includes('customers.stokeleads.com')) return false;
-  return true;
+/** Stable join key: legacy google-reviews.json has no MGR id — match on identity fields. */
+function normalizeMatchPart(s) {
+  return String(s ?? '')
+    .toLowerCase()
+    .replace(/\r\n/g, '\n')
+    .replace(/[\s\u00a0]+/g, ' ')
+    .replace(/[\u2018\u2019\u201c\u201d]/g, "'")
+    .trim();
 }
 
-function pushUniquePhotoUrl(out, url) {
-  const u = typeof url === 'string' ? url.trim() : '';
-  if (!isLikelyPhotoUrl(u) || out.includes(u)) return;
-  out.push(u);
-  if (out.length >= MAX_REVIEW_IMAGES) return true;
-  return false;
-}
-
-function collectPhotoUrlsFromValue(val, out) {
-  if (out.length >= MAX_REVIEW_IMAGES) return;
-  if (val == null) return;
-  if (typeof val === 'string') {
-    pushUniquePhotoUrl(out, val);
-    return;
-  }
-  if (Array.isArray(val)) {
-    for (const item of val) {
-      collectPhotoUrlsFromValue(item, out);
-      if (out.length >= MAX_REVIEW_IMAGES) return;
-    }
-    return;
-  }
-  if (typeof val === 'object') {
-    for (const k of ['link', 'url', 'src', 'href', 'file_url', 'photo_url', 'path']) {
-      if (typeof val[k] === 'string') pushUniquePhotoUrl(out, val[k]);
-      if (out.length >= MAX_REVIEW_IMAGES) return;
-    }
-    for (const k of Object.keys(val)) {
-      if (['link', 'url', 'src', 'href'].includes(k)) continue;
-      collectPhotoUrlsFromValue(val[k], out);
-      if (out.length >= MAX_REVIEW_IMAGES) return;
-    }
-  }
+function legacyReviewMatchKey({ author, text, rating }) {
+  return `${normalizeMatchPart(author)}|${Number(rating)}|${normalizeMatchPart(text)}`;
 }
 
 /**
- * Review-level photos (separate from reviewer avatar). Shape varies by MGR version / field config.
+ * Maps normalized text -> images[] from DataForSEO export. First row wins on duplicate keys; logs once.
  */
-function extractReviewImages(row) {
-  const out = [];
-  if (Array.isArray(row?.photos)) collectPhotoUrlsFromValue(row.photos, out);
-  if (Array.isArray(row?.images)) collectPhotoUrlsFromValue(row.images, out);
-  if (Array.isArray(row?.attachments)) collectPhotoUrlsFromValue(row.attachments, out);
-  if (Array.isArray(row?.media)) collectPhotoUrlsFromValue(row.media, out);
-  if (Array.isArray(row?.fields)) {
-    for (const f of row.fields) {
-      if (out.length >= MAX_REVIEW_IMAGES) break;
-      collectPhotoUrlsFromValue(f?.value, out);
-      collectPhotoUrlsFromValue(f?.values, out);
-      collectPhotoUrlsFromValue(f?.files, out);
-      collectPhotoUrlsFromValue(f?.attachments, out);
-      collectPhotoUrlsFromValue(f?.photos, out);
+function loadLegacyImagesByMatchKey() {
+  /** @type {Map<string, string[]>} */
+  const map = new Map();
+  let duplicateKeys = 0;
+  try {
+    if (!fs.existsSync(LEGACY_GOOGLE_REVIEWS_PATH)) return { map, duplicateKeys };
+    const raw = fs.readFileSync(LEGACY_GOOGLE_REVIEWS_PATH, 'utf8');
+    const parsed = JSON.parse(raw);
+    const list = Array.isArray(parsed.rawReviews) ? parsed.rawReviews : [];
+    for (const r of list) {
+      if (!r || !Array.isArray(r.images) || r.images.length === 0) continue;
+      const key = legacyReviewMatchKey({
+        author: r.author,
+        text: r.text,
+        rating: r.rating,
+      });
+      if (map.has(key)) {
+        duplicateKeys++;
+        continue;
+      }
+      map.set(key, r.images.filter((x) => typeof x === 'string' && x.trim()));
     }
+  } catch (e) {
+    console.warn('fetch-mgr-reviews: could not load legacy google-reviews.json for images:', e.message);
   }
-  return out;
+  return { map, duplicateKeys };
 }
 
-function mapRow(row) {
+function loadManualMatchesByMgrId() {
+  /** @type {Map<string, string[]>} */
+  const map = new Map();
+  try {
+    if (!fs.existsSync(MANUAL_MATCHES_PATH)) return map;
+    const raw = fs.readFileSync(MANUAL_MATCHES_PATH, 'utf8');
+    const parsed = JSON.parse(raw);
+    const list = Array.isArray(parsed.matches) ? parsed.matches : [];
+    for (const item of list) {
+      const mgrReviewId = String(item?.mgrReviewId ?? '').trim();
+      const images = Array.isArray(item?.images)
+        ? item.images.filter((x) => typeof x === 'string' && x.trim())
+        : [];
+      if (!mgrReviewId || images.length === 0) continue;
+      map.set(mgrReviewId, images);
+    }
+  } catch (e) {
+    console.warn('fetch-mgr-reviews: could not load manual-matches.json overrides:', e.message);
+  }
+  return map;
+}
+
+function mapRow(row, manualMatchesByMgrId, legacyImagesByKey) {
   if (!row || row.is_hidden || row.is_duplicate) return null;
   const rating = Number(row.score ?? row.rating?.score ?? 0);
-  const images = extractReviewImages(row);
-  return {
+  const author = row.reviewer?.name?.trim() || 'Anonymous';
+  const text = String(row.review ?? '').trim();
+  const mgrReviewId = String(row.id ?? '').trim();
+  const base = {
+    mgrReviewId,
     date: formatDate(row.created_at),
-    text: String(row.review ?? '').trim(),
-    author: row.reviewer?.name?.trim() || 'Anonymous',
+    text,
+    author,
     rating: Number.isFinite(rating) ? rating : 0,
     source: row.source?.name?.trim() || 'Google',
     avatarUrl: row.reviewer?.photo?.link?.trim() || '',
-    ...(images.length > 0 ? { images } : {}),
   };
+  const manualImages = manualMatchesByMgrId.get(mgrReviewId);
+  if (manualImages?.length) {
+    return { ...base, images: manualImages };
+  }
+  const key = legacyReviewMatchKey(base);
+  const legacyImages = legacyImagesByKey.get(key);
+  if (legacyImages?.length) {
+    return { ...base, images: legacyImages };
+  }
+  return base;
 }
 
 async function fetchAllReviews(apiKey) {
@@ -183,13 +203,28 @@ async function main() {
   }
 
   const curated = readCuratedVideos();
+  const manualMatchesByMgrId = loadManualMatchesByMgrId();
+  const { map: legacyImagesByKey, duplicateKeys } = loadLegacyImagesByMatchKey();
+  if (duplicateKeys > 0) {
+    console.warn(
+      `fetch-mgr-reviews: ${duplicateKeys} duplicate legacy match keys in google-reviews.json (skipped extras)`
+    );
+  }
   const rows = await fetchAllReviews(key);
-  const mapped = rows.map(mapRow).filter(Boolean);
+  const mapped = rows.map((r) => mapRow(r, manualMatchesByMgrId, legacyImagesByKey)).filter(Boolean);
+  let withImages = 0;
+  let withManualImages = 0;
+  for (const r of mapped) {
+    if (Array.isArray(r.images) && r.images.length > 0) {
+      withImages++;
+      if (manualMatchesByMgrId.has(String(r.mgrReviewId ?? ''))) withManualImages++;
+    }
+  }
   const out = { rawReviews: [...mapped, ...curated] };
 
   fs.writeFileSync(OUT_PATH, `${JSON.stringify(out, null, 2)}\n`, 'utf8');
   console.log(
-    `fetch-mgr-reviews: wrote ${mapped.length} from MGR + ${curated.length} curated video row(s) → src/data/reviews.json`
+    `fetch-mgr-reviews: wrote ${mapped.length} from MGR (${withImages} with project images, ${withManualImages} from manual override map) + ${curated.length} curated video row(s) → src/data/reviews.json`
   );
 }
 

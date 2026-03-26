@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "deploy": "npm run build && npx wrangler pages deploy dist",
     "sync-reviews": "node --env-file=.env scripts/sync-reviews.js",
-    "fetch-mgr-reviews": "node --env-file=.env scripts/fetch-mgr-reviews.js"
+    "fetch-mgr-reviews": "node --env-file=.env scripts/fetch-mgr-reviews.js",
+    "test:mgr-review": "node --env-file=.env scripts/test-mgr-review-payload.js"
   },
   "dependencies": {
     "astro": "^6.0.4",
