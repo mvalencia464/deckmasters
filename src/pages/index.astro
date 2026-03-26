@@ -5,16 +5,12 @@ import TrustBar from '../components/TrustBar.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import Gallery from '../components/Gallery.astro';
 import FeaturedProject from '../components/FeaturedProject.astro';
-import FeaturedCustomer from '../components/FeaturedCustomer.astro';
 import ReviewsExperimental from '../components/ReviewsExperimental.astro';
 import { Image } from 'astro:assets';
 import ownerImg from '../assets/jordanwebb.png';
 
 const site = (await import('../data/site.json')).default;
 const { serviceImages } = await import('../data/serviceImages.ts');
-const reviewsData = (await import('../data/reviews.json')).default;
-const rawReviews = reviewsData.rawReviews ?? [];
-const videoReview = rawReviews.find((r: { videoUrl?: string; videoThumbnailUrl?: string }) => r.videoUrl || r.videoThumbnailUrl) ?? null;
 const googleData = (await import('../data/google-reviews.json')).default;
 const googleRaw = googleData.rawReviews ?? [];
 const josephLeman = googleRaw.find((r: { author: string }) => r.author === 'Joseph Leman') ?? null;
@@ -58,7 +54,6 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
   </section>
   <Gallery />
   <FeaturedProject josephReview={josephLeman} />
-  <FeaturedCustomer videoReview={videoReview} josephReview={josephLeman} />
   <ReviewsExperimental />
   <section class="py-20 lg:py-28 bg-surface border-t border-neutral-200">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -71,7 +66,7 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
             height={675}
             loading="lazy"
             decoding="async"
-            class="aspect-[4/3] w-full object-cover border border-neutral-200 bg-neutral-100 shadow-sm"
+            class="aspect-4/3 w-full object-cover border border-neutral-200 bg-neutral-100 shadow-sm"
           />
         </div>
         <div>
