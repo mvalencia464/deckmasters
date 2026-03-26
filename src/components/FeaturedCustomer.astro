@@ -1,7 +1,6 @@
 ---
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
-import GoogleReviewCard from './GoogleReviewCard.astro';
 
 interface VideoReview {
   videoUrl?: string;
@@ -51,12 +50,12 @@ const resolvedJosephAvatar = josephReview?.avatarUrl ? await resolveAvatar(josep
       </p>
     </header>
 
-    <div class="grid gap-8 lg:grid-cols-[minmax(0,1.4fr),minmax(0,1.2fr)] lg:items-start">
+    <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
       {videoReview?.videoUrl && (
-        <div class="space-y-3">
-          <div class="rounded-none border border-neutral-200 bg-black shadow-sm overflow-hidden">
+        <div class="space-y-3 lg:pr-4">
+          <div class="mx-auto w-full max-w-[420px] rounded-none border border-neutral-200 bg-black shadow-sm overflow-hidden">
             <video
-              class="w-full h-full max-h-[360px] object-contain bg-black"
+              class="w-full aspect-9/16 object-cover bg-black"
               controls
               preload="metadata"
               playsinline
@@ -71,15 +70,37 @@ const resolvedJosephAvatar = josephReview?.avatarUrl ? await resolveAvatar(josep
         </div>
       )}
 
-      <div class="space-y-4">
+      <div class="space-y-4 lg:pl-4">
         {josephReview && (
-          <GoogleReviewCard
-            text={josephReview.text}
-            author={josephReview.author}
-            rating={josephReview.rating}
-            source={josephReview.source}
-            avatarUrl={resolvedJosephAvatar}
-          />
+          <article class="rounded-none border border-neutral-200 bg-surface-elevated p-5 shadow-sm">
+            <div class="flex text-amber-500 text-sm mb-2" aria-label={`${josephReview.rating} out of 5 stars`}>
+              {[1, 2, 3, 4, 5].map((i) => (
+                <span class={i <= josephReview.rating ? 'text-amber-500' : 'text-neutral-300'}>★</span>
+              ))}
+            </div>
+            <p class="text-neutral-700 text-sm leading-relaxed mb-4 whitespace-pre-line">{josephReview.text}</p>
+            <footer class="flex items-center gap-3 pt-2 border-t border-neutral-100">
+              {resolvedJosephAvatar ? (
+                <img
+                  src={resolvedJosephAvatar}
+                  alt=""
+                  class="h-10 w-10 rounded-full object-cover"
+                  width="40"
+                  height="40"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-200 text-sm font-semibold text-neutral-600" aria-hidden="true">
+                  {josephReview.author.charAt(0).toUpperCase()}
+                </span>
+              )}
+              <div>
+                <p class="font-semibold text-neutral-800 text-sm">{josephReview.author}</p>
+                <p class="text-xs text-neutral-500">{josephReview.source}</p>
+              </div>
+            </footer>
+          </article>
         )}
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-[10px] sm:text-xs text-neutral-500">
