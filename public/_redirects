@@ -24,3 +24,20 @@
 /10-cool-backyard-deck-design-ideas/   /10-cool-backyard-deck-design-ideas    301
 /is-trex-decking-right-for-you/        /is-trex-decking-right-for-you    301
 /deck-masters-introduction/            /deck-masters-introduction    301
+
+# Common WordPress / legacy paths → Astro
+/about-us            /about    301
+/about-us/           /about    301
+/contact-us          /contact  301
+/contact-us/         /contact  301
+/deck-benefits             /deck-benefits    301
+/best-decking-materials    /best-decking-materials    301
+/10-cool-backyard-deck-design-ideas   /10-cool-backyard-deck-design-ideas    301
+/is-trex-decking-right-for-you        /is-trex-decking-right-for-you    301
+/deck-masters-introduction            /deck-masters-introduction    301
+
+# Legacy archive patterns seen in crawl exports
+/tag/*               /blog    301
+/category/*          /blog    301
+/author/*            /blog    301
+/gallery/homepage/   /gallery 301

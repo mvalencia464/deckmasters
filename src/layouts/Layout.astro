@@ -11,7 +11,11 @@ const { title, description } = Astro.props;
 const site = (await import('../data/site.json')).default;
 const fullTitle = `${title} | ${site.businessName}`;
 const metaDescription = description ?? `${site.tagline} Custom decks, repairs & outdoor living in ${site.primaryCity}. Free estimates.`;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
+/** Always point to production (`astro.config` `site`) so staging/dev match GBP & Ads final URLs. */
+const canonicalUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : new URL(Astro.url.pathname, Astro.url.origin).href;
+const noIndex = import.meta.env.PUBLIC_NO_INDEX === 'true' || import.meta.env.PUBLIC_NO_INDEX === '1';
 const logoParts = site.businessName.split(' ').filter((p: string) => p !== 'AK');
 const logoFirst = logoParts[0] ?? '';
 const logoRest = logoParts.slice(1).join('');
@@ -24,6 +28,7 @@ const logoRest = logoParts.slice(1).join('');
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={metaDescription} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
