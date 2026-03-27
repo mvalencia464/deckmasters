@@ -7,8 +7,8 @@
  * - Avatar: from MGR `reviewer.photo.link`.
  * - Project photos (`images[]` with local filenames under src/assets/review-images): MGR does not sync
  *   Google customer photo attachments. We re-attach them from:
- *   (1) `src/data/manual-matches.json` (explicit mgrReviewId -> optional `avatarUrl` local filename
- *       under src/assets/avatars, and/or `images` list), then
+ *   (1) `src/data/manual-matches.json` (explicit mgrReviewId -> `images` list under
+ *       src/assets/review-images), then
  *   (2) `src/data/google-reviews.json` fuzzy match (normalized author + rating + full review text).
  *
  * Preserves curated entries that include videoUrl / videoThumbnailUrl (site-hosted testimonials).
@@ -79,7 +79,7 @@ function loadLegacyImagesByMatchKey() {
 }
 
 function loadManualMatchesByMgrId() {
-  /** @type {Map<string, { images: string[]; avatarUrl?: string }>} */
+  /** @type {Map<string, string[]>} */
   const map = new Map();
   try {
     if (!fs.existsSync(MANUAL_MATCHES_PATH)) return map;
@@ -91,11 +91,8 @@ function loadManualMatchesByMgrId() {
       const images = Array.isArray(item?.images)
         ? item.images.filter((x) => typeof x === 'string' && x.trim())
         : [];
-      const avatarRaw = item?.avatarUrl;
-      const avatarUrl =
-        typeof avatarRaw === 'string' && avatarRaw.trim() ? avatarRaw.trim() : undefined;
-      if (!mgrReviewId || (images.length === 0 && !avatarUrl)) continue;
-      map.set(mgrReviewId, { images, ...(avatarUrl ? { avatarUrl } : {}) });
+      if (!mgrReviewId || images.length === 0) continue;
+      map.set(mgrReviewId, images);
     }
   } catch (e) {
     console.warn('fetch-mgr-reviews: could not load manual-matches.json overrides:', e.message);
@@ -118,21 +115,16 @@ function mapRow(row, manualMatchesByMgrId, legacyImagesByKey) {
     source: row.source?.name?.trim() || 'Google',
     avatarUrl: row.reviewer?.photo?.link?.trim() || '',
   };
-  const manual = manualMatchesByMgrId.get(mgrReviewId);
-  let out = { ...base };
-  if (manual?.avatarUrl) {
-    out = { ...out, avatarUrl: manual.avatarUrl };
+  const manualImages = manualMatchesByMgrId.get(mgrReviewId);
+  if (manualImages?.length) {
+    return { ...base, images: manualImages };
   }
-  if (manual?.images?.length) {
-    out = { ...out, images: manual.images };
-  } else {
-    const key = legacyReviewMatchKey(base);
-    const legacyImages = legacyImagesByKey.get(key);
-    if (legacyImages?.length) {
-      out = { ...out, images: legacyImages };
-    }
+  const key = legacyReviewMatchKey(base);
+  const legacyImages = legacyImagesByKey.get(key);
+  if (legacyImages?.length) {
+    return { ...base, images: legacyImages };
   }
-  return out;
+  return base;
 }
 
 async function fetchAllReviews(apiKey) {
@@ -226,8 +218,7 @@ async function main() {
   for (const r of mapped) {
     if (Array.isArray(r.images) && r.images.length > 0) {
       withImages++;
-      const m = manualMatchesByMgrId.get(String(r.mgrReviewId ?? ''));
-      if (m?.images?.length) withManualImages++;
+      if (manualMatchesByMgrId.has(String(r.mgrReviewId ?? ''))) withManualImages++;
     }
   }
   const out = { rawReviews: [...mapped, ...curated] };
