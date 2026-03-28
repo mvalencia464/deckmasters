@@ -1,4 +1,5 @@
 ---
+import { Font } from 'astro:assets';
 import '../styles/global.css';
 import iconSvg from '../assets/icon.svg';
 
@@ -38,20 +39,8 @@ const logoRest = logoParts.slice(1).join('');
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={metaDescription} />
     <link rel="icon" type="image/svg+xml" href={typeof iconSvg === 'string' ? iconSvg : iconSvg.src} sizes="any" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap"
-      />
-    </noscript>
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-oswald" />
     </head>
   <body>
     <header class="sticky top-0 z-50 w-full bg-white border-b border-neutral-200/80">

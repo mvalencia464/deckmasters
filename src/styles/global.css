@@ -31,8 +31,9 @@
   --color-brand-dark: #262626;
   --color-brand-wood: #4a3728;
 
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Oswald", system-ui, sans-serif;
+  /* Stacks from Astro Fonts API (`<Font />` in Layout): self-hosted + metric fallbacks */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-oswald);
 
   --radius-sharp: 0;
 
