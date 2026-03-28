@@ -21,6 +21,8 @@ export default defineConfig({
       weights: [500, 600, 700],
       styles: ['normal'],
       subsets: ['latin'],
+      // Heavier condensed system fonts read closer to Oswald than generic sans-serif while loading.
+      fallbacks: ['Arial Black', 'Impact', 'sans-serif'],
     },
   ],
   integrations: [sitemap()],
