@@ -7,14 +7,14 @@ import CustomerSuccessManager from './CustomerSuccessManager.astro';
 const inputClass =
   'w-full border-2 border-neutral-700 bg-neutral-900/80 p-3 text-sm font-medium text-neutral-100 placeholder-neutral-500 focus:border-brand-orange focus:ring-0 outline-none rounded-none';
 
-const mgrData = (await import('../data/reviews.json')).default;
-const mgrRawReviews = mgrData?.rawReviews ?? [];
-const mgrGoogleReviews = mgrRawReviews.filter((r: { source?: string; rating?: number }) =>
+const reviewData = (await import('../data/google-reviews.json')).default;
+const reviewRaw = reviewData?.rawReviews ?? [];
+const googleReviews = reviewRaw.filter((r: { source?: string; rating?: number }) =>
   String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
 );
-const googleReviewCount = mgrGoogleReviews.length;
-const googleAverageRating = mgrGoogleReviews.length
-  ? (mgrGoogleReviews.reduce((a: number, r: { rating?: number }) => a + Number(r.rating), 0) / googleReviewCount).toFixed(1)
+const googleReviewCount = googleReviews.length;
+const googleAverageRating = googleReviews.length
+  ? (googleReviews.reduce((a: number, r: { rating?: number }) => a + Number(r.rating), 0) / googleReviewCount).toFixed(1)
   : '0';
 ---
 

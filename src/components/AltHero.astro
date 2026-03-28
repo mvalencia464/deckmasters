@@ -9,12 +9,12 @@ import SocialProofPill from './SocialProofPill.astro';
 import vibrantImg from '../assets/vibrant.webp';
 const site = (await import('../data/site.json')).default;
 const city = site.primaryCity;
-const mgrData = (await import('../data/reviews.json')).default;
-const mgrRawReviews = mgrData?.rawReviews ?? [];
-const mgrGoogleReviews = mgrRawReviews.filter((r: { source?: string; rating?: number }) =>
+const reviewData = (await import('../data/google-reviews.json')).default;
+const reviewRaw = reviewData?.rawReviews ?? [];
+const googleReviews = reviewRaw.filter((r: { source?: string; rating?: number }) =>
   String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
 );
-const googleFiveStarReviewCount = mgrGoogleReviews.filter((r: { rating?: number }) => Number(r.rating) >= 5).length;
+const googleFiveStarReviewCount = googleReviews.filter((r: { rating?: number }) => Number(r.rating) >= 5).length;
 ---
 
 <section class="relative min-h-[min(85vh,800px)] overflow-hidden bg-neutral-900" aria-label="Hero">

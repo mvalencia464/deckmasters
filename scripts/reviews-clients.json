@@ -7,8 +7,8 @@
       "keyword": "deck masters ak",
       "location_code": 2840,
       "language_code": "en",
-      "depth": 130,
-      "sort_by": "highest_rating",
+      "depth": 200,
+      "sort_by": "newest",
       "outputJson": "src/data/google-reviews.json",
       "outputAvatarsDir": "src/assets/avatars",
       "outputReviewImagesDir": "src/assets/review-images"

@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ReviewTest from '../components/ReviewTest.astro';
+
+const site = (await import('../data/site.json')).default;
+const title = `DFS test reviews — ${site.businessName}`;
+const description = 'Local-first DataForSEO review dataset for layout testing.';
+---
+
+<Layout title={title} description={description}>
+  <section class="py-20 lg:py-28 bg-surface">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-semibold text-neutral-800">Review layout test (DataForSEO)</h1>
+      <p class="mt-4 text-lg text-neutral-600 max-w-2xl">
+        Dev-only DataForSEO layout test. Production uses <code class="text-sm bg-neutral-100 px-1">ReviewsSection</code> +
+        <code class="text-sm bg-neutral-100 px-1">npm run build</code> (runs <code class="text-sm bg-neutral-100 px-1">sync-reviews.js</code>).
+      </p>
+    </div>
+  </section>
+  <ReviewTest />
+</Layout>

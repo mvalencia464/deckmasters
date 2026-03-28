@@ -19,8 +19,10 @@ Sync Google Reviews by **business name** (keyword). Multi-client ready.
 npm run sync-reviews
 
 # Sync a specific client by slug
-node --env-file=.env scripts/sync-reviews.js deck-masters
+node scripts/sync-reviews.js deck-masters
 ```
+
+`npm run build` runs this script automatically before `astro build` (set `DATAFORSEO_*` in Cloudflare Pages build env).
 
 ## Adding another client
 
@@ -55,9 +57,11 @@ node --env-file=.env scripts/sync-reviews.js acme-contracting
 1. **task_post** — Creates a task with keyword + location + language.
 2. **Poll task_get** — Waits until the task is done (polling every few seconds).
 3. **Download avatars** — Saves profile images under `outputAvatarsDir` (filename = review id).
-4. **Download review project images** — For reviews that include photos, downloads up to 6 per review to `outputReviewImagesDir` (default `src/assets/review-images`). These are optimized at build (AVIF thumbnails) and shown in the Experimental section with `loading="lazy"` so they don’t hurt performance.
-5. **Map & write** — Maps DataForSEO fields to your `rawReviews` schema and writes `outputJson`.
+4. **Download review project images** — For reviews that include photos, downloads up to 6 per review to `outputReviewImagesDir` (default `src/assets/review-images`).
+5. **Map & write** — Maps DataForSEO fields to `rawReviews` (including **month + year** in `date` for card footers) and writes `outputJson`.
 
-The homepage “Experimental” reviews section reads `src/data/google-reviews.json`; point it at a client-specific file if you use multiple clients.
+`ReviewsSection.astro` reads `src/data/google-reviews.json` (plus `curated-video-reviews.json`). Use a per-client `outputJson` if you maintain multiple businesses.
+
+**More Good Reviews** — Deprecated; see `scripts/archive/mgr/`.
 
 **Reference data** — `scripts/reference/` holds sample API responses (e.g. DataForSEO my_business_info for Deck Masters). See `scripts/reference/README.md`.

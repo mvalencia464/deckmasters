@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ReviewsExperimental from '../components/ReviewsExperimental.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
 
 const site = (await import('../data/site.json')).default;
 const title = `Reviews | Wall of Love — ${site.businessName}`;
@@ -16,7 +16,7 @@ const description = `What Anchorage homeowners say about ${site.businessName}. R
       </p>
     </div>
   </section>
-  <ReviewsExperimental />
+  <ReviewsSection />
   <section class="py-20 bg-surface-muted border-t border-neutral-200">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-neutral-600">Ready to join the family?</p>

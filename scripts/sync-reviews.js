@@ -3,7 +3,7 @@
  *
  * 1. POST reviews/task_post with keyword (business name) + location + language
  * 2. Poll task_get until results are ready
- * 3. Download avatars, map to reviews.json schema, write to client output paths
+ * 3. Download avatars + review images, map to rawReviews, write google-reviews.json
  *
  * Credentials: .env with DATAFORSEO_LOGIN and DATAFORSEO_PASSWORD.
  * Config: scripts/reviews-clients.json (keyword, location_code or location_name, language_code per client).
@@ -16,9 +16,11 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
+dotenv.config({ path: path.join(ROOT, '.env') });
 
 const API_REVIEWS = 'https://api.dataforseo.com/v3/business_data/google/reviews';
 const POLL_INTERVAL_MS = 3000;
@@ -63,9 +65,23 @@ function safeFilename(reviewId) {
   return reviewId.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 128) || 'unknown';
 }
 
-function formatDate(timestamp) {
+/** Display on cards: month + year only (no day/time). */
+function formatYearMonth(timestamp) {
   if (!timestamp) return '';
-  return String(timestamp).trim().replace(/\s*\+00:00\s*$/, '').trim() || '';
+  const raw = String(timestamp).trim().replace(/\s*\+00:00\s*$/, '').trim();
+  if (!raw) return '';
+  let d = new Date(raw);
+  if (Number.isNaN(d.getTime())) {
+    d = new Date(raw.replace(' ', 'T'));
+  }
+  if (Number.isNaN(d.getTime())) {
+    const m = raw.match(/^(\d{4})-(\d{2})/);
+    if (m) {
+      d = new Date(Number(m[1]), Number(m[2]) - 1, 1);
+    }
+  }
+  if (Number.isNaN(d.getTime())) return raw.slice(0, 7);
+  return d.toLocaleString('en-US', { year: 'numeric', month: 'long' });
 }
 
 async function taskPost(client) {
@@ -97,6 +113,12 @@ async function taskPost(client) {
   }
   const data = await res.json();
   const task = data?.tasks?.[0];
+  const postOk = task?.status_code === 20000 || task?.status_code === 20100;
+  if (task?.status_code != null && !postOk) {
+    throw new Error(
+      `DataForSEO task_post failed: ${task.status_code} ${task.status_message ?? ''}`.trim()
+    );
+  }
   if (!task?.id) {
     throw new Error('No task id in task_post response: ' + JSON.stringify(data));
   }
@@ -159,7 +181,7 @@ function mapItemToReview(item, avatarFilename, projectImageFilenames = []) {
   const rating = item?.rating?.value;
   const numRating = typeof rating === 'number' ? Math.round(rating) : 5;
   return {
-    date: formatDate(item?.timestamp ?? ''),
+    date: formatYearMonth(item?.timestamp ?? ''),
     text: (item?.review_text ?? '').trim(),
     author: (item?.profile_name ?? '').trim() || 'Google User',
     rating: numRating,

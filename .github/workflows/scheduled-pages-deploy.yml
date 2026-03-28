@@ -1,0 +1,30 @@
+# Triggers a Cloudflare Pages production build on a schedule.
+# Your build command runs sync-reviews.js (DataForSEO) then astro build — reviews stay fresh without MGR webhooks.
+#
+# Setup (GitHub repo → Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_PAGES_DEPLOY_HOOK_URL = full URL from Cloudflare Dashboard
+#   (Pages project → Settings → Builds & deployments → Deploy hooks → Create deploy hook)
+#
+# Optional: disable or delete functions/api/mgr-webhook.js if you no longer want POST-triggered deploys.
+
+name: Scheduled Pages deploy
+
+on:
+  schedule:
+    # 07:00 UTC daily (~11pm previous day AKST part of the year). Change as needed.
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages deploy hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_PAGES_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "::error::Set repository secret CLOUDFLARE_PAGES_DEPLOY_HOOK_URL (full hook URL from Cloudflare)."
+            exit 1
+          fi
+          curl -fsS -X POST "$DEPLOY_HOOK_URL" -o /dev/null
