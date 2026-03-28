@@ -7,8 +7,7 @@
     "build": "node scripts/sync-reviews.js && astro build",
     "preview": "astro preview",
     "deploy": "npm run build && npx wrangler pages deploy dist",
-    "sync-reviews": "node scripts/sync-reviews.js",
-    "sync-dfs-test": "node scripts/sync-dfs-test.js"
+    "sync-reviews": "node scripts/sync-reviews.js"
   },
   "dependencies": {
     "astro": "^6.0.4",
@@ -17,9 +16,7 @@
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.0.0",
-    "axios": "^1.14.0",
     "dotenv": "^17.3.1",
-    "fs-extra": "^11.3.4",
     "typescript": "^5.0.0"
   }
 }

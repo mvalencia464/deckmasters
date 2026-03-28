@@ -62,6 +62,4 @@ node --env-file=.env scripts/sync-reviews.js acme-contracting
 
 `ReviewsSection.astro` reads `src/data/google-reviews.json` (plus `curated-video-reviews.json`). Use a per-client `outputJson` if you maintain multiple businesses.
 
-**More Good Reviews** — Deprecated; see `scripts/archive/mgr/`.
-
 **Reference data** — `scripts/reference/` holds sample API responses (e.g. DataForSEO my_business_info for Deck Masters). See `scripts/reference/README.md`.

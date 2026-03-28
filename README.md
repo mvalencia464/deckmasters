@@ -29,9 +29,7 @@ Reviews come from the **DataForSEO Business Data API** and power the homepage / 
 4. **`npm run build`** — Always runs sync, then `astro build`, and writes `src/data/google-reviews.json` plus downloaded media.
 5. **Curated video** — `src/data/curated-video-reviews.json` (e.g. Erica testimonial) is merged in `ReviewsSection.astro`.
 
-**Auto-redeploy (recommended):** A GitHub Action (`.github/workflows/scheduled-pages-deploy.yml`) POSTs your Cloudflare **deploy hook** once per day so Pages rebuilds and runs `sync-reviews.js` again. Add the hook URL as repo secret `CLOUDFLARE_PAGES_DEPLOY_HOOK_URL`. You can drop MGR/GHL webhooks entirely.
-
-Optional: **POST `/api/mgr-webhook`** still triggers the same deploy hook if you want a manual or GHL-fired rebuild—remove that function when you no longer need it.
+**Auto-redeploy:** A GitHub Action (`.github/workflows/scheduled-pages-deploy.yml`) POSTs your Cloudflare **deploy hook** once per day so Pages rebuilds and runs `sync-reviews.js` again. Add the hook URL as repo secret `CLOUDFLARE_PAGES_DEPLOY_HOOK_URL`.
 
 Full details (adding clients, location codes, output paths): **`scripts/README.md`**.
 

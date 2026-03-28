@@ -1,8 +1,7 @@
 ---
 /**
  * Reviews masonry: DataForSEO → google-reviews.json (sync at build via scripts/sync-reviews.js).
- * Curated video rows from curated-video-reviews.json (Erica testimonial).
- * `dir="rtl"` on the columns wrapper places the first card top-right (multi-column flow).
+ * Curated video rows from curated-video-reviews.json (Erica testimonial, first = top-left column).
  */
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
@@ -133,10 +132,10 @@ const reviewsWithAvatars = await Promise.all(
         </a>
       </div>
     </div>
-    <div class="columns-1 md:columns-4 column-gap-4" dir="rtl">
+    <div class="columns-1 md:columns-4 column-gap-4">
       {
         reviewsWithAvatars.map((r) => (
-          <div dir="ltr" class="break-inside-avoid">
+          <div class="break-inside-avoid">
             <GoogleReviewCard
               text={r.text}
               author={r.author}
