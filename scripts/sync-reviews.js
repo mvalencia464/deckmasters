@@ -8,6 +8,13 @@
  * Credentials: .env with DATAFORSEO_LOGIN and DATAFORSEO_PASSWORD.
  * Config: scripts/reviews-clients.json (keyword, location_code or location_name, language_code per client).
  *
+ * Environment:
+ *   SKIP_SYNC_REVIEWS=1          — skip API call; use committed google-reviews.json (good for emergency deploys).
+ *   DATAFORSEO_POLL_MAX_ATTEMPTS — poll attempts (default 55).
+ *   DATAFORSEO_POLL_INTERVAL_MS  — ms between polls (default 5000).
+ *   SYNC_REVIEWS_STRICT=1              — fail the build on poll timeout (overrides stale fallback).
+ *   SYNC_REVIEWS_ALLOW_STALE_ON_TIMEOUT=1 — on timeout, succeed with committed JSON (use if CF_PAGES is unset).
+ *
  * Usage:
  *   node --env-file=.env scripts/sync-reviews.js              # default client
  *   node --env-file=.env scripts/sync-reviews.js deck-masters # client by slug
@@ -23,8 +30,18 @@ const ROOT = path.resolve(__dirname, '..');
 dotenv.config({ path: path.join(ROOT, '.env') });
 
 const API_REVIEWS = 'https://api.dataforseo.com/v3/business_data/google/reviews';
-const POLL_INTERVAL_MS = 3000;
-const POLL_MAX_ATTEMPTS = 30;
+
+function pollSettings() {
+  const interval = Number(process.env.DATAFORSEO_POLL_INTERVAL_MS) || 5000;
+  const maxAttempts = Number(process.env.DATAFORSEO_POLL_MAX_ATTEMPTS) || 55;
+  return {
+    POLL_INTERVAL_MS: Number.isFinite(interval) && interval >= 1000 ? interval : 5000,
+    POLL_MAX_ATTEMPTS: Number.isFinite(maxAttempts) && maxAttempts >= 5 ? maxAttempts : 55,
+  };
+}
+
+const POLL_TIMEOUT_MESSAGE =
+  'Task did not complete in time. Try again later or check the task in DataForSEO dashboard.';
 
 function getAuthHeader() {
   const login = process.env.DATAFORSEO_LOGIN;
@@ -141,6 +158,7 @@ async function taskGet(taskId) {
 }
 
 async function pollUntilReady(taskId) {
+  const { POLL_INTERVAL_MS, POLL_MAX_ATTEMPTS } = pollSettings();
   for (let attempt = 0; attempt < POLL_MAX_ATTEMPTS; attempt++) {
     const body = await taskGet(taskId);
     const task = body?.tasks?.[0];
@@ -157,7 +175,7 @@ async function pollUntilReady(taskId) {
       await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
     }
   }
-  throw new Error('Task did not complete in time. Try again later or check the task in DataForSEO dashboard.');
+  throw new Error(POLL_TIMEOUT_MESSAGE);
 }
 
 function extractItems(apiBody) {
@@ -191,7 +209,25 @@ function mapItemToReview(item, avatarFilename, projectImageFilenames = []) {
   };
 }
 
+function shouldAllowStaleOnPollTimeout(err) {
+  const msg = err instanceof Error ? err.message : String(err);
+  if (msg !== POLL_TIMEOUT_MESSAGE) return false;
+  if (process.env.SYNC_REVIEWS_STRICT === '1' || process.env.SYNC_REVIEWS_STRICT === 'true') {
+    return false;
+  }
+  const allowExplicit =
+    process.env.SYNC_REVIEWS_ALLOW_STALE_ON_TIMEOUT === '1' ||
+    process.env.SYNC_REVIEWS_ALLOW_STALE_ON_TIMEOUT === 'true';
+  // Cloudflare Pages: DataForSEO queues often exceed short poll windows; do not fail the deploy.
+  return allowExplicit || process.env.CF_PAGES === '1';
+}
+
 async function main() {
+  if (process.env.SKIP_SYNC_REVIEWS === '1' || process.env.SKIP_SYNC_REVIEWS === 'true') {
+    console.log('SKIP_SYNC_REVIEWS set — skipping DataForSEO sync (using committed google-reviews.json).');
+    return;
+  }
+
   const config = loadConfig();
   const client = selectClient(config);
   console.log(`Client: ${client.name} (${client.slug}) — keyword: "${client.keyword}"`);
@@ -200,7 +236,22 @@ async function main() {
   const taskId = await taskPost(client);
   console.log(`Task id: ${taskId}. Waiting for results...`);
 
-  const body = await pollUntilReady(taskId);
+  let body;
+  try {
+    body = await pollUntilReady(taskId);
+  } catch (err) {
+    if (shouldAllowStaleOnPollTimeout(err)) {
+      console.warn(
+        '[sync-reviews] Poll timed out on CF_PAGES; continuing build with committed google-reviews.json.',
+        err.message
+      );
+      console.warn(
+        '[sync-reviews] To fail the build instead, set SYNC_REVIEWS_STRICT=1 in Pages environment variables.'
+      );
+      return;
+    }
+    throw err;
+  }
   const items = extractItems(body);
   if (items.length === 0) {
     console.warn('No review items in API response. Writing empty rawReviews.');
