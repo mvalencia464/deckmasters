@@ -6,17 +6,22 @@ import iconSvg from '../assets/icon.svg';
 interface Props {
   title: string;
   description?: string;
+  /** When true, `title` is used as the full document title (no `| Brand` suffix). For SEO-precise About/Contact titles. */
+  verbatimTitle?: boolean;
+  /** Force noindex (e.g. internal admin pages). Ignores PUBLIC_NO_INDEX for this page only. */
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, verbatimTitle, noindex: forceNoIndex } = Astro.props;
 const site = (await import('../data/site.json')).default;
-const fullTitle = `${title} | ${site.businessName}`;
+const fullTitle = verbatimTitle ? title : `${title} | ${site.businessName}`;
 const metaDescription = description ?? `${site.tagline} Custom decks, repairs & outdoor living in ${site.primaryCity}. Free estimates.`;
 /** Always point to production (`astro.config` `site`) so staging/dev match GBP & Ads final URLs. */
 const canonicalUrl = Astro.site
   ? new URL(Astro.url.pathname, Astro.site).href
   : new URL(Astro.url.pathname, Astro.url.origin).href;
-const noIndex = import.meta.env.PUBLIC_NO_INDEX === 'true' || import.meta.env.PUBLIC_NO_INDEX === '1';
+const envNoIndex = import.meta.env.PUBLIC_NO_INDEX === 'true' || import.meta.env.PUBLIC_NO_INDEX === '1';
+const noIndex = forceNoIndex || envNoIndex;
 const logoParts = site.businessName.split(' ').filter((p: string) => p !== 'AK');
 const logoFirst = logoParts[0] ?? '';
 const logoRest = logoParts.slice(1).join('');
@@ -41,6 +46,7 @@ const logoRest = logoParts.slice(1).join('');
     <link rel="icon" type="image/svg+xml" href={typeof iconSvg === 'string' ? iconSvg : iconSvg.src} sizes="any" />
     <Font cssVariable="--font-inter" preload />
     <Font cssVariable="--font-oswald" />
+    <slot name="head" />
     </head>
   <body>
     <header class="sticky top-0 z-50 w-full bg-white border-b border-neutral-200/80">
@@ -159,6 +165,7 @@ const logoRest = logoParts.slice(1).join('');
             <a href="/hiring" class="hover:text-brand-orange transition-colors">Careers</a>
             <a href="/partners" class="hover:text-brand-orange transition-colors">Partners</a>
             <a href="/blog" class="hover:text-brand-orange transition-colors">Blog</a>
+            <a href="/copywriting-library" class="hover:text-brand-orange transition-colors">Voice & messaging</a>
           </div>
         </div>
       </div>

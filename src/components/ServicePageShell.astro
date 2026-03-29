@@ -1,0 +1,133 @@
+---
+import type { ServicePageEntry } from '../data/siteArchitecture';
+import { getServicePage, getChildren } from '../data/siteArchitecture';
+import ServiceCard from './ServiceCard.astro';
+
+interface Props {
+  page: ServicePageEntry;
+  site: {
+    businessName: string;
+    primaryCity: string;
+    primaryPhone: string;
+  };
+  serviceImages: Record<string, string>;
+}
+
+const { page, site, serviceImages } = Astro.props;
+
+function ancestorChain(slug: string): ServicePageEntry[] {
+  const rev: ServicePageEntry[] = [];
+  let cur: ServicePageEntry | undefined = getServicePage(slug);
+  while (cur) {
+    rev.push(cur);
+    cur = cur.parentSlug ? getServicePage(cur.parentSlug) : undefined;
+  }
+  return rev.reverse();
+}
+
+const chain = ancestorChain(page.slug);
+const kids = getChildren(page.slug);
+const parent = page.parentSlug ? getServicePage(page.parentSlug) : null;
+
+const cityState = `${site.primaryCity}, AK`;
+const h1 = `${page.title} in ${cityState}`;
+
+const lead =
+  page.kind === 'category'
+    ? `${site.businessName} handles ${page.title.toLowerCase()} work built for Alaska's climate — snow load, freeze-thaw, and moisture. Use the links below to find a specific service, or call for a free estimate.`
+    : page.kind === 'core'
+      ? `Explore ${page.title.toLowerCase()} options in ${cityState}. Follow the links for individual services with dedicated pages.`
+      : `You're viewing the ${page.title} service page for ${cityState}. More detailed project copy, FAQs, and proof will be added in the content phase — this route is live for structure and internal linking.`;
+---
+
+<section class="py-16 lg:py-20 bg-surface border-b border-neutral-200">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <nav class="text-sm text-neutral-500 mb-8" aria-label="Breadcrumb">
+      <ol class="flex flex-wrap gap-x-2 gap-y-1 items-center" role="list">
+        <li><a href="/" class="hover:text-brand-orange">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/services" class="hover:text-brand-orange">Services</a></li>
+        {
+          chain.map((c, i) => (
+            <>
+              <li aria-hidden="true">/</li>
+              <li>
+                {i === chain.length - 1 ? (
+                  <span class="text-neutral-800 font-medium">{c.title}</span>
+                ) : (
+                  <a href={`/services/${c.slug}`} class="hover:text-brand-orange">
+                    {c.title}
+                  </a>
+                )}
+              </li>
+            </>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <h1 class="text-4xl md:text-5xl font-semibold text-neutral-800 tracking-tight">{h1}</h1>
+    <p class="mt-6 text-lg text-neutral-600 max-w-3xl leading-relaxed">{lead}</p>
+
+    {
+      parent && (
+        <p class="mt-6 text-sm text-neutral-500">
+          <span class="font-medium text-neutral-700">Section:</span>{' '}
+          <a href={`/services/${parent.slug}`} class="text-brand-orange font-medium hover:underline">
+            {parent.title}
+          </a>
+        </p>
+      )
+    }
+
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a
+        href={`tel:${site.primaryPhone.replace(/\D/g, '')}`}
+        class="inline-flex rounded-none bg-brand-orange px-6 py-3 text-base font-medium text-white transition-colors hover:bg-orange-800 focus-ring"
+      >
+        Call {site.primaryPhone}
+      </a>
+      <a
+        href="/contact#quote"
+        class="inline-flex rounded-none border-2 border-neutral-300 px-6 py-3 text-base font-medium text-neutral-800 hover:border-brand-orange hover:text-brand-orange transition-colors focus-ring"
+      >
+        Request a quote
+      </a>
+    </div>
+  </div>
+</section>
+
+{
+  kids.length > 0 && (
+    <section class="py-16 lg:py-20 bg-surface-muted border-b border-neutral-200">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-semibold text-neutral-800">
+          {page.kind === 'category' ? 'Services in this category' : 'Related services'}
+        </h2>
+        <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
+          {kids.map((k) => (
+            <li>
+              <ServiceCard
+                title={k.title}
+                href={`/services/${k.slug}`}
+                imageUrl={serviceImages[k.title]}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<section class="py-16 bg-surface">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <p class="text-neutral-600 max-w-2xl">
+      Questions about timing, permits, or materials?{' '}
+      <a href="/contact#quote" class="text-brand-orange font-medium hover:underline">
+        Contact {site.businessName}
+      </a>{' '}
+      for a conversation about your project in {site.primaryCity}.
+    </p>
+  </div>
+</section>

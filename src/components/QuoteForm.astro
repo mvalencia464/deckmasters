@@ -1,8 +1,16 @@
 ---
 /**
- * Quote form — submits to /api/submit-quote (GHL). Simplified: no service selection.
+ * Quote form — submits to /api/submit-quote (GHL). Optional service line (Contact page / Prompt 7).
  */
 import CustomerSuccessManager from './CustomerSuccessManager.astro';
+import { CONTACT_FORM_OTHER_OPTION, contactFormServiceGroups } from '../data/contactFormServiceOptions';
+
+interface Props {
+  /** Core30 Prompt 7: category + core hub dropdown on Contact */
+  includeServiceSelect?: boolean;
+}
+
+const { includeServiceSelect = false } = Astro.props;
 
 const inputClass =
   'w-full border-2 border-neutral-700 bg-neutral-900/80 p-3 text-sm font-medium text-neutral-100 placeholder-neutral-500 focus:border-brand-orange focus:ring-0 outline-none rounded-none';
@@ -43,6 +51,27 @@ const googleAverageRating = googleReviews.length
     <span class="sr-only">Email</span>
     <input type="email" name="email" required autocomplete="email" class={inputClass} placeholder="Email Address*" />
   </label>
+
+  {
+    includeServiceSelect && (
+      <label class="block">
+        <span class="sr-only">Service needed</span>
+        <select name="serviceType" required class={`${inputClass} appearance-none bg-[url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 24 24%27 stroke=%27%239ca3af%27%3E%3Cpath stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M19 9l-7 7-7-7%27/%3E%3C/svg%3E')] bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat pr-10`}>
+          <option value="" disabled selected>
+            Service needed *
+          </option>
+          {contactFormServiceGroups.map((group) => (
+            <optgroup label={group.label}>
+              {group.options.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </optgroup>
+          ))}
+          <option value={CONTACT_FORM_OTHER_OPTION}>{CONTACT_FORM_OTHER_OPTION}</option>
+        </select>
+      </label>
+    )
+  }
 
   <label class="block">
     <span class="sr-only">Project description</span>
@@ -194,6 +223,8 @@ const googleAverageRating = googleReviews.length
       payload.append('name', getValue('[name="name"]'));
       payload.append('email', getValue('[name="email"]'));
       payload.append('phone', getValue('[name="phone"]'));
+      const serviceType = getValue('[name="serviceType"]');
+      if (serviceType) payload.append('serviceType', serviceType);
       payload.append('projectDescription', getValue('[name="projectDescription"]'));
       payload.append('termsConsent', getChecked('[name="termsConsent"]') ? 'true' : '');
       payload.append('marketingConsent', getChecked('[name="marketingConsent"]') ? 'true' : '');

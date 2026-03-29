@@ -1,11 +1,12 @@
 ---
 title: "Is Trex Decking Right For You?"
-description: "Pros and cons of Trex composite decking for Alaska. Durability, maintenance, and cost to help you decide."
+description: "Trex in Alaska: maintenance, heat, upfront cost, and longevity vs wood—so you can decide before you order samples."
+lede: "You want low maintenance and long life—but composite is not always the right call for every budget or sun exposure. Here is an honest look at Trex for Anchorage decks."
 pubDate: 2022-01-10
 image: "006-aerial-composite"
 ---
 
-Trex is one of the most popular composite decking brands. Here’s how it stacks up for Alaska homeowners.
+Trex is one of the most widely used composite lines we see on local jobs. Use this as a decision filter—not a brand commercial—before you commit.
 
 ## What is Trex?
 

@@ -51,7 +51,7 @@ Full details (adding clients, location codes, output paths): **`scripts/README.m
 
 ## Hero image
 
-`public/newhero.avif` and `public/newhero.png` are loaded **only on desktop** (via `<picture>` + `media="(min-width: 1024px)"` in `Hero.astro`); mobile uses a gradient so LCP stays fast. Prefer AVIF as primary; PNG as fallback.
+The homepage hero (`src/components/Hero.astro`) uses `src/assets/vibrant.webp` via Astro `Image` (full-bleed on desktop, framed above the headline on mobile). Desktop adds dark overlays; mobile uses a gradient behind the framed image.
 
 ---
 

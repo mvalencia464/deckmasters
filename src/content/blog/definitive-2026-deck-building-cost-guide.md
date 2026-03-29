@@ -1,25 +1,14 @@
 ---
 title: "The Definitive 2026 Deck Building Cost Guide: Prices, Permits, and Alaska Labor Trends"
-description: "A deep-dive into 2026 deck pricing in Alaska—square-foot myths, foundations, permits, and how labor trends affect your budget."
+description: "2026 Alaska deck costs: why per-sq-ft bids fail, foundation options, materials, permits, and labor—without the vague estimate runaround."
+lede: "You deserve a real budget—not a Lower 48 calculator, a ghosting contractor, and a square-foot rate that explodes after site visit. Here is how 2026 pricing actually works for Anchorage and Alaska."
 pubDate: 2026-03-09
 image: "009-masterpiece-main"
 ---
 
-I think you’ll agree with me on this:
+Getting a straight answer on what a new deck costs here should not feel impossible. You get no-shows, one-line “estimates,” and material prices that move before you sign—so it is no wonder homeowners give up before they ever get a written scope.
 
-Trying to get a straight answer on what a new deck actually costs in Alaska is incredibly frustrating.
-
-Between ghosting contractors, vague "estimates," and the fluctuating cost of materials, it’s enough to make you give up on your backyard upgrade entirely.
-
-Here’s the deal:
-
-It doesn't have to be a guessing game.
-
-In this complete guide, I’m going to show you exactly how much you should expect to pay for a deck in 2026.
-
-What's the bottom line?
-
-By the end of this post, you'll know precisely how to budget for your dream deck, navigate Anchorage permits, and avoid getting ripped off.
+**What this guide gives you:** a practical way to budget for 2026, how to read Anchorage permit and site realities, and what to challenge when someone quotes you off a spreadsheet instead of your lot.
 
 ![Placeholder — hero deck image for 2026 cost guide (swap for final project photo)](/projects/009-masterpiece-main.avif)
 

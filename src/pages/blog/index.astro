@@ -1,13 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { blogIndexCopy } from '../../data/marketingPagesCopy';
 
 const site = (await import('../../data/site.json')).default;
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-const title = `Blog | Deck Tips & Outdoor Living — ${site.businessName}`;
-const description = `Tips on deck building, materials, and outdoor living in Alaska. From ${site.businessName}, Anchorage's deck builder.`;
+const mc = blogIndexCopy({
+  businessName: site.businessName,
+  primaryCity: site.primaryCity,
+  primaryPhone: site.primaryPhone,
+  ownerName: site.ownerName,
+});
+const title = mc.title;
+const description = mc.description;
 
 /** Resolve featured image URL from post image slug (uses /projects/*.avif). */
 function getPostImageUrl(slug: string | undefined): string | undefined {
@@ -22,10 +29,10 @@ function getPostImageUrl(slug: string | undefined): string | undefined {
       <div class="mb-10">
         <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Blog</p>
         <h1 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">
-          Deck Tips &amp; Ideas.
+          {mc.h1}
         </h1>
         <p class="mt-3 text-neutral-600 max-w-xl">
-          Deck building, materials, and outdoor living ideas for {site.primaryCity} homeowners.
+          {mc.lead}
         </p>
       </div>
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
@@ -74,12 +81,12 @@ function getPostImageUrl(slug: string | undefined): string | undefined {
   </section>
   <section class="py-20 bg-surface-muted border-t border-neutral-200">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-neutral-600">Ready to start your project?</p>
+      <p class="text-neutral-600 max-w-xl mx-auto">{mc.ctaLead}</p>
       <a
         href="/contact#quote"
         class="mt-4 inline-flex rounded-none bg-brand-orange px-6 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-orange-800 focus-ring"
       >
-        Get a free quote
+        {mc.ctaButton}
       </a>
     </div>
   </section>

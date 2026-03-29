@@ -1,0 +1,252 @@
+---
+import type { ChildServiceSlug, ServicePageEntry } from '../data/siteArchitecture';
+import { getChildren, getServicePage } from '../data/siteArchitecture';
+import { childPageCopy } from '../data/childPageCopy';
+import type { ChildPageBundle } from '../data/childPageCopy';
+import { childAgitationByParentSlug } from '../data/childPageAgitation';
+import { childVocBySlug } from '../data/servicePageVoc';
+import ServiceImageTextBand from './ServiceImageTextBand.astro';
+import { getChildVisualBand } from '../data/servicePageVisualBands';
+
+interface Props {
+  page: ServicePageEntry;
+  site: {
+    businessName: string;
+    primaryCity: string;
+    primaryPhone: string;
+  };
+}
+
+const { page, site } = Astro.props;
+const slug = page.slug as ChildServiceSlug;
+const copy: ChildPageBundle = childPageCopy[slug];
+
+function ancestorChain(slugStr: string): ServicePageEntry[] {
+  const rev: ServicePageEntry[] = [];
+  let cur: ServicePageEntry | undefined = getServicePage(slugStr);
+  while (cur) {
+    rev.push(cur);
+    cur = cur.parentSlug ? getServicePage(cur.parentSlug) : undefined;
+  }
+  return rev.reverse();
+}
+
+const chain = ancestorChain(page.slug);
+const parent = page.parentSlug ? getServicePage(page.parentSlug) : null;
+const siblingPages =
+  page.parentSlug
+    ? getChildren(page.parentSlug).filter((p) => p.kind === 'child' && p.slug !== page.slug)
+    : [];
+siblingPages.sort((a, b) => a.title.localeCompare(b.title));
+const tel = site.primaryPhone.replace(/\D/g, '');
+const heroSub = copy.heroSubhead.replace(/\{phone\}/g, site.primaryPhone);
+const city = site.primaryCity;
+const st = 'AK';
+const h1 = `${page.title} in ${city}, ${st} — ${copy.h1Benefit}`;
+const pasAgitation =
+  page.parentSlug && childAgitationByParentSlug[page.parentSlug]
+    ? childAgitationByParentSlug[page.parentSlug]
+    : null;
+const vocSnippet = childVocBySlug[slug];
+const visualBand = getChildVisualBand(slug, copy, vocSnippet ?? null);
+---
+
+<section class="relative min-h-[min(48vh,420px)] flex flex-col justify-end overflow-hidden border-b border-neutral-200">
+  <img
+    src={copy.heroImage}
+    alt=""
+    width={1920}
+    height={1080}
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="absolute inset-0 bg-linear-to-t from-neutral-900/95 via-neutral-900/70 to-neutral-900/45" aria-hidden="true"></div>
+  <div class="relative z-10 mx-auto w-full max-w-6xl px-4 pb-10 pt-8 sm:px-6 sm:pb-12 sm:pt-10 lg:px-8">
+    <nav class="text-sm text-neutral-300 mb-5" aria-label="Breadcrumb">
+      <ol class="flex flex-wrap gap-x-2 gap-y-1 items-center" role="list">
+        <li><a href="/" class="hover:text-brand-orange">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/services" class="hover:text-brand-orange">Services</a></li>
+        {
+          chain.map((c, i) => (
+            <>
+              <li aria-hidden="true">/</li>
+              <li>
+                {i === chain.length - 1 ? (
+                  <span class="text-white font-medium">{c.title}</span>
+                ) : (
+                  <a href={`/services/${c.slug}`} class="hover:text-brand-orange">
+                    {c.title}
+                  </a>
+                )}
+              </li>
+            </>
+          ))
+        }
+      </ol>
+    </nav>
+    <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-white max-w-4xl drop-shadow-sm">
+      {h1}
+    </h1>
+    <p class="mt-4 max-w-2xl text-base sm:text-lg text-neutral-200 leading-relaxed">
+      {heroSub}
+    </p>
+    <ul class="mt-5 flex flex-wrap gap-2.5" role="list">
+      {
+        copy.trustPills.map((t) => (
+          <li class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white sm:text-xs">
+            {t}
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mt-7 flex flex-wrap gap-3">
+      <a
+        href={`tel:${tel}`}
+        class="inline-flex rounded-none bg-brand-orange px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-orange-800 focus-ring sm:px-6 sm:py-3 sm:text-base"
+      >
+        Call now
+      </a>
+      <a
+        href="/contact#quote"
+        class="inline-flex rounded-none border-2 border-white/80 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-white hover:text-neutral-900 transition-colors focus-ring sm:px-6 sm:py-3 sm:text-base"
+      >
+        Schedule service
+      </a>
+    </div>
+  </div>
+</section>
+
+<article class="bg-surface">
+  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
+    {
+      parent && (
+        <p class="text-sm text-neutral-600 mb-8">
+          <span class="font-semibold text-neutral-800">Related hub:</span>{' '}
+          <a href={`/services/${parent.slug}`} class="text-brand-orange font-medium hover:underline">
+            {parent.title}
+          </a>
+        </p>
+      )
+    }
+
+    <div class="space-y-4 text-neutral-600 leading-relaxed">
+      {
+        copy.opening.length > 1 ? (
+          <p>{copy.opening[0]}</p>
+        ) : (
+          copy.opening.map((p) => <p>{p}</p>)
+        )
+      }
+    </div>
+  </div>
+</article>
+
+<ServiceImageTextBand band={visualBand} />
+
+<article class="bg-surface">
+  <div class="mx-auto max-w-3xl px-4 py-0 sm:px-6 lg:px-8 pb-12 lg:pb-14 lg:pt-0">
+    <h2 class="mt-0 font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-800 lg:mt-2">
+      When you need {page.title.toLowerCase()}
+    </h2>
+    <div class="mt-5 space-y-4 text-neutral-600 leading-relaxed">
+      {copy.whenYouNeed.map((p) => <p>{p}</p>)}
+    </div>
+
+    {
+      pasAgitation && (
+        <>
+          <h2 class="mt-12 font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-800">
+            {pasAgitation.title}
+          </h2>
+          <div class="mt-5 space-y-4 text-neutral-600 leading-relaxed">
+            {pasAgitation.paragraphs.map((p) => (
+              <p>{p}</p>
+            ))}
+          </div>
+        </>
+      )
+    }
+
+    <h2 class="mt-12 font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-800">
+      Our {page.title} process
+    </h2>
+    <div class="mt-5 space-y-4 text-neutral-600 leading-relaxed">
+      {copy.process.map((p) => <p>{p}</p>)}
+    </div>
+
+    <h2 class="mt-12 font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-800">
+      {page.title} cost in {city}
+    </h2>
+    <div class="mt-5 space-y-4 text-neutral-600 leading-relaxed">
+      {copy.cost.map((p) => <p>{p}</p>)}
+    </div>
+
+    {
+      copy.whyChoose.length > 1 && (
+        <>
+          <h2 class="mt-12 font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-800">
+            Why choose {site.businessName}
+          </h2>
+          <div class="mt-5 space-y-4 text-neutral-600 leading-relaxed">
+            {copy.whyChoose.slice(1).map((p) => (
+              <p>{p}</p>
+            ))}
+          </div>
+        </>
+      )
+    }
+
+    {
+      siblingPages.length > 0 && parent && (
+        <div class="mt-12 rounded-none border border-neutral-200 bg-surface-muted p-6">
+          <h2 class="font-display text-lg md:text-xl font-bold uppercase tracking-tight text-neutral-800">
+            More {parent.title} services
+          </h2>
+          <p class="mt-2 text-sm text-neutral-600 leading-relaxed">
+            Sibling line items under the same hub — jump between scopes without returning to the menu.
+          </p>
+          <ul class="mt-4 grid gap-2 sm:grid-cols-2 text-sm list-none p-0 m-0" role="list">
+            {siblingPages.map((s) => (
+              <li>
+                <a href={`/services/${s.slug}`} class="font-medium text-brand-orange hover:underline">
+                  {s.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    <div class="mt-12 rounded-none border border-neutral-200 bg-surface-muted p-6">
+      <p class="text-neutral-800 font-semibold">Ready for a clear scope?</p>
+      <p class="mt-2 text-sm text-neutral-600 leading-relaxed">{copy.finalCta}</p>
+      <p class="mt-3 text-sm font-bold text-neutral-800">{site.primaryPhone}</p>
+      {
+        parent && (
+          <p class="mt-4 text-sm text-neutral-600">
+            Browse related work on our{' '}
+            <a href={`/services/${parent.slug}`} class="font-medium text-brand-orange hover:underline">
+              {parent.title}
+            </a>{' '}
+            hub, or return to the{' '}
+            <a href="/services" class="font-medium text-brand-orange hover:underline">full services list</a>.
+          </p>
+        )
+      }
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href={`tel:${tel}`} class="inline-flex rounded-none bg-brand-orange px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-orange-800">
+          Call now
+        </a>
+        <a
+          href="/contact#quote"
+          class="inline-flex rounded-none border-2 border-neutral-300 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-neutral-800 hover:border-brand-orange hover:text-brand-orange"
+        >
+          Request a quote
+        </a>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,34 @@
+---
+interface Block {
+  headline: string;
+  body: string;
+}
+
+interface Props {
+  items: Block[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="py-14 sm:py-16 lg:py-20 bg-surface border-t border-neutral-200" aria-labelledby="why-choose-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Why homeowners choose us</p>
+    <h2 id="why-choose-heading" class="font-display text-3xl md:text-4xl font-bold text-neutral-800 uppercase tracking-tight max-w-3xl">
+      Proof, not promises
+    </h2>
+    <p class="mt-3 text-neutral-600 max-w-2xl">
+      Four reasons Anchorage homeowners call Deck Masters before the other guys.
+    </p>
+    <ul class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4" role="list">
+      {
+        items.map((item) => (
+          <li class="border border-neutral-200 bg-surface-elevated p-6 shadow-sm">
+            <h3 class="text-base font-bold text-neutral-800 leading-snug">{item.headline}</h3>
+            <p class="mt-3 text-sm text-neutral-600 leading-relaxed">{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

@@ -1,19 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import AltHero from '../components/AltHero.astro';
+import Hero from '../components/Hero.astro';
 import TrustBar from '../components/TrustBar.astro';
+import HomeWhyChoose from '../components/HomeWhyChoose.astro';
+import HomeFaq from '../components/HomeFaq.astro';
+import HomeMapSection from '../components/HomeMapSection.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import Gallery from '../components/Gallery.astro';
 import FeaturedProject from '../components/FeaturedProject.astro';
 import ReviewsSection from '../components/ReviewsSection.astro';
 import { Image } from 'astro:assets';
 import ownerImg from '../assets/jordanwebb.png';
+import { homeMeta, getWhyChooseUs, homeFaqs, getFinalCta } from '../data/homepageCopy';
 
 const site = (await import('../data/site.json')).default;
 const { serviceImages } = await import('../data/serviceImages.ts');
 const googleData = (await import('../data/google-reviews.json')).default;
 const googleRaw = googleData.rawReviews ?? [];
 const josephLeman = googleRaw.find((r: { author: string }) => r.author === 'Joseph Leman') ?? null;
+
+const statsGoogle = googleRaw.filter((r: { source?: string; rating?: number }) =>
+  String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
+);
+const googleReviewCount = statsGoogle.length;
+const googleAverageRating = statsGoogle.length
+  ? (statsGoogle.reduce((a: number, r: { rating?: number }) => a + Number(r.rating), 0) / googleReviewCount).toFixed(1)
+  : '5.0';
+
+const whyChooseItems = getWhyChooseUs(googleReviewCount, googleAverageRating);
+const finalCta = getFinalCta(site.primaryPhone);
 
 const primaryCategory = site.categories.find((c: { isPrimary: boolean }) => c.isPrimary);
 const featuredServices = primaryCategory
@@ -22,13 +37,77 @@ const featuredServices = primaryCategory
       .slice(0, 6)
       .map((s: { name: string }) => s.name)
   : [];
-const title = `Custom Decks & Repairs in ${site.primaryCity}`;
-const description = `${site.tagline} ${site.businessName} — decks, outdoor living, repairs. Free estimates.`;
+
+const siteOrigin = Astro.site?.origin ?? 'https://deckmastersak.com';
+const businessId = `${siteOrigin}/#business`;
+
+const addrMatch = site.address.match(/^(.+),\s*([^,]+),\s*([A-Z]{2})\s*(\d{5})/);
+const streetAddress = addrMatch?.[1]?.trim() ?? site.address;
+const addressLocality = addrMatch?.[2]?.trim() ?? 'Anchorage';
+const addressRegion = addrMatch?.[3] ?? 'AK';
+const postalCode = addrMatch?.[4] ?? '99518';
+
+const sameAs = [site.socials.instagram, site.socials.facebook, site.socials.linkedin].filter(Boolean);
+
+const primaryCategoryName = primaryCategory?.name ?? 'Deck Builder';
+
+const businessNode: Record<string, unknown> = {
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': businessId,
+  name: site.businessName,
+  description: homeMeta.description,
+  url: `${siteOrigin}/`,
+  telephone: site.primaryPhone,
+  image: `${siteOrigin}/projects/009-masterpiece-main.avif`,
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress,
+    addressLocality,
+    addressRegion,
+    postalCode,
+    addressCountry: 'US',
+  },
+  areaServed: site.neighborhoods.map((n: string) => `${n}, Anchorage, AK`),
+  sameAs,
+};
+if (site.primaryEmail) businessNode.email = site.primaryEmail;
+
+const graph: Record<string, unknown>[] = [
+  businessNode,
+  {
+    '@type': 'Service',
+    name: primaryCategoryName,
+    serviceType: primaryCategoryName,
+    provider: { '@id': businessId },
+    areaServed: {
+      '@type': 'City',
+      name: site.primaryCity,
+      containedInPlace: { '@type': 'State', name: 'Alaska' },
+    },
+    description: `Deck builder and exterior contractor in ${site.primaryCity}, Alaska — custom decks, repairs, railings, and related work.`,
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: homeFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.answer,
+      },
+    })),
+  },
+];
+
+const structuredDataJson = { '@context': 'https://schema.org', '@graph': graph };
 ---
 
-<Layout title={title} description={description}>
-  <AltHero />
+<Layout title={homeMeta.title} description={homeMeta.description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(structuredDataJson)} />
+  <Hero />
   <TrustBar />
+  <HomeWhyChoose items={whyChooseItems} />
   <section class="py-12 sm:py-16 lg:py-24 bg-surface border-t border-neutral-200" aria-label="Services">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-10">
@@ -87,7 +166,7 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
               We believe in unmatched quality, super high integrity, and total transparency. When you hire us, you are getting specialty contractors who engineer decks specifically for the Alaskan elements. We treat your home as a sanctuary—our goal is for you to feel so safe and comfortable with our crew that you don't even need to lock your deadbolt while we work. We aren't perfect, but we promise this: when we make a mistake, we own it, and we make it right.
             </p>
             <p>
-              With nearly 1,000 custom decks completed, we're proud to be Alaska’s #1 rated, most trusted choice for outdoor living.
+              With nearly 1,000 custom decks completed, we're proud to be Alaska's #1 rated, most trusted choice for outdoor living.
             </p>
           </div>
           <a
@@ -100,4 +179,12 @@ const description = `${site.tagline} ${site.businessName} — decks, outdoor liv
       </div>
     </div>
   </section>
+  <HomeFaq faqs={homeFaqs} />
+  <HomeMapSection
+    businessName={site.businessName}
+    address={site.address}
+    phone={site.primaryPhone}
+    placeId={site.googlePlaceId}
+    finalCta={finalCta}
+  />
 </Layout>

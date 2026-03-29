@@ -1,11 +1,12 @@
 ---
 title: "Best Decking Materials for Alaska"
-description: "Compare decking materials for cold climates—composite, pressure-treated wood, and more. What holds up best in Alaska?"
+description: "Composite vs wood in Alaska: freeze-thaw, moisture, maintenance, and what actually lasts—without marketing fluff."
+lede: "You pick a walking surface once—and live with maintenance, traction, and replacement cost for years. Here is how common decking options compare in cold, wet, high-swing weather."
 pubDate: 2024-07-01
 image: "006-aerial-composite"
 ---
 
-Choosing the right decking material in Alaska can mean the difference between a deck that lasts decades and one that needs constant upkeep. Here’s a quick look at options that perform well in cold, wet conditions.
+The right material is the one that matches how much upkeep you will do, how your deck drains, and what your rails and framing demand—not whichever sample looked best in the store.
 
 ## Composite decking
 

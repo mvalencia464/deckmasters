@@ -1,0 +1,47 @@
+---
+import type { VocSnippet } from '../data/vocQuotes';
+
+interface Props {
+  snippet: VocSnippet;
+  /** tighter padding for grids */
+  compact?: boolean;
+}
+
+const { snippet, compact } = Astro.props;
+---
+
+<figure
+  class:list={[
+    'relative flex h-full flex-col overflow-hidden rounded-none border border-neutral-200 border-l-4 border-l-brand-orange bg-linear-to-br from-white to-orange-50/45 p-6 shadow-md',
+    compact && 'p-4 sm:p-5',
+  ]}
+>
+  <blockquote class="relative flex-1">
+    <span
+      class:list={[
+        'font-display pointer-events-none absolute -left-0.5 top-0 select-none leading-[0.75] text-brand-orange drop-shadow-sm',
+        compact ? 'text-5xl sm:text-6xl' : 'text-6xl sm:text-7xl',
+      ]}
+      aria-hidden="true"
+    >
+      “
+    </span>
+    <p
+      class:list={[
+        'relative z-10 font-display font-bold leading-[1.2] tracking-tight text-neutral-900',
+        compact
+          ? 'pl-7 pt-5 text-base sm:text-lg md:text-xl'
+          : 'pl-8 pt-6 text-lg sm:text-xl md:text-2xl',
+      ]}
+    >
+      {snippet.excerpt}
+    </p>
+  </blockquote>
+  <figcaption class="mt-5 flex items-end justify-between gap-3 border-t border-neutral-200/90 pt-4">
+    <div class="min-w-0">
+      <cite class="not-italic text-sm font-bold text-neutral-900">{snippet.author}</cite>
+      <p class="mt-0.5 text-[10px] font-bold uppercase tracking-[0.15em] text-brand-orange">Google review</p>
+    </div>
+    <span class="shrink-0 text-xl leading-none tracking-tight text-amber-500" aria-hidden="true">★★★★★</span>
+  </figcaption>
+</figure>

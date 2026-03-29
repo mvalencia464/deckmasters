@@ -1,30 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ReviewsSection from '../components/ReviewsSection.astro';
+import { wallOfLovePageCopy } from '../data/marketingPagesCopy';
 
 const site = (await import('../data/site.json')).default;
-const title = `Reviews | Wall of Love — ${site.businessName}`;
-const description = `What Anchorage homeowners say about ${site.businessName}. Real reviews from real customers.`;
+const mc = wallOfLovePageCopy({
+  businessName: site.businessName,
+  primaryCity: site.primaryCity,
+  primaryPhone: site.primaryPhone,
+  ownerName: site.ownerName,
+});
 ---
 
-<Layout title={title} description={description}>
+<Layout title={mc.title} description={mc.description}>
   <section class="py-20 lg:py-28 bg-surface">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-semibold text-neutral-800">Wall of Love</h1>
+      <h1 class="text-4xl font-semibold text-neutral-800">{mc.h1}</h1>
       <p class="mt-4 text-lg text-neutral-600 max-w-2xl">
-        Real reviews from homeowners we've had the pleasure of working with in {site.primaryCity}.
+        {mc.lead}
       </p>
     </div>
   </section>
   <ReviewsSection />
   <section class="py-20 bg-surface-muted border-t border-neutral-200">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-neutral-600">Ready to join the family?</p>
+      <p class="text-neutral-600 max-w-xl mx-auto">{mc.ctaLead}</p>
       <a
         href="/contact#quote"
         class="mt-4 inline-flex rounded-none bg-brand-orange px-6 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-orange-800 focus-ring"
       >
-        Get a free quote
+        {mc.ctaButton}
       </a>
     </div>
   </section>

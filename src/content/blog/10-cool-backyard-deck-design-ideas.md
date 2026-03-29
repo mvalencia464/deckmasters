@@ -1,11 +1,12 @@
 ---
 title: "10 Cool Backyard Deck Design Ideas"
-description: "Explore 10 backyard deck design ideas for Alaska homeowners—from multi-level decks to composite materials and built-in seating."
+description: "Ten deck layout ideas for Anchorage—levels, built-ins, rails, and materials that hold up to snow, wind, and freeze-thaw."
+lede: "You want outdoor space that works when the weather turns—not just a pretty rendering. These ideas match how Alaska homeowners actually use a deck."
 pubDate: 2021-06-15
 image: "020-contemporary-full"
 ---
 
-From simple ground-level decks to two-story designs with unique railings, the right deck can transform your backyard. Here are 10 deck design ideas that work well in Anchorage and across Alaska.
+You walk on decks through snow, ice, and short summers—so layout, rails, and materials matter as much as looks. Here are ten approaches that work well in Anchorage and across Alaska.
 
 ## 1. Multi-level decks
 

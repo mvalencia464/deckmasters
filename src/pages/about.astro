@@ -1,68 +1,376 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image, getImage } from 'astro:assets';
+import ownerPortrait from '../assets/jordanwebb.png';
+import { aboutPageCopy } from '../data/marketingPagesCopy';
 
 const site = (await import('../data/site.json')).default;
-const title = `About | ${site.businessName} — ${site.primaryCity}`;
-const description = `${site.aboutUs}`;
-const challenges = site.environmentalChallenges as string[];
+const primaryCategory =
+  site.categories?.find((c: { isPrimary?: boolean }) => c.isPrimary)?.name ?? 'Deck Builder';
+const st = 'AK';
+const mc = aboutPageCopy({
+  businessName: site.businessName,
+  primaryCity: site.primaryCity,
+  primaryPhone: site.primaryPhone,
+  ownerName: site.ownerName,
+});
+const title = mc.title;
+const description = mc.description;
 const neighborhoods = (site.neighborhoods as string[]) || [];
+const challenges = site.environmentalChallenges as string[];
+const tel = site.primaryPhone.replace(/\D/g, '');
+const siteOrigin = Astro.site?.origin ?? 'https://deckmastersak.com';
+const businessId = `${siteOrigin}/#business`;
+const personId = `${siteOrigin}/#person-jordan-webb`;
+const mapsSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`;
+const gbpUrl =
+  site.googleBusinessProfileUrl && String(site.googleBusinessProfileUrl).trim() !== ''
+    ? site.googleBusinessProfileUrl
+    : mapsSearchUrl;
+
+const ownerOptimized = await getImage({ src: ownerPortrait, width: 480, format: 'webp' });
+const ownerImageUrl = new URL(ownerOptimized.src, siteOrigin).href;
+
+const sameAs = [
+  site.socials.facebook,
+  site.socials.instagram,
+  site.socials.linkedin,
+  site.googleBusinessProfileUrl,
+].filter((u) => u && String(u).trim() !== '');
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'LocalBusiness',
+      '@id': businessId,
+      name: site.businessName,
+      description: site.tagline,
+      telephone: site.primaryPhone,
+      email: site.primaryEmail || undefined,
+      image: `${siteOrigin}/projects/009-masterpiece-main.avif`,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '625 W 59th Ave Unit J',
+        addressLocality: site.primaryCity,
+        addressRegion: st,
+        postalCode: '99518',
+        addressCountry: 'US',
+      },
+      areaServed: {
+        '@type': 'City',
+        name: site.primaryCity,
+        containedInPlace: { '@type': 'State', name: 'Alaska' },
+      },
+      founder: { '@id': personId },
+      sameAs,
+    },
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: site.ownerName,
+      image: ownerImageUrl,
+      jobTitle: 'Owner',
+      worksFor: { '@id': businessId },
+    },
+  ],
+};
+
+const h1 = `About ${site.businessName} — Your Local ${site.primaryCity} ${primaryCategory}`;
 ---
 
-<Layout title={title} description={description}>
-  <section class="py-20 lg:py-28 bg-surface">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-semibold text-neutral-800">About Us</h1>
-      <div class="mt-8 prose prose-neutral max-w-none">
-        <p class="text-neutral-600 leading-relaxed">{site.aboutUs}</p>
+<Layout title={title} description={description} verbatimTitle>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(aboutSchema)} />
+
+  <section class="relative border-b border-neutral-200 bg-neutral-900 text-white overflow-hidden">
+    <div
+      class="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-700 via-neutral-900 to-neutral-900"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative z-10 mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight max-w-4xl">
+        {h1}
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-neutral-200 leading-relaxed">
+        {mc.heroLead}
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4 items-center">
+        <a
+          href={`tel:${tel}`}
+          class="inline-flex rounded-none bg-brand-orange px-6 py-3 text-base font-bold uppercase tracking-wider text-white hover:bg-orange-800 transition-colors focus-ring"
+        >
+          Call now
+        </a>
+        <a href={`tel:${tel}`} class="text-lg font-bold text-white hover:text-brand-orange transition-colors">
+          {site.primaryPhone}
+        </a>
       </div>
     </div>
   </section>
-  <section class="py-20 lg:py-28 bg-surface-muted border-y border-neutral-200">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold text-neutral-800">Climate resilience</h2>
+
+  <article class="bg-surface">
+    <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+      <h2 class="font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+        {mc.storyH2}
+      </h2>
+      <div class="mt-6 space-y-4 text-neutral-600 leading-relaxed">
+        <p>{site.aboutUs}</p>
+        <p>
+          {mc.afterAboutP1}
+        </p>
+        <p>
+          {mc.afterAboutP2}
+        </p>
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        <figure class="m-0 aspect-4/3 border border-neutral-200 overflow-hidden bg-neutral-100 shadow-sm">
+          <img
+            src="/projects/009-masterpiece-main.avif"
+            alt="Composite deck with railing overlooking trees in Anchorage"
+            width={1200}
+            height={900}
+            class="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <figure class="m-0 aspect-4/3 border border-neutral-200 overflow-hidden bg-neutral-100 shadow-sm">
+          <img
+            src="/projects/006-aerial-composite.avif"
+            alt="Aerial view of a custom deck installation"
+            width={1200}
+            height={900}
+            class="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
+
+      <h2 class="mt-16 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+        Meet {site.ownerName}
+      </h2>
+      <div class="mt-8 rounded-none border border-neutral-200 bg-surface-muted p-6 sm:p-8">
+        <div class="flex flex-col sm:flex-row gap-6 sm:gap-8">
+          <div class="shrink-0 w-40 sm:w-44 border border-neutral-200 overflow-hidden bg-neutral-100 shadow-sm">
+            <Image
+              src={ownerPortrait}
+              alt={`${site.ownerName}, owner of ${site.businessName}`}
+              width={360}
+              height={360}
+              class="h-full w-full object-cover object-top aspect-square"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div>
+            <p class="font-display text-xl font-bold text-neutral-800">{site.ownerName}</p>
+            <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">Owner &amp; Lead Builder</p>
+            <ul class="mt-4 space-y-1 text-sm text-neutral-600">
+              <li>
+                <span class="font-medium text-neutral-800">Credentials:</span>{' '}
+                {site.licenseNumber ? `License #${site.licenseNumber}` : 'Contractor credentials on file — ask for details'}
+              </li>
+              <li>
+                <span class="font-medium text-neutral-800">Experience:</span> Hands-on deck and exterior carpentry in
+                Alaska-focused residential work.
+              </li>
+            </ul>
+            <p class="mt-4 text-neutral-600 leading-relaxed">
+              {mc.ownerBlurb}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 rounded-none border border-neutral-200 bg-neutral-100/80 p-8 text-center">
+        <h2 class="font-display text-xl font-bold uppercase tracking-tight text-neutral-800">Video introduction</h2>
+        <p class="mt-2 text-sm text-neutral-600">
+          Watch {site.ownerName} introduce {site.businessName} — embed your YouTube or Vimeo video here when ready.
+        </p>
+        <div
+          class="mt-6 aspect-video max-w-2xl mx-auto border-2 border-dashed border-neutral-300 bg-neutral-200/50 flex items-center justify-center text-sm text-neutral-500"
+        >
+          Video placeholder
+        </div>
+      </div>
+
+      <h2 class="mt-16 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+        {mc.servingH2}
+      </h2>
       <p class="mt-4 text-neutral-600 leading-relaxed">
-        In {site.primaryCity} and similar cold-climate regions, outdoor structures face unique challenges: freeze-thaw cycles, heavy snow, high winds, and moisture. We design and build with these conditions in mind — from footings and framing to materials and finishes — so your deck or renovation stands up for years.
+        {mc.servingLead}
       </p>
+      {
+        neighborhoods.length > 0 && (
+          <ul class="mt-6 grid gap-2 sm:grid-cols-2" role="list">
+            {neighborhoods.map((n: string) => (
+              <li class="flex items-center gap-2 text-neutral-600 text-sm">
+                <span class="h-1.5 w-1.5 rounded-full bg-brand-orange shrink-0" aria-hidden="true" />
+                {n}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      <h2 class="mt-16 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+        {mc.licensedH2}
+      </h2>
       <p class="mt-4 text-neutral-600 leading-relaxed">
-        We address the full range of environmental factors that affect durability:
+        {mc.licensedLead}
+      </p>
+      <ul class="mt-8 space-y-4" role="list">
+        <li class="flex gap-3">
+          <span class="mt-0.5 text-brand-orange" aria-hidden="true">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </span>
+          <div>
+            <p class="font-semibold text-neutral-800">Strong Google review presence</p>
+            <p class="text-sm text-neutral-600">Homeowners share feedback publicly — we earn the next job.</p>
+          </div>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 text-brand-orange" aria-hidden="true">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </span>
+          <div>
+            <p class="font-semibold text-neutral-800">Local owner-operated</p>
+            <p class="text-sm text-neutral-600">
+              Led by {site.ownerName} — Alaska-specific build experience, not a distant call center.
+            </p>
+          </div>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 text-brand-orange" aria-hidden="true">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+            </svg>
+          </span>
+          <div>
+            <p class="font-semibold text-neutral-800">Cold-climate construction</p>
+            <p class="text-sm text-neutral-600">Materials and methods chosen for snow, wind, and moisture.</p>
+          </div>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 text-brand-orange" aria-hidden="true">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+          </span>
+          <div>
+            <p class="font-semibold text-neutral-800">Transparent process</p>
+            <p class="text-sm text-neutral-600">Consult, clear scope, and free estimates — know what you are buying.</p>
+          </div>
+        </li>
+      </ul>
+      <dl class="mt-10 grid gap-3 text-sm text-neutral-600 border-t border-neutral-200 pt-8">
+        <div class="flex flex-wrap gap-2">
+          <dt class="font-semibold text-neutral-800">License #</dt>
+          <dd>{site.licenseNumber ? `#${site.licenseNumber}` : '—'}</dd>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <dt class="font-semibold text-neutral-800">Insurance</dt>
+          <dd>General liability — certificate available on request.</dd>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <dt class="font-semibold text-neutral-800">Certifications</dt>
+          <dd>— list manufacturer or trade certs here when applicable</dd>
+        </div>
+      </dl>
+
+      <h2 class="mt-16 font-display text-2xl font-bold uppercase tracking-tight text-neutral-800">
+        {mc.envH2}
+      </h2>
+      <p class="mt-4 text-neutral-600 leading-relaxed">
+        {mc.envLead}
       </p>
       <ul class="mt-6 grid gap-2 sm:grid-cols-2" role="list">
-        {challenges.map((c) => (
-          <li class="flex items-center gap-2 text-neutral-600">
-            <span class="h-1.5 w-1.5 rounded-full bg-brand-orange shrink-0" aria-hidden="true" />
-            {c}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-  {neighborhoods.length > 0 && (
-    <section class="py-20 lg:py-28 bg-surface">
-      <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl font-semibold text-neutral-800">Serving {site.primaryCity}</h2>
-        <p class="mt-4 text-neutral-600 leading-relaxed">
-          We're proud to serve homeowners across the greater Anchorage area, including:
-        </p>
-        <ul class="mt-6 grid gap-2 sm:grid-cols-2" role="list">
-          {neighborhoods.map((n) => (
-            <li class="flex items-center gap-2 text-neutral-600">
+        {
+          challenges.map((c) => (
+            <li class="flex items-center gap-2 text-neutral-600 text-sm">
               <span class="h-1.5 w-1.5 rounded-full bg-brand-orange shrink-0" aria-hidden="true" />
-              {n}
+              {c}
             </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
-  <section class="py-20 lg:py-28 bg-surface-muted border-t border-neutral-200">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-neutral-600">Get a free estimate for your project.</p>
+          ))
+        }
+      </ul>
+
+      <h2 class="mt-16 font-display text-2xl font-bold uppercase tracking-tight text-neutral-800">{mc.gbpH2}</h2>
+      <p class="mt-4 text-neutral-600 leading-relaxed">
+        {mc.gbpLead}
+      </p>
       <a
-        href="/contact#quote"
-        class="mt-4 inline-flex rounded-none bg-brand-orange hover:bg-orange-800 px-6 py-3 text-base font-medium text-white transition-colors duration-200 focus-ring"
+        href={gbpUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 inline-flex font-medium text-brand-orange hover:underline"
       >
-        Request a quote
+        Open {site.businessName} on Google →
       </a>
+
+      <h2 class="mt-16 font-display text-2xl font-bold uppercase tracking-tight text-neutral-800">Follow us</h2>
+      <div class="mt-4 flex flex-wrap gap-6" aria-label="Social media">
+        {
+          site.socials.facebook && (
+            <a
+              href={site.socials.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-neutral-600 hover:text-brand-orange font-medium"
+            >
+              Facebook
+            </a>
+          )
+        }
+        {
+          site.socials.instagram && (
+            <a
+              href={site.socials.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-neutral-600 hover:text-brand-orange font-medium"
+            >
+              Instagram
+            </a>
+          )
+        }
+        {
+          site.socials.linkedin && (
+            <a
+              href={site.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-neutral-600 hover:text-brand-orange font-medium"
+            >
+              LinkedIn
+            </a>
+          )
+        }
+        <a href={gbpUrl} target="_blank" rel="noopener noreferrer" class="text-neutral-600 hover:text-brand-orange font-medium">
+          Google Business Profile
+        </a>
+      </div>
+
+      <div class="mt-14 rounded-none border border-neutral-200 bg-surface-muted p-6 text-center">
+        <p class="text-neutral-800 font-semibold">{mc.ctaHeadline}</p>
+        <div class="mt-5 flex flex-wrap justify-center gap-3">
+          <a href={`tel:${tel}`} class="inline-flex rounded-none bg-brand-orange px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-orange-800">
+            Call {site.primaryPhone}
+          </a>
+          <a
+            href="/contact#quote"
+            class="inline-flex rounded-none border-2 border-neutral-300 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-neutral-800 hover:border-brand-orange hover:text-brand-orange"
+          >
+            Request a quote
+          </a>
+        </div>
+      </div>
     </div>
-  </section>
+  </article>
 </Layout>

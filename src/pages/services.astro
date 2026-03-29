@@ -2,47 +2,129 @@
 import Layout from '../layouts/Layout.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import Gallery from '../components/Gallery.astro';
+import {
+  serviceCategoryOrder,
+  getServicePage,
+  getChildren,
+  type ServicePageEntry,
+} from '../data/siteArchitecture';
+import { serviceImages } from '../data/serviceImages';
+import { servicesPageCopy } from '../data/marketingPagesCopy';
 
 const site = (await import('../data/site.json')).default;
-const { serviceImages } = await import('../data/serviceImages.ts');
-const title = `Services | Decks, Repairs & Outdoor Living in ${site.primaryCity}`;
-const description = `Custom deck design, deck replacement, composite decking, railing, siding, structural repairs. Serving ${site.primaryCity}. Free estimates.`;
+const mc = servicesPageCopy({
+  businessName: site.businessName,
+  primaryCity: site.primaryCity,
+  primaryPhone: site.primaryPhone,
+  ownerName: site.ownerName,
+});
+const title = mc.title;
+const description = mc.description;
+
+function isCoreOrCategoryWithCoreChildren(categorySlug: string): boolean {
+  const kids = getChildren(categorySlug);
+  return kids.some((k) => k.kind === 'core');
+}
 ---
 
 <Layout title={title} description={description}>
   <section class="py-20 lg:py-28 bg-surface">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-semibold text-neutral-800">Our Services</h1>
+      <h1 class="text-4xl font-semibold text-neutral-800">{mc.h1}</h1>
       <p class="mt-4 text-lg text-neutral-600 max-w-2xl">
-        Full-service deck building, repair, and general contracting — selected services below. All work built for cold-climate durability.
+        {mc.leadBeforePhone}
+        <a href={`tel:${site.primaryPhone.replace(/\D/g, '')}`} class="text-brand-orange font-medium hover:underline"
+          >{site.primaryPhone}</a
+        >
+        {mc.leadAfterPhone}
       </p>
-      {site.categories.map((cat: { name: string; services: { name: string; selected: boolean }[] }) => {
-        const selected = cat.services.filter((s: { selected: boolean }) => s.selected);
-        if (selected.length === 0) return null;
-        return (
-          <div class="mt-16">
-            <h2 class="text-2xl font-semibold text-neutral-800 border-b border-neutral-200 pb-3">{cat.name}</h2>
-            <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
-              {selected.map((s: { name: string }) => (
-                <li>
-                  <ServiceCard title={s.name} href="/contact#quote" imageUrl={serviceImages[s.name]} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        );
-      })}
+
+      {
+        serviceCategoryOrder.map((categoryId) => {
+          const catPage = getServicePage(categoryId);
+          if (!catPage) return null;
+          const topLevel = getChildren(categoryId);
+          const nestedByCore = isCoreOrCategoryWithCoreChildren(categoryId);
+
+          return (
+            <div class="mt-16">
+              <div class="flex flex-wrap items-end justify-between gap-4 border-b border-neutral-200 pb-3">
+                <h2 class="text-2xl font-semibold text-neutral-800">{catPage.title}</h2>
+                <a
+                  href={`/services/${catPage.slug}`}
+                  class="text-sm font-medium uppercase tracking-wider text-brand-orange hover:underline"
+                >
+                  View {catPage.title} hub →
+                </a>
+              </div>
+
+              {!nestedByCore ? (
+                <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+                  {topLevel.map((p: ServicePageEntry) => (
+                    <li>
+                      <ServiceCard
+                        title={p.title}
+                        href={`/services/${p.slug}`}
+                        imageUrl={serviceImages[p.title]}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div class="mt-8 space-y-12">
+                  {topLevel.map((core: ServicePageEntry) => {
+                    const leaves = getChildren(core.slug);
+                    return (
+                      <div>
+                        <h3 class="text-lg font-semibold text-neutral-800">
+                          <a href={`/services/${core.slug}`} class="hover:text-brand-orange transition-colors">
+                            {core.title}
+                          </a>
+                        </h3>
+                        <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+                          {leaves.map((p: ServicePageEntry) => (
+                            <li>
+                              <ServiceCard
+                                title={p.title}
+                                href={`/services/${p.slug}`}
+                                imageUrl={serviceImages[p.title]}
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })
+      }
+
+      <div class="mt-16 pt-10 border-t border-neutral-200">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">{mc.waterfrontEyebrow}</p>
+        <h2 class="text-2xl font-semibold text-neutral-800">{mc.waterfrontH2}</h2>
+        <p class="mt-3 text-neutral-600 max-w-2xl">
+          {mc.waterfrontLead}
+        </p>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+          <li>
+            <ServiceCard title="Dock Building" href="/dock-building" imageUrl={serviceImages['Dock Building']} />
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
   <Gallery />
   <section class="py-20 bg-surface-muted">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-neutral-600">Ready to start your project?</p>
+      <p class="text-neutral-600 max-w-xl mx-auto">{mc.ctaLead}</p>
       <a
         href="/contact#quote"
         class="mt-4 inline-flex rounded-none bg-brand-orange px-6 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-orange-800 focus-ring"
       >
-        Get a free quote
+        {mc.ctaButton}
       </a>
     </div>
   </section>

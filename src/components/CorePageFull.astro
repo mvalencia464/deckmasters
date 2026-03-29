@@ -1,0 +1,281 @@
+---
+import type { ServicePageEntry } from '../data/siteArchitecture';
+import type { CoreServiceSlug } from '../data/siteArchitecture';
+import { getServicePage, getChildren } from '../data/siteArchitecture';
+import { corePageCopy } from '../data/corePageCopy';
+import type { CorePageBundle } from '../data/corePageCopy';
+import { coreVocQuotes } from '../data/servicePageVoc';
+import VocQuoteCard from './VocQuoteCard.astro';
+import ServiceImageTextBand from './ServiceImageTextBand.astro';
+import { getCoreVisualBand } from '../data/servicePageVisualBands';
+
+interface Props {
+  page: ServicePageEntry;
+  site: {
+    businessName: string;
+    primaryCity: string;
+    primaryPhone: string;
+  };
+}
+
+const { page, site } = Astro.props;
+const slug = page.slug as CoreServiceSlug;
+const copy: CorePageBundle = corePageCopy[slug];
+
+function ancestorChain(slugStr: string): ServicePageEntry[] {
+  const rev: ServicePageEntry[] = [];
+  let cur: ServicePageEntry | undefined = getServicePage(slugStr);
+  while (cur) {
+    rev.push(cur);
+    cur = cur.parentSlug ? getServicePage(cur.parentSlug) : undefined;
+  }
+  return rev.reverse();
+}
+
+const chain = ancestorChain(page.slug);
+const parentCategory = page.parentSlug ? getServicePage(page.parentSlug) : null;
+const leaves = getChildren(page.slug);
+const tel = site.primaryPhone.replace(/\D/g, '');
+const heroSub = copy.heroSubhead.replace(/\{phone\}/g, site.primaryPhone);
+const city = site.primaryCity;
+const st = 'AK';
+const h1 = `${page.title} in ${city}, ${st} — ${copy.h1Benefit}`;
+const vocList = coreVocQuotes[slug];
+const vocRest = vocList?.slice(1) ?? [];
+const visualBand = getCoreVisualBand(slug, copy, vocList?.[0] ?? null);
+---
+
+<section class="relative min-h-[min(52vh,480px)] flex flex-col justify-end overflow-hidden border-b border-neutral-200">
+  <img
+    src={copy.heroImage}
+    alt=""
+    width={1920}
+    height={1080}
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="absolute inset-0 bg-linear-to-t from-neutral-900/95 via-neutral-900/70 to-neutral-900/45" aria-hidden="true"></div>
+  <div class="relative z-10 mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8">
+    <nav class="text-sm text-neutral-300 mb-6" aria-label="Breadcrumb">
+      <ol class="flex flex-wrap gap-x-2 gap-y-1 items-center" role="list">
+        <li><a href="/" class="hover:text-brand-orange">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/services" class="hover:text-brand-orange">Services</a></li>
+        {
+          chain.map((c, i) => (
+            <>
+              <li aria-hidden="true">/</li>
+              <li>
+                {i === chain.length - 1 ? (
+                  <span class="text-white font-medium">{c.title}</span>
+                ) : (
+                  <a href={`/services/${c.slug}`} class="hover:text-brand-orange">
+                    {c.title}
+                  </a>
+                )}
+              </li>
+            </>
+          ))
+        }
+      </ol>
+    </nav>
+    <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-white max-w-4xl drop-shadow-sm">
+      {h1}
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg text-neutral-200 leading-relaxed">
+      {heroSub}
+    </p>
+    <ul class="mt-6 flex flex-wrap gap-3" role="list">
+      {
+        copy.trustPills.map((t) => (
+          <li class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
+            {t}
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a
+        href={`tel:${tel}`}
+        class="inline-flex rounded-none bg-brand-orange px-6 py-3 text-base font-bold uppercase tracking-wider text-white transition-colors hover:bg-orange-800 focus-ring"
+      >
+        Call now
+      </a>
+      <a
+        href="/contact#quote"
+        class="inline-flex rounded-none border-2 border-white/80 px-6 py-3 text-base font-bold uppercase tracking-wider text-white hover:bg-white hover:text-neutral-900 transition-colors focus-ring"
+      >
+        Schedule service
+      </a>
+    </div>
+  </div>
+</section>
+
+<article class="bg-surface">
+  <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+    {
+      parentCategory && (
+        <p class="text-sm text-neutral-600 mb-8">
+          <span class="font-semibold text-neutral-800">Category:</span>{' '}
+          <a href={`/services/${parentCategory.slug}`} class="text-brand-orange font-medium hover:underline">
+            {parentCategory.title}
+          </a>
+        </p>
+      )
+    }
+
+    <div class="space-y-4 text-neutral-600 leading-relaxed">
+      {
+        copy.opening.length > 1 ? (
+          <p>{copy.opening[0]}</p>
+        ) : (
+          copy.opening.map((p) => <p>{p}</p>)
+        )
+      }
+    </div>
+  </div>
+</article>
+
+<ServiceImageTextBand band={visualBand} />
+
+<article class="bg-surface">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pb-14 lg:pb-16 lg:pt-0">
+    <h2 class="mt-0 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800 lg:mt-2">
+      Signs you need {page.title.toLowerCase()}
+    </h2>
+    <div class="mt-6 space-y-4 text-neutral-600 leading-relaxed">
+      {copy.signs.map((p) => <p>{p}</p>)}
+    </div>
+
+    <h2 class="mt-14 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+      {copy.agitationTitle}
+    </h2>
+    <div class="mt-6 space-y-4 text-neutral-600 leading-relaxed">
+      {copy.agitation.map((p) => <p>{p}</p>)}
+    </div>
+
+    {
+      vocRest.length > 0 && (
+        <div class="mt-10">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-3">Homeowners said it</p>
+          <ul class="grid gap-6 sm:grid-cols-2 list-none p-0 m-0" role="list">
+            {vocRest.map((snippet) => (
+              <li>
+                <VocQuoteCard snippet={snippet} compact />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    <h2 class="mt-14 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+      Our {page.title} options
+    </h2>
+    <div class="mt-6 space-y-4 text-neutral-600 leading-relaxed">
+      {copy.optionsIntro.map((p) => <p>{p}</p>)}
+      <p class="text-neutral-600 leading-relaxed">
+        {
+          leaves.map((leaf, i) => (
+            <>
+              {i === 0 ? '' : i === leaves.length - 1 ? ' and ' : ', '}
+              <a href={`/services/${leaf.slug}`} class="font-medium text-brand-orange hover:underline">
+                {leaf.title}
+              </a>
+            </>
+          ))
+        }
+        .
+      </p>
+      {copy.optionsClosing.map((p) => <p>{p}</p>)}
+    </div>
+
+    <h2 class="mt-14 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+      {page.title} for {city} homes
+    </h2>
+    <div class="mt-6 space-y-4 text-neutral-600 leading-relaxed">
+      {copy.city.map((p) => <p>{p}</p>)}
+    </div>
+
+    <h2 class="mt-14 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+      What to expect
+    </h2>
+    <div class="mt-6 space-y-4 text-neutral-600 leading-relaxed">
+      {copy.whatToExpect.map((p) => <p>{p}</p>)}
+    </div>
+
+    <h2 class="mt-14 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+      Why choose us for {page.title.toLowerCase()}?
+    </h2>
+    <div class="mt-6 space-y-4 text-neutral-600 leading-relaxed">
+      {(copy.opening.length > 1 ? copy.whyChoose.slice(1) : copy.whyChoose).map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+
+    <p class="mt-10 text-neutral-600 leading-relaxed">
+      For the full picture on decks and exterior work in town, visit our{' '}
+      <a href="/" class="font-medium text-brand-orange hover:underline">Anchorage deck builder home page</a>
+      — then return here for the service line you need.
+    </p>
+
+    <div class="mt-10 rounded-none border border-neutral-200 bg-surface-muted p-6">
+      <p class="text-neutral-800 font-semibold">Need help choosing?</p>
+      <p class="mt-2 text-sm text-neutral-600 leading-relaxed">{copy.finalCta}</p>
+      <p class="mt-3 text-sm font-bold text-neutral-800">{site.primaryPhone}</p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href={`tel:${tel}`} class="inline-flex rounded-none bg-brand-orange px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-orange-800">
+          Call now
+        </a>
+        <a
+          href="/contact#quote"
+          class="inline-flex rounded-none border-2 border-neutral-300 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-neutral-800 hover:border-brand-orange hover:text-brand-orange"
+        >
+          Request a quote
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<section class="border-t border-neutral-200 bg-surface-muted py-14 lg:py-16">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-neutral-800">Related services</h2>
+    <p class="mt-2 text-sm text-neutral-600">
+      Pick a scope — each page goes deeper on that line item.
+      {parentCategory && (
+        <>
+          {' '}
+          <a href={`/services/${parentCategory.slug}`} class="font-medium text-brand-orange hover:underline">
+            Browse every {parentCategory.title.toLowerCase()} service page
+          </a>{' '}
+          (all sibling line items in this category).
+        </>
+      )}
+    </p>
+    <ul class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
+      {
+        leaves.map((leaf) => (
+          <li class="border border-neutral-200 bg-surface p-6 shadow-sm">
+            <h3 class="text-lg font-bold text-neutral-800">
+              <a href={`/services/${leaf.slug}`} class="hover:text-brand-orange transition-colors">
+                {leaf.title}
+              </a>
+            </h3>
+            <p class="mt-3 text-sm text-neutral-600 leading-relaxed">
+              {copy.gridBlurbs[leaf.slug] ??
+                `${leaf.title} in ${city} — details, scope, and pricing notes on the dedicated page.`}
+            </p>
+            <a
+              href={`/services/${leaf.slug}`}
+              class="mt-4 inline-block text-sm font-bold uppercase tracking-wider text-brand-orange hover:underline"
+            >
+              Learn more →
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

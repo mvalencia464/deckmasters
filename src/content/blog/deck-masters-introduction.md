@@ -1,23 +1,24 @@
 ---
 title: "Welcome to Deck Masters — What to Expect When You Work With Us"
-description: "A short intro from Jordan at Deck Masters: our process, timeline, portfolio, foundations, and what makes us Alaska's #1 deck builder."
+description: "Video intro: Jordan on timelines, reviews, steel and helical piles, permits, and what to ask any Anchorage deck contractor."
+lede: "You get the same overview we give homeowners who ask how we run jobs—process, foundations, and how we handle mistakes—plus links below to our public reviews so you can verify before you call."
 pubDate: 2024-09-01
 video: "LgI04T7LvXE"
 image: "009-masterpiece-main"
 ---
 
-In the video above, Jordan walks you through what to expect when you work with Deck Masters—from timeline and process to our portfolio, foundations, and how we handle permits and design. Below is an outline of the main points so you can scan or reference them anytime.
+In the video above, Jordan walks through what to expect when you work with Deck Masters—timeline, process, portfolio, foundations, and permits. Skim the outline below if you want the bullet points without the play bar.
 
 ## Who we are
 
 - Deck Masters has been building decks for **15+ years** and has refined a system focused on **smooth process**, **clear timelines**, and **meeting your expectations**.
-- We aim to shortcut the path to success for your deck project and deliver a result you’re happy with, on time.
+- We aim to shorten the path from “idea” to “built right” and deliver a result you are happy with, on time.
 
 ## Timeline and project management
 
 - Many contractors struggle with schedules and materials; we’ve made that a strength.
 - We project schedules and manage materials so your project stays on track.
-- You can see this reflected in our reviews—we’re proud to be known as **Alaska’s #1 deck building contractor** and work to keep it that way.
+- You can see this reflected in our reviews—homeowners mention communication and follow-through as often as the finished deck.
 
 ## Our portfolio and scope of work
 

@@ -1,6 +1,7 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import { sitemapSerialize } from './sitemap-serialize.mjs';
 
 export default defineConfig({
   site: 'https://deckmastersak.com',
@@ -25,7 +26,23 @@ export default defineConfig({
       fallbacks: ['Arial Black', 'Impact', 'sans-serif'],
     },
   ],
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      lastmod: new Date(),
+      serialize: sitemapSerialize,
+      /** Exclude internal tools from sitemap (still noindex on page). */
+      filter: (page) => {
+        try {
+          const path = new URL(page).pathname.replace(/\/$/, '') || '/';
+          if (path.startsWith('/admin')) return false;
+          if (path === '/copywriting-library') return false;
+          return true;
+        } catch {
+          return true;
+        }
+      },
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

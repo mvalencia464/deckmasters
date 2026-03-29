@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { publishingWeeks, launchStrategy, deployCadenceNote } from '../../data/publishingPlan';
+
+const site = (await import('../../data/site.json')).default;
+const title = 'Publishing schedule & launch strategy (internal)';
+const description = 'Internal-only calendar and SEO/GBP strategy — not indexed.';
+---
+
+<Layout title={title} description={description} verbatimTitle noindex>
+  <div class="min-h-[70vh] bg-neutral-950 text-neutral-100">
+    <div class="border-b border-amber-500/40 bg-amber-950/40 px-4 py-3 text-center text-sm text-amber-100">
+      Internal use only — this URL is <strong>noindex</strong> and excluded from the sitemap. Do not link from public
+      pages. Not password-protected; use caution when sharing.
+    </div>
+
+    <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-amber-500/90">{site.businessName}</p>
+      <h1 class="mt-2 font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-white">
+        Publishing &amp; launch plan
+      </h1>
+      <p class="mt-3 max-w-2xl text-sm text-neutral-400 leading-relaxed">
+        Next several weeks at a glance, plus how we rank the site alongside Google Business Profile. Edit copy in{' '}
+        <code class="rounded bg-neutral-800 px-1.5 py-0.5 text-amber-200/90 text-xs">src/data/publishingPlan.ts</code>.
+      </p>
+
+      <div class="mt-10 grid gap-10 lg:grid-cols-[1fr_280px] lg:items-start">
+        <div>
+          <h2 class="font-display text-xl font-bold uppercase tracking-tight text-white border-b border-neutral-700 pb-2">
+            Next 8 weeks — what to ship
+          </h2>
+          <ol class="mt-6 space-y-6" role="list">
+            {
+              publishingWeeks.map((week) => (
+                <li class="rounded-none border border-neutral-700 bg-neutral-900/80 p-5 shadow-sm">
+                  <p class="text-xs font-bold uppercase tracking-wider text-amber-500/90">{week.label}</p>
+                  <p class="mt-1 font-semibold text-neutral-100">{week.theme}</p>
+                  <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-300 leading-relaxed" role="list">
+                    {week.tasks.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <aside class="rounded-none border border-neutral-700 bg-neutral-900/60 p-5 text-sm">
+          <h3 class="font-display text-sm font-bold uppercase tracking-tight text-white">{deployCadenceNote.title}</h3>
+          <ul class="mt-3 list-disc space-y-2 pl-4 text-neutral-400 leading-relaxed" role="list">
+            {deployCadenceNote.lines.map((line) => (
+              <li>{line}</li>
+            ))}
+          </ul>
+          <p class="mt-4 text-xs text-neutral-500">
+            Public scheduling for customers remains at{' '}
+            <a href="/schedule" class="text-amber-400 hover:underline">
+              /schedule
+            </a>{' '}
+            (quotes).
+          </p>
+        </aside>
+      </div>
+
+      <section class="mt-16 border-t border-neutral-700 pt-12">
+        <h2 class="font-display text-xl font-bold uppercase tracking-tight text-white border-b border-neutral-700 pb-2">
+          Launch &amp; ranking strategy
+        </h2>
+        <div class="mt-8 space-y-10">
+          {
+            launchStrategy.map((section) => (
+              <div>
+                <h3 class="font-display text-lg font-semibold text-amber-400/95">{section.title}</h3>
+                <p class="mt-2 text-sm text-neutral-300 leading-relaxed">{section.summary}</p>
+                <ul class="mt-4 list-disc space-y-2 pl-5 text-sm text-neutral-400 leading-relaxed" role="list">
+                  {section.bullets.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <p class="mt-14 text-center text-xs text-neutral-600">
+        <a href="/" class="text-neutral-400 hover:text-amber-500/90">
+          ← Back to site
+        </a>
+      </p>
+    </div>
+  </div>
+</Layout>

@@ -1,18 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import QuoteForm from '../components/QuoteForm.astro';
+import { schedulePageCopy } from '../data/marketingPagesCopy';
 
 const site = (await import('../data/site.json')).default;
-const title = `Get a Quote | Schedule Your Free Estimate — ${site.primaryCity}`;
-const description = `Request a free quote for your deck or outdoor project. ${site.businessName} serves ${site.primaryCity}. No-surprise guarantee.`;
+const mc = schedulePageCopy({
+  businessName: site.businessName,
+  primaryCity: site.primaryCity,
+  primaryPhone: site.primaryPhone,
+  ownerName: site.ownerName,
+});
 ---
 
-<Layout title={title} description={description}>
+<Layout title={mc.title} description={mc.description}>
   <section class="py-20 lg:py-28 bg-surface">
     <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-semibold text-neutral-800">Get a Quote</h1>
+      <h1 class="text-4xl font-semibold text-neutral-800">{mc.h1}</h1>
       <p class="mt-4 text-lg text-neutral-600">
-        Tell us about your project. We'll get back to you with a free estimate — no surprises, no obligation.
+        {mc.lead}
       </p>
       <div class="mt-12">
         <div class="bg-neutral-900 border-[3px] border-neutral-700 p-8 rounded-none max-w-xl shadow-xl shadow-black/40">
@@ -20,7 +25,9 @@ const description = `Request a free quote for your deck or outdoor project. ${si
         </div>
       </div>
       <p class="mt-8 text-sm text-neutral-500">
-        Prefer to talk? Call us at <a href={`tel:${site.primaryPhone.replace(/\D/g, '')}`} class="font-medium text-brand-orange hover:underline">{site.primaryPhone}</a>.
+        {mc.calloutBefore}
+        <a href={`tel:${site.primaryPhone.replace(/\D/g, '')}`} class="font-medium text-brand-orange hover:underline">{site.primaryPhone}</a>
+        {mc.calloutAfter}
       </p>
     </div>
   </section>

@@ -1,0 +1,39 @@
+---
+interface Faq {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faqs: Faq[];
+}
+
+const { faqs } = Astro.props;
+---
+
+<section class="py-14 sm:py-18 lg:py-22 bg-surface-muted border-t border-neutral-200" aria-labelledby="faq-heading">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">FAQ</p>
+    <h2 id="faq-heading" class="font-display text-3xl md:text-4xl font-bold text-neutral-800 uppercase tracking-tight">
+      Questions we hear a lot
+    </h2>
+    <p class="mt-3 text-neutral-600">Straight answers before you pick up the phone.</p>
+    <div class="mt-10 space-y-3">
+      {
+        faqs.map((faq, i) => (
+          <details class="group border border-neutral-200 bg-surface open:bg-neutral-50/80">
+            <summary class="cursor-pointer list-none px-4 py-4 font-semibold text-neutral-800 flex justify-between gap-4 items-start text-left [&::-webkit-details-marker]:hidden">
+              <span>{faq.question}</span>
+              <span class="text-brand-orange shrink-0 mt-0.5 group-open:rotate-180 transition-transform" aria-hidden="true">
+                ▼
+              </span>
+            </summary>
+            <div class="px-4 pb-4 pt-0 text-sm text-neutral-600 leading-relaxed border-t border-transparent group-open:border-neutral-100">
+              <p id={`faq-a-${i}`}>{faq.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

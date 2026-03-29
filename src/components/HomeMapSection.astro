@@ -1,0 +1,79 @@
+---
+interface Props {
+  businessName: string;
+  address: string;
+  phone: string;
+  placeId: string;
+  finalCta: { headline: string; subtext: string };
+}
+
+const { businessName, address, phone, placeId, finalCta } = Astro.props;
+
+const telHref = `tel:${phone.replace(/\D/g, '')}`;
+const mapsSearchUrl = `https://www.google.com/maps/search/?api=1&query_place_id=${encodeURIComponent(placeId)}`;
+const embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
+---
+
+<section class="py-14 sm:py-16 lg:py-20 bg-surface border-t border-neutral-200" aria-labelledby="map-heading">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-12 lg:items-start">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Location</p>
+        <h2 id="map-heading" class="font-display text-3xl md:text-4xl font-bold text-neutral-800 uppercase tracking-tight">
+          Find us in Anchorage
+        </h2>
+        <p class="mt-4 text-neutral-600 leading-relaxed">
+          {businessName} serves Anchorage and surrounding areas. Stop by or call — we’re happy to talk through your
+          project.
+        </p>
+        <address class="mt-6 not-italic text-neutral-800">
+          <p class="font-semibold">{businessName}</p>
+          <p class="mt-1 text-neutral-600">{address}</p>
+          <p class="mt-3">
+            <a href={telHref} class="text-brand-orange font-bold hover:underline">
+              {phone}
+            </a>
+          </p>
+        </address>
+        <p class="mt-4">
+          <a
+            href={mapsSearchUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-medium uppercase tracking-wider text-brand-orange hover:underline"
+          >
+            Open in Google Maps →
+          </a>
+        </p>
+        <div class="mt-10 p-6 border border-neutral-200 bg-surface-muted">
+          <h3 class="text-lg font-bold text-neutral-800">{finalCta.headline}</h3>
+          <p class="mt-2 text-sm text-neutral-600">{finalCta.subtext}</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href={telHref}
+              class="inline-flex rounded-none bg-brand-orange px-5 py-3 text-sm font-bold uppercase tracking-wider text-white hover:bg-orange-800 focus-ring"
+            >
+              Call now
+            </a>
+            <a
+              href="/contact#quote"
+              class="inline-flex rounded-none border-2 border-neutral-300 px-5 py-3 text-sm font-bold uppercase tracking-wider text-neutral-800 hover:border-brand-orange hover:text-brand-orange focus-ring"
+            >
+              Request a quote
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="w-full min-h-[280px] lg:min-h-[360px] border border-neutral-200 bg-neutral-100 shadow-sm overflow-hidden">
+        <iframe
+          title={`Map showing ${businessName} in Anchorage, Alaska`}
+          src={embedSrc}
+          class="w-full h-full min-h-[280px] lg:min-h-[360px]"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        />
+      </div>
+    </div>
+  </div>
+</section>

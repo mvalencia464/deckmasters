@@ -1,0 +1,440 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {
+  libraryMeta,
+  stickyVerbatims,
+  painPoints,
+  desiredOutcomes,
+  hesitations,
+  heroHeadlines,
+  testimonialPulls,
+  trustBadges,
+  riskReversalLines,
+  fascinationSets,
+  evenIfCrushers,
+  buttonCopyRows,
+  metaSeoRows,
+  pasByService,
+} from '../data/copywritingLibrary';
+
+const site = (await import('../data/site.json')).default;
+const pageTitle = `${libraryMeta.title} | ${site.businessName}`;
+const description =
+  'VOC-mined messaging: customer verbatims, headlines, trust blocks, CTAs, and SEO snippets for Deck Masters.';
+
+const toc = [
+  { id: 'mining', label: 'Message mining' },
+  { id: 'heroes', label: 'Hero headlines' },
+  { id: 'trust', label: 'Trust & proof' },
+  { id: 'fascinations', label: 'Fascination bullets' },
+  { id: 'even-if', label: 'Even-if crushers' },
+  { id: 'buttons', label: 'Button copy' },
+  { id: 'meta', label: 'Meta titles' },
+  { id: 'pas-service', label: 'PAS by service' },
+];
+---
+
+<Layout title={pageTitle} description={description} verbatimTitle noindex>
+  <div class="bg-surface">
+    <!-- Hero -->
+    <section class="relative overflow-hidden border-b border-neutral-200 bg-neutral-900 text-white">
+      <div
+        class="pointer-events-none absolute inset-0 opacity-50"
+        style="background: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(232,90,7,0.25) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 80% 100%, rgba(13,148,136,0.2) 0%, transparent 50%)"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="relative z-10 mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+        <p class="text-xs font-bold uppercase tracking-[0.25em] text-orange-300/90">{libraryMeta.methodology}</p>
+        <h1 class="mt-4 font-display text-3xl font-bold uppercase tracking-tight sm:text-4xl md:text-5xl max-w-4xl">
+          {libraryMeta.title}
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg text-neutral-200 leading-relaxed">{libraryMeta.subtitle}</p>
+        <p class="mt-3 max-w-2xl text-sm italic text-neutral-400 border-l-2 border-brand-orange pl-4">
+          {libraryMeta.disclaimer}
+        </p>
+        <nav class="mt-10 flex flex-wrap gap-2" aria-label="On this page">
+          {
+            toc.map((item) => (
+              <a
+                href={`#${item.id}`}
+                class="rounded-sm border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-neutral-200 hover:bg-white/10 hover:border-brand-orange/50 transition-colors focus-ring"
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </section>
+
+    <!-- Part 1: Mining -->
+    <section id="mining" class="scroll-mt-24 mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-2 border-b border-neutral-200 pb-6 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-neutral-900">Message mining</h2>
+          <p class="mt-1 text-neutral-600 max-w-2xl">
+            Raw voice-of-customer: what homeowners said before we wrote a single headline.
+          </p>
+        </div>
+      </div>
+
+      <h3 class="mt-10 font-display text-lg font-bold uppercase tracking-wide text-brand-dark">Sticky verbatims</h3>
+      <p class="mt-1 text-sm text-neutral-500">Use these exactly — pulled from real reviews.</p>
+      <ul
+        class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        role="list"
+      >
+        {
+          stickyVerbatims.map((v) => (
+            <li class="flex flex-col border border-neutral-200 bg-white p-5 shadow-sm border-l-4 border-l-brand-orange">
+              <blockquote class="text-neutral-800 leading-relaxed grow">“{v.quote}”</blockquote>
+              <p class="mt-4 text-xs font-bold uppercase tracking-wider text-neutral-500">— {v.author}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-12 grid gap-8 lg:grid-cols-2">
+        <div class="rounded-sm border border-neutral-200 bg-surface-muted/80 p-6 lg:p-8">
+          <h3 class="font-display text-lg font-bold uppercase tracking-wide text-red-900/90">Pain points (before)</h3>
+          <ul class="mt-4 list-disc space-y-2 pl-5 text-neutral-700 marker:text-brand-orange">
+            {painPoints.map((p) => <li>{p}</li>)}
+          </ul>
+        </div>
+        <div class="rounded-sm border border-neutral-200 bg-white p-6 lg:p-8 shadow-sm">
+          <h3 class="font-display text-lg font-bold uppercase tracking-wide text-teal-900/90">Desired outcomes (after)</h3>
+          <ul class="mt-4 list-disc space-y-2 pl-5 text-neutral-700 marker:text-accent">
+            {desiredOutcomes.map((d) => <li>{d}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-8 rounded-sm border border-dashed border-neutral-300 bg-surface-elevated p-6 lg:p-8">
+        <h3 class="font-display text-lg font-bold uppercase tracking-wide text-neutral-800">Hesitations & anxieties</h3>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+          {
+            hesitations.map((h) => (
+              <li class="flex gap-3 text-neutral-700">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400" aria-hidden="true" />
+                <span>{h}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- Part 2: Heroes -->
+    <section id="heroes" class="scroll-mt-24 border-t border-neutral-200 bg-white py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-neutral-900">Hero headlines & page copy</h2>
+        <p class="mt-2 max-w-2xl text-neutral-600">
+          Organized by page. H1s lean on the strongest verbatim or near-verbatim lines.
+        </p>
+
+        <div class="mt-10 space-y-10">
+          {
+            heroHeadlines.map((block) => (
+              <article class="overflow-hidden rounded-sm border border-neutral-200 bg-surface shadow-sm">
+                <header class="border-b border-neutral-200 bg-neutral-100/80 px-5 py-4 sm:px-6">
+                  <h3 class="font-display text-lg font-bold uppercase tracking-wide text-neutral-900">{block.page}</h3>
+                </header>
+                <div class="space-y-6 px-5 py-6 sm:px-6 sm:py-8">
+                  {block.h1Primary && (
+                    <div>
+                      <p class="text-xs font-bold uppercase tracking-wider text-neutral-500">Primary H1</p>
+                      <p class="mt-2 text-xl font-semibold text-neutral-900 leading-snug">{block.h1Primary}</p>
+                    </div>
+                  )}
+                  {block.h1Alternatives && block.h1Alternatives.length > 0 && (
+                    <div>
+                      <p class="text-xs font-bold uppercase tracking-wider text-neutral-500">Alternatives</p>
+                      <ul class="mt-2 list-disc space-y-1 pl-5 text-neutral-700">
+                        {block.h1Alternatives.map((alt) => (
+                          <li>{alt}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {block.subheadline && (
+                    <div>
+                      <p class="text-xs font-bold uppercase tracking-wider text-neutral-500">Subheadline</p>
+                      <p class="mt-2 text-neutral-700 leading-relaxed">{block.subheadline}</p>
+                    </div>
+                  )}
+                  {(block.ctaTop || block.ctaMid) && (
+                    <div class="flex flex-wrap gap-3">
+                      {block.ctaTop && (
+                        <span class="inline-flex items-center gap-2 rounded-sm bg-brand-orange/10 px-3 py-2 text-sm font-semibold text-brand-dark">
+                          Top CTA: <span class="text-brand-orange">{block.ctaTop}</span>
+                        </span>
+                      )}
+                      {block.ctaMid && (
+                        <span class="inline-flex items-center gap-2 rounded-sm bg-neutral-100 px-3 py-2 text-sm font-semibold text-neutral-800">
+                          Mid CTA: {block.ctaMid}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  {block.evenIf && (
+                    <div class="border-l-4 border-accent pl-4">
+                      <p class="text-xs font-bold uppercase tracking-wider text-accent-dark">Even-if line</p>
+                      <p class="mt-1 text-neutral-800 italic">{block.evenIf}</p>
+                    </div>
+                  )}
+                  {block.pas && (
+                    <div class="grid gap-4 md:grid-cols-3">
+                      <div class="rounded-sm bg-red-50/80 p-4 border border-red-100">
+                        <p class="text-xs font-bold uppercase text-red-900/80">Problem</p>
+                        <p class="mt-2 text-sm text-neutral-800 leading-relaxed">{block.pas.problem}</p>
+                      </div>
+                      <div class="rounded-sm bg-amber-50/80 p-4 border border-amber-100">
+                        <p class="text-xs font-bold uppercase text-amber-900/80">Agitation</p>
+                        <p class="mt-2 text-sm text-neutral-800 leading-relaxed">{block.pas.agitation}</p>
+                      </div>
+                      <div class="rounded-sm bg-teal-50/80 p-4 border border-teal-100">
+                        <p class="text-xs font-bold uppercase text-teal-900/80">Solution</p>
+                        <p class="mt-2 text-sm text-neutral-800 leading-relaxed">{block.pas.solution}</p>
+                      </div>
+                    </div>
+                  )}
+                  {block.fascinationBullets && block.fascinationBullets.length > 0 && (
+                    <div>
+                      <p class="text-xs font-bold uppercase tracking-wider text-neutral-500">Fascination bullets</p>
+                      <ul class="mt-3 space-y-3">
+                        {block.fascinationBullets.map((fb) => (
+                          <li class="flex gap-3 text-neutral-800">
+                            <span
+                              class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand-orange"
+                              aria-hidden="true"
+                            />
+                            <span>
+                              <strong>{fb.title}</strong> {fb.text}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {block.cta && (
+                    <p class="text-sm">
+                      <span class="font-bold text-neutral-600">CTA:</span>{' '}
+                      <span class="font-semibold text-brand-orange">{block.cta}</span>
+                    </p>
+                  )}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust -->
+    <section id="trust" class="scroll-mt-24 border-t border-neutral-200 bg-surface py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-neutral-900">Trust signals & social proof</h2>
+        <p class="mt-2 text-neutral-600">Rotate these across pages — matched to intent.</p>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          <div>
+            <h3 class="font-display text-sm font-bold uppercase tracking-wider text-neutral-500">Testimonial pulls</h3>
+            <ul class="mt-4 space-y-4">
+              {
+                testimonialPulls.map((t) => (
+                  <li class="border-l-4 border-brand-orange bg-white pl-4 py-3 pr-3 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-wide text-neutral-500">{t.label}</p>
+                    <p class="mt-2 text-neutral-800 leading-relaxed">{t.quote}</p>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div class="space-y-8">
+            <div>
+              <h3 class="font-display text-sm font-bold uppercase tracking-wider text-neutral-500">Trust badges (near CTAs)</h3>
+              <ul class="mt-4 grid gap-2 sm:grid-cols-1">
+                {
+                  trustBadges.map((b) => (
+                    <li class="flex gap-3 rounded-sm border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800">
+                      <span class="text-accent font-bold" aria-hidden="true">
+                        ✓
+                      </span>
+                      <span>{b}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-display text-sm font-bold uppercase tracking-wider text-neutral-500">Risk reversal</h3>
+              <ul class="mt-4 space-y-3">
+                {
+                  riskReversalLines.map((r) => (
+                    <li class="relative pl-6 text-neutral-700 italic before:absolute before:left-0 before:top-0 before:text-brand-orange before:content-['“']">
+                      {r}
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fascinations -->
+    <section id="fascinations" class="scroll-mt-24 border-t border-neutral-200 bg-white py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-neutral-900">Fascination bullet sets</h2>
+        <p class="mt-2 text-neutral-600">Drop into service pages — mix and match.</p>
+        <div class="mt-10 grid gap-8 lg:grid-cols-2">
+          {
+            fascinationSets.map((set) => (
+              <div class="border border-neutral-200 bg-surface p-6 shadow-sm">
+                <h3 class="font-display text-base font-bold uppercase tracking-wide text-neutral-900 border-b border-neutral-200 pb-3">
+                  {set.title}
+                </h3>
+                <ul class="mt-4 space-y-3">
+                  {set.bullets.map((b) => (
+                    <li class="flex gap-3 text-sm text-neutral-800 leading-relaxed">
+                      <span class="mt-1.5 h-1.5 w-4 shrink-0 bg-gradient-to-r from-brand-orange to-orange-600" aria-hidden="true" />
+                      <span>
+                        <strong>{b.lead}</strong>
+                        {b.rest}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Even-if -->
+    <section id="even-if" class="scroll-mt-24 border-t border-neutral-200 bg-neutral-900 py-14 text-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-2xl font-bold uppercase tracking-tight">“Even if” objection crushers</h2>
+        <p class="mt-2 text-neutral-300 max-w-2xl">Attach to your strongest benefit claims — complete the promise.</p>
+        <ul class="mt-10 grid gap-4 md:grid-cols-2">
+          {
+            evenIfCrushers.map((line) => (
+              <li class="border border-white/10 bg-white/5 p-5 text-neutral-100 leading-relaxed">
+                {line.split(/\*\*/).map((part, i) => (i % 2 === 1 ? <strong>{part}</strong> : part))}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- Buttons table -->
+    <section id="buttons" class="scroll-mt-24 border-t border-neutral-200 bg-surface py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-neutral-900">Button copy</h2>
+        <p class="mt-2 text-neutral-600">
+          Calls to value — completes “I want to…” Never use “Submit” or generic “Contact us.”
+        </p>
+        <div class="mt-8 overflow-x-auto rounded-sm border border-neutral-200 bg-white shadow-sm">
+          <table class="min-w-full text-left text-sm">
+            <thead>
+              <tr class="border-b border-neutral-200 bg-neutral-100">
+                <th class="px-4 py-3 font-display text-xs font-bold uppercase tracking-wider text-neutral-600">Placement</th>
+                <th class="px-4 py-3 font-display text-xs font-bold uppercase tracking-wider text-neutral-600">Button copy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                buttonCopyRows.map((row) => (
+                  <tr class="border-b border-neutral-100 last:border-0 hover:bg-surface-muted/50">
+                    <td class="px-4 py-3 text-neutral-700 align-top">{row.placement}</td>
+                    <td class="px-4 py-3 font-semibold text-brand-orange">{row.copy}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Meta SEO -->
+    <section id="meta" class="scroll-mt-24 border-t border-neutral-200 bg-white py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-neutral-900">Meta titles & descriptions</h2>
+        <p class="mt-2 text-neutral-600">SEO-ready: titles under ~60 characters, descriptions under ~160.</p>
+        <div class="mt-8 overflow-x-auto rounded-sm border border-neutral-200 shadow-sm">
+          <table class="min-w-[640px] w-full text-left text-sm">
+            <thead>
+              <tr class="border-b border-neutral-200 bg-neutral-900 text-white">
+                <th class="px-4 py-3 font-display text-xs font-bold uppercase tracking-wider">Page</th>
+                <th class="px-4 py-3 font-display text-xs font-bold uppercase tracking-wider">Meta title</th>
+                <th class="px-4 py-3 font-display text-xs font-bold uppercase tracking-wider">Meta description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                metaSeoRows.map((row) => (
+                  <tr class="border-b border-neutral-100 bg-white last:border-0 hover:bg-surface-muted/30">
+                    <td class="px-4 py-3 font-medium text-neutral-900 align-top whitespace-nowrap">{row.page}</td>
+                    <td class="px-4 py-3 text-neutral-800 align-top">{row.title}</td>
+                    <td class="px-4 py-3 text-neutral-600 align-top max-w-md">{row.description}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAS by service -->
+    <section id="pas-service" class="scroll-mt-24 border-t border-neutral-200 bg-surface-muted/50 py-14 pb-24">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-2xl font-bold uppercase tracking-tight text-neutral-900">PAS blocks by service</h2>
+        <p class="mt-2 text-neutral-600">Short-form Problem → Agitation → Solution for key services.</p>
+        <div class="mt-10 space-y-8">
+          {
+            pasByService.map((pas) => (
+              <div class="overflow-hidden rounded-sm border border-neutral-200 bg-white shadow-sm">
+                <h3 class="border-b border-neutral-200 bg-neutral-100 px-5 py-3 font-display text-base font-bold uppercase tracking-wide text-neutral-900">
+                  {pas.service}
+                </h3>
+                <div class="grid gap-px bg-neutral-200 md:grid-cols-3">
+                  <div class="bg-white p-5">
+                    <p class="text-xs font-bold uppercase text-red-800">Problem</p>
+                    <p class="mt-2 text-sm text-neutral-800 leading-relaxed">{pas.problem}</p>
+                  </div>
+                  <div class="bg-white p-5">
+                    <p class="text-xs font-bold uppercase text-amber-800">Agitation</p>
+                    <p class="mt-2 text-sm text-neutral-800 leading-relaxed">{pas.agitation}</p>
+                  </div>
+                  <div class="bg-white p-5">
+                    <p class="text-xs font-bold uppercase text-teal-800">Solution</p>
+                    <p class="mt-2 text-sm text-neutral-800 leading-relaxed">{pas.solution}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <footer class="mt-14 flex flex-col gap-4 border-t border-neutral-200 pt-10 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-sm text-neutral-500">
+            End of asset library — v{libraryMeta.version}. Sourced from customer VOC data; quotes verified against the review
+            dataset.
+          </p>
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center bg-brand-orange px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-md hover:bg-orange-800 transition-colors focus-ring rounded-none shrink-0"
+          >
+            Get My Free Estimate →
+          </a>
+        </footer>
+      </div>
+    </section>
+  </div>
+</Layout>

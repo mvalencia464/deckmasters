@@ -1,0 +1,8 @@
+# Deck Masters AK — Core30 Prompt 8
+User-agent: *
+Allow: /
+
+# Serverless API (quote submit); not meaningful to crawl
+Disallow: /api/
+
+Sitemap: https://deckmastersak.com/sitemap-index.xml

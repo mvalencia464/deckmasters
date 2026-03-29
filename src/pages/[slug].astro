@@ -57,7 +57,7 @@ const videoId = post.data.video;
           {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
         <p class="mt-6 text-lg text-neutral-600 leading-relaxed max-w-2xl">
-          {post.data.description}
+          {post.data.lede ?? post.data.description}
         </p>
       </div>
     </header>

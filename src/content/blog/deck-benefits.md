@@ -1,11 +1,12 @@
 ---
 title: "Deck Benefits: Why Add a Deck to Your Home"
-description: "Discover the benefits of adding a deck to your home—outdoor living space, property value, and durability in Alaska's climate."
+description: "Why add a deck in Alaska: usable outdoor space, resale appeal, and durability when you build for snow load and freeze-thaw."
+lede: "You gain living space you actually use in summer—and a structure that still has to survive freeze-thaw and snow load. Here is why a well-built deck pays off in Anchorage."
 pubDate: 2024-06-15
 image: "001-aerial-wraparound"
 ---
 
-A well-built deck expands your living space, adds value to your home, and gives you a durable outdoor area for years to come. In Alaska, where summers are precious and the climate is tough on outdoor structures, a deck designed for cold weather pays off in longevity and enjoyment.
+A deck is not just curb appeal—it is daily usability when the weather finally cooperates. In Alaska, the payoff is biggest when footings, framing, and materials match real weather, not a mild-climate brochure.
 
 ## More usable outdoor space
 

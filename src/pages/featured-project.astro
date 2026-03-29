@@ -1,8 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { featuredProjectCopy } from '../data/marketingPagesCopy';
 
-const title = 'Featured Project Video';
-const description = 'Watch a full Deck Masters build from start to finish.';
+const site = (await import('../data/site.json')).default;
+const mc = featuredProjectCopy(site.primaryCity);
+const title = mc.title;
+const description = mc.description;
 const projectsData = (await import('../data/projects.json')).default;
 const allImages = projectsData.images ?? [];
 const galleryImages = allImages.slice(0, 29);
@@ -22,11 +25,10 @@ const galleryImages = allImages.slice(0, 29);
       <header class="mt-6 sm:mt-8">
         <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Featured Project</p>
         <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 tracking-tight">
-          Keller Deck Build Walkthrough
+          {mc.h1}
         </h1>
         <p class="mt-3 text-sm sm:text-base text-neutral-600 max-w-2xl">
-          A start-to-finish look at how we approach structure, details, and client experience on one of our recent
-          projects.
+          {mc.subhead}
         </p>
       </header>
 
@@ -48,15 +50,12 @@ const galleryImages = allImages.slice(0, 29);
 
       <div class="mt-10 grid gap-8 md:grid-cols-[minmax(0,1.7fr)_minmax(0,1.1fr)] md:items-start">
         <div class="space-y-4 text-sm leading-relaxed text-neutral-700">
-          <h2 class="font-semibold text-neutral-900 text-base">What you&apos;ll see in this build</h2>
+          <h2 class="font-semibold text-neutral-900 text-base">{mc.sectionH2}</h2>
           <p>
-            This featured project walks through a complete deck build—from foundation and framing to railing, lighting,
-            and final details. It&apos;s a good snapshot of how our team communicates, solves problems on site, and
-            obsesses over the small details that make a deck feel finished for decades, not seasons.
+            {mc.p1}
           </p>
           <p>
-            We filmed this project to give you a clear sense of what it&apos;s like to have Deck Masters on your
-            property: how we protect your home, keep the site clean, and keep you in the loop at each stage.
+            {mc.p2}
           </p>
         </div>
 
@@ -81,17 +80,16 @@ const galleryImages = allImages.slice(0, 29);
 
           <div class="border-t border-neutral-200 pt-4">
             <p class="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500 mb-2">
-              Considering a project like this?
+              {mc.asideCtaEyebrow}
             </p>
             <p class="text-sm text-neutral-700">
-              When you&apos;re ready, head back to the homepage and request an estimate. We&apos;ll walk the site with
-              you, talk through options, and give you a clear, written plan—no surprises.
+              {mc.asideCtaBody}
             </p>
             <a
               href="/#quote"
               class="mt-4 inline-flex items-center justify-center px-4 py-2 bg-brand-orange hover:bg-orange-800 text-white text-xs font-bold uppercase tracking-[0.18em] rounded-none shadow-sm transition-colors focus-ring"
             >
-              Request An Estimate →
+              {mc.asideCtaButton} →
             </a>
           </div>
         </aside>

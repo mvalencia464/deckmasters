@@ -1,21 +1,16 @@
 ---
 title: "How Much Does a Custom Deck Cost in Alaska? (2026 Guide)"
-description: "See real 2026 pricing ranges for custom decks in Anchorage and the Mat-Su, plus how foundations, materials, and permits change your budget."
+description: "2026 custom deck cost ranges for Anchorage & Mat-Su: piles, materials, permits, and what actually moves your quote."
+lede: "Online calculators rarely include Alaska snow load, peat, or seismic detail—so you get a number that collapses the first time a contractor walks your lot. Start from real cost drivers instead."
 pubDate: 2026-03-09
 image: "006-aerial-composite"
 ---
 
-I think you’ll agree: trying to get a straight answer on deck pricing in Alaska is a nightmare. 
-
-Most online "cost estimators" give you Lower 48 prices that don't account for our 15–20 lbs per cubic foot snow loads or the reality of building on Alaskan peat and clay. 
+Most online "estimators" quote Lower 48 numbers that ignore snow load, soil, and how we actually build here. If you want a deck that lasts decades—not one that heaves after the first hard winter—you need a budget tied to your site, not a spreadsheet from another state.
 
 ![Custom composite deck in Anchorage built on steel piles](/projects/006-aerial-composite.avif)
 
-**Here’s the deal:**
-
-If you want a deck that lasts 30 to 50 years—and doesn't "heave" after its first winter—you need a real budget.
-
-In this guide, I’m going to show you exactly how much a professional deck costs in 2026, from permit fees in Anchorage to the high-performance materials that actually survive our climate.
+**What you get in this guide:** realistic 2026 ranges for professional work in Anchorage and the Mat-Su, plus how foundations, materials, and permits change the number before you sign anything.
 
 ## The "Big Three" Cost Drivers for 2026
 

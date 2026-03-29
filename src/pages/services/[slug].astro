@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ServicePageShell from '../../components/ServicePageShell.astro';
+import CategoryPageFull from '../../components/CategoryPageFull.astro';
+import CorePageFull from '../../components/CorePageFull.astro';
+import ChildPageFull from '../../components/ChildPageFull.astro';
+import {
+  servicePages,
+  type ServiceCategoryId,
+  type CoreServiceSlug,
+  type ChildServiceSlug,
+} from '../../data/siteArchitecture';
+import { categoryPageCopy } from '../../data/categoryPageCopy';
+import { corePageCopy } from '../../data/corePageCopy';
+import { childPageCopy } from '../../data/childPageCopy';
+import { serviceImages } from '../../data/serviceImages';
+
+export function getStaticPaths() {
+  return servicePages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+interface Props {
+  page: (typeof servicePages)[number];
+}
+
+const { page } = Astro.props;
+const site = (await import('../../data/site.json')).default;
+
+const city = site.primaryCity;
+const st = 'AK';
+
+const isCategory = page.kind === 'category';
+const isCore = page.kind === 'core';
+const isChild = page.kind === 'child';
+
+const title = isCategory
+  ? categoryPageCopy[page.slug as ServiceCategoryId].browserTitle
+  : isCore
+    ? corePageCopy[page.slug as CoreServiceSlug].browserTitle
+    : isChild
+      ? childPageCopy[page.slug as ChildServiceSlug].browserTitle
+      : `${page.title} ${city} ${st}`;
+
+const description = isCategory
+  ? categoryPageCopy[page.slug as ServiceCategoryId].metaDescription
+  : isCore
+    ? corePageCopy[page.slug as CoreServiceSlug].metaDescription
+    : isChild
+      ? childPageCopy[page.slug as ChildServiceSlug].metaDescription
+      : `${page.title} in ${city}, ${st}. ${site.businessName} — decks, repairs & exterior work built for Alaska. Free estimates.`;
+
+const siteOrigin = Astro.site?.origin ?? 'https://deckmastersak.com';
+const businessId = `${siteOrigin}/#business`;
+
+const serviceSchema =
+  isCategory || isCore || isChild
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        serviceType: page.title,
+        provider: { '@id': businessId },
+        areaServed: { '@type': 'City', name: city, containedInPlace: { '@type': 'State', name: 'Alaska' } },
+        description,
+        url: `${siteOrigin}/services/${page.slug}/`,
+      }
+    : null;
+---
+
+<Layout title={title} description={description}>
+  {serviceSchema && (
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(serviceSchema)} />
+  )}
+  {
+    isCategory ? (
+      <CategoryPageFull page={page} site={site} serviceImages={serviceImages} />
+    ) : isCore ? (
+      <CorePageFull page={page} site={site} />
+    ) : isChild ? (
+      <ChildPageFull page={page} site={site} />
+    ) : (
+      <ServicePageShell page={page} site={site} serviceImages={serviceImages} />
+    )
+  }
+</Layout>
