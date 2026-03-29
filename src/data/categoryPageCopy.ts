@@ -1,9 +1,12 @@
 /**
  * Core30 Prompt 4 — secondary category pages (deck-building, deck-repair, general-contracting, outdoor-living).
- * Avoid fluffy banned words; short sentences; Alaska-specific where it helps.
+ * Hero H1 benefits stay keyword-forward for SEO (e.g. deck builder, Anchorage); body copy uses VOC elsewhere.
  */
 
 import type { ServiceCategoryId } from './siteArchitecture';
+import { metaSeoRows } from './copywritingLibrary';
+
+const seo = (page: string) => metaSeoRows.find((r) => r.page === page)!;
 
 export interface CategoryPageBundle {
   /** Page `<title>` segment before Layout adds ` | Deck Masters AK` — no brand suffix */
@@ -14,6 +17,8 @@ export interface CategoryPageBundle {
   h1Benefit: string;
   /** Use {phone} for click-to-call number text */
   heroSubhead: string;
+  /** Mid-page CTV label for secondary hero button */
+  heroSecondaryCta: string;
   trustPills: string[];
   opening: string[];
   problemsTitle: string;
@@ -34,13 +39,13 @@ export interface CategoryPageBundle {
 
 export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
   'deck-building': {
-    browserTitle: 'Deck Builder Anchorage AK — Custom Decks, Railings & Cold-Climate Builds',
-    metaDescription:
-      'Anchorage deck builder for custom decks, composite and wood decking, railings, stairs, framing, and footings. Cold-climate design. Free estimates. Deck Masters AK.',
+    browserTitle: seo('Deck Building').title,
+    metaDescription: seo('Deck Building').description,
     heroImage: '/projects/009-masterpiece-main.avif',
     h1Benefit: 'Custom Decks & Railings Built for Snow and Ice',
     heroSubhead:
       'New builds, replacements, and structural work — scoped for Anchorage loads and freeze-thaw. Questions? Call {phone} for a straight answer and a clear next step.',
+    heroSecondaryCta: 'Start Designing My Deck',
     trustPills: ['Google-reviewed crew', 'Written scope before work begins', 'Alaska-focused details'],
     opening: [
       'You want a deck you can trust when the snow piles up and the temperature swings hard. That means correct footings, hardware that holds, railings that stay stiff, and decking that drains instead of trapping water.',
@@ -58,7 +63,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
       'Lead times and good crews book early. The longer you defer, the fewer options you have next season — and emergency fixes cost more than a planned build.',
     ],
     servicesIntro:
-      'Below is the full list of deck services we publish for Anchorage. Each name matches what you will see on your estimate — click through for a dedicated page on that service.',
+      'You get line-item names that match your estimate — no mystery labels. Click any service below for photos, scope notes, and what happens next.',
     coreLead: {
       'custom-decks-design':
         'New layouts should account for sun, wind, door locations, and how you will clear snow off the walking surface.',
@@ -84,13 +89,13 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
   },
 
   'deck-repair': {
-    browserTitle: 'Deck Repair & Maintenance Anchorage AK — Boards, Structure & Storm Damage',
-    metaDescription:
-      'Deck repair in Anchorage, AK: board replacement, structural repair, railings, stairs, storm and water damage. Honest scopes. Call Deck Masters AK for a free estimate.',
+    browserTitle: seo('Deck Repair').title,
+    metaDescription: seo('Deck Repair').description,
     heroImage: '/projects/046-ground-level-1.avif',
     h1Benefit: 'Fast, Honest Repairs Before Small Issues Grow',
     heroSubhead:
       'Soft boards, shaky railings, and storm damage do not get cheaper if you wait. Call {phone} — we will tell you what needs fixing now and what can wait.',
+    heroSecondaryCta: 'Find Out What\'s Wrong',
     trustPills: ['Clear repair scope', 'Structural checks, not just cosmetics', 'Local storm-season experience'],
     opening: [
       'Repair calls usually start the same way: something moved, something rotted, or something failed after a wind or snow event. You want to know if the deck is safe this weekend, not after a patch that hides rot.',
@@ -108,7 +113,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
       'Buyers and inspectors remember decks. Deferred repairs become leverage or a failed contingency when you sell.',
     ],
     servicesIntro:
-      'Every repair service below has its own page with more detail. Names match how we write estimates so you always know what you are buying.',
+      'You get estimate line items you can recognize — each link below goes deeper on that exact scope.',
     cityTitle: 'Deck repair across Anchorage neighborhoods',
     city: [
       'Weather hits every part of town a little differently — wind exposure on the Hillside, shade and ice in some Midtown backyards, tight side yards in older Fairview homes. We adjust the repair plan to your real conditions.',
@@ -124,13 +129,13 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
   },
 
   'general-contracting': {
-    browserTitle: 'General Contracting Anchorage AK — Siding, Roofing, Structure & Repairs',
-    metaDescription:
-      'Residential general contracting in Anchorage: siding, roofing, fascia, garages, water damage, structural repairs, permits, and carpentry. Deck Masters AK.',
+    browserTitle: seo('General Contracting').title,
+    metaDescription: seo('General Contracting').description,
     heroImage: '/projects/006-aerial-composite.avif',
     h1Benefit: 'Exterior and Structural Work With One Responsible Crew',
     heroSubhead:
       'When siding, roof edges, or structure fail, you need a plan that ties materials, code, and sequencing together. Start with {phone} — we will outline realistic options.',
+    heroSecondaryCta: 'Tell Me What It Would Cost',
     trustPills: ['Permit help when required', 'Coordinated trades', 'Written scope'],
     opening: [
       'General contracting for us means the messy middle: water got in, something sagged, or an exterior system failed. You want one team that can frame, sheath, side, and roof lines that meet — not three bids that blame each other.',
@@ -148,7 +153,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
       'Multi-trade jobs without a clear sequence leave walls open to weather longer than shoulder season allows in Anchorage.',
     ],
     servicesIntro:
-      'Use the lists below to jump to a specific service. Larger jobs often touch more than one line item — tell us the full story so we sequence work correctly.',
+      'You jump straight to the scope that matches your damage or remodel — tell us the full story so we sequence trades in the right order.',
     coreLead: {
       'exterior-renovations-roofing':
         'Exterior work is where water management, ventilation, and materials meet — we plan layers in the right order.',
@@ -177,6 +182,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
     h1Benefit: 'Stairs, Landings & Elevated Systems That Feel Solid',
     heroSubhead:
       'Elevated decks and custom stairs need clean load paths and safe railings in Alaska conditions. Call {phone} to talk through height, access, and materials.',
+    heroSecondaryCta: 'Plan My Stairs & Landings',
     trustPills: ['Engineered connections', 'Code-aware rail heights', 'Cold-climate materials'],
     opening: [
       'Outdoor living here is not just furniture — it is how you move between yard levels, attach to the house, and handle ice on treads. Stairs and elevated decks need to feel stiff underfoot and stay predictable in wind.',
@@ -194,7 +200,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
       'Sloped lots and wind amplify motion. Waiting turns a targeted fix into a full guard or framing rebuild.',
     ],
     servicesIntro:
-      'Pick the service that matches your project — each page spells out what we inspect and how we build.',
+      'You pick the access problem you are solving — each page spells out what we inspect, how we brace height, and how guards stay stiff in real weather.',
     cityTitle: 'Outdoor living built for Anchorage yards',
     city: [
       'Tight side yards and steep lots push stairs and landings into creative layouts. We measure the real grade, not an assumed flat lawn.',

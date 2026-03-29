@@ -10,8 +10,10 @@ import {
 } from '../data/siteArchitecture';
 import { serviceImages } from '../data/serviceImages';
 import { servicesPageCopy } from '../data/marketingPagesCopy';
+import { homepageTrustStripItems } from '../data/copywritingLibrary';
 
 const site = (await import('../data/site.json')).default;
+const tel = site.primaryPhone.replace(/\D/g, '');
 const mc = servicesPageCopy({
   businessName: site.businessName,
   primaryCity: site.primaryCity,
@@ -28,26 +30,74 @@ function isCoreOrCategoryWithCoreChildren(categorySlug: string): boolean {
 ---
 
 <Layout title={title} description={description}>
+  <!-- Hero: same pattern as /about and /contact -->
+  <section class="relative border-b border-neutral-200 bg-neutral-900 text-white overflow-hidden">
+    <div
+      class="absolute inset-0 opacity-35 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-700 via-neutral-900 to-neutral-900"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative z-10 mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight max-w-4xl">
+        {mc.h1}
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-neutral-200 leading-relaxed">
+        {mc.heroLead}
+      </p>
+      <a
+        href={`tel:${tel}`}
+        class="mt-8 inline-block text-2xl sm:text-3xl font-bold text-white hover:text-brand-orange transition-colors tracking-tight"
+      >
+        {site.primaryPhone}
+      </a>
+      <ul class="mt-8 flex flex-wrap gap-3" role="list">
+        <li class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
+          Licensed &amp; insured
+        </li>
+        <li class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
+          Free estimates
+        </li>
+        <li class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white max-w-md leading-snug">
+          {homepageTrustStripItems[0].line}
+        </li>
+      </ul>
+      <p class="mt-6 text-sm text-neutral-300 max-w-xl">
+        {mc.phoneCtaAfterPrefix}
+        <a
+          href="/contact#quote"
+          class="font-medium text-white underline-offset-2 hover:underline hover:text-brand-orange"
+          >request a quote</a
+        >{mc.phoneCtaAfterSuffix}
+      </p>
+    </div>
+  </section>
+
+  <section class="border-b border-neutral-200 bg-surface-muted">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <ul class="grid gap-8 sm:grid-cols-3" role="list">
+        {
+          mc.heroPillars.map((pillar) => (
+            <li class="border-l-4 border-brand-orange pl-4">
+              <p class="font-display text-sm font-bold uppercase tracking-wide text-neutral-800">{pillar.title}</p>
+              <p class="mt-2 text-sm leading-relaxed text-neutral-600">{pillar.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <section class="py-20 lg:py-28 bg-surface">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-semibold text-neutral-800">{mc.h1}</h1>
-      <p class="mt-4 text-lg text-neutral-600 max-w-2xl">
-        {mc.leadBeforePhone}
-        <a href={`tel:${site.primaryPhone.replace(/\D/g, '')}`} class="text-brand-orange font-medium hover:underline"
-          >{site.primaryPhone}</a
-        >
-        {mc.leadAfterPhone}
-      </p>
-
       {
-        serviceCategoryOrder.map((categoryId) => {
+        serviceCategoryOrder.map((categoryId, index) => {
           const catPage = getServicePage(categoryId);
           if (!catPage) return null;
           const topLevel = getChildren(categoryId);
           const nestedByCore = isCoreOrCategoryWithCoreChildren(categoryId);
 
           return (
-            <div class="mt-16">
+            <div class:list={['mt-16', { 'mt-0': index === 0 }]}>
               <div class="flex flex-wrap items-end justify-between gap-4 border-b border-neutral-200 pb-3">
                 <h2 class="text-2xl font-semibold text-neutral-800">{catPage.title}</h2>
                 <a

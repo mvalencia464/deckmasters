@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import HomeTrustStrip from '../components/HomeTrustStrip.astro';
 import HomeWhyChoose from '../components/HomeWhyChoose.astro';
 import HomeFaq from '../components/HomeFaq.astro';
 import HomeMapSection from '../components/HomeMapSection.astro';
@@ -105,6 +106,7 @@ const structuredDataJson = { '@context': 'https://schema.org', '@graph': graph }
 <Layout title={homeMeta.title} description={homeMeta.description}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(structuredDataJson)} />
   <Hero />
+  <HomeTrustStrip />
   <HomeWhyChoose items={whyChooseItems} />
   <section class="py-12 sm:py-16 lg:py-24 bg-surface border-t border-neutral-200" aria-label="Services">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

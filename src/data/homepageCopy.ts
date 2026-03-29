@@ -13,15 +13,18 @@ export const homeMeta = {
   description: homepagePublicSeo.description,
 };
 
-export function heroCopy(fiveStarCount: number) {
-  const n = fiveStarCount >= 100 ? `${fiveStarCount}+` : String(fiveStarCount);
+export function heroCopy() {
   return {
-    /** Primary headline — customer verbatim from the library */
-    h1: publicHomepageHero.h1,
+    /**
+     * SEO-primary line inside `<h1>` — includes “deck builder” + “Anchorage” for query relevance.
+     * The verbatim quote below carries conversion; title tag + this line reinforce keywords.
+     */
+    h1Seo: 'Deck builder in Anchorage',
+    /** Customer verbatim — large display line under the SEO fragment */
+    h1Quote: publicHomepageHero.h1,
     subhead: publicHomepageHero.subhead,
-    /** Social proof line under subhead */
-    support: `${n} five-star Google reviews in Anchorage. ${riskReversalLines[0]}`,
-    eyebrow: `${n} five-star reviews · Anchorage deck builder`,
+    /** Risk-reversal under subhead */
+    support: riskReversalLines[0],
   };
 }
 

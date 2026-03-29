@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AdminInternalNav from '../components/AdminInternalNav.astro';
+import {
+  forTheNerdsMeta,
+  forTheNerdsHero,
+  stackAtAGlance,
+  techPillars,
+} from '../data/forTheNerdsCopy';
+
+const site = (await import('../data/site.json')).default;
+const pathname = Astro.url.pathname;
+const title = forTheNerdsMeta.title;
+const description = forTheNerdsMeta.description;
+---
+
+<Layout title={title} description={description} verbatimTitle>
+  <div class="min-h-[60vh] bg-surface text-neutral-800">
+    <div class="border-b border-neutral-200 bg-surface-muted">
+      <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange">{site.businessName}</p>
+        <p class="mt-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">{forTheNerdsHero.eyebrow}</p>
+        <h1 class="mt-3 font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-neutral-900">
+          {forTheNerdsHero.h1}
+        </h1>
+        <p class="mt-5 max-w-3xl text-lg text-neutral-600 leading-relaxed">
+          {forTheNerdsHero.lead}
+        </p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="grid gap-12 lg:grid-cols-[1fr_280px] lg:items-start lg:gap-10">
+        <div class="space-y-8">
+          {
+            techPillars.map((pillar, i) => (
+              <article
+                class="rounded-none border border-neutral-200 bg-white p-6 shadow-sm sm:p-8"
+                aria-labelledby={`nerd-${i}`}
+              >
+                <p class="text-xs font-bold uppercase tracking-wider text-brand-orange">{pillar.kicker}</p>
+                <h2 id={`nerd-${i}`} class="mt-2 font-display text-xl font-bold uppercase tracking-tight text-neutral-900">
+                  {pillar.title}
+                </h2>
+                <p class="mt-3 text-sm text-neutral-600 leading-relaxed">{pillar.summary}</p>
+                <ul class="mt-5 list-disc space-y-2 pl-5 text-sm text-neutral-600 leading-relaxed" role="list">
+                  {pillar.advantages.map((line) => (
+                    <li>{line}</li>
+                  ))}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+
+        <aside class="rounded-none border border-neutral-200 bg-white p-5 text-sm shadow-sm lg:sticky lg:top-28">
+          <h3 class="border-b border-neutral-100 pb-2 font-display text-sm font-bold uppercase tracking-tight text-neutral-900">
+            Stack at a glance
+          </h3>
+          <dl class="mt-4 space-y-3 text-neutral-600">
+            {
+              stackAtAGlance.map((row) => (
+                <div>
+                  <dt class="text-xs font-semibold uppercase tracking-wider text-neutral-500">{row.label}</dt>
+                  <dd class="mt-0.5 font-mono text-sm text-neutral-900">{row.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="mt-6 border-t border-neutral-100 pt-4 text-xs leading-relaxed text-neutral-500">
+            Built for <strong class="text-neutral-700">performance</strong>, <strong class="text-neutral-700">maintainability</strong>, and{' '}
+            <strong class="text-neutral-700">honest local SEO</strong> — not buzzwords.
+          </p>
+          <p class="mt-4 text-xs text-neutral-500">
+            The public <a href="/services" class="font-medium text-accent-dark underline-offset-2 hover:underline">services index</a> is generated from the same architecture data as every hub and child page — one source of truth.
+          </p>
+          <AdminInternalNav pathname={pathname} />
+        </aside>
+      </div>
+
+      <p class="mt-16 border-t border-neutral-200 pt-10 text-center text-sm text-neutral-500">
+        <a href="/contact" class="font-medium text-brand-orange hover:text-orange-800">
+          Ready to talk decks, not devtools? Get in touch →
+        </a>
+      </p>
+    </div>
+  </div>
+</Layout>

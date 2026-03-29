@@ -28,7 +28,9 @@ export function getFascinationForPage(page: ServicePageEntry): FascinationBundle
 
   if (kind === 'category') {
     if (slug === 'deck-building') return fascinationBundles.deckBuilding;
-    if (slug === 'outdoor-living') return fascinationBundles.deckBuilding;
+    if (slug === 'deck-repair') return fascinationBundles.deckRepair;
+    if (slug === 'general-contracting') return fascinationBundles.generalContracting;
+    if (slug === 'outdoor-living') return fascinationBundles.outdoorLiving;
     return null;
   }
 
@@ -36,11 +38,13 @@ export function getFascinationForPage(page: ServicePageEntry): FascinationBundle
     if (['custom-decks-design', 'deck-replacement-decking', 'deck-framing-foundations'].includes(slug)) {
       return fascinationBundles.deckBuilding;
     }
+    if (slug === 'exterior-renovations-roofing') return fascinationBundles.exteriorRenovations;
+    if (slug === 'contracting-project-services') return fascinationBundles.generalContracting;
     return null;
   }
 
   if (kind === 'child' && categoryId === 'deck-building') return fascinationBundles.deckBuilding;
-  if (kind === 'child' && categoryId === 'outdoor-living') return fascinationBundles.deckBuilding;
+  if (kind === 'child' && categoryId === 'outdoor-living') return fascinationBundles.outdoorLiving;
 
   return null;
 }

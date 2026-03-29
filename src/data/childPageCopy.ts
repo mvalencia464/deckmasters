@@ -1,4 +1,19 @@
 import type { ChildServiceSlug } from './siteArchitecture';
+import { metaSeoRows } from './copywritingLibrary';
+
+/** Plain-text “even if” objection lines (no markdown). */
+const evenIf = {
+  designVision:
+    'You can get a design that matches your vision — even if you have never described it clearly to a contractor before.',
+  fairQuote: 'You can get a fair quote — even if you have already been burned by low bids that ballooned.',
+  smallRepair:
+    'You can get a small repair scheduled without a long wait — even if every other company said they were too busy.',
+  compositeWinter:
+    'You can have a deck that survives Alaska winters — even if you worry composite will look plastic or cheap.',
+  timeline: 'You can get the job moving this season — even if you are not sure your timeline is realistic.',
+  scopeTrust:
+    'You can trust the scope you sign — even if “no surprise bills” sounds too good to be true.',
+} as const;
 
 /** Prompt 6 — long-form copy for leaf /services/[slug] pages */
 export interface ChildPageBundle {
@@ -15,19 +30,21 @@ export interface ChildPageBundle {
   process: string[];
   cost: string[];
   whyChoose: string[];
+  /** Optional objection crushers — shown before process/cost */
+  evenIfLines?: string[];
   finalCta: string;
 }
 
 export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'custom-deck-design': {
-    browserTitle: 'Custom Deck Design Anchorage AK | Layouts & Code-Aware Plans',
-    metaDescription:
-      'Custom deck design in Anchorage: layouts, egress, loads, and material options that fit your lot. Deck Masters AK — clear plans before you build.',
+    browserTitle: metaSeoRows.find((r) => r.page === 'Custom Deck Design')!.title,
+    metaDescription: metaSeoRows.find((r) => r.page === 'Custom Deck Design')!.description,
     heroImage: '/projects/017-contemporary-design.avif',
     h1Benefit: 'Plans That Fit Your Lot and Code',
     heroSubhead:
       'Unsure where stairs, landings, or guardrails should go? Call {phone} — we measure your space and sketch real options you can build against.',
     trustPills: ['Code-aware layouts', 'Alaska snow & wind loads', 'Written scope'],
+    evenIfLines: [evenIf.designVision, evenIf.fairQuote],
     opening: [
       'A strong deck starts with a plan that matches how you use the space, how people move through it, and what Anchorage building requirements expect for height, guards, and connections.',
       'We translate goals into a practical layout: traffic flow, furniture zones, views, and transitions to the yard or garage. You get clarity before lumber is ordered or footings are placed.',
@@ -61,6 +78,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     heroSubhead:
       'Starting from dirt or a blank ledger? Call {phone} — we sequence footings, framing, and finishes so your new deck is solid from day one.',
     trustPills: ['New construction sequence', 'Anchorage-ready details', 'Clean job sites'],
+    evenIfLines: [evenIf.timeline, evenIf.compositeWinter],
     opening: [
       'A new deck is a chance to get structure, drainage, and connections right the first time. We focus on load path, hardware, and details that hold up to snow, wind, and daily use.',
       'Whether you are stepping out from a single door or tying into multiple levels, we build a frame you can trust and a deck surface you will actually use.',
@@ -119,14 +137,18 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   },
 
   'deck-replacement': {
-    browserTitle: 'Deck Replacement Anchorage AK | Full Tear-Off & Rebuild',
-    metaDescription:
-      'Deck replacement in Anchorage: safe tear-off, ledger inspection, and rebuilds sized for today’s codes. Deck Masters AK — free estimates.',
+    browserTitle: metaSeoRows.find((r) => r.page === 'Deck Replacement')!.title,
+    metaDescription: metaSeoRows.find((r) => r.page === 'Deck Replacement')!.description,
     heroImage: '/projects/046-ground-level-1.avif',
     h1Benefit: 'Replace What Failed — Build What Lasts',
     heroSubhead:
       'Rotten rim or tired framing? Call {phone} — we strip to structure, fix what hid underneath, and rebuild for decades of use.',
     trustPills: ['Ledger & flashing review', 'Code-current rebuilds', 'Clean tear-off'],
+    evenIfLines: [
+      evenIf.fairQuote,
+      evenIf.timeline,
+      'You can have the deck replaced and get exactly what you envisioned — even if you already got three quotes that felt too high.',
+    ],
     opening: [
       'Replacement is often the right move when repairs stack up, guards are outdated, or the footprint no longer fits how you live. We treat tear-off as discovery — not just decking swap.',
       'We inspect the ledger, posts, and connections that older decks hide. What we find drives the rebuild plan so you are not covering failing structure with new boards.',
@@ -152,9 +174,8 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   },
 
   'composite-decking-installation': {
-    browserTitle: 'Composite Decking Installation Anchorage AK | Low-Maintenance Decks',
-    metaDescription:
-      'Composite decking installation in Anchorage: proper gapping, fascia, and hidden fasteners for warranty-backed performance. Deck Masters AK.',
+    browserTitle: metaSeoRows.find((r) => r.page === 'Composite Decking')!.title,
+    metaDescription: metaSeoRows.find((r) => r.page === 'Composite Decking')!.description,
     heroImage: '/projects/composite-decking-texture.avif',
     h1Benefit: 'Installed to Manufacturer Detail',
     heroSubhead:
@@ -164,6 +185,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
       'Composite and cap-stock decking reward precise installation. Boards move with temperature; manufacturers spell out gapping at ends and breaks — we follow those rules.',
       'We pair composite surfaces with framing that meets span tables and ventilation expectations so you do not void warranty over shortcuts.',
     ],
+    evenIfLines: [evenIf.compositeWinter, evenIf.fairQuote],
     whenYouNeed: [
       'You want a deck that shrinks yearly staining without looking like plastic — modern composites balance both.',
       'You are re-decking an existing frame that is sound but tired of wood maintenance.',
@@ -350,14 +372,16 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   },
 
   'cable-railing-installation': {
-    browserTitle: 'Cable Railing Installation Anchorage AK | Minimal View Obstruction',
-    metaDescription:
-      'Cable railing installation in Anchorage: tension, spacing, and posts engineered for thin-profile guards. Deck Masters AK.',
+    browserTitle: metaSeoRows.find((r) => r.page === 'Cable Railing')!.title,
+    metaDescription: metaSeoRows.find((r) => r.page === 'Cable Railing')!.description,
     heroImage: '/projects/008-aerial-elevated.avif',
     h1Benefit: 'Thin Lines, Maximum View',
     heroSubhead:
       'Cable rails need tension and spacing discipline. Call {phone} — we set posts stiff enough so cables stay true.',
     trustPills: ['Tension systems done right', 'Stiff post layout', 'Code spacing checks'],
+    evenIfLines: [
+      'You can keep your view and pass inspection — even if you worry cable rails will feel flimsy until you see them installed right.',
+    ],
     opening: [
       'Cable infill looks minimal but demands strong posts and correct cable spacing so a sphere cannot pass — inspectors check this.',
       'We choose frames rated for cable loads and follow manufacturer tension patterns so rails do not loosen after the first season.',
@@ -490,6 +514,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     heroSubhead:
       'If joists are solid, you may not need a full rebuild. Call {phone} — we replace boards and refasten smart.',
     trustPills: ['Frame check first', 'Matching thickness', 'Fastener upgrades'],
+    evenIfLines: [evenIf.smallRepair, evenIf.fairQuote],
     opening: [
       'Sometimes decking fails before structure: sun checks, cupping, or localized rot from planters. Targeted board replacement restores the walk surface without starting over.',
       'We still inspect joists and ledgers — new boards on bad framing wastes money.',
@@ -523,6 +548,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     heroSubhead:
       'Soft posts or a spongy rim are serious. Call {phone} — we stabilize structure before cosmetics.',
     trustPills: ['Load-path focus', 'Flashing integration', 'Engineering referrals'],
+    evenIfLines: [evenIf.scopeTrust, evenIf.fairQuote],
     opening: [
       'Structural repairs address bounce, tilt, or decay where the deck ties to the house or meets the ground. These are not cosmetic patches.',
       'We expose problem zones, propose fixes that restore strength, and sequence work so the deck stays safe during repairs.',
@@ -614,9 +640,8 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   },
 
   'water-damage-repair-decks': {
-    browserTitle: 'Water Damage Deck Repair Anchorage AK | Rot & Ledger Issues',
-    metaDescription:
-      'Water damage repair for decks in Anchorage: find leaks, fix ledgers, and replace rotted members. Deck Masters AK.',
+    browserTitle: metaSeoRows.find((r) => r.page === 'Water Damage Repair')!.title,
+    metaDescription: metaSeoRows.find((r) => r.page === 'Water Damage Repair')!.description,
     heroImage: '/projects/046-ground-level-1.avif',
     h1Benefit: 'Stop the Leak, Then Rebuild',
     heroSubhead:
@@ -626,6 +651,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
       'Deck water damage often tracks to ledger flashing gaps, clogged gutters above, or splash-back at grade. Boards may look bad while rim joists are worse.',
       'We dry in concept first: stop the water, then replace compromised wood and connectors.',
     ],
+    evenIfLines: [evenIf.fairQuote, evenIf.scopeTrust],
     whenYouNeed: [
       'You see staining at the house wall, soft rim, or mushrooms near posts.',
       'Paint or stain keeps failing in the same zone — a symptom, not the disease.',
@@ -911,14 +937,14 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   },
 
   'residential-general-contracting': {
-    browserTitle: 'Residential General Contracting Anchorage AK | Single-Family Projects',
-    metaDescription:
-      'Residential general contracting in Anchorage: coordinate trades, schedules, and quality on home projects. Deck Masters AK.',
+    browserTitle: metaSeoRows.find((r) => r.page === 'General Contracting')!.title,
+    metaDescription: metaSeoRows.find((r) => r.page === 'General Contracting')!.description,
     heroImage: '/projects/009-masterpiece-main.avif',
     h1Benefit: 'One Lead for Your Project',
     heroSubhead:
       'Tired of chasing subcontractors? Call {phone} — we run exterior-focused scopes with clear communication.',
     trustPills: ['Schedule ownership', 'Quality checks', 'Transparent change orders'],
+    evenIfLines: [evenIf.fairQuote, evenIf.timeline],
     opening: [
       'General contracting means sequencing demolition, inspections, and finishes so the job finishes — not stalls mid-trades.',
       'We emphasize exterior and structural scopes where our carpentry strength shines, and coordinate partners for licensed trades.',

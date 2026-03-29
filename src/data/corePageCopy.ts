@@ -1,6 +1,6 @@
 /**
  * Core30 Prompt 5 — core service hub pages (six URLs under /services/[slug]).
- * Avoid banned filler words; short sentences; Alaska-specific where it helps.
+ * Hero benefits stay keyword-forward for SEO; PAS and VOC live in body sections.
  */
 
 import type { CoreServiceSlug } from './siteArchitecture';
@@ -12,6 +12,8 @@ export interface CorePageBundle {
   h1Benefit: string;
   /** Subhead; use {phone} */
   heroSubhead: string;
+  /** CTV label for secondary hero button */
+  heroSecondaryCta: string;
   trustPills: string[];
   opening: string[];
   signs: string[];
@@ -39,6 +41,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     h1Benefit: 'Layouts That Match Your Lot and How You Live Outside',
     heroSubhead:
       'Waiting until “later” usually means a rushed season and fewer material choices. Call {phone} — we will pencil a real timeline and a clear design path before you commit.',
+    heroSecondaryCta: 'Start My Design Conversation',
     trustPills: ['Design-led planning', 'Cold-climate detailing', 'Written scope'],
     opening: [
       'A custom deck should fit door locations, sun, wind, and how you clear snow. It should also fit your budget without hiding costs in change orders later.',
@@ -57,11 +60,13 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
       'Design mistakes cost more to fix in the field than on paper — and Anchorage code does not bend for “we thought it would work.”',
     ],
     optionsIntro: [
-      'Each service below is a separate page with the same names we use on estimates — click through for photos, scope notes, and how we sequence work.',
-      'Design-first work means we answer load paths, attachment, and drainage before we order long lead items.',
+      'You get line items that match your estimate — each link below is a dedicated page with photos and scope notes.',
+      'Design-first work means load paths, attachment, and drainage are answered before long-lead materials are ordered.',
     ],
     optionsClosing: [
-      'Choose custom deck design when you need drawings and decisions before lumber hits the truck. Choose new deck construction when the plan is set and you are ready to build. Multi-level decks help when grade changes, views, or separate zones matter for your family.',
+      'Choose custom deck design when you need drawings and decisions before lumber hits the truck.',
+      'Choose new deck construction when the plan is set and you are ready to build.',
+      'Choose multi-level decks when grade changes, views, or separate zones matter for your family.',
     ],
     city: [
       'Anchorage lots range from flat Midtown rectangles to Hillside slopes with wind exposure. Snow stays longer in shade; south-facing rails see more UV. We bake those facts into rail height, stair placement, and how we detail the ledger.',
@@ -77,7 +82,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
       'We build in Alaska full time, so our details match freeze-thaw and snow load instead of copying mild-climate details from the internet.',
     ],
     finalCta:
-      'Pick the service link below or call now — spring and summer slots move fast once the weather breaks, and design work should start before you are under pressure.',
+      'Pick a service link below or call now — design work should start before you are under pressure when the season opens.',
     gridBlurbs: {
       'custom-deck-design': 'Layout, code-aware planning, and material direction before you buy a board.',
       'new-deck-construction': 'New footprint and frame when you are ready to build from a clear plan.',
@@ -93,6 +98,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     h1Benefit: 'Replace What Failed — Surface, Frame, or Both',
     heroSubhead:
       'Spongy boards and rusty hardware do not fix themselves. Call {phone} — we will tell you if you need new decking only, sistered joists, or a full reset.',
+    heroSecondaryCta: 'Get My Replacement Quote',
     trustPills: ['Frame inspection first', 'Clear tear-off scope', 'Anchorage-savvy installs'],
     opening: [
       'Replacement starts with honesty about what is still solid. Sometimes the frame and ledger are fine and you need new decking and railing. Sometimes the rot runs deeper.',
@@ -111,11 +117,13 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
       'Composite and wood both need good drainage and correct spans. Skipping that to “save” now is how you get cupping, bounce, and callbacks.',
     ],
     optionsIntro: [
-      'We link every decking-related service we publish so names match your estimate line items.',
+      'Every link below matches how we write estimates — no renamed mystery scopes.',
       'Replacement usually means demolition, inspection, repair or replace framing, then new decking and rail per code.',
     ],
     optionsClosing: [
-      'Full deck replacement is the right move when the frame, posts, or ledger are at end of life. Composite decking installation wins when you want lower maintenance and predictable color. Wood decking installation still fits when you want a natural look and accept sealing cycles.',
+      'Full deck replacement is the right move when the frame, posts, or ledger are at end of life.',
+      'Composite decking installation wins when you want lower maintenance and predictable color.',
+      'Wood decking installation still fits when you want a natural look and accept sealing cycles.',
     ],
     city: [
       'Anchorage freeze-thaw cycles punish bad fasteners and trapped moisture. We specify clips, gaps, and flashing that match your exposure — not a one-size brochure from Outside.',
@@ -147,6 +155,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     h1Benefit: 'Footings and Framing That Hold Up to Snow and Frost',
     heroSubhead:
       'If posts shift or the frame bounces, pretty boards will not save you. Call {phone} — we assess what is carrying load and what needs correction.',
+    heroSecondaryCta: 'Get My Free Estimate',
     trustPills: ['Frost-depth awareness', 'Hanger and bolt schedules', 'Clean load paths'],
     opening: [
       'Everything you walk on hangs off beams, posts, and footings. In Anchorage, frost and poor drainage move posts over time if the hole and hardware were wrong from day one.',
@@ -169,7 +178,8 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
       'On many jobs both show up in the same scope — names stay separate so permits and inspections stay clear.',
     ],
     optionsClosing: [
-      'Deck framing covers new layout, beam upgrades, joist sistering, and hardware corrections. Deck footings and foundations cover piers, posts bases, and getting bearing down to stable soil for your site.',
+      'Deck framing covers new layout, beam upgrades, joist sistering, and hardware corrections.',
+      'Deck footings and foundations cover piers, post bases, and bearing down to stable soil for your site.',
     ],
     city: [
       'Soils and slope change block to block. Hillside lots often need taller posts, bracing, and careful staging; flat lots still need correct frost depth and drainage at the pier.',
@@ -200,6 +210,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     h1Benefit: 'Rails and Stairs That Stay Stiff in Wind and Ice',
     heroSubhead:
       'Loose guards and bouncy stairs are a fall risk — especially with snow boots. Call {phone} for a straight answer on repair versus rebuild.',
+    heroSecondaryCta: 'Fix My Railing Today',
     trustPills: ['Code-height guards', 'Stiff post bases', 'Ice-aware details'],
     opening: [
       'Railings and stairs are where people test your deck every day: hands on the top rail, feet on icy treads. If posts flex or pickets loosen, nobody feels safe.',
@@ -256,6 +267,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     h1Benefit: 'Stop Water Before It Reaches the Wall Cavity',
     heroSubhead:
       'Stains, peeling paint, and garage leaks do not fix themselves after thaw. Call {phone} — we trace the stain to the failure and sequence repairs correctly.',
+    heroSecondaryCta: 'Get My Free Estimate',
     trustPills: ['Layered weatherproofing', 'Permit help when needed', 'Exterior-focused crew'],
     opening: [
       'Exterior failures show up as drips, stains, or soft sheathing — often at roof-to-wall lines, fascia, or garage roof transitions.',
@@ -274,11 +286,14 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
       'Garage leaks and wall racking get expensive when they touch structure and doors — not just trim.',
     ],
     optionsIntro: [
-      'Each linked service matches how we write scopes — click through for where that line item applies.',
+      'Each link matches how we write scopes — click through for where that line item applies.',
       'Big renovations often combine several lines; smaller jobs may be only fascia or only a garage roof.',
     ],
     optionsClosing: [
-      'Exterior home renovations bundle multiple trades into one plan. Siding replacement and fascia and soffit installation target the skin and edge details. Roofing services cover protective roof work on smaller structures when that is the leak source. Garage wall and roof reconstruction address failed garage shells start to finish.',
+      'Exterior home renovations bundle multiple trades into one plan.',
+      'Siding replacement and fascia and soffit installation target the skin and edge details.',
+      'Roofing services cover protective roof work on smaller structures when that is the leak source.',
+      'Garage wall and roof reconstruction address failed garage shells start to finish.',
     ],
     city: [
       'Anchorage wind drives rain into laps and corners. Sun hits south and west faces harder. We plan starter strips, flashings, and ice-and-water lines for what your lot actually sees.',
@@ -313,6 +328,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     h1Benefit: 'Planning, Permits, and Build Discipline in One Scope',
     heroSubhead:
       'Big repairs stall when nobody owns the whole chain. Call {phone} — we line up demo, structure, materials, and inspections so you are not chasing three crews.',
+    heroSecondaryCta: 'Tell Me What It Would Cost',
     trustPills: ['Written milestones', 'Permit assistance', 'Site-safe workflow'],
     opening: [
       'Project services cover everything that is not a single trade swap: planning, permits, demolition, rough and finish carpentry, and the cleanup when we are done.',
@@ -331,11 +347,13 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
       'Stopgap handyman work that fails twice erodes trust at home and costs more than sequencing it right once.',
     ],
     optionsIntro: [
-      'We publish fourteen related services — each page explains when that line item stands alone versus pairs with others.',
+      'Fourteen related services — each page explains when a line item stands alone versus pairs with others.',
       'Residential general contracting is the umbrella; the other pages split the work for clarity and permits.',
     ],
     optionsClosing: [
-      'Water damage restoration and structural repairs pair often. Project management and permit acquisition assistance help when the city wants drawings and sequential inspections. Site preparation, material sourcing, rough and finish carpentry, framing, demolition, consultation, code compliance, and construction clean-up cover the hands-on and paperwork sides end to end.',
+      'Water damage restoration and structural repairs pair often.',
+      'Project management and permit acquisition assistance help when the city wants drawings and sequential inspections.',
+      'Site preparation, material sourcing, rough and finish carpentry, framing, demolition, consultation, code compliance, and construction clean-up cover the hands-on and paperwork sides end to end.',
     ],
     city: [
       'Anchorage’s short season means sequencing matters — we do not leave roofs open or walls wet longer than the weather allows.',

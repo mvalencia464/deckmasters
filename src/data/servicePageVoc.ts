@@ -10,27 +10,42 @@ export type { VocSnippet };
 export const categoryVocQuotes: Record<ServiceCategoryId, VocSnippet[]> = {
   'deck-building': [
     {
-      excerpt: 'Price was competitive against other quotes… quality of the work was excellent.',
-      author: 'Nate Van Nortwick',
+      excerpt:
+        'We have never been more satisfied with the quality and workmanship of any project we have contracted in our 42 years of marriage.',
+      author: 'Jeff G.',
     },
     {
       excerpt:
-        'They worked to get us a design that fit our budget… focused on getting the job done right — price was very competitive.',
-      author: 'Damon “DS” Scott',
+        'I was sort of glad that all the previous contractors had dropped out. The new deck has enhanced the appearance of my home.',
+      author: 'James W.',
+    },
+    {
+      excerpt: 'Price was competitive against other quotes… quality of the work was excellent.',
+      author: 'Nate Van Nortwick',
     },
   ],
   'deck-repair': [
     {
-      excerpt: 'Deck Masters scheduled me quickly and completed the job to my satisfaction.',
-      author: 'Anita Baker',
+      excerpt:
+        'We were buying a house with a deck that had been built incorrectly. Deckmasters fixed it to where it\'s safe and enjoyable for many years to come.',
+      author: 'Tristen T.',
     },
     {
       excerpt:
-        'I was impressed when I got a call 9 months after the deck was finished to ask if we had any concerns.',
-      author: 'Caryn Bromirski',
+        'I was having a hard time finding someone to come out because it was a small job. DeckMasters scheduled me quickly.',
+      author: 'Annette D.',
+    },
+    {
+      excerpt: 'Deck Masters scheduled me quickly and completed the job to my satisfaction.',
+      author: 'Anita Baker',
     },
   ],
   'general-contracting': [
+    {
+      excerpt:
+        'Big projects are never perfect, but Deckmasters proved themselves to be problem-solvers who care deeply about both their craft and their clients.',
+      author: 'Rachel B.',
+    },
     {
       excerpt:
         'Working with Deck Masters has been a good experience… dedicated to customer service and getting projects built in a timely manner.',
@@ -57,6 +72,11 @@ export const categoryVocQuotes: Record<ServiceCategoryId, VocSnippet[]> = {
 export const coreVocQuotes: Record<CoreServiceSlug, VocSnippet[]> = {
   'custom-decks-design': [
     {
+      excerpt:
+        'We have never been more satisfied with the quality and workmanship of any project we have contracted in our 42 years of marriage.',
+      author: 'Jeff G.',
+    },
+    {
       excerpt: 'Deckmasters was very accommodating and helped me pick out the perfect colors.',
       author: 'Deborah Warnke',
     },
@@ -67,6 +87,10 @@ export const coreVocQuotes: Record<CoreServiceSlug, VocSnippet[]> = {
         'I started out wanting the front deck expanded and then ended up with a complete front and rear deck replacement… I should have done this years ago.',
       author: 'Dennis Hardman',
     },
+    {
+      excerpt: 'More expensive, but worth it. They paid attention.',
+      author: 'Bruce W.',
+    },
   ],
   'deck-framing-foundations': [
     {
@@ -75,6 +99,11 @@ export const coreVocQuotes: Record<CoreServiceSlug, VocSnippet[]> = {
     },
   ],
   'railings-staircases': [
+    {
+      excerpt:
+        'We have never been more satisfied with the quality and workmanship of any project we have contracted in our 42 years of marriage.',
+      author: 'Jeff G.',
+    },
     {
       excerpt: 'The company was on time, on budget and produced a lovely deck exactly as requested.',
       author: 'Penny G.',
@@ -86,8 +115,18 @@ export const coreVocQuotes: Record<CoreServiceSlug, VocSnippet[]> = {
         'Deck masters replaced our 30 year old deck and a section of rotted exterior siding. Very nice job. I\'d recommend them highly.',
       author: 'Brent Schlosstein',
     },
+    {
+      excerpt:
+        'Big projects are never perfect, but Deckmasters proved themselves to be problem-solvers who care deeply about both their craft and their clients.',
+      author: 'Rachel B.',
+    },
   ],
   'contracting-project-services': [
+    {
+      excerpt:
+        'Big projects are never perfect, but Deckmasters proved themselves to be problem-solvers who care deeply about both their craft and their clients.',
+      author: 'Rachel B.',
+    },
     {
       excerpt: 'They showed up when they said they would and did a great job.',
       author: 'Frank Gwartney',

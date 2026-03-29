@@ -208,6 +208,80 @@ export const heroHeadlines: HeroBlock[] = [
       solution:
         'Deck Masters doesn\'t hand you a referral list. They handle the full scope — siding replacement, framing, roofing, structural repairs — with the same crew that already knows your project.',
     },
+    ctaMid: 'Tell Me What It Would Cost',
+  },
+  {
+    page: 'Outdoor living (category)',
+    h1Primary: 'Stairs, landings & elevated systems that feel solid underfoot',
+    subheadline:
+      'You need clean load paths and guards that stay stiff — not a kit that ignores your slope, wind exposure, or ice on the treads. We build outdoor access for how Anchorage yards actually drain and freeze.',
+    ctaMid: 'Plan My Stairs & Landings',
+  },
+  {
+    page: 'Deck replacement & decking (core)',
+    h1Primary: 'Replace what failed — decking, frame, or both',
+    subheadline:
+      'You know it is time. The question is who you trust with the tear-off — and whether the price reflects a real scope, not new boards hiding old rot.',
+    ctaMid: 'Get My Replacement Quote',
+  },
+  {
+    page: 'Deck framing & foundations (core)',
+    h1Primary: 'Footings and framing that stay put through frost and snow load',
+    subheadline:
+      'Everything you walk on hangs off beams, posts, and footings. If anything moves, you deserve to know why — before fresh decking covers it.',
+  },
+  {
+    page: 'Contracting & project services (core)',
+    h1Primary: 'One sequence from demo to clean-up — paperwork that matches the build',
+    subheadline:
+      'When a job touches multiple trades, you need one crew that owns milestones — not three voicemails and a finger-pointing contest.',
+    ctaMid: 'Tell Me What It Would Cost',
+  },
+];
+
+/** Fascination bullets for categories/cores not covered by deck-building or repair sets. */
+const generalContractingFascinationBullets: { lead: string; rest: string }[] = [
+  {
+    lead: 'One accountable crew for messy scopes',
+    rest: ' — when the job finds rot, siding, or roof lines, you are not handed a referral list mid-stream',
+  },
+  {
+    lead: 'Milestones you can track',
+    rest: ' — exterior work sequenced so you are not left open to weather longer than the season allows',
+  },
+  {
+    lead: 'Problem-solvers on big projects',
+    rest: ' — homeowners describe craft and communication when trades stack up',
+  },
+];
+
+const exteriorRenovationFascinationBullets: { lead: string; rest: string }[] = [
+  {
+    lead: 'Water traced to the failure',
+    rest: ' — stains traced to roof lines, laps, and deck tie-ins — not masked with another coat of paint',
+  },
+  {
+    lead: 'Layers planned in the right order',
+    rest: ' — flashing, WRB, and cladding so the envelope actually dries',
+  },
+  {
+    lead: 'Deck-to-wall experience',
+    rest: ' — we see ledger and siding intersections every week; fewer leaks at the worst joints',
+  },
+];
+
+const outdoorLivingFascinationBullets: { lead: string; rest: string }[] = [
+  {
+    lead: 'Landings sized for real life',
+    rest: ' — door swing, snow pile, and turns — not a token slab where math ended',
+  },
+  {
+    lead: 'Posts and bracing for elevation',
+    rest: ' — tall runs get lateral discipline so you do not feel sway when you lean on the rail',
+  },
+  {
+    lead: 'Guards and treads built for ice months',
+    rest: ' — consistent rise-and-run and graspable paths before the first freeze',
   },
 ];
 
@@ -310,9 +384,26 @@ export const fascinationBundles = {
   deckRepair: fascinationSets[1],
   composite: fascinationSets[2],
   railings: fascinationSets[3],
+  generalContracting: {
+    title: 'General contracting (coordination & trust)',
+    bullets: generalContractingFascinationBullets,
+  },
+  exteriorRenovations: {
+    title: 'Exterior & envelope',
+    bullets: exteriorRenovationFascinationBullets,
+  },
+  outdoorLiving: {
+    title: 'Outdoor access & elevation',
+    bullets: outdoorLivingFascinationBullets,
+  },
 } as const;
 
 export type FascinationBundle = (typeof fascinationBundles)[keyof typeof fascinationBundles];
+
+/** Resolve hero library block by internal page label (see `heroHeadlines[].page`). */
+export function getHeroBlock(pageLabel: string): HeroBlock | undefined {
+  return heroHeadlines.find((h) => h.page === pageLabel);
+}
 
 export const evenIfCrushers = [
   'You can get a design that perfectly matches your vision — **even if you\'ve never been able to describe it clearly to a contractor before.**',

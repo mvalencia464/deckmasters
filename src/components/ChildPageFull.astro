@@ -169,6 +169,24 @@ const fascination = getFascinationForPage(page);
     </div>
 
     {
+      copy.evenIfLines && copy.evenIfLines.length > 0 && (
+        <>
+          <h2 class="mt-12 font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-800">
+            You can still move forward — even if…
+          </h2>
+          <ul class="mt-5 space-y-3 text-neutral-600 leading-relaxed list-none p-0 m-0" role="list">
+            {copy.evenIfLines.map((line) => (
+              <li class="flex gap-3">
+                <span class="mt-0.5 h-2 w-2 shrink-0 bg-gradient-to-br from-brand-orange to-orange-700" aria-hidden="true" />
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+
+    {
       pasAgitation && (
         <>
           <h2 class="mt-12 font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-800">

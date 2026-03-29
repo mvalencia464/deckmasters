@@ -14,14 +14,29 @@ export function servicesPageCopy(s: SiteForMarketingCopy) {
   const { businessName, primaryCity, primaryPhone } = s;
   return {
     title: `Services | Decks, Repairs & Exterior Work in ${primaryCity} — ${businessName}`,
-    description: `Find the exact line item you need — new decks, repairs, railings, exterior and GC in ${primaryCity}, AK. Same names on these pages as on your written estimate. Free estimates. ${primaryPhone}.`,
-    h1: 'Pick the service that matches your job',
-    leadBeforePhone: `You get a dedicated page for every scope we publish — wording matches your estimate so you always know what you are clicking. Everything is built for snow load, wind, and freeze-thaw around ${primaryCity}. Call `,
-    leadAfterPhone: ` or request a quote if you are not sure which link fits.`,
+    description: `List of our deck and exterior services in ${primaryCity}. Free estimates. ${primaryPhone}.`,
+    h1: 'Our services',
+    heroLead: `This page lists what we do. Click a link to read more about that job. The words match what you see on your written estimate. We plan work for ${primaryCity} weather — snow, wind, and cold.`,
+    heroPillars: [
+      {
+        title: 'Click a service',
+        body: 'Each link opens a page with more detail about that job.',
+      },
+      {
+        title: 'Same words as your estimate',
+        body: 'Page titles match your paperwork so you know what you are opening.',
+      },
+      {
+        title: 'Questions?',
+        body: 'Call us — we will help you pick the right page.',
+      },
+    ],
+    phoneCtaAfterPrefix: 'Or ',
+    phoneCtaAfterSuffix: ' online.',
     waterfrontEyebrow: 'Waterfront & docks',
     waterfrontH2: 'Docks and waterfront work',
     waterfrontLead: `You get the same structural discipline we use on decks — hardware and details that respect ice, moisture, and heavy use, not a warm-climate template.`,
-    ctaLead: 'Tell us what you want fixed or built — we will point you to the right line item.',
+    ctaLead: 'Tell us what you need fixed or built. We will point you to the right service.',
     ctaButton: 'Get my free estimate',
   };
 }

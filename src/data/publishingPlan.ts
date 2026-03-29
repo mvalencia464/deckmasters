@@ -19,8 +19,8 @@ export const publishingWeeks: PublishingWeek[] = [
     theme: 'Post-launch stabilization',
     tasks: [
       'Google Search Console: confirm property, submit sitemap, check Coverage for obvious errors',
-      'GBP: verify NAP matches site; add 3–5 new project photos; respond to any new Q&A',
-      'Spot-check core service + child URLs on mobile (CTA, tel:, forms)',
+      'GBP: verify NAP matches site + footer; add 3–5 new project photos; respond to any new Q&A',
+      'Spot-check core service + child URLs on mobile (CTA, tel:, quote form)',
     ],
   },
   {
@@ -28,8 +28,8 @@ export const publishingWeeks: PublishingWeek[] = [
     theme: 'Reviews & trust',
     tasks: [
       'Request reviews from 3–5 recent happy jobs (SMS/email with direct GBP link)',
-      'Wall of Love / homepage: ensure review count sync from scheduled deploy is accurate',
-      'Add 1 short case-style note to a service page or blog (before/after or scope)',
+      'Wall of Love / homepage: confirm review sync after scheduled deploy (google-reviews.json)',
+      'Add one short case-style note to a service page or blog (before/after or scope)',
     ],
   },
   {
@@ -38,7 +38,7 @@ export const publishingWeeks: PublishingWeek[] = [
     tasks: [
       'Publish one long-form blog aligned to a money keyword (cost, materials, or repairs)',
       'Internal links: new post → relevant /services/* hubs and back',
-      'Optional: short video clip for GBP or site hero (15–30s on-site)',
+      'Optional: short clip for GBP or featured project (15–30s on-site)',
     ],
   },
   {
@@ -111,13 +111,13 @@ export const launchStrategy: StrategySection[] = [
   {
     title: 'Organic SEO (site)',
     summary:
-      'The site is structured for hubs (/services) and long-tail child pages; technical base is sitemap, robots, schema, and internal links.',
+      'Hubs (/services), category/core/child pages, and blog posts; technical base is sitemap, robots, schema, and internal links.',
     bullets: [
       'Homepage + hubs target head terms; child pages capture specific intent and long-tail queries.',
       'Maintain internal links: category → core → child; siblings; no orphan URLs.',
       'Blog supports topical authority (cost guides, materials, climate) — link into service hubs.',
       'Title + meta: unique per URL; refine if GSC shows high impressions with low CTR.',
-      'Schema: LocalBusiness #business + Service on service URLs; keep email/phone consistent.',
+      'Schema: LocalBusiness + Service where applicable; keep email/phone consistent with JSON-LD.',
     ],
   },
   {
@@ -128,7 +128,7 @@ export const launchStrategy: StrategySection[] = [
       'Aim for 1–2 quality posts per month minimum (depth over volume).',
       'Align topics to seasonal search (snow load, spring builds, repair after winter).',
       'Repurpose: one project can yield site photos, GBP photos, a short post, and a testimonial pull-quote.',
-      'Scheduled deploy: daily hook rebuilds review-driven content — watch Wall of Love / star ratings after sync.',
+      'Scheduled production deploy: daily hook rebuilds review-driven UI — verify Wall of Love + ratings after sync.',
     ],
   },
   {
@@ -146,7 +146,7 @@ export const launchStrategy: StrategySection[] = [
     title: 'What we do not rely on',
     summary: 'Avoid scope creep that does not move Anchorage deck leads.',
     bullets: [
-      'Thin location pages for every suburb unless you can make each one truly unique.',
+      'Thin location pages for every suburb unless each one is truly unique and useful.',
       'Automated junk blog — hurts trust and can trigger quality issues.',
       'Keyword-stuffed titles; prefer clear benefit + city where it reads naturally.',
     ],
@@ -157,8 +157,8 @@ export const launchStrategy: StrategySection[] = [
 export const deployCadenceNote = {
   title: 'Automated deploy (production)',
   lines: [
-    'GitHub Actions workflow `scheduled-pages-deploy.yml` triggers a Cloudflare Pages deploy hook daily at 07:00 UTC (adjust cron as needed).',
-    'Build runs your sync script (e.g. reviews) then `astro build` — keeps live reviews and timestamps fresh.',
-    'This page is not in the sitemap and uses meta robots noindex; it is not linked from the public nav.',
+    'GitHub Actions workflow `.github/workflows/scheduled-pages-deploy.yml` POSTs the Cloudflare Pages deploy hook daily at 07:00 UTC (`workflow_dispatch` runs it manually too).',
+    'Cloudflare Pages runs your project build command (e.g. review sync + `astro build` as configured in Pages) — keeps live reviews and build output fresh.',
+    'This route uses `noindex` and is not linked from the public nav or sitemap.',
   ],
 };
