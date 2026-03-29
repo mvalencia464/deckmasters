@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import TrustBar from '../components/TrustBar.astro';
 import HomeWhyChoose from '../components/HomeWhyChoose.astro';
 import HomeFaq from '../components/HomeFaq.astro';
 import HomeMapSection from '../components/HomeMapSection.astro';
@@ -12,9 +11,6 @@ import ReviewsSection from '../components/ReviewsSection.astro';
 import { Image } from 'astro:assets';
 import ownerImg from '../assets/jordanwebb.png';
 import { homeMeta, getWhyChooseUs, homeFaqs, getFinalCta, homeServicesSectionLead } from '../data/homepageCopy';
-import { fascinationBundles } from '../data/copywritingLibrary';
-import FascinationBulletsBand from '../components/FascinationBulletsBand.astro';
-import HomeVocSections from '../components/HomeVocSections.astro';
 
 const site = (await import('../data/site.json')).default;
 const { serviceImages } = await import('../data/serviceImages.ts');
@@ -109,14 +105,6 @@ const structuredDataJson = { '@context': 'https://schema.org', '@graph': graph }
 <Layout title={homeMeta.title} description={homeMeta.description}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(structuredDataJson)} />
   <Hero />
-  <TrustBar />
-  <FascinationBulletsBand
-    bundle={fascinationBundles.deckBuilding}
-    heading="What Anchorage homeowners say about the finished job"
-    eyebrow="Straight from reviews"
-    layout="wide"
-  />
-  <HomeVocSections />
   <HomeWhyChoose items={whyChooseItems} />
   <section class="py-12 sm:py-16 lg:py-24 bg-surface border-t border-neutral-200" aria-label="Services">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

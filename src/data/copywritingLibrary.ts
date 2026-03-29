@@ -476,12 +476,3 @@ export const homepageTrustStripItems = [
   { kicker: 'Every job', line: 'Small repairs scheduled fast — no job too small' },
 ] as const;
 
-/** Featured verbatim quotes for homepage “gems” section (subset of `stickyVerbatims`). */
-export const homepageFeaturedVerbatims = [
-  stickyVerbatims[9],
-  stickyVerbatims[7],
-  stickyVerbatims[4],
-] as const;
-
-/** Even-if lines to surface on the homepage (addresses objections; strip `**` in UI). */
-export const homepageEvenIfLines = evenIfCrushers.slice(0, 3);
