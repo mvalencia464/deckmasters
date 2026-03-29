@@ -1,0 +1,54 @@
+---
+import type { FascinationBundle } from '../data/copywritingLibrary';
+
+interface Props {
+  bundle: FascinationBundle;
+  /** Main heading (H2) */
+  heading?: string;
+  eyebrow?: string;
+  /** max-w-3xl (article) vs max-w-6xl + 2-col grid */
+  layout?: 'narrow' | 'wide';
+}
+
+const {
+  bundle,
+  heading = 'What homeowners say matters most',
+  eyebrow = 'From real reviews',
+  layout = 'narrow',
+} = Astro.props;
+
+const wrap = layout === 'wide' ? 'max-w-7xl' : 'max-w-3xl';
+const grid = layout === 'wide' ? 'sm:grid-cols-2 gap-x-10 gap-y-4' : 'gap-4';
+---
+
+<section
+  class="border-y border-neutral-200 bg-surface-muted/60 py-12 lg:py-14"
+  aria-labelledby="fascination-heading"
+>
+  <div class:list={['mx-auto px-4 sm:px-6 lg:px-8', wrap]}>
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange">{eyebrow}</p>
+    <h2
+      id="fascination-heading"
+      class="mt-2 font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-900"
+    >
+      {heading}
+    </h2>
+    <p class="mt-2 text-sm text-neutral-500">{bundle.title}</p>
+    <ul class:list={['mt-8 grid list-none p-0 m-0', grid]} role="list">
+      {
+        bundle.bullets.map((b) => (
+          <li class="flex gap-3 text-neutral-800 leading-relaxed">
+            <span
+              class="mt-1.5 h-2 w-2 shrink-0 bg-gradient-to-br from-brand-orange to-orange-700"
+              aria-hidden="true"
+            />
+            <span class="text-sm sm:text-base">
+              <strong>{b.lead}</strong>
+              {b.rest}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

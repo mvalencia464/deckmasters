@@ -8,6 +8,8 @@ import { coreVocQuotes } from '../data/servicePageVoc';
 import VocQuoteCard from './VocQuoteCard.astro';
 import ServiceImageTextBand from './ServiceImageTextBand.astro';
 import { getCoreVisualBand } from '../data/servicePageVisualBands';
+import FascinationBulletsBand from './FascinationBulletsBand.astro';
+import { getFascinationForPage } from '../data/servicePageFascination';
 
 interface Props {
   page: ServicePageEntry;
@@ -43,6 +45,7 @@ const h1 = `${page.title} in ${city}, ${st} — ${copy.h1Benefit}`;
 const vocList = coreVocQuotes[slug];
 const vocRest = vocList?.slice(1) ?? [];
 const visualBand = getCoreVisualBand(slug, copy, vocList?.[0] ?? null);
+const fascination = getFascinationForPage(page);
 ---
 
 <section class="relative min-h-[min(52vh,480px)] flex flex-col justify-end overflow-hidden border-b border-neutral-200">
@@ -138,6 +141,16 @@ const visualBand = getCoreVisualBand(slug, copy, vocList?.[0] ?? null);
 </article>
 
 <ServiceImageTextBand band={visualBand} />
+
+{
+  fascination && (
+    <FascinationBulletsBand
+      bundle={fascination}
+      heading={`What matters most for ${page.title.toLowerCase()}`}
+      layout="wide"
+    />
+  )
+}
 
 <article class="bg-surface">
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pb-14 lg:pb-16 lg:pt-0">

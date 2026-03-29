@@ -304,6 +304,16 @@ export const fascinationSets: { title: string; bullets: { lead: string; rest: st
   },
 ];
 
+/** Stable references for service-page mapping (same copy as `fascinationSets`). */
+export const fascinationBundles = {
+  deckBuilding: fascinationSets[0],
+  deckRepair: fascinationSets[1],
+  composite: fascinationSets[2],
+  railings: fascinationSets[3],
+} as const;
+
+export type FascinationBundle = (typeof fascinationBundles)[keyof typeof fascinationBundles];
+
 export const evenIfCrushers = [
   'You can get a design that perfectly matches your vision — **even if you\'ve never been able to describe it clearly to a contractor before.**',
   'You can get a fair quote — **even if you\'ve already been burned by low bids that ballooned.**',

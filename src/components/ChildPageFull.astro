@@ -7,6 +7,8 @@ import { childAgitationByParentSlug } from '../data/childPageAgitation';
 import { childVocBySlug } from '../data/servicePageVoc';
 import ServiceImageTextBand from './ServiceImageTextBand.astro';
 import { getChildVisualBand } from '../data/servicePageVisualBands';
+import FascinationBulletsBand from './FascinationBulletsBand.astro';
+import { getFascinationForPage } from '../data/servicePageFascination';
 
 interface Props {
   page: ServicePageEntry;
@@ -49,6 +51,7 @@ const pasAgitation =
     : null;
 const vocSnippet = childVocBySlug[slug];
 const visualBand = getChildVisualBand(slug, copy, vocSnippet ?? null);
+const fascination = getFascinationForPage(page);
 ---
 
 <section class="relative min-h-[min(48vh,420px)] flex flex-col justify-end overflow-hidden border-b border-neutral-200">
@@ -144,6 +147,16 @@ const visualBand = getChildVisualBand(slug, copy, vocSnippet ?? null);
 </article>
 
 <ServiceImageTextBand band={visualBand} />
+
+{
+  fascination && (
+    <FascinationBulletsBand
+      bundle={fascination}
+      heading={`Why ${page.title.toLowerCase()} is worth doing right`}
+      layout="wide"
+    />
+  )
+}
 
 <article class="bg-surface">
   <div class="mx-auto max-w-3xl px-4 py-0 sm:px-6 lg:px-8 pb-12 lg:pb-14 lg:pt-0">
