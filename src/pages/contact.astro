@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import { contactPageCopy } from '../data/marketingPagesCopy';
+import { homepageTrustStripItems } from '../data/copywritingLibrary';
 
 const site = (await import('../data/site.json')).default;
 const st = 'AK';
@@ -75,8 +76,8 @@ const contactLocalBusiness = {
         <li class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
           Free estimates
         </li>
-        <li class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
-          Local crew
+        <li class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white max-w-md leading-snug">
+          {homepageTrustStripItems[0].line}
         </li>
       </ul>
     </div>

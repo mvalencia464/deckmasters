@@ -4,10 +4,11 @@ interface Props {
   address: string;
   phone: string;
   placeId: string;
-  finalCta: { headline: string; subtext: string };
+  finalCta: { headline: string; subtext: string; ctvLabel?: string };
 }
 
 const { businessName, address, phone, placeId, finalCta } = Astro.props;
+const quoteCta = finalCta.ctvLabel ?? 'Get My Free Estimate';
 
 const telHref = `tel:${phone.replace(/\D/g, '')}`;
 const mapsSearchUrl = `https://www.google.com/maps/search/?api=1&query_place_id=${encodeURIComponent(placeId)}`;
@@ -59,7 +60,7 @@ const embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&
               href="/contact#quote"
               class="inline-flex rounded-none border-2 border-neutral-300 px-5 py-3 text-sm font-bold uppercase tracking-wider text-neutral-800 hover:border-brand-orange hover:text-brand-orange focus-ring"
             >
-              Request a quote
+              {quoteCta}
             </a>
           </div>
         </div>

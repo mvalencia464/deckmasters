@@ -16,6 +16,7 @@ import ServiceImageTextBand from './ServiceImageTextBand.astro';
 import { getCategoryVisualBand } from '../data/servicePageVisualBands';
 import FascinationBulletsBand from './FascinationBulletsBand.astro';
 import { getFascinationForPage } from '../data/servicePageFascination';
+import ServicePageTrustBand from './ServicePageTrustBand.astro';
 
 interface Props {
   page: ServicePageEntry;
@@ -270,6 +271,8 @@ const fascination = getFascinationForPage(page);
       <a href="/" class="font-medium text-brand-orange hover:underline">Anchorage deck builder home page</a> — then come
       back here for the service line that fits your job.
     </p>
+
+    <ServicePageTrustBand />
 
     <div class="mt-10 rounded-none border border-neutral-200 bg-surface-muted p-6">
       <p class="text-neutral-800 font-semibold">Ready to talk?</p>

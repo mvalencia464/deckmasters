@@ -1,21 +1,27 @@
 /**
- * Homepage copy — clear, proof-aware; detailed VOC lives on service/category pages.
+ * Homepage copy — wired to VOC library lines (public-facing only; no internal methodology labels).
  */
 
+import {
+  homepagePublicSeo,
+  publicHomepageHero,
+  riskReversalLines,
+} from './copywritingLibrary';
+
 export const homeMeta = {
-  title: 'Deck Builder in Anchorage, AK | Custom Decks, Repairs & Outdoor Living',
-  description:
-    'Anchorage homeowners rate us for clear communication, competitive pricing, and decks that hold up — see Google reviews. Custom decks, repairs, railings & exterior work for Alaska. Free estimates. Deck Masters AK.',
+  title: homepagePublicSeo.title,
+  description: homepagePublicSeo.description,
 };
 
 export function heroCopy(fiveStarCount: number) {
   const n = fiveStarCount >= 100 ? `${fiveStarCount}+` : String(fiveStarCount);
   return {
-    h1: `Deck Builder in Anchorage, AK | ${n} Five-Star Reviews`,
-    subhead:
-      'You get a deck, railing, or repair scoped for Alaska snow and freeze-thaw — with clear communication from first call to walkthrough. Free estimates; no vague “we’ll see” pricing.',
-    support:
-      'You can move forward with confidence even if you have been burned by contractors who ghosted you, blew the budget, or left a messy site — our reviews keep saying the same things: on time, fair price, and follow-through.',
+    /** Primary headline — customer verbatim from the library */
+    h1: publicHomepageHero.h1,
+    subhead: publicHomepageHero.subhead,
+    /** Social proof line under subhead */
+    support: `${n} five-star Google reviews in Anchorage. ${riskReversalLines[0]}`,
+    eyebrow: `${n} five-star reviews · Anchorage deck builder`,
   };
 }
 
@@ -27,24 +33,24 @@ export interface WhyChooseBlock {
 export function getWhyChooseUs(googleReviewCount: number, averageRating: string): WhyChooseBlock[] {
   return [
     {
-      headline: `${googleReviewCount}+ Google reviews at ${averageRating} — others already took the risk for you`,
+      headline: '"They do what they say they\'re going to do. Then they over deliver."',
       body:
-        'You see detailed feedback on how we communicate, show up, and finish — not a star-click and silence. That stack of reviews is your shortcut past “hope this contractor works out.”',
+        'That line shows up in reviews for a reason — homeowners describe follow-through, not just a strong first impression.',
     },
     {
-      headline: 'Free estimates — you know the scope before you sign',
+      headline: `${googleReviewCount}+ Google reviews at ${averageRating} — with real detail`,
       body:
-        'You walk through options and real numbers for your site. No pressure to decide on the spot — you deserve a written path before you commit.',
+        'You see how we communicate, show up, and finish — not a star-click and silence. That stack of reviews is your shortcut past “hope this contractor works out.”',
     },
     {
-      headline: 'Built for Anchorage weather — not a sunny-state kit',
+      headline: 'Permits, scope, and budget in the same conversation',
       body:
-        'You get structure, fasteners, and details chosen for load, ice, and wind here — so you are not rebuilding the same problem in three winters.',
+        'We pull your permits and deal with the municipality. Your budget is part of the design conversation — not an afterthought.',
     },
     {
-      headline: 'You are not hiring a mystery crew',
+      headline: 'Built for Anchorage — not a sunny-state kit',
       body:
-        'You hear when we will be there, what happens if weather slips, and how we handle punch-list items — because that is what shows up again and again in reviews.',
+        'Structure, fasteners, and materials chosen for snow load, freeze-thaw, and wind — so you are not rebuilding the same problem in three winters.',
     },
   ];
 }
@@ -58,7 +64,7 @@ export const homeFaqs: { question: string; answer: string }[] = [
   {
     question: 'Do you offer free estimates?',
     answer:
-      'Yes. You tell us what you want fixed or built; we inspect what is there and outline options so you can decide before you sign.',
+      'Yes. No pressure, no obligation — just a real conversation about what your project actually needs. Tell us what you want fixed or built; we inspect what is there and outline options before you sign.',
   },
   {
     question: 'How long does a typical deck project take?',
@@ -78,14 +84,18 @@ export const homeFaqs: { question: string; answer: string }[] = [
   {
     question: 'What if something goes wrong during the build?',
     answer:
-      'You get honesty first: we explain what happened, fix it, and get you back on track — that is the pattern homeowners describe in reviews when something needed a second look.',
+      'If we find something we did not expect, we tell you before we touch it. When something needs a second look, we explain what happened, fix it, and get you back on track — that is the pattern homeowners describe in reviews.',
   },
 ];
 
 export function getFinalCta(phone: string) {
   return {
     headline: 'Ready for a deck you will actually use?',
-    subtext: `Call ${phone} — or tell us what you need fixed. You will get a straight scope, not a sales maze.`,
-    ctvLabel: 'Get my free estimate',
+    subtext: `Call ${phone} — or send a message. You get a straight scope, not a sales maze.`,
+    ctvLabel: 'Get My Free Estimate',
   };
 }
+
+/** Services grid intro on the homepage — from the deck-building category library block. */
+export const homeServicesSectionLead =
+  'From the first meeting to the final board, you stay in control of the design — and we handle everything else, including permits.';

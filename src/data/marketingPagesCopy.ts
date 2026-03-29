@@ -56,7 +56,7 @@ export function contactPageCopy(s: SiteForMarketingCopy) {
     title: `Contact ${s.businessName} | ${s.primaryCity} Deck & Exterior Contractor`,
     description: `Call ${s.primaryPhone} or send a message — free estimates for decks, repairs, railings, and exterior work in ${s.primaryCity}. Licensed and insured. ${s.businessName}.`,
     heroH1: `Contact ${s.businessName}`,
-    heroLead: `You get a fast, honest response — tell us what is going on (rot, rails, new build, exterior leak) and we will route you to the right next step.`,
+    heroLead: `No pressure, no obligation — just a real conversation about what your project actually needs. Tell us what is going on (rot, rails, new build, exterior leak) and we will route you to the right next step.`,
     callH2: 'Call us',
     callBlurb: `You reach people who build here every week — say if it is urgent; we check messages closely.`,
     emailH2: 'Email us',
@@ -72,7 +72,7 @@ export function contactPageCopy(s: SiteForMarketingCopy) {
     findUsH2: 'Find us',
     findUsLead: `${s.primaryCity} — open the map for directions.`,
     trustEyebrow: 'Why homeowners reach out',
-    trustLine: `Licensed and insured · Free estimates · Cold-climate build experience · Written scopes — not vague “we’ll see” pricing`,
+    trustLine: `Licensed and insured · Free estimates · We pull permits and deal with the municipality · Written scopes — not vague “we’ll see” pricing`,
   };
 }
 

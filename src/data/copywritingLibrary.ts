@@ -450,3 +450,38 @@ export const pasByService = [
       'Deck Masters handles permitting as part of the job. They\'ve worked with the Muni on complex projects and have a track record of getting it done — while keeping your build on schedule.',
   },
 ] as const;
+
+/** SEO strings for homepage — aligned with Part 7 meta table. */
+export const homepagePublicSeo = {
+  title: metaSeoRows[0].title,
+  description: metaSeoRows[0].description,
+} as const;
+
+/**
+ * Homepage hero — VOC lines only (no internal methodology labels).
+ * Matches Part 2 Homepage block in the asset library.
+ */
+export const publicHomepageHero = {
+  h1: 'They do what they say they\'re going to do. Then they over deliver.',
+  subhead:
+    'Deck Masters builds decks that exceed expectations, handle Alaska\'s winters, and come with a team that actually picks up the phone — even 9 months after the job is done.',
+  ctaPrimary: 'Get My Free Estimate',
+  ctaMidPage: 'See What My Deck Could Look Like',
+} as const;
+
+/** Homepage trust strip — short, customer-facing (from trust badges / VOC). */
+export const homepageTrustStripItems = [
+  { kicker: 'Permits', line: 'We pull permits and deal with the municipality' },
+  { kicker: 'Trex', line: '25-year manufacturer guarantee on select materials' },
+  { kicker: 'Every job', line: 'Small repairs scheduled fast — no job too small' },
+] as const;
+
+/** Featured verbatim quotes for homepage “gems” section (subset of `stickyVerbatims`). */
+export const homepageFeaturedVerbatims = [
+  stickyVerbatims[9],
+  stickyVerbatims[7],
+  stickyVerbatims[4],
+] as const;
+
+/** Even-if lines to surface on the homepage (addresses objections; strip `**` in UI). */
+export const homepageEvenIfLines = evenIfCrushers.slice(0, 3);

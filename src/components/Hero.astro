@@ -16,6 +16,7 @@ const googleReviews = reviewRaw.filter((r: { source?: string; rating?: number })
 );
 const googleFiveStarReviewCount = googleReviews.filter((r: { rating?: number }) => Number(r.rating) >= 5).length;
 const hero = heroCopy(googleFiveStarReviewCount);
+const heroEyebrow = hero.eyebrow ?? `${googleFiveStarReviewCount} FIVE-STAR REVIEWS`;
 ---
 
 <section class="relative min-h-[min(85vh,800px)] overflow-hidden bg-neutral-900" aria-label="Hero">
@@ -64,10 +65,10 @@ const hero = heroCopy(googleFiveStarReviewCount);
         <div class="flex items-center gap-4 mb-6">
           <span class="h-px w-12 bg-brand-orange" aria-hidden="true" />
           <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange drop-shadow-md">
-            {googleFiveStarReviewCount} FIVE-STAR REVIEWS
+            {heroEyebrow}
           </p>
         </div>
-        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] font-bold text-white mb-6 uppercase tracking-tight drop-shadow-lg">
+        <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.08] font-bold text-white mb-6 uppercase tracking-tight drop-shadow-lg max-w-4xl">
           {hero.h1}
         </h1>
         <p class="max-w-xl text-neutral-200 text-lg md:text-xl leading-relaxed mb-6 drop-shadow">

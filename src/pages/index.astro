@@ -11,9 +11,10 @@ import FeaturedProject from '../components/FeaturedProject.astro';
 import ReviewsSection from '../components/ReviewsSection.astro';
 import { Image } from 'astro:assets';
 import ownerImg from '../assets/jordanwebb.png';
-import { homeMeta, getWhyChooseUs, homeFaqs, getFinalCta } from '../data/homepageCopy';
+import { homeMeta, getWhyChooseUs, homeFaqs, getFinalCta, homeServicesSectionLead } from '../data/homepageCopy';
 import { fascinationBundles } from '../data/copywritingLibrary';
 import FascinationBulletsBand from '../components/FascinationBulletsBand.astro';
+import HomeVocSections from '../components/HomeVocSections.astro';
 
 const site = (await import('../data/site.json')).default;
 const { serviceImages } = await import('../data/serviceImages.ts');
@@ -115,14 +116,15 @@ const structuredDataJson = { '@context': 'https://schema.org', '@graph': graph }
     eyebrow="Straight from reviews"
     layout="wide"
   />
+  <HomeVocSections />
   <HomeWhyChoose items={whyChooseItems} />
   <section class="py-12 sm:py-16 lg:py-24 bg-surface border-t border-neutral-200" aria-label="Services">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-10">
         <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Services</p>
         <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">What We Build.</h2>
-        <p class="mt-3 text-neutral-600 max-w-xl">
-          From custom decks to repairs and general contracting — built for {site.primaryCity}'s climate.
+        <p class="mt-3 text-neutral-600 max-w-2xl leading-relaxed">
+          {homeServicesSectionLead} Beyond decks: repairs and exterior work — built for {site.primaryCity}&apos;s climate.
         </p>
       </div>
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">

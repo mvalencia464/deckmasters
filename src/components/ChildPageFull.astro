@@ -9,6 +9,7 @@ import ServiceImageTextBand from './ServiceImageTextBand.astro';
 import { getChildVisualBand } from '../data/servicePageVisualBands';
 import FascinationBulletsBand from './FascinationBulletsBand.astro';
 import { getFascinationForPage } from '../data/servicePageFascination';
+import ServicePageTrustBand from './ServicePageTrustBand.astro';
 
 interface Props {
   page: ServicePageEntry;
@@ -232,6 +233,8 @@ const fascination = getFascinationForPage(page);
         </div>
       )
     }
+
+    <ServicePageTrustBand />
 
     <div class="mt-12 rounded-none border border-neutral-200 bg-surface-muted p-6">
       <p class="text-neutral-800 font-semibold">Ready for a clear scope?</p>
