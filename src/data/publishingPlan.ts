@@ -1,90 +1,77 @@
 /**
- * Internal publishing calendar & launch strategy (shown on /admin/publishing only).
- * Edit dates and rows as the plan evolves — not customer-facing.
+ * Internal drip-publishing plan (shown on /admin/publishing only).
+ * The full site may hold ~50–60 URLs; we release them in batches so Google is not flooded
+ * with dozens of new pages in a single crawl window. Edit batches as the plan evolves.
  */
 
-export interface PublishingWeek {
-  /** Display label, e.g. "Mar 31 – Apr 6, 2026" */
+/** Hero + intro on /admin/publishing */
+export const publishingFocus = {
+  title: 'Why drip publishing',
+  body:
+    'Most of the build can be done in the repo ahead of time. The operational question is when URLs go live and get crawled. Shipping 30+ pages in one drop can dilute crawl budget and delay indexing; a steadier cadence (first wave slightly larger, then smaller waves) lines up better with how we verify coverage in Google Search Console before the next batch.',
+};
+
+export interface ReleaseBatch {
+  /** Short name, e.g. "Batch 1 — week 1" */
   label: string;
-  /** Focus theme for the week */
-  theme: string;
-  /** Concrete deliverables */
-  tasks: string[];
+  /** Typical size band for this wave */
+  pageRange: string;
+  /** What to prioritize in this wave */
+  focus: string;
+  /** Example URL groups or page types (adjust to match site-structure) */
+  examples: string[];
+  /** Gate before starting the next batch */
+  gateBeforeNext: string;
 }
 
-/** Rolling ~8-week window; advance / replace rows each quarter. */
-export const publishingWeeks: PublishingWeek[] = [
+/**
+ * Illustrative sequence for ~50–60 total public URLs.
+ * Replace labels with real week windows when you schedule; keep pageRange bands as guardrails.
+ */
+export const releaseBatches: ReleaseBatch[] = [
   {
-    label: 'Mar 31 – Apr 6, 2026',
-    theme: 'Post-launch stabilization',
-    tasks: [
-      'Google Search Console: confirm property, submit sitemap, check Coverage for obvious errors',
-      'GBP: verify NAP matches site + footer; add 3–5 new project photos; respond to any new Q&A',
-      'Spot-check core service + child URLs on mobile (CTA, tel:, quote form)',
+    label: 'Batch 1 — first week',
+    pageRange: '8–12 URLs',
+    focus:
+      'Core crawl paths: homepage, conversion pages, and the main service hubs so Google sees money pages and internal linking first.',
+    examples: [
+      'Home, contact, schedule, about',
+      '/services index + primary category hubs (as agreed)',
+      'High-intent marketing pages you want ranking first (e.g. Alaska, featured project if in scope)',
     ],
+    gateBeforeNext:
+      'In GSC: new URLs requested/indexed or clearly in “Discovered / crawled”; fix Coverage issues. Do not start batch 2 until this batch looks healthy.',
   },
   {
-    label: 'Apr 7 – Apr 13, 2026',
-    theme: 'Reviews & trust',
-    tasks: [
-      'Request reviews from 3–5 recent happy jobs (SMS/email with direct GBP link)',
-      'Wall of Love / homepage: confirm review sync after scheduled deploy (google-reviews.json)',
-      'Add one short case-style note to a service page or blog (before/after or scope)',
+    label: 'Batch 2 — week 2 (or start of week 2)',
+    pageRange: '4–6 URLs',
+    focus: 'Next tier of service depth: core hubs and first child pages under priority categories.',
+    examples: [
+      'Remaining category or core pages not in batch 1',
+      'First child pages under top revenue categories',
     ],
+    gateBeforeNext:
+      'Re-check GSC for batch 1 + 2 URLs; confirm internal links from new pages resolve. Then schedule batch 3.',
   },
   {
-    label: 'Apr 14 – Apr 20, 2026',
-    theme: 'Content — one pillar piece',
-    tasks: [
-      'Publish one long-form blog aligned to a money keyword (cost, materials, or repairs)',
-      'Internal links: new post → relevant /services/* hubs and back',
-      'Optional: short clip for GBP or featured project (15–30s on-site)',
+    label: 'Batch 3 onward — every 1–2 weeks',
+    pageRange: '4–6 URLs per wave',
+    focus: 'Long-tail and supporting pages: additional child pages, blog posts already drafted, gallery/utility pages as needed.',
+    examples: [
+      'Remaining child/service URLs',
+      'Blog posts (stagger so not all hit at once)',
+      'Secondary landings (partners, hiring, etc.) if not already live',
     ],
+    gateBeforeNext:
+      'After each wave: spot-check indexing for prior batches; resolve soft 404s or duplicate issues before adding the next slice.',
   },
   {
-    label: 'Apr 21 – Apr 27, 2026',
-    theme: 'GBP engagement',
-    tasks: [
-      'Weekly GBP post (seasonal tip, project highlight, or offer if applicable)',
-      'Update services list in GBP to mirror site architecture (no orphan categories)',
-      'Photo batch: upload 5+ jobsite or detail shots',
-    ],
-  },
-  {
-    label: 'Apr 28 – May 4, 2026',
-    theme: 'Local relevance',
-    tasks: [
-      'Second blog or FAQ expansion targeting a neighborhood + intent (e.g. Hillside, repair)',
-      'Check competitor GBP categories; adjust secondary categories only if accurate',
-      'Build 1–2 local citations (BBB, Alignable, industry) if not already present',
-    ],
-  },
-  {
-    label: 'May 5 – May 11, 2026',
-    theme: 'Technical hygiene',
-    tasks: [
-      'Re-run Lighthouse on homepage + /contact; fix easy wins (images, LCP)',
-      'Confirm robots.txt + sitemap in GSC; fix any soft 404s',
-      'Review Search Console queries: add FAQ or copy tweaks where impressions are high but CTR low',
-    ],
-  },
-  {
-    label: 'May 12 – May 18, 2026',
-    theme: 'Seasonal push (pre-summer)',
-    tasks: [
-      'Homepage or deck-building hub: refresh copy for “book before peak season” if still accurate',
-      'Email past leads with maintenance or inspection offer (if list exists)',
-      'GBP post: scheduling / estimate CTA',
-    ],
-  },
-  {
-    label: 'May 19 – May 25, 2026',
-    theme: 'Measure & adjust',
-    tasks: [
-      'Export GSC 28-day comparison: top pages and queries',
-      'GBP insights: views, calls, direction requests — set next quarter targets',
-      'Update this calendar for the next 8 weeks',
-    ],
+    label: 'Final sweep',
+    pageRange: 'Remaining URLs',
+    focus: 'Anything held back for last: low-priority child pages, experimental landings, or pages waiting on assets.',
+    examples: ['Stragglers from site-structure checklist', 'Optional blog backlog'],
+    gateBeforeNext:
+      'Full sitemap review in GSC; one pass on internal links and orphan URLs.',
   },
 ];
 
@@ -96,59 +83,41 @@ export interface StrategySection {
 
 export const launchStrategy: StrategySection[] = [
   {
-    title: 'Google Business Profile (GBP)',
+    title: 'Cadence (rule of thumb)',
     summary:
-      'GBP is the fastest local lever: same brand, address, and phone as the site; strong photos; regular posts; and review velocity.',
+      'First wave is slightly larger so crawlers see the site skeleton; after that, smaller drops reduce the risk of a single huge “new URL” spike.',
     bullets: [
-      'Keep NAP identical to site.json and footer (no typos in suite or ZIP).',
-      'Primary category: Deck Builder; secondaries match real work (repair, GC, outdoor living).',
-      'Photos: mix of wide shots, detail/craft, team — refreshed monthly.',
-      'Review strategy: ask within 48h of completion; reply to every review professionally.',
-      'Use Q&A to seed real homeowner questions (one person asks, official account answers).',
-      'Track GBP metrics monthly (views, calls, directions) and tie posts to seasonality in Anchorage.',
+      'Week 1: about 8–12 pages live (not the entire ~50–60 at once).',
+      'Thereafter: about 4–6 pages per week, or every two weeks if you prefer a slower drip.',
+      'Dropping 30+ URLs in one day is the pattern to avoid unless you have a strong reason and monitoring in place.',
     ],
   },
   {
-    title: 'Organic SEO (site)',
+    title: 'Google Search Console between batches',
     summary:
-      'Hubs (/services), category/core/child pages, and blog posts; technical base is sitemap, robots, schema, and internal links.',
+      'Batches are gated on evidence, not calendar optimism: the previous set should be crawled and indexed (or clearly progressing) before you add the next.',
     bullets: [
-      'Homepage + hubs target head terms; child pages capture specific intent and long-tail queries.',
-      'Maintain internal links: category → core → child; siblings; no orphan URLs.',
-      'Blog supports topical authority (cost guides, materials, climate) — link into service hubs.',
-      'Title + meta: unique per URL; refine if GSC shows high impressions with low CTR.',
-      'Schema: LocalBusiness + Service where applicable; keep email/phone consistent with JSON-LD.',
+      'Submit/refresh the sitemap after each meaningful go-live.',
+      'Use URL inspection for a sample of new URLs; watch Coverage for “Excluded” or “Error” spikes.',
+      'If a batch stalls (many “Crawled — not indexed”), pause the next release until causes are understood.',
     ],
   },
   {
-    title: 'Content & publishing rhythm',
+    title: 'What this page is not',
     summary:
-      'Predictable publishing beats “random bursts”: steady blogs, GBP posts, and photo drops signal an active business.',
+      'Operational marketing (GBP posts, review asks, blog cadence) still matters — but this screen is about which URLs hit the public web when, to stay aligned with indexing reality.',
     bullets: [
-      'Aim for 1–2 quality posts per month minimum (depth over volume).',
-      'Align topics to seasonal search (snow load, spring builds, repair after winter).',
-      'Repurpose: one project can yield site photos, GBP photos, a short post, and a testimonial pull-quote.',
-      'Scheduled production deploy: daily hook rebuilds review-driven UI — verify Wall of Love + ratings after sync.',
+      'Build and content can be finished in Git before public release; “publishing” here means go-live to crawlers.',
+      'Keep the detailed route map in /admin/site-structure; use the batches above as the release checklist.',
     ],
   },
   {
-    title: 'Launch sequencing (first 30 days)',
+    title: 'Google Business Profile (reminder)',
     summary:
-      'After go-live, prioritize verification and measurement before chasing new features.',
+      'GBP stays parallel: NAP matches site, photos, posts — it does not replace drip URL releases but complements local visibility.',
     bullets: [
-      'Week 1: GSC + GBP verified; sitemap submitted; manual test of quote form and phone.',
-      'Week 2: Review generation push; first GBP post; fix any crawl errors.',
-      'Week 3–4: First new blog or major FAQ update; internal link pass from new content.',
-      'Ongoing: weekly GBP touch (post or photos); monthly GSC review.',
-    ],
-  },
-  {
-    title: 'What we do not rely on',
-    summary: 'Avoid scope creep that does not move Anchorage deck leads.',
-    bullets: [
-      'Thin location pages for every suburb unless each one is truly unique and useful.',
-      'Automated junk blog — hurts trust and can trigger quality issues.',
-      'Keyword-stuffed titles; prefer clear benefit + city where it reads naturally.',
+      'Keep NAP identical to site.json and footer.',
+      'Review velocity and GBP posts are ongoing, not tied to a single page batch.',
     ],
   },
 ];
@@ -158,7 +127,7 @@ export const deployCadenceNote = {
   title: 'Automated deploy (production)',
   lines: [
     'GitHub Actions workflow `.github/workflows/scheduled-pages-deploy.yml` POSTs the Cloudflare Pages deploy hook daily at 07:00 UTC (`workflow_dispatch` runs it manually too).',
-    'Cloudflare Pages runs your project build command (e.g. review sync + `astro build` as configured in Pages) — keeps live reviews and build output fresh.',
-    'This route uses `noindex` and is not linked from the public nav or sitemap.',
+    'Cloudflare Pages runs your project build — keeps live reviews and build output fresh.',
+    'Drip publishing is a routing / navigation / sitemap decision: you can keep pages out of the main nav or behind noindex until their batch, or ship code with URLs gated by your release process.',
   ],
 };

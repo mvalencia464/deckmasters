@@ -1,5 +1,5 @@
 /**
- * Copy for /for-the-nerds — engineering & stack story (public).
+ * Copy for /admin/for-the-nerds — engineering & stack story (internal).
  */
 
 export const forTheNerdsMeta = {

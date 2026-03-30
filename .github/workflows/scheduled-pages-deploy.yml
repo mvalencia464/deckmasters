@@ -1,4 +1,5 @@
 # Triggers a Cloudflare Pages production build on a schedule.
+# For on-demand deploys after merging a drip batch, use workflow "Manual drip deploy".
 # Your build command runs sync-reviews.js (DataForSEO) then astro build.
 #
 # Setup (GitHub → Settings → Secrets and variables → Actions):

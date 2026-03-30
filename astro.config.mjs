@@ -35,7 +35,6 @@ export default defineConfig({
         try {
           const path = new URL(page).pathname.replace(/\/$/, '') || '/';
           if (path.startsWith('/admin')) return false;
-          if (path === '/copywriting-library') return false;
           return true;
         } catch {
           return true;

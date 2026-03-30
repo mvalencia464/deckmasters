@@ -1,0 +1,40 @@
+# Manual production deploy — same Cloudflare Pages deploy hook as the scheduled job.
+#
+# In GitHub: Actions → "Manual drip deploy" → Run workflow → choose batch label (log only).
+# Secret: CLOUDFLARE_PAGES_DEPLOY_HOOK_URL (same as scheduled-pages-deploy.yml)
+
+name: Manual drip deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch:
+        description: 'Which release batch this deploy is for (logged in the run; merge to main first)'
+        type: choice
+        required: true
+        default: 'Batch 1 — first week'
+        options:
+          - 'Batch 1 — first week'
+          - 'Batch 2 — week 2 (or start of week 2)'
+          - 'Batch 3 onward — every 1–2 weeks'
+          - 'Final sweep'
+          - 'Ad-hoc / hotfix'
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log batch context
+        run: |
+          echo "Manual drip deploy — ${{ inputs.batch }}"
+          echo "Uses latest default branch commit Cloudflare Pages is configured to build."
+
+      - name: Trigger Cloudflare Pages deploy hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_PAGES_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "::error::Set repository secret CLOUDFLARE_PAGES_DEPLOY_HOOK_URL (full hook URL from Cloudflare Pages → Deploy hooks)."
+            exit 1
+          fi
+          curl -fsS -X POST "$DEPLOY_HOOK_URL" -o /dev/null

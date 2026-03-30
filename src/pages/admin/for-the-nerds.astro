@@ -1,20 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import AdminInternalNav from '../components/AdminInternalNav.astro';
+import Layout from '../../layouts/Layout.astro';
+import AdminInternalNav from '../../components/AdminInternalNav.astro';
 import {
   forTheNerdsMeta,
   forTheNerdsHero,
   stackAtAGlance,
   techPillars,
-} from '../data/forTheNerdsCopy';
+} from '../../data/forTheNerdsCopy';
 
-const site = (await import('../data/site.json')).default;
+const site = (await import('../../data/site.json')).default;
 const pathname = Astro.url.pathname;
 const title = forTheNerdsMeta.title;
 const description = forTheNerdsMeta.description;
 ---
 
-<Layout title={title} description={description} verbatimTitle>
+<Layout title={title} description={description} verbatimTitle noindex>
   <div class="min-h-[60vh] bg-surface text-neutral-800">
     <div class="border-b border-neutral-200 bg-surface-muted">
       <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">

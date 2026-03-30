@@ -1,6 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import AdminInternalNav from '../components/AdminInternalNav.astro';
+import Layout from '../../layouts/Layout.astro';
+import AdminInternalNav from '../../components/AdminInternalNav.astro';
 import {
   libraryMeta,
   stickyVerbatims,
@@ -16,9 +16,9 @@ import {
   buttonCopyRows,
   metaSeoRows,
   pasByService,
-} from '../data/copywritingLibrary';
+} from '../../data/copywritingLibrary';
 
-const site = (await import('../data/site.json')).default;
+const site = (await import('../../data/site.json')).default;
 const pathname = Astro.url.pathname;
 const pageTitle = `${libraryMeta.title} | ${site.businessName}`;
 const description =

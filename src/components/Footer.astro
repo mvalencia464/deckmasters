@@ -23,7 +23,6 @@ const navCompany = [
   { label: 'About', href: '/about' },
   { label: 'Reviews', href: '/wall-of-love' },
   { label: 'Blog', href: '/blog' },
-  { label: 'For the nerds', href: '/for-the-nerds' },
   { label: 'Careers', href: '/hiring' },
   { label: 'Partners', href: '/partners' },
 ];
@@ -31,11 +30,10 @@ const navCompany = [
 const legalUtility = [
   { label: 'Privacy', href: '/privacy' },
   { label: 'Terms', href: '/terms' },
-  { label: 'Voice & messaging', href: '/copywriting-library' },
 ];
 ---
 
-<footer class="border-t border-neutral-200 bg-surface text-neutral-800 pb-[max(5rem,env(safe-area-inset-bottom))] md:pb-0">
+<footer class="border-t border-neutral-200 bg-surface text-neutral-800 pb-[max(1.25rem,env(safe-area-inset-bottom))] md:pb-0">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 lg:py-16">
       <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
         <!-- Brand -->
@@ -183,9 +181,9 @@ const legalUtility = [
 
   <!-- Slightly muted strip: legal + meta -->
   <div class="border-t border-neutral-200 bg-surface-muted">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p class="text-xs text-neutral-600">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div class="flex flex-col items-center gap-3 text-center sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-left">
+          <p class="max-w-prose text-xs leading-snug text-neutral-600">
             © {year} {site.businessName}. All rights reserved.
             {site.licenseNumber && (
               <span class="text-neutral-500">
@@ -194,10 +192,13 @@ const legalUtility = [
               </span>
             )}
           </p>
-          <nav class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-neutral-600" aria-label="Legal and utilities">
+          <nav
+            class="flex shrink-0 flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs text-neutral-600 sm:justify-end"
+            aria-label="Legal"
+          >
             {
               legalUtility.map((item) => (
-                <a href={item.href} class="transition-colors hover:text-brand-orange">
+                <a href={item.href} class="whitespace-nowrap transition-colors hover:text-brand-orange">
                   {item.label}
                 </a>
               ))

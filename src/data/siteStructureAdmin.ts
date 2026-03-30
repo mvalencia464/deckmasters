@@ -25,17 +25,16 @@ export const topLevelSiteRoutes: { href: string; label: string }[] = [
   { href: '/dock-building', label: 'Dock building' },
   { href: '/partners', label: 'Partners' },
   { href: '/hiring', label: 'Careers' },
-  { href: '/for-the-nerds', label: 'For the nerds' },
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },
 ];
 
-/** Internal tools — linked from /admin/* pages; copywriting library is noindex but not under /admin */
+/** Internal tools — linked from /admin/* pages */
 export const adminInternalNav: { href: string; label: string }[] = [
-  { href: '/admin/publishing', label: 'Publishing & launch plan' },
+  { href: '/admin/publishing', label: 'Drip publishing plan' },
   { href: '/admin/site-structure', label: 'Site structure' },
-  { href: '/for-the-nerds', label: 'For the nerds' },
-  { href: '/copywriting-library', label: 'Copywriting library' },
+  { href: '/admin/for-the-nerds', label: 'For the nerds' },
+  { href: '/admin/copywriting-library', label: 'Copywriting library' },
 ];
 
 export type ServiceTreeSection =
