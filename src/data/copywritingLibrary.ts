@@ -71,11 +71,11 @@ export type HeroBlock = {
 export const heroHeadlines: HeroBlock[] = [
   {
     page: 'Homepage',
-    h1Primary: 'They do what they say they\'re going to do. Then they over deliver.',
+    h1Primary: 'New decks, replacements, and repairs — built for Anchorage homes.',
     h1Alternatives: [
+      'Custom decks and outdoor living in Anchorage — permits through punch list.',
       'Your deck is finished. The neighbors won\'t stop asking who built it.',
-      'You\'ve been waiting a year for someone to show up. We will.',
-      'Stop settling for contractors who ghost. Start here.',
+      'Reviews in three words: “They do what they say — then they over deliver.”',
     ],
     subheadline:
       'Deck Masters builds decks that exceed expectations, handle Alaska\'s winters, and come with a team that actually picks up the phone — even 9 months after the job is done.',
@@ -549,11 +549,10 @@ export const homepagePublicSeo = {
 } as const;
 
 /**
- * Homepage hero — VOC lines only (no internal methodology labels).
- * Matches Part 2 Homepage block in the asset library.
+ * Homepage hero — H1 pairs SEO kicker (in homepageCopy) + clear offer; subhead carries voice/proof.
  */
 export const publicHomepageHero = {
-  h1: 'They do what they say they\'re going to do. Then they over deliver.',
+  h1: 'New decks, replacements, and repairs — built for Anchorage homes.',
   subhead:
     'Deck Masters builds decks that exceed expectations, handle Alaska\'s winters, and come with a team that actually picks up the phone — even 9 months after the job is done.',
   ctaPrimary: 'Get My Free Estimate',

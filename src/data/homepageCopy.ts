@@ -16,11 +16,11 @@ export const homeMeta = {
 export function heroCopy() {
   return {
     /**
-     * SEO-primary line inside `<h1>` — includes “deck builder” + “Anchorage” for query relevance.
-     * The verbatim quote below carries conversion; title tag + this line reinforce keywords.
+     * SEO-primary line inside `<h1>` — “deck builder” + “Anchorage” (matches title tag intent).
+     * Large line under it states services + locale plainly; verbatim praise lives in “Why choose us.”
      */
     h1Seo: 'Deck builder in Anchorage',
-    /** Customer verbatim — large display line under the SEO fragment */
+    /** Clear offer line inside the same `<h1>` — still indexable alongside the kicker */
     h1Quote: publicHomepageHero.h1,
     subhead: publicHomepageHero.subhead,
     /** Risk-reversal under subhead */
@@ -31,14 +31,17 @@ export function heroCopy() {
 export interface WhyChooseBlock {
   headline: string;
   body: string;
+  /** Optional citation below the headline (e.g. review author + source) */
+  attribution?: string;
 }
 
 export function getWhyChooseUs(googleReviewCount: number, averageRating: string): WhyChooseBlock[] {
   return [
     {
       headline: '"They do what they say they\'re going to do. Then they over deliver."',
+      attribution: 'Mark Daly · Google review',
       body:
-        'That line shows up in reviews for a reason — homeowners describe follow-through, not just a strong first impression.',
+        'Homeowners keep saying this in their own words: follow-through first, then extra care — not just a strong first impression.',
     },
     {
       headline: `${googleReviewCount}+ Google reviews at ${averageRating} — with real detail`,
