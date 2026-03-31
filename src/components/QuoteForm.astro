@@ -330,46 +330,103 @@ const googleAverageRating = googleReviews.length
         return !!field?.checked;
       };
 
-      const payload = new FormData();
-      payload.append('name', getValue('[name="name"]'));
-      payload.append('email', getValue('[name="email"]'));
-      payload.append('phone', getValue('[name="phone"]'));
-      payload.append('projectAddress', getValue('[name="projectAddress"]'));
-      payload.append('addressLine1', getValue('[name="addressLine1"]'));
-      payload.append('addressCity', getValue('[name="addressCity"]'));
-      payload.append('addressState', getValue('[name="addressState"]'));
-      payload.append('addressZip', getValue('[name="addressZip"]'));
-      payload.append('addressCountry', getValue('[name="addressCountry"]'));
-      const serviceType = getValue('[name="serviceType"]');
-      if (serviceType) payload.append('serviceType', serviceType);
-      payload.append('projectDescription', getValue('[name="projectDescription"]'));
-      payload.append('termsConsent', getChecked('[name="termsConsent"]') ? 'true' : '');
-      payload.append('marketingConsent', getChecked('[name="marketingConsent"]') ? 'true' : '');
-      
-      const photoInput = document.getElementById('photo-upload') as HTMLInputElement | null;
-      if (photoInput && photoInput.files && photoInput.files[0]) {
-        payload.append('photo', photoInput.files[0]);
-      }
+      const buildFormData = () => {
+        const payload = new FormData();
+        payload.append('name', getValue('[name="name"]'));
+        payload.append('email', getValue('[name="email"]'));
+        payload.append('phone', getValue('[name="phone"]'));
+        payload.append('projectAddress', getValue('[name="projectAddress"]'));
+        payload.append('addressLine1', getValue('[name="addressLine1"]'));
+        payload.append('addressCity', getValue('[name="addressCity"]'));
+        payload.append('addressState', getValue('[name="addressState"]'));
+        payload.append('addressZip', getValue('[name="addressZip"]'));
+        payload.append('addressCountry', getValue('[name="addressCountry"]'));
+        const serviceType = getValue('[name="serviceType"]');
+        if (serviceType) payload.append('serviceType', serviceType);
+        payload.append('projectDescription', getValue('[name="projectDescription"]'));
+        payload.append('termsConsent', getChecked('[name="termsConsent"]') ? 'true' : '');
+        payload.append('marketingConsent', getChecked('[name="marketingConsent"]') ? 'true' : '');
+        const photoInput = document.getElementById('photo-upload') as HTMLInputElement | null;
+        if (photoInput && photoInput.files && photoInput.files[0]) {
+          payload.append('photo', photoInput.files[0]);
+        }
+        return payload;
+      };
+
+      const maxAttempts = 2;
+      const retryDelayMs = (n: number) => 900 * (n + 1);
 
       try {
-        const res = await fetch('/api/submit-quote', {
-          method: 'POST',
-          body: payload,
-        });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data.success) {
-          showMessage(
-            data.message || "Thank you! You're all set — meet your customer success manager below.",
-            false
-          );
-          formEl.reset();
-          const dropText = document.getElementById('dropzone-text');
-          if (dropText) dropText.textContent = 'Click or drag a photo of your project area (optional)';
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+          const res = await fetch('/api/submit-quote', {
+            method: 'POST',
+            body: buildFormData(),
+          });
+          const cfRay = res.headers.get('cf-ray') || '';
+          const hdrReqId = res.headers.get('x-request-id') || '';
+          const ct = res.headers.get('content-type') || '';
 
-        } else {
-          showMessage(data.error || 'Something went wrong. Please try again or call us.', true);
+          if (ct.includes('application/json')) {
+            const data = (await res.json().catch(() => ({}))) as {
+              success?: boolean;
+              message?: string;
+              error?: string;
+              requestId?: string;
+            };
+            if (res.ok && data.success) {
+              showMessage(
+                data.message || "Thank you! You're all set — meet your customer success manager below.",
+                false
+              );
+              formEl.reset();
+              const dropText = document.getElementById('dropzone-text');
+              if (dropText) dropText.textContent = 'Click or drag a photo of your project area (optional)';
+              break;
+            }
+            const ref = [data.requestId, hdrReqId, cfRay].filter(Boolean).join(' · ');
+            const retryable =
+              (res.status === 502 || res.status === 503 || res.status === 520) && attempt < maxAttempts - 1;
+            if (retryable) {
+              console.warn('[submit-quote] Retrying after CRM/upstream error', {
+                status: res.status,
+                attempt,
+                ref,
+              });
+              await new Promise((r) => setTimeout(r, retryDelayMs(attempt)));
+              continue;
+            }
+            showMessage(
+              data.error ||
+                (ref
+                  ? `Something went wrong. Reference: ${ref}. Please try again or call us.`
+                  : 'Something went wrong. Please try again or call us.'),
+              true
+            );
+            break;
+          }
+
+          const bodySnippet = (await res.text().catch(() => '')).slice(0, 160);
+          const retryable =
+            (res.status === 502 || res.status === 503 || res.status === 520) && attempt < maxAttempts - 1;
+          console.error('[submit-quote] Non-JSON response', {
+            status: res.status,
+            cfRay,
+            hdrReqId,
+            bodySnippet,
+          });
+          if (retryable) {
+            await new Promise((r) => setTimeout(r, retryDelayMs(attempt)));
+            continue;
+          }
+          const ref = [hdrReqId, cfRay].filter(Boolean).join(' · ') || 'n/a';
+          showMessage(
+            `We couldn’t reach the form service (error ${res.status}). Please try again or call us. Reference: ${ref}.`,
+            true
+          );
+          break;
         }
-      } catch {
+      } catch (err) {
+        console.error('[submit-quote] Network failure', err);
         showMessage('Network error. Please try again or call us.', true);
       } finally {
         if (submitBtn) submitBtn.disabled = false;

@@ -5,38 +5,53 @@
  */
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 
+/** GHL HTTP timeout — avoids hanging until the Workers/Pages CPU wall and surfacing as a Cloudflare 502 HTML page. */
+const GHL_FETCH_TIMEOUT_MS = 25_000;
+
 export async function onRequestPost(context) {
   const { request, env } = context;
-  const token = env.HIGHLEVEL_TOKEN;
-  const locationId = env.HIGHLEVEL_LOCATION_ID;
+  const requestId =
+    request.headers.get('cf-ray') ||
+    request.headers.get('x-request-id') ||
+    (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`);
 
-  if (!token || !locationId) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'Server configuration error' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
-
-  const contentType = request.headers.get('content-type') || '';
-  let data = {};
-  let photoFile = null;
+  const respond = (payload, status) =>
+    new Response(JSON.stringify({ ...payload, requestId }), {
+      status,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Request-Id': requestId,
+        'Cache-Control': 'no-store',
+      },
+    });
 
   try {
-    if (contentType.includes('multipart/form-data')) {
-      const formData = await request.formData();
-      photoFile = formData.get('photo');
-      for (const [key, value] of formData.entries()) {
-        if (key !== 'photo') data[key] = value;
-      }
-    } else {
-      data = await request.json();
+    const token = env.HIGHLEVEL_TOKEN;
+    const locationId = env.HIGHLEVEL_LOCATION_ID;
+
+    if (!token || !locationId) {
+      console.error(`[submit-quote:${requestId}] Missing required server configuration`);
+      return respond({ success: false, error: 'Server configuration error' }, 500);
     }
-  } catch (err) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'Invalid request body', debug: String(err) }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
+
+    const contentType = request.headers.get('content-type') || '';
+    let data = {};
+    let photoFile = null;
+
+    try {
+      if (contentType.includes('multipart/form-data')) {
+        const formData = await request.formData();
+        photoFile = formData.get('photo');
+        for (const [key, value] of formData.entries()) {
+          if (key !== 'photo') data[key] = value;
+        }
+      } else {
+        data = await request.json();
+      }
+    } catch (err) {
+      console.error(`[submit-quote:${requestId}] Invalid request body`, err);
+      return respond({ success: false, error: 'Invalid request body', debug: String(err) }, 400);
+    }
 
   const name = String(data.name || '').trim();
   const email = String(data.email || '').trim();
@@ -84,10 +99,7 @@ export async function onRequestPost(context) {
 
 
   if (!name || !email || !phone) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'Name, email, and phone are required' }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
+    return respond({ success: false, error: 'Name, email, and phone are required' }, 400);
   }
 
   const nameParts = name.split(/\s+/);
@@ -142,46 +154,65 @@ export async function onRequestPost(context) {
     'Version': '2021-07-28',
   };
 
-  const postToGHL = async (payload) => {
-    const res = await fetch(`${GHL_BASE}/contacts/`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(payload),
-    });
-    const result = await res.json().catch(() => ({}));
-    return { res, data: result };
-  };
+    const postToGHL = async (payload) => {
+      const signal =
+        typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function'
+          ? AbortSignal.timeout(GHL_FETCH_TIMEOUT_MS)
+          : undefined;
+      const res = await fetch(`${GHL_BASE}/contacts/`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload),
+        ...(signal ? { signal } : {}),
+      });
+      const result = await res.json().catch(() => ({}));
+      return { res, data: result };
+    };
 
-  try {
-    let { res, data: ghlData } = await postToGHL(basePayload);
+    try {
+      let { res, data: ghlData } = await postToGHL(basePayload);
 
-    // Fallback if custom field ID is wrong (common source of 400s)
-    if (!res.ok && basePayload.customFields) {
-      const fallbackPayload = { ...basePayload };
-      delete fallbackPayload.customFields;
-      const retry = await postToGHL(fallbackPayload);
-      res = retry.res;
-      ghlData = retry.data;
-    }
+      // Fallback if custom field ID is wrong (common source of 400s)
+      if (!res.ok && basePayload.customFields) {
+        const fallbackPayload = { ...basePayload };
+        delete fallbackPayload.customFields;
+        const retry = await postToGHL(fallbackPayload);
+        res = retry.res;
+        ghlData = retry.data;
+      }
 
-    if (!res.ok) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: ghlData.message || ghlData.error || `GHL API Error (${res.status})`,
-        }),
-        { status: 502, headers: { 'Content-Type': 'application/json' } }
+      if (!res.ok) {
+        console.error(
+          `[submit-quote:${requestId}] GHL API error`,
+          JSON.stringify({ status: res.status, body: ghlData })
+        );
+        // 503 = our app returned JSON (upstream CRM issue). Cloudflare edge HTML 502 is a separate failure mode.
+        return respond(
+          {
+            success: false,
+            error: ghlData.message || ghlData.error || `GHL API Error (${res.status})`,
+          },
+          503
+        );
+      }
+
+      return respond({ success: true, message: "Thank you! We'll be in touch soon." }, 200);
+    } catch (err) {
+      console.error(`[submit-quote:${requestId}] Submission failed`, err);
+      return respond(
+        { success: false, error: 'Submission failed. Please try again.', debug: String(err) },
+        503
       );
     }
-
-    return new Response(
-      JSON.stringify({ success: true, message: "Thank you! We'll be in touch soon." }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
   } catch (err) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'Submission failed. Please try again.', debug: String(err) }),
-      { status: 502, headers: { 'Content-Type': 'application/json' } }
+    console.error(`[submit-quote:${requestId}] Unhandled error`, err);
+    return respond(
+      {
+        success: false,
+        error: 'Server error. Please try again in a moment.',
+        debug: String(err),
+      },
+      500
     );
   }
 }
