@@ -8,9 +8,11 @@ compatibility_date = "2026-03-06"
 pages_build_output_dir = "dist"
 
 [vars]
-# Maps JS + Places (quote form autocomplete). Restrict key by HTTP referrer in Google Cloud.
-# Managed here with other Pages vars (not Dashboard). Safe to commit: key is also in client HTML.
-PUBLIC_GOOGLE_MAPS_API_KEY = ""
+# Maps JS + Places (quote form autocomplete). Restrict the key by HTTP referrer in Google Cloud.
+# Format (quotes required for the value):
+#   PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSy…"   # your actual browser key
+# The key ends up in built HTML anyway; protection is referrer + API restrictions, not secrecy.
+PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSyDcsQrRtFyZmA3I2hluPV33Wjx2Xj3nul4"
 
 # Add your HighLevel Custom Field IDs here
 # You can find these in HighLevel > Settings > Custom Fields
