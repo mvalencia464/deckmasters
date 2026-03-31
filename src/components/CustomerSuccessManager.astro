@@ -7,7 +7,7 @@ import jackieImg from '../assets/jackie.png';
   <p class="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-400 mb-3">
     Your Customer Success Manager
   </p>
-  <div class="flex items-center gap-4">
+  <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
     <div class="shrink-0">
       <Image
         src={jackieImg}
@@ -18,14 +18,20 @@ import jackieImg from '../assets/jackie.png';
         loading="lazy"
       />
     </div>
-    <div>
+    <div class="min-w-0">
       <p class="font-semibold text-sm text-neutral-50">Jackie Slagle</p>
       <p class="text-xs text-neutral-400">Customer Success Manager</p>
       <p class="mt-1 text-xs text-neutral-300">
         <span class="font-medium">Phone:</span> (907) 891-8283
       </p>
-      <p class="text-xs text-neutral-300">
-        <span class="font-medium">Email:</span> meeting@deckmastersak.com
+      <p class="text-xs text-neutral-300 wrap-break-word">
+        <span class="font-medium">Email:</span>{' '}
+        <a
+          href="mailto:meeting@deckmastersak.com"
+          class="break-all text-neutral-300 hover:text-neutral-100 underline underline-offset-2"
+        >
+          meeting@deckmastersak.com
+        </a>
       </p>
     </div>
   </div>
