@@ -8,6 +8,10 @@ compatibility_date = "2026-03-06"
 pages_build_output_dir = "dist"
 
 [vars]
+# Maps JS + Places (quote form autocomplete). Restrict key by HTTP referrer in Google Cloud.
+# Managed here with other Pages vars (not Dashboard). Safe to commit: key is also in client HTML.
+PUBLIC_GOOGLE_MAPS_API_KEY = ""
+
 # Add your HighLevel Custom Field IDs here
 # You can find these in HighLevel > Settings > Custom Fields
 HIGHLEVEL_CUSTOM_FIELD_PROJECT_DESCRIPTION = "cVY04IeJOEfpC42bqury"

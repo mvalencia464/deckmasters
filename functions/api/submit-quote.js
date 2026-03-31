@@ -44,6 +44,12 @@ export async function onRequestPost(context) {
   const serviceType = String(data.serviceType || '').trim();
   let projectDescription = String(data.projectDescription || '').trim();
   const neighborhood = String(data.neighborhood || '').trim();
+  const projectAddress = String(data.projectAddress || '').trim();
+  const addressLine1 = String(data.addressLine1 || '').trim();
+  const addressCity = String(data.addressCity || '').trim();
+  const addressState = String(data.addressState || '').trim();
+  const addressZip = String(data.addressZip || '').trim();
+  const addressCountry = String(data.addressCountry || '').trim();
 
   let fileUrl = '';
   // Handle Photo Upload (R2)
@@ -101,6 +107,19 @@ export async function onRequestPost(context) {
     source: 'Website Quote Form',
     tags,
   };
+
+  if (addressLine1) basePayload.address1 = addressLine1;
+  else if (projectAddress) basePayload.address1 = projectAddress;
+  if (addressCity) basePayload.city = addressCity;
+  if (addressState) basePayload.state = addressState;
+  if (addressZip) basePayload.postalCode = addressZip;
+  if (addressCountry) basePayload.country = addressCountry;
+
+  if (projectAddress) {
+    projectDescription = projectDescription
+      ? `Project address: ${projectAddress}\n\n${projectDescription}`
+      : `Project address: ${projectAddress}`;
+  }
 
   const customFields = [];
   const projectDescriptionFieldId = env.HIGHLEVEL_CUSTOM_FIELD_PROJECT_DESCRIPTION;
