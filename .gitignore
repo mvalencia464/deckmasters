@@ -22,3 +22,5 @@ dist/
 public/Keller-video.mov
 public/keller.mov
 public/keller.mp4
+# GitHub rejects blobs > 100 MB — transcode or host on R2 before referencing in content
+src/assets/projects/matt-blakeslee/IMG_6982.mov

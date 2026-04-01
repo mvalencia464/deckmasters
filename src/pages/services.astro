@@ -10,7 +10,7 @@ import {
 } from '../data/siteArchitecture';
 import { serviceImages } from '../data/serviceImages';
 import { servicesPageCopy } from '../data/marketingPagesCopy';
-import { homepageTrustStripItems } from '../data/copywritingLibrary';
+import { homepageTrustStripItems, testimonialPulls } from '../data/copywritingLibrary';
 
 const site = (await import('../data/site.json')).default;
 const tel = site.primaryPhone.replace(/\D/g, '');
@@ -20,6 +20,9 @@ const mc = servicesPageCopy({
   primaryPhone: site.primaryPhone,
   ownerName: site.ownerName,
 });
+const servicesHeroQuote =
+  testimonialPulls.find((t) => t.label === 'Any deck building page')?.quote ??
+  testimonialPulls[0].quote;
 const title = mc.title;
 const description = mc.description;
 
@@ -41,9 +44,9 @@ function isCoreOrCategoryWithCoreChildren(categorySlug: string): boolean {
       <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight max-w-4xl">
         {mc.h1}
       </h1>
-      <p class="mt-5 max-w-2xl text-lg text-neutral-200 leading-relaxed">
-        {mc.heroLead}
-      </p>
+      <blockquote class="mt-5 max-w-3xl border-l-4 border-brand-orange pl-4 text-sm sm:text-base text-neutral-200 leading-relaxed">
+        {servicesHeroQuote}
+      </blockquote>
       <a
         href={`tel:${tel}`}
         class="mt-8 inline-block text-2xl sm:text-3xl font-bold text-white hover:text-brand-orange transition-colors tracking-tight"

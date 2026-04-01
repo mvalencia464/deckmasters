@@ -15,20 +15,20 @@ export function servicesPageCopy(s: SiteForMarketingCopy) {
   return {
     title: `Services | Decks, Repairs & Exterior Work in ${primaryCity} — ${businessName}`,
     description: `List of our deck and exterior services in ${primaryCity}. Free estimates. ${primaryPhone}.`,
-    h1: 'Our services',
-    heroLead: `This page lists what we do. Click a link to read more about that job. The words match what you see on your written estimate. We plan work for ${primaryCity} weather — snow, wind, and cold.`,
+    h1: 'Get a deck your family will actually enjoy',
+    heroLead: `You are not hiring "services" for the sake of it. You are creating an outdoor space that feels good to use, looks right for your home, and holds up in ${primaryCity} weather. We offer every service needed to get you there — from new builds to repairs and upgrades.`,
     heroPillars: [
       {
-        title: 'Click a service',
-        body: 'Each link opens a page with more detail about that job.',
+        title: 'Comfort and confidence',
+        body: 'You get a deck that feels solid underfoot, functions the way your family lives, and is planned for long-term use.',
       },
       {
-        title: 'Same words as your estimate',
-        body: 'Page titles match your paperwork so you know what you are opening.',
+        title: 'One team for the full outcome',
+        body: 'Whether you need a full build, structural repair, stairs, railing, or resurfacing, every service supports the same end result: a better deck.',
       },
       {
-        title: 'Questions?',
-        body: 'Call us — we will help you pick the right page.',
+        title: 'Clear path from idea to build',
+        body: 'You get straightforward recommendations and written scope language, so you can make decisions without second-guessing.',
       },
     ],
     phoneCtaAfterPrefix: 'Or ',

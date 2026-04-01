@@ -19,4 +19,24 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    description: z.string(),
+    h1: z.string(),
+    subhead: z.string(),
+    sectionH2: z.string(),
+    p1: z.string(),
+    p2: z.string(),
+    location: z.string().default('Anchorage, Alaska'),
+    deckType: z.string(),
+    keyFeatures: z.string(),
+    featuredImage: image(),
+    galleryImages: z.array(image()),
+    video: z.string().optional(),
+    isFeatured: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, projects };
