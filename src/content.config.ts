@@ -35,6 +35,15 @@ const projects = defineCollection({
     featuredImage: image(),
     galleryImages: z.array(image()),
     video: z.string().optional(),
+    /**
+     * hero: video replaces featured image under the title (default).
+     * afterGallery: keep featured image at top; show video below the photo grid.
+     */
+    videoPlacement: z.enum(['hero', 'afterGallery']).default('hero'),
+    /** Short intro for on-site walkthrough videos (shown under the player when set) */
+    walkthroughIntro: z.string().optional(),
+    /** Pull quotes from the walkthrough transcript */
+    walkthroughQuotes: z.array(z.string()).optional(),
     isFeatured: z.boolean().default(false),
   }),
 });

@@ -1,8 +1,8 @@
 ---
 title: "Blakeslee Multi-Level Deck | Massive Anchorage Build — Deck Masters AK"
-description: "A sprawling 1,750 sq ft multi-level Trex Enhance deck in Anchorage featuring flat roof sleeper systems and cable railings. Deck Masters AK."
+description: "1,750 sq ft multi-level Trex deck in Anchorage — on-site walkthrough with Jordan plus photos: flat roof sleepers, cable rail, and how we sequence the work."
 h1: "Blakeslee 1,750 sq ft multi-level deck"
-subhead: "One of our largest residential projects, featuring four distinct deck levels, a flat roof sleeper system, and sleek cable railings."
+subhead: "One of our largest residential projects — four levels, a flat roof sleeper system, and cable railings. Below, Jordan walks the site and talks through what we are keeping, replacing, and rebuilding."
 sectionH2: "Multi-level complexity"
 p1: "The Blakeslee project involved approximately 1,750 sq ft of outdoor space, spread across multiple levels including an upper wrap-around walkway, a middle back deck, and a lower wrap-around deck. The build used Trex Enhance decking with a seamless picture-frame design and smooth treated posts with stainless steel cable railing for an open, airy feel."
 p2: "Key technical details include a pressure-treated sleeper system on the flat roof garage, new steel piles for the lower deck, and extensive use of joist tape to preserve existing framing. Every level was carefully planned to ensure heights matched and drainage was managed correctly, providing a cohesive and massive outdoor living area."
@@ -11,6 +11,14 @@ deckType: "Multi-level Trex Enhance composite deck"
 keyFeatures: "Flat roof sleeper system, 1,750 sq ft total area, cable railing, steel piles"
 featuredImage: "../../assets/projects/matt-blakeslee/Photo-1-3.jpg"
 galleryImages:
+  - "../../assets/projects/matt-blakeslee/Resized_20250630_122428.jpeg"
+  - "../../assets/projects/matt-blakeslee/Resized_20250630_122416.jpeg"
+  - "../../assets/projects/matt-blakeslee/Resized_20250630_122300.jpeg"
+  - "../../assets/projects/matt-blakeslee/Photo-9.jpg"
+  - "../../assets/projects/matt-blakeslee/Photo-8.jpg"
+  - "../../assets/projects/matt-blakeslee/Photo-7.jpg"
+  - "../../assets/projects/matt-blakeslee/Photo-6.jpg"
+  - "../../assets/projects/matt-blakeslee/Photo-2-3.jpg"
   - "../../assets/projects/matt-blakeslee/IMG_2263.jpeg"
   - "../../assets/projects/matt-blakeslee/IMG_2264.jpeg"
   - "../../assets/projects/matt-blakeslee/IMG_2266.jpeg"
@@ -29,5 +37,13 @@ galleryImages:
   - "../../assets/projects/matt-blakeslee/IMG_6987.jpeg"
   - "../../assets/projects/matt-blakeslee/IMG_6998.jpeg"
   - "../../assets/projects/matt-blakeslee/IMG_6999.jpeg"
+video: "https://media.stokeleads.com/deckmasters/videos/IMG_6982.mp4"
+videoPlacement: afterGallery
+walkthroughIntro: "Press play for a real site walkthrough — not a polished ad. Jordan narrates what is happening on the middle deck, the upper deck, and the flat roof so you can hear how we think about framing, decking, stairs, and safety before we put it in writing."
+walkthroughQuotes:
+  - "On the middle deck we are replacing posts, cutting the deck back where it makes sense, and keeping good framing where we can — then new decking, new stairs down to the lower deck (six feet wide), Trex Enhanced with picture-framed stairs, cable railing, and a layout shift from about 12×17 to 10×17."
+  - "On the upper deck: new stairs, all new decking and railing, keeping the existing framing where it is sound and wrapping it so it lasts."
+  - "This flat roof has to be repaired the right way — we strip it, seal it, then rebuild the deck and bring the walking surface up to match the adjacent level. Think on the order of a 25×24 foot area with a sleeper system and new stairs; there will be a step, but it is all planned as one system."
+  - "We bring the stairs closer to the house so kids and dogs are not exposed to a big open edge."
 isFeatured: true
 ---

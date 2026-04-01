@@ -18,6 +18,11 @@ const otherProjects = allProjects.filter((p) => p.id !== project.id).slice(0, 3)
 
 const title = data.title;
 const description = data.description;
+
+const videoInHero = !!(data.video && data.videoPlacement !== 'afterGallery');
+const videoAfterGallery = !!(data.video && data.videoPlacement === 'afterGallery');
+const walkthroughBlock =
+  data.walkthroughIntro || (data.walkthroughQuotes && data.walkthroughQuotes.length > 0);
 ---
 
 <Layout title={title} description={description}>
@@ -44,7 +49,7 @@ const description = data.description;
       </header>
 
       <div class="mt-8 sm:mt-10 rounded-none border border-neutral-200 bg-black shadow-sm overflow-hidden">
-        {data.video ? (
+        {videoInHero ? (
           <div class="aspect-video w-full max-h-[70vh] min-h-[200px]">
             <video
               class="w-full h-full object-contain bg-black"
@@ -70,6 +75,27 @@ const description = data.description;
           </div>
         )}
       </div>
+
+      {videoInHero && walkthroughBlock && (
+        <div class="mt-8 sm:mt-10 rounded-none border border-neutral-200 bg-surface-elevated p-5 sm:p-6">
+          <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-orange mb-2">On-site walkthrough</p>
+          <h2 class="font-display text-lg sm:text-xl font-semibold text-neutral-900 tracking-tight">
+            Jordan walks the job with you
+          </h2>
+          {data.walkthroughIntro && (
+            <p class="mt-3 text-sm leading-relaxed text-neutral-700">{data.walkthroughIntro}</p>
+          )}
+          {data.walkthroughQuotes && data.walkthroughQuotes.length > 0 && (
+            <ul class="mt-5 space-y-3 text-sm text-neutral-700 border-t border-neutral-200 pt-5" role="list">
+              {data.walkthroughQuotes.map((quote) => (
+                <li class="relative pl-4 border-l-2 border-brand-orange/40">
+                  <span class="italic leading-relaxed">{quote}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
 
       <div class="mt-10 grid gap-8 md:grid-cols-[minmax(0,1.7fr)_minmax(0,1.1fr)] md:items-start">
         <div class="space-y-4 text-sm leading-relaxed text-neutral-700">
@@ -143,6 +169,64 @@ const description = data.description;
             ))}
           </ul>
         </section>
+      )}
+
+      {videoAfterGallery && (
+        <div class="mt-12 sm:mt-14 rounded-none border border-neutral-200 bg-surface-elevated overflow-hidden shadow-sm">
+          {walkthroughBlock ? (
+            <div class="flex flex-col md:flex-row md:items-stretch">
+              <div class="order-1 bg-black shrink-0 border-b md:border-b-0 md:border-r border-neutral-200 flex justify-center md:justify-start">
+                <div class="relative aspect-[9/16] w-full max-w-[min(100%,22rem)] sm:max-w-[min(100%,26rem)] md:max-w-none md:w-72 lg:w-80">
+                  <video
+                    class="absolute inset-0 h-full w-full object-contain bg-black"
+                    width="1080"
+                    height="1920"
+                    controls
+                    preload="metadata"
+                    playsinline
+                  >
+                    <source src={data.video} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+              <div class="order-2 flex-1 min-w-0 p-5 sm:p-6 lg:p-8">
+                <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-orange mb-2">On-site walkthrough</p>
+                <h2 class="font-display text-lg sm:text-xl font-semibold text-neutral-900 tracking-tight">
+                  Jordan walks the job with you
+                </h2>
+                {data.walkthroughIntro && (
+                  <p class="mt-3 text-sm leading-relaxed text-neutral-700">{data.walkthroughIntro}</p>
+                )}
+                {data.walkthroughQuotes && data.walkthroughQuotes.length > 0 && (
+                  <ul class="mt-5 space-y-3 text-sm text-neutral-700 border-t border-neutral-200 pt-5" role="list">
+                    {data.walkthroughQuotes.map((quote) => (
+                      <li class="relative pl-4 border-l-2 border-brand-orange/40">
+                        <span class="italic leading-relaxed">{quote}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div class="bg-black flex justify-center p-2 sm:p-4">
+              <div class="relative aspect-[9/16] w-full max-w-[min(100%,22rem)]">
+                <video
+                  class="absolute inset-0 h-full w-full object-contain bg-black"
+                  width="1080"
+                  height="1920"
+                  controls
+                  preload="metadata"
+                  playsinline
+                >
+                  <source src={data.video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          )}
+        </div>
       )}
 
       {/* Project Discovery Section */}
