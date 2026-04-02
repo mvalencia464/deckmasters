@@ -68,10 +68,11 @@ const projects = defineCollection({
   }),
 });
 
+const siteSlugForR2 = (R2_SITE_SLUG ?? '').trim().replace(/^\/+|\/+$/g, '');
+const projectImagesPrefix = siteSlugForR2 ? `${siteSlugForR2}/projects/` : 'projects/';
+
 const projectImages = defineCollection({
-  loader: r2Loader({
-    folder: `${(R2_SITE_SLUG ?? '').trim().replace(/^\/+|\/+$/g, '') || ''}projects/`,
-  }),
+  loader: r2Loader({ folder: projectImagesPrefix }),
 });
 
 export const collections = { blog, projects, projectImages };

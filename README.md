@@ -14,6 +14,13 @@ Static marketing site for a cold-climate deck builder and general contractor. **
 | `npm run build` | Build to `./dist` |
 | `npm run preview` | Preview production build |
 | `npm run sync-reviews` | Sync Google Reviews from DataForSEO (see below) |
+| `npm run media:upload` | Sync `media/raw/` → Cloudflare R2 (project images); see **`docs/media-management.md`** |
+
+---
+
+## Project media (Cloudflare R2)
+
+Project photos are served from **R2** using consistent object keys and optional **per-site prefixes** for shared buckets. Full workflow, naming, env vars, and troubleshooting: **`docs/media-management.md`**.
 
 ---
 
