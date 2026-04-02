@@ -167,6 +167,7 @@ Use **`.env.example`** as the checklist for variable *names* only.
 
 | Symptom | Check |
 |--------|--------|
+| `Failed to load remote image` / **404** during `astro build` (image optimization) | **`R2_SITE_SLUG` mismatch.** If the bucket has `projects/...` keys, **omit** `R2_SITE_SLUG` from `.env` and Pages (not the same as setting `R2_SITE_SLUG=`). If the slug is set, public URLs become `<base>/<slug>/projects/...` — that path must exist in R2. After changing slug, run a clean build (`rm -rf .astro dist`) so cached content URLs are not reused. |
 | Build says r2-loader loaded `0` images | Keys in bucket must start with `<siteSlug>/projects/` when slug is set; verify with R2 dashboard or `npm run media:upload -- --dry-run`. |
 | Images 403 in dev/build | Host must be in `astro.config.mjs` → `image.domains`. |
 | Wrong folder in R2 | Upload used wrong `--root`; default should be `media/raw` so relative paths start with `projects/`. |
