@@ -39,7 +39,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'custom-deck-design': {
     browserTitle: metaSeoRows.find((r) => r.page === 'Custom Deck Design')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'Custom Deck Design')!.description,
-    heroImage: '/projects/017-contemporary-design.avif',
+    heroImage: '/projects/derek-clark-deck-overview.jpg',
     h1Benefit: 'Plans That Fit Your Lot and Code',
     heroSubhead:
       'Unsure where stairs, landings, or guardrails should go? Call {phone} — we measure your space and sketch real options you can build against.',
@@ -73,7 +73,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'New Deck Construction Anchorage AK | Ground-Up Builds',
     metaDescription:
       'New deck construction in Anchorage: footings, framing, decking, and railings built for Alaska weather. Free estimates from Deck Masters AK.',
-    heroImage: '/projects/002-aerial-view-new.avif',
+    heroImage: '/projects/doug-mcneil-trex-pergola.jpg',
     h1Benefit: 'Ground-Up Builds Done Right',
     heroSubhead:
       'Starting from dirt or a blank ledger? Call {phone} — we sequence footings, framing, and finishes so your new deck is solid from day one.',
@@ -107,7 +107,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Multi-Level Decks Anchorage AK | Stairs, Landings & Flow',
     metaDescription:
       'Multi-level decks in Anchorage: landings, stair runs, transitions, and code-compliant guards. Design and build with Deck Masters AK.',
-    heroImage: '/projects/050-bonus-1.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Levels That Flow Together',
     heroSubhead:
       'Split levels can eat budget fast without a plan. Call {phone} — we tie landings, stairs, and views into one coherent system.',
@@ -139,7 +139,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'deck-replacement': {
     browserTitle: metaSeoRows.find((r) => r.page === 'Deck Replacement')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'Deck Replacement')!.description,
-    heroImage: '/projects/046-ground-level-1.avif',
+    heroImage: '/projects/olivia-grill-deck-angle.jpg',
     h1Benefit: 'Replace What Failed — Build What Lasts',
     heroSubhead:
       'Rotten rim or tired framing? Call {phone} — we strip to structure, fix what hid underneath, and rebuild for decades of use.',
@@ -176,7 +176,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'composite-decking-installation': {
     browserTitle: metaSeoRows.find((r) => r.page === 'Composite Decking')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'Composite Decking')!.description,
-    heroImage: '/projects/composite-decking-texture.avif',
+    heroImage: '/projects/olivia-grill-trex-cable.jpg',
     h1Benefit: 'Installed to Manufacturer Detail',
     heroSubhead:
       'Composite needs correct joist spacing and expansion gaps. Call {phone} — we follow brand specs so your surface performs in cold snaps.',
@@ -243,7 +243,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Deck Framing Anchorage AK | Beams, Joists & Ledgers',
     metaDescription:
       'Deck framing in Anchorage: ledgers, beams, joists, and hardware sized for snow loads. Professional framing from Deck Masters AK.',
-    heroImage: '/projects/001-aerial-wraparound.avif',
+    heroImage: '/projects/matt-blakeslee-framing-deck.jpeg',
     h1Benefit: 'Structure Built to Carry Loads',
     heroSubhead:
       'Framing is where decks succeed or fail. Call {phone} — we set square, level runs and hardware that matches engineering intent.',
@@ -276,7 +276,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Deck Footings & Foundations Anchorage AK | Piles & Posts',
     metaDescription:
       'Deck footings and foundations in Anchorage: depth, frost heave, and stable posts for elevated decks. Deck Masters AK.',
-    heroImage: '/projects/001-aerial-wraparound.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Anchorage-Grade Support Below Grade',
     heroSubhead:
       'Frost and soil vary block to block. Call {phone} — we set posts and footings so your deck does not drift or sink.',
@@ -309,7 +309,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Custom Railing Design Anchorage AK | Guards That Fit the View',
     metaDescription:
       'Custom railing design in Anchorage: height, strength, and style that meets code without blocking your deck. Deck Masters AK.',
-    heroImage: '/projects/021-custom-entrance.avif',
+    heroImage: '/projects/derek-clark-deck-overview.jpg',
     h1Benefit: 'Guards That Match the Deck',
     heroSubhead:
       'Rails are safety gear and curb appeal. Call {phone} — we balance code minimums with sightlines you actually want.',
@@ -342,7 +342,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Aluminum Railing Installation Anchorage AK | Low-Maintenance Guards',
     metaDescription:
       'Aluminum railing installation in Anchorage: powder-coated systems, secure posts, and code-compliant heights. Deck Masters AK.',
-    heroImage: '/projects/020-contemporary-full.avif',
+    heroImage: '/projects/derek-clark-timbertech-cable.jpeg',
     h1Benefit: 'Strong, Weather-Ready Rails',
     heroSubhead:
       'Aluminum rails shrug off moisture. Call {phone} — we anchor posts and panels square for a tight, rattle-free fit.',
@@ -374,7 +374,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'cable-railing-installation': {
     browserTitle: metaSeoRows.find((r) => r.page === 'Cable Railing')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'Cable Railing')!.description,
-    heroImage: '/projects/008-aerial-elevated.avif',
+    heroImage: '/projects/derek-clark-timbertech-cable.jpeg',
     h1Benefit: 'Thin Lines, Maximum View',
     heroSubhead:
       'Cable rails need tension and spacing discipline. Call {phone} — we set posts stiff enough so cables stay true.',
@@ -443,7 +443,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Composite Railing Installation Anchorage AK | Matched Deck Systems',
     metaDescription:
       'Composite railing installation in Anchorage: matched posts, sleeves, and infill for cohesive deck systems. Deck Masters AK.',
-    heroImage: '/projects/006-aerial-composite.avif',
+    heroImage: '/projects/doug-mcneil-trex-pergola.jpg',
     h1Benefit: 'Matched Colors & Profiles',
     heroSubhead:
       'Composite rails pair with synthetic decking. Call {phone} — we install kits so seams and brackets stay hidden.',
@@ -476,7 +476,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Staircase Design & Build Anchorage AK | Deck Stairs That Feel Right',
     metaDescription:
       'Staircase design and build in Anchorage: rise, run, landings, and guards calculated for comfort and code. Deck Masters AK.',
-    heroImage: '/projects/050-bonus-1.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Comfortable Rise-and-Run',
     heroSubhead:
       'Bad stairs trip people and fail inspection. Call {phone} — we engineer runs, landings, and rail continuity.',
@@ -509,7 +509,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Deck Board Replacement Anchorage AK | Resurface Without Full Tear-Off',
     metaDescription:
       'Deck board replacement in Anchorage: swap damaged boards, upgrade to composite, and refresh walking surfaces. Deck Masters AK.',
-    heroImage: '/projects/046-ground-level-1.avif',
+    heroImage: '/projects/olivia-grill-trex-cable.jpg',
     h1Benefit: 'Fresh Boards on Sound Framing',
     heroSubhead:
       'If joists are solid, you may not need a full rebuild. Call {phone} — we replace boards and refasten smart.',
@@ -543,7 +543,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Structural Deck Repair Anchorage AK | Joists, Ledgers & Posts',
     metaDescription:
       'Structural deck repair in Anchorage: sister joists, ledger fixes, post replacement, and lateral bracing. Deck Masters AK.',
-    heroImage: '/projects/001-aerial-wraparound.avif',
+    heroImage: '/projects/matt-blakeslee-framing-deck.jpeg',
     h1Benefit: 'Fix What Carries the Load',
     heroSubhead:
       'Soft posts or a spongy rim are serious. Call {phone} — we stabilize structure before cosmetics.',
@@ -577,7 +577,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Deck Railing Repair Anchorage AK | Loose Posts & Balusters',
     metaDescription:
       'Deck railing repair in Anchorage: tighten posts, replace balusters, fix loose top rails, and meet guard height. Deck Masters AK.',
-    heroImage: '/projects/021-custom-entrance.avif',
+    heroImage: '/projects/olivia-grill-deck-angle.jpg',
     h1Benefit: 'Guards That Stay Solid',
     heroSubhead:
       'Wobbly rails are a hazard. Call {phone} — we re-anchor posts and rebuild sections to code.',
@@ -610,7 +610,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Deck Stair Repair Anchorage AK | Stringers, Treads & Landing Fixes',
     metaDescription:
       'Deck stair repair in Anchorage: fix cracked stringers, loose treads, and landing issues. Safe steps from Deck Masters AK.',
-    heroImage: '/projects/050-bonus-1.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Steps You Can Trust',
     heroSubhead:
       'Uneven treads or rotted stringers are accidents waiting. Call {phone} — we rebuild runs to uniform rise.',
@@ -642,7 +642,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'water-damage-repair-decks': {
     browserTitle: metaSeoRows.find((r) => r.page === 'Water Damage Repair')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'Water Damage Repair')!.description,
-    heroImage: '/projects/046-ground-level-1.avif',
+    heroImage: '/projects/olivia-grill-deck-angle.jpg',
     h1Benefit: 'Stop the Leak, Then Rebuild',
     heroSubhead:
       'Water always points to a source. Call {phone} — we trace damage and fix flashing, not just boards.',
@@ -676,7 +676,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Deck Mold & Mildew Treatment Anchorage AK | Ventilation & Repairs',
     metaDescription:
       'Deck-related mold and mildew in Anchorage: improve drainage, ventilation, and replace affected materials. Deck Masters AK.',
-    heroImage: '/projects/046-ground-level-1.avif',
+    heroImage: '/projects/olivia-grill-trex-cable.jpg',
     h1Benefit: 'Dry Details, Healthier Spaces',
     heroSubhead:
       'Mildew on decking is often moisture + shade. Call {phone} — we fix airflow and materials, not just spray-and-ignore.',
@@ -709,7 +709,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Storm Damage Deck Repair Anchorage AK | Wind, Snow & Impact',
     metaDescription:
       'Storm damage deck repair in Anchorage: wind-lifted rails, broken posts, and snow-load issues. Fast assessments from Deck Masters AK.',
-    heroImage: '/projects/001-aerial-wraparound.avif',
+    heroImage: '/projects/derek-clark-deck-overview.jpg',
     h1Benefit: 'Recover After Weather Hits',
     heroSubhead:
       'Storms expose weak connections. Call {phone} — we secure what’s loose and replace what bent or broke.',
@@ -742,7 +742,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Exterior Home Renovations Anchorage AK | Siding, Trim & Envelope',
     metaDescription:
       'Exterior home renovations in Anchorage: coordinated siding, trim, and deck tie-ins for a cohesive envelope. Deck Masters AK.',
-    heroImage: '/projects/006-aerial-composite.avif',
+    heroImage: '/projects/doug-mcneil-trex-pergola.jpg',
     h1Benefit: 'Facades That Work Together',
     heroSubhead:
       'Decks meet walls at critical flashings. Call {phone} — we coordinate exterior upgrades so transitions seal.',
@@ -775,7 +775,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Siding Replacement Anchorage AK | Lap, Panel & Trim',
     metaDescription:
       'Siding replacement in Anchorage: remove failed cladding, repair sheathing, and install durable exterior finishes. Deck Masters AK.',
-    heroImage: '/projects/006-aerial-composite.avif',
+    heroImage: '/projects/doug-mcneil-trex-pergola.jpg',
     h1Benefit: 'New Skin, Solid Sheathing',
     heroSubhead:
       'Failed siding hides wall damage. Call {phone} — we strip, repair, and re-side with deck ties coordinated.',
@@ -841,7 +841,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Roofing Services Anchorage AK | Repairs & Deck Adjacent Work',
     metaDescription:
       'Roofing services in Anchorage: repairs, tie-ins, and coordination where decks meet rooflines. Deck Masters AK.',
-    heroImage: '/projects/006-aerial-composite.avif',
+    heroImage: '/projects/doug-mcneil-trex-pergola.jpg',
     h1Benefit: 'Dry Deck-to-Roof Transitions',
     heroSubhead:
       'Deck roofs and second-story walkouts leak at valleys. Call {phone} — we coordinate roof and deck flashing.',
@@ -907,7 +907,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Garage Roof Reconstruction Anchorage AK | Structure & Covering',
     metaDescription:
       'Garage roof reconstruction in Anchorage: replace failed rafters, improve ventilation, and re-cover. Deck Masters AK.',
-    heroImage: '/projects/006-aerial-composite.avif',
+    heroImage: '/projects/matt-blakeslee-framing-deck.jpeg',
     h1Benefit: 'A Roof That Sheds Snow',
     heroSubhead:
       'Sagging garage roofs risk everything below. Call {phone} — we rebuild structure before new shingles.',
@@ -939,7 +939,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'residential-general-contracting': {
     browserTitle: metaSeoRows.find((r) => r.page === 'General Contracting')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'General Contracting')!.description,
-    heroImage: '/projects/009-masterpiece-main.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'One Lead for Your Project',
     heroSubhead:
       'Tired of chasing subcontractors? Call {phone} — we run exterior-focused scopes with clear communication.',
@@ -973,7 +973,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Water Damage Restoration Anchorage AK | Structure Drying & Repair',
     metaDescription:
       'Water damage restoration in Anchorage: assess saturation, remove failed materials, and rebuild sound structure. Deck Masters AK.',
-    heroImage: '/projects/046-ground-level-1.avif',
+    heroImage: '/projects/olivia-grill-deck-angle.jpg',
     h1Benefit: 'Dry It Out, Build It Back',
     heroSubhead:
       'Floods and leaks soak more than surfaces. Call {phone} — we remove rot and rebuild to code.',
@@ -1006,7 +1006,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Structural Repairs Anchorage AK | Beams, Posts & Load Paths',
     metaDescription:
       'Structural repairs in Anchorage: fix compromised beams, posts, and connections for homes and attached decks. Deck Masters AK.',
-    heroImage: '/projects/001-aerial-wraparound.avif',
+    heroImage: '/projects/matt-blakeslee-framing-deck.jpeg',
     h1Benefit: 'Restore Strength & Safety',
     heroSubhead:
       'Creaking floors or sagging beams need engineering-minded fixes. Call {phone} — we sister, post, and connect properly.',
@@ -1039,7 +1039,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Construction Project Management Anchorage AK | Timelines & Quality',
     metaDescription:
       'Construction project management in Anchorage: schedules, trade coordination, and site communication for exterior jobs. Deck Masters AK.',
-    heroImage: '/projects/009-masterpiece-main.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Schedules That Actually Move',
     heroSubhead:
       'Jobs stall in the gaps between trades. Call {phone} — we keep milestones tied to real field progress.',
@@ -1105,7 +1105,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Construction Site Preparation Anchorage AK | Access & Safety',
     metaDescription:
       'Site preparation in Anchorage: safe access, staging, and protection before exterior builds. Deck Masters AK.',
-    heroImage: '/projects/001-aerial-wraparound.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Clean Start, Safer Builds',
     heroSubhead:
       'Good jobs start with protected yards and clear paths. Call {phone} — we stage smart before framing.',
@@ -1138,7 +1138,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Construction Material Sourcing Anchorage AK | Decking, Lumber & Orders',
     metaDescription:
       'Material sourcing in Anchorage: order correct grades, lengths, and compatible systems for your project. Deck Masters AK.',
-    heroImage: '/projects/020-contemporary-full.avif',
+    heroImage: '/projects/derek-clark-timbertech-cable.jpeg',
     h1Benefit: 'Right Stock, On Time',
     heroSubhead:
       'Wrong lumber shows up late or in the wrong grade. Call {phone} — we order to the cut list.',
@@ -1171,7 +1171,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Rough Carpentry Anchorage AK | Framing, Sheathing & Structure',
     metaDescription:
       'Rough carpentry in Anchorage: framing walls, floors, and deck structures before finishes. Deck Masters AK.',
-    heroImage: '/projects/005-aerial-wide.avif',
+    heroImage: '/projects/matt-blakeslee-framing-deck.jpeg',
     h1Benefit: 'Straight, Square Structure',
     heroSubhead:
       'Finish work hides rough carpentry — until it does not. Call {phone} — we frame level and plumb.',
@@ -1204,7 +1204,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Finish Carpentry Anchorage AK | Trim, Stairs & Details',
     metaDescription:
       'Finish carpentry in Anchorage: trim, skirt boards, stair details, and refined exterior woodwork. Deck Masters AK.',
-    heroImage: '/projects/017-contemporary-design.avif',
+    heroImage: '/projects/derek-clark-deck-overview.jpg',
     h1Benefit: 'Details That Look Intentional',
     heroSubhead:
       'Finish work is what you see daily. Call {phone} — we miter, scribe, and sand to standards that last outdoors.',
@@ -1237,7 +1237,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Framing Services Anchorage AK | Decks, Additions & Repairs',
     metaDescription:
       'Framing services in Anchorage: new frames, sisters, and repairs for decks and small additions. Deck Masters AK.',
-    heroImage: '/projects/008-aerial-elevated.avif',
+    heroImage: '/projects/matt-blakeslee-framing-deck.jpeg',
     h1Benefit: 'Frames Built for Loads',
     heroSubhead:
       'Framing is our bread and butter. Call {phone} — we lay out efficient structures that inspect clean.',
@@ -1369,7 +1369,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Construction Clean-Up Anchorage AK | Job Site Final & Touch-Up',
     metaDescription:
       'Construction clean-up in Anchorage: sweep, magnetic nail sweep, and debris removal after exterior projects. Deck Masters AK.',
-    heroImage: '/projects/020-contemporary-full.avif',
+    heroImage: '/projects/doug-mcneil-deck-rail-detail.jpeg',
     h1Benefit: 'Leave the Site Livable',
     heroSubhead:
       'Nails in grass ruin tires and trust. Call {phone} — we include real cleanup, not a token sweep.',
@@ -1402,7 +1402,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Custom Staircases & Landings Anchorage AK | Outdoor Access',
     metaDescription:
       'Custom staircases and landings in Anchorage: exterior stairs that connect yards, decks, and doors with code-compliant guards. Deck Masters AK.',
-    heroImage: '/projects/050-bonus-1.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Designed Steps Between Levels',
     heroSubhead:
       'Yards in Anchorage are rarely flat. Call {phone} — we stitch levels with landings that feel natural.',
@@ -1435,7 +1435,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Elevated Deck Systems Anchorage AK | High Decks & Views',
     metaDescription:
       'Elevated deck systems in Anchorage: tall posts, bracing, and guards for second-story and view decks. Deck Masters AK.',
-    heroImage: '/projects/008-aerial-elevated.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Height Done With Confidence',
     heroSubhead:
       'Elevation multiplies wind and sway. Call {phone} — we brace and rail elevated decks for real loads.',

@@ -1,11 +1,31 @@
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig, fontProviders, envField } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import cloudflare from '@astrojs/cloudflare';
 import { sitemapSerialize } from './sitemap-serialize.mjs';
 
 export default defineConfig({
   site: 'https://deckmastersak.com',
   output: 'static',
+  adapter: cloudflare(),
+  env: {
+    schema: {
+      R2_SECRET_ACCESS_KEY: envField.string({ context: 'server', access: 'secret' }),
+      R2_ACCESS_KEY_ID: envField.string({ context: 'server', access: 'public' }),
+      R2_BUCKET_NAME: envField.string({ context: 'server', access: 'public' }),
+      R2_ACCOUNT_ID: envField.string({ context: 'server', access: 'public' }),
+      R2_PUBLIC_BASE_URL: envField.string({ context: 'server', access: 'public' }),
+      // Optional prefix for multi-site media isolation in R2.
+      // When set, we upload + resolve objects under: <siteSlug>/projects/...
+      // When empty, we keep the current behavior: projects/...
+      R2_SITE_SLUG: envField.string({
+        context: 'server',
+        access: 'public',
+        optional: true,
+        default: '',
+      }),
+    },
+  },
   fonts: [
     {
       provider: fontProviders.google(),
@@ -50,5 +70,6 @@ export default defineConfig({
   },
   image: {
     formats: ['avif', 'webp'],
+    domains: ['media.stokeleads.com'],
   },
 });

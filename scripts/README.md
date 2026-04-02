@@ -63,3 +63,19 @@ node --env-file=.env scripts/sync-reviews.js acme-contracting
 `ReviewsSection.astro` reads `src/data/google-reviews.json` (plus `curated-video-reviews.json`). Use a per-client `outputJson` if you maintain multiple businesses.
 
 **Reference data** — `scripts/reference/` holds sample API responses (e.g. DataForSEO my_business_info for Deck Masters). See `scripts/reference/README.md`.
+
+---
+
+## R2 media pipeline (optimize → upload)
+
+**Layout:** Put originals under `media/raw/projects/{slug}/` with **semantic names** (e.g. `hero-aerial-wide-01.jpg`). The optimize step writes **AVIF** to `media/dist/projects/{slug}/` with the **same basename** (`.avif`). `media/dist/` is gitignored.
+
+1. **Rename** camera files in `media/raw/...` before optimizing (lowercase, hyphens, optional `01` suffixes).
+2. **Optimize:** `npm run media:optimize` (defaults: `media/raw` → `media/dist`, max long edge 2560px, AVIF quality 62).  
+   - `npm run media:optimize -- --dry-run` — preview outputs  
+   - `npm run media:optimize -- --force` — re-encode everything  
+   - `npm run media:optimize -- --max 0` — no resize  
+3. **Upload to R2:** Set `R2_*` vars in `.env` (see `.env.example`).  
+   - `npm run media:upload -- --dry-run` — list keys  
+   - `npm run media:upload -- --only projects/keller` — only that prefix  
+4. **Site URLs:** Reference `R2_PUBLIC_BASE_URL` + path, e.g. `{PUBLIC_MEDIA_BASE}/projects/keller/hero-aerial-wide-01.avif` (configure `PUBLIC_MEDIA_BASE` in Astro env when you switch off `public/` copies).

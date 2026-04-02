@@ -10,15 +10,120 @@ const mc = wallOfLovePageCopy({
   primaryPhone: site.primaryPhone,
   ownerName: site.ownerName,
 });
+
+const googleData = (await import('../data/google-reviews.json')).default;
+const googleReviews = googleData?.rawReviews ?? [];
+const statsGoogleOnly = googleReviews.filter((r: { source?: string; rating?: number }) =>
+  String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
+);
+const googleReviewCount = statsGoogleOnly.length;
+const averageRating = googleReviewCount
+  ? (
+      statsGoogleOnly.reduce((a: number, r: { rating?: number }) => a + Number(r.rating), 0) /
+      googleReviewCount
+    ).toFixed(1)
+  : null;
+
+const st = 'AK';
+const cityState = `${site.primaryCity}, ${st}`;
+const tel = site.primaryPhone.replace(/\D/g, '');
+const heroImage = '/projects/009-masterpiece-main.avif';
 ---
 
 <Layout title={mc.title} description={mc.description}>
-  <section class="py-20 lg:py-28 bg-surface">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-semibold text-neutral-800">{mc.h1}</h1>
-      <p class="mt-4 text-lg text-neutral-600 max-w-2xl">
+  <section
+    class="relative min-h-[min(52vh,520px)] flex flex-col justify-end overflow-hidden border-b border-neutral-200"
+  >
+    <img
+      src={heroImage}
+      alt=""
+      width={1920}
+      height={1080}
+      class="absolute inset-0 h-full w-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div
+      class="absolute inset-0 bg-linear-to-t from-neutral-900/95 via-neutral-900/72 to-neutral-900/50"
+      aria-hidden="true"
+    ></div>
+    <div class="relative z-10 mx-auto w-full max-w-6xl px-4 pb-10 pt-8 sm:px-6 sm:pb-12 sm:pt-10 lg:px-8">
+      <nav class="text-sm text-neutral-300 mb-5" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap gap-x-2 gap-y-1 items-center" role="list">
+          <li><a href="/" class="hover:text-brand-orange">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><span class="text-white font-medium">Reviews</span></li>
+        </ol>
+      </nav>
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange">{mc.eyebrow}</p>
+      <h1
+        class="mt-3 font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-white max-w-4xl drop-shadow-sm"
+      >
+        {mc.h1}
+        <span class="mt-2 block text-lg sm:text-xl md:text-2xl font-semibold normal-case tracking-normal text-neutral-200 max-w-3xl">
+          {mc.h1Benefit}
+        </span>
+      </h1>
+      <p class="mt-5 max-w-2xl text-base sm:text-lg text-neutral-200 leading-relaxed">
         {mc.lead}
       </p>
+      {
+        averageRating && googleReviewCount > 0 && (
+          <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div class="flex items-center gap-2.5">
+              <span class="text-amber-400 text-xl tracking-tight" aria-hidden="true">
+                ★★★★★
+              </span>
+              <span class="text-white font-bold text-lg tabular-nums">{averageRating}</span>
+              <span class="text-neutral-400 text-sm uppercase font-semibold tracking-wider">avg on Google</span>
+            </div>
+            <span class="hidden sm:inline text-neutral-600" aria-hidden="true">
+              |
+            </span>
+            <p class="text-neutral-300 text-sm sm:text-base">
+              <span class="font-bold text-white tabular-nums">{googleReviewCount}</span>
+              <span class="text-neutral-400"> verified reviews</span>
+            </p>
+          </div>
+        )
+      }
+      <ul class="mt-6 flex flex-wrap gap-2.5" role="list">
+        <li
+          class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white sm:text-xs"
+        >
+          Pulled from Google
+        </li>
+        <li
+          class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white sm:text-xs"
+        >
+          Same crew. Same standards.
+        </li>
+        <li
+          class="rounded-none border border-white/25 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white sm:text-xs"
+        >
+          {cityState}
+        </li>
+      </ul>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href={`tel:${tel}`}
+          class="inline-flex rounded-none bg-brand-orange px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-orange-800 focus-ring sm:px-6 sm:py-3 sm:text-base"
+        >
+          Call {site.primaryPhone}
+        </a>
+        <a
+          href="#reviews"
+          class="inline-flex rounded-none border-2 border-white/80 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-white hover:text-neutral-900 transition-colors focus-ring sm:px-6 sm:py-3 sm:text-base"
+        >
+          Jump to reviews
+        </a>
+        <a
+          href="/contact#quote"
+          class="inline-flex rounded-none border border-white/40 bg-white/5 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-white/15 transition-colors focus-ring sm:px-6 sm:py-3 sm:text-base"
+        >
+          {mc.ctaButton}
+        </a>
+      </div>
     </div>
   </section>
   <ReviewsSection />

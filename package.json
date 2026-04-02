@@ -7,16 +7,20 @@
     "build": "node scripts/sync-reviews.js && astro build",
     "preview": "astro preview",
     "deploy": "npm run build && npx wrangler pages deploy dist",
-    "sync-reviews": "node scripts/sync-reviews.js"
+    "sync-reviews": "node scripts/sync-reviews.js",
+    "media:upload": "node scripts/media-upload-r2.mjs"
   },
   "dependencies": {
     "astro": "^6.0.4",
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
+    "@astrojs/cloudflare": "^13.1.6",
     "@astrojs/sitemap": "^3.7.2",
+    "@aws-sdk/client-s3": "^3.1021.0",
     "@tailwindcss/vite": "^4.0.0",
     "dotenv": "^17.3.1",
+    "sharp": "^0.34.5",
     "typescript": "^5.0.0"
   }
 }

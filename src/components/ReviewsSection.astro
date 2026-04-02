@@ -12,17 +12,6 @@ const curatedData = (await import('../data/curated-video-reviews.json')).default
 const googleReviews = googleData?.rawReviews ?? [];
 const curated = curatedData?.rawReviews ?? [];
 
-const statsGoogleOnly = googleReviews.filter((r: { source?: string; rating?: number }) =>
-  String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
-);
-const googleReviewCount = statsGoogleOnly.length;
-const averageRating = googleReviewCount
-  ? (
-      statsGoogleOnly.reduce((a: number, r: { rating?: number }) => a + Number(r.rating), 0) /
-      googleReviewCount
-    ).toFixed(1)
-  : '0';
-
 const isEricaVideoReview = (r: { videoUrl?: string; author?: string; source?: string }) =>
   !!r.videoUrl &&
   (/erica\s+le?hman/i.test(String(r.author ?? '')) ||
@@ -109,28 +98,19 @@ const reviewsWithAvatars = await Promise.all(
 
 <section id="reviews" class="reviews-diagonal-bg py-12 sm:py-16 lg:py-24 border-t border-neutral-200" aria-label="Reviews">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
       <div>
         <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">Reviews</p>
         <h2 class="font-display text-4xl md:text-5xl font-bold text-neutral-800 uppercase tracking-tight">What Anchorage Is Saying.</h2>
       </div>
-      <div class="flex flex-wrap items-center gap-4 text-sm">
-        <div class="flex items-center gap-2">
-          <span class="text-amber-500 text-lg" aria-hidden="true">★★★★★</span>
-          <span class="font-bold text-neutral-800">{averageRating}</span>
-          <span class="text-neutral-500 uppercase font-semibold">Average</span>
-        </div>
-        <span class="text-neutral-300">|</span>
-        <span class="text-neutral-600 font-semibold">{googleReviewCount} Google Reviews</span>
-        <a
-          href="https://www.google.com/search?q=deckmasters+anchorage+reviews"
-          target="_blank"
-          rel="noopener"
-          class="text-brand-orange font-bold hover:underline uppercase text-xs tracking-wider"
-        >
-          See All Google Reviews →
-        </a>
-      </div>
+      <a
+        href="https://www.google.com/search?q=deckmasters+anchorage+reviews"
+        target="_blank"
+        rel="noopener"
+        class="shrink-0 text-brand-orange font-bold hover:underline uppercase text-xs tracking-wider sm:mb-1"
+      >
+        See all on Google →
+      </a>
     </div>
     <div class="columns-1 md:columns-4 column-gap-4">
       {

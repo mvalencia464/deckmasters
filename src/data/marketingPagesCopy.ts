@@ -116,7 +116,9 @@ export function wallOfLovePageCopy(s: SiteForMarketingCopy) {
   return {
     title: `Reviews | What ${s.primaryCity} Homeowners Say — ${s.businessName}`,
     description: `Real Google reviews for ${s.businessName} in ${s.primaryCity} — communication, pricing, craftsmanship, and follow-through in homeowners’ own words.`,
+    eyebrow: 'Wall of love',
     h1: 'Reviews in their words',
+    h1Benefit: `Real Google feedback from ${s.primaryCity} homeowners`,
     lead: `You are not reading marketing fluff — these are public reviews from people who hired us for decks, repairs, railings, and exterior work in ${s.primaryCity}.`,
     ctaLead: 'Ready for your own “five-star” story?',
     ctaButton: 'Get my free estimate',

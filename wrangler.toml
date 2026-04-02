@@ -7,18 +7,17 @@ name = "deckmasters"
 compatibility_date = "2026-03-06"
 pages_build_output_dir = "dist"
 
-[vars]
-# Maps JS + Places (quote form autocomplete). Restrict the key by HTTP referrer in Google Cloud.
-# Format (quotes required for the value):
-#   PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSy…"   # your actual browser key
-# The key ends up in built HTML anyway; protection is referrer + API restrictions, not secrecy.
-PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSyDcsQrRtFyZmA3I2hluPV33Wjx2Xj3nul4"
+# Cloudflare Pages reserves the binding name `ASSETS`. @astrojs/cloudflare skips its default
+# ASSETS binding when any assets.binding is set — required for `astro build` with Wrangler 4.79+.
+[assets]
+binding = "SITE_STATIC"
+directory = "dist/client"
 
-# Add your HighLevel Custom Field IDs here
-# You can find these in HighLevel > Settings > Custom Fields
-HIGHLEVEL_CUSTOM_FIELD_PROJECT_DESCRIPTION = "cVY04IeJOEfpC42bqury"
-HIGHLEVEL_CUSTOM_FIELD_QUOTE_IMAGE = "4umRt0qz4rRZPDhjVQAD"
-HIGHLEVEL_LOCATION_ID = "tV8qFLdWkBLBfjh64cFV"
+# Do not put API keys or tokens here — this file is usually committed.
+# Set the same variable names in:
+#   • Local: `.env` (Astro/build) and optionally `.dev.vars` (Wrangler CLI)
+#   • Production: Cloudflare Pages → Settings → Environment variables
+#     (Production + Preview). Use "Encrypt" for secrets (e.g. HIGHLEVEL_TOKEN, DATAFORSEO_PASSWORD).
 
 [[r2_buckets]]
 binding = "IMG_BUCKET"

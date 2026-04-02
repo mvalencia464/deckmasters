@@ -1,6 +1,25 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { R2_PUBLIC_BASE_URL, R2_SITE_SLUG } from 'astro:env/server';
+import { r2Loader } from './loaders/r2-loader';
+
+/** R2 object key or absolute URL → absolute URL for <Image /> and <img>. */
+function mediaPublicUrl(keyOrUrl: string): string {
+  const raw = keyOrUrl.trim();
+  if (/^https?:\/\//i.test(raw)) return raw;
+  const base = R2_PUBLIC_BASE_URL.replace(/\/+$/, '');
+  const key = raw.replace(/^\/+/, '');
+
+  const siteSlug = (R2_SITE_SLUG ?? '').trim().replace(/^\/+|\/+$/g, '');
+  if (!siteSlug) return `${base}/${key}`;
+
+  // If the key is already prefixed, don't double-prefix.
+  if (key.startsWith(`${siteSlug}/`)) return `${base}/${key}`;
+  return `${base}/${siteSlug}/${key}`;
+}
+
+const r2MediaSrc = z.string().transform(mediaPublicUrl);
 
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
@@ -21,7 +40,7 @@ const blog = defineCollection({
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
-  schema: ({ image }) => z.object({
+  schema: z.object({
     title: z.string(),
     description: z.string(),
     h1: z.string(),
@@ -32,8 +51,9 @@ const projects = defineCollection({
     location: z.string().default('Anchorage, Alaska'),
     deckType: z.string(),
     keyFeatures: z.string(),
-    featuredImage: image(),
-    galleryImages: z.array(image()),
+    /** R2 key relative to bucket (e.g. projects/keller/hero.webp) or absolute image URL */
+    featuredImage: r2MediaSrc,
+    galleryImages: z.array(r2MediaSrc),
     video: z.string().optional(),
     /**
      * hero: video replaces featured image under the title (default).
@@ -48,4 +68,10 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { blog, projects };
+const projectImages = defineCollection({
+  loader: r2Loader({
+    folder: `${(R2_SITE_SLUG ?? '').trim().replace(/^\/+|\/+$/g, '') || ''}projects/`,
+  }),
+});
+
+export const collections = { blog, projects, projectImages };

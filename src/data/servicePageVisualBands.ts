@@ -31,6 +31,15 @@ export const PROJECT_IMAGE_POOL = [
   '/projects/008-aerial-elevated.avif',
   '/projects/006-aerial-composite.avif',
   '/projects/005-aerial-wide.avif',
+  /** Client project folders (see src/assets/projects/{derek-clark,doug-mcneil,matt-blakeslee,olivia-grill}) */
+  '/projects/derek-clark-timbertech-cable.jpeg',
+  '/projects/derek-clark-deck-overview.jpg',
+  '/projects/doug-mcneil-trex-pergola.jpg',
+  '/projects/doug-mcneil-deck-rail-detail.jpeg',
+  '/projects/matt-blakeslee-multi-level.jpg',
+  '/projects/matt-blakeslee-framing-deck.jpeg',
+  '/projects/olivia-grill-trex-cable.jpg',
+  '/projects/olivia-grill-deck-angle.jpg',
 ] as const;
 
 function hashString(s: string): number {

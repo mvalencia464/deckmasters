@@ -9,13 +9,13 @@ p2: "You get a feel for how we protect your home, keep the site organized, and k
 location: "Anchorage, Alaska"
 deckType: "Elevated composite deck"
 keyFeatures: "Cable railing, integrated lighting, weather-ready framing"
-featuredImage: "../../assets/projects/keller/001-aerial-wraparound.webp"
+featuredImage: "projects/keller/001-aerial-wraparound.webp"
 galleryImages:
-  - "../../assets/projects/keller/002-aerial-view-new.webp"
-  - "../../assets/projects/keller/003-aerial-detail.webp"
-  - "../../assets/projects/keller/004-aerial-landscape.webp"
-  - "../../assets/projects/keller/005-aerial-wide.webp"
-  - "../../assets/projects/keller/006-aerial-composite.webp"
+  - "projects/keller/002-aerial-view-new.webp"
+  - "projects/keller/003-aerial-detail.webp"
+  - "projects/keller/004-aerial-landscape.webp"
+  - "projects/keller/005-aerial-wide.webp"
+  - "projects/keller/006-aerial-composite.webp"
 video: "https://media.stokeleads.com/deckmasters/videos/keller.mp4"
 isFeatured: true
 ---

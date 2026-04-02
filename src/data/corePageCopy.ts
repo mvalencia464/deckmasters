@@ -37,7 +37,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Custom Decks & Design Anchorage AK | Plans, Layouts & New Builds',
     metaDescription:
       'Custom deck design and new construction in Anchorage, AK. Layouts built for snow, wind, and your lot. Free estimates. Call Deck Masters AK.',
-    heroImage: '/projects/017-contemporary-design.avif',
+    heroImage: '/projects/derek-clark-deck-overview.jpg',
     h1Benefit: 'Layouts That Match Your Lot and How You Live Outside',
     heroSubhead:
       'Waiting until “later” usually means a rushed season and fewer material choices. Call {phone} — we will pencil a real timeline and a clear design path before you commit.',
@@ -94,7 +94,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Deck Replacement & Decking Anchorage AK | Composite, Wood & Resurface',
     metaDescription:
       'Deck replacement and new decking in Anchorage: composite, wood, and full tear-off when the frame is done. Honest scopes. Deck Masters AK — call for a free estimate.',
-    heroImage: '/projects/046-ground-level-1.avif',
+    heroImage: '/projects/olivia-grill-deck-angle.jpg',
     h1Benefit: 'Replace What Failed — Surface, Frame, or Both',
     heroSubhead:
       'Spongy boards and rusty hardware do not fix themselves. Call {phone} — we will tell you if you need new decking only, sistered joists, or a full reset.',
@@ -151,7 +151,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Deck Framing & Footings Anchorage AK | Structure Below the Boards',
     metaDescription:
       'Deck framing, footings, and foundations in Anchorage, AK — depth, drainage, and hardware for snow load. Engineering-minded carpentry. Deck Masters AK.',
-    heroImage: '/projects/008-aerial-elevated.avif',
+    heroImage: '/projects/matt-blakeslee-framing-deck.jpeg',
     h1Benefit: 'Footings and Framing That Hold Up to Snow and Frost',
     heroSubhead:
       'If posts shift or the frame bounces, pretty boards will not save you. Call {phone} — we assess what is carrying load and what needs correction.',
@@ -206,7 +206,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Railings & Stairs Anchorage AK | Code-Safe, Ice-Aware Builds',
     metaDescription:
       'Custom railings, stairs, and cable or aluminum installs in Anchorage. Grippable rails, stiff posts, cold-climate hardware. Free estimates — Deck Masters AK.',
-    heroImage: '/projects/021-custom-entrance.avif',
+    heroImage: '/projects/derek-clark-timbertech-cable.jpeg',
     h1Benefit: 'Rails and Stairs That Stay Stiff in Wind and Ice',
     heroSubhead:
       'Loose guards and bouncy stairs are a fall risk — especially with snow boots. Call {phone} for a straight answer on repair versus rebuild.',
@@ -263,7 +263,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Exterior Renovations & Roofing Anchorage AK | Siding, Roof Lines & Garages',
     metaDescription:
       'Exterior renovations in Anchorage: siding, roofing edges, fascia, soffit, and garage rebuilds. Water-tight layers. Deck Masters AK — free estimates.',
-    heroImage: '/projects/006-aerial-composite.avif',
+    heroImage: '/projects/doug-mcneil-trex-pergola.jpg',
     h1Benefit: 'Stop Water Before It Reaches the Wall Cavity',
     heroSubhead:
       'Stains, peeling paint, and garage leaks do not fix themselves after thaw. Call {phone} — we trace the stain to the failure and sequence repairs correctly.',
@@ -324,7 +324,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Contracting & Project Services Anchorage AK | GC, Permits & Carpentry',
     metaDescription:
       'Residential GC, permits, demolition, carpentry, and code compliance in Anchorage. One crew, clear paperwork. Deck Masters AK — estimates and scheduling.',
-    heroImage: '/projects/002-aerial-view-new.avif',
+    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
     h1Benefit: 'Planning, Permits, and Build Discipline in One Scope',
     heroSubhead:
       'Big repairs stall when nobody owns the whole chain. Call {phone} — we line up demo, structure, materials, and inspections so you are not chasing three crews.',
