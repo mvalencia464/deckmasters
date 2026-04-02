@@ -7,11 +7,9 @@ name = "deckmasters"
 compatibility_date = "2026-03-06"
 pages_build_output_dir = "dist"
 
-# Cloudflare Pages reserves the binding name `ASSETS`. @astrojs/cloudflare skips its default
-# ASSETS binding when any assets.binding is set — required for `astro build` with Wrangler 4.79+.
-[assets]
-binding = "SITE_STATIC"
-directory = "dist/client"
+# Do not add `[assets]` here — Cloudflare Pages rejects this block (Workers-only).
+# In astro.config, `adapter: cloudflare({ prerenderEnvironment: 'node' })` avoids a workerd
+# prerender config that uses the reserved binding name `ASSETS` (Pages also rejects that name).
 
 # Do not put API keys or tokens here — this file is usually committed.
 # Set the same variable names in:

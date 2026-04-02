@@ -7,7 +7,9 @@ import { sitemapSerialize } from './sitemap-serialize.mjs';
 export default defineConfig({
   site: 'https://deckmastersak.com',
   output: 'static',
-  adapter: cloudflare(),
+  // Prerender in Node so the build does not emit a workerd prerender config that uses the
+  // reserved binding name `ASSETS` (Cloudflare Pages rejects it). Static output is unchanged.
+  adapter: cloudflare({ prerenderEnvironment: 'node' }),
   env: {
     schema: {
       R2_SECRET_ACCESS_KEY: envField.string({ context: 'server', access: 'secret' }),
