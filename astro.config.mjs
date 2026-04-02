@@ -1,15 +1,14 @@
 import { defineConfig, fontProviders, envField } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import cloudflare from '@astrojs/cloudflare';
 import { sitemapSerialize } from './sitemap-serialize.mjs';
 
 export default defineConfig({
   site: 'https://deckmastersak.com',
   output: 'static',
-  // Prerender in Node so the build does not emit a workerd prerender config that uses the
-  // reserved binding name `ASSETS` (Cloudflare Pages rejects it). Static output is unchanged.
-  adapter: cloudflare({ prerenderEnvironment: 'node' }),
+  // No Cloudflare adapter: this site is fully static HTML/CSS + pre-optimized images at build time.
+  // @astrojs/cloudflare emits dist/server/wrangler.json with ASSETS/KV/triggers that Pages rejects
+  // during deploy; Pages Functions in /functions stay independent of the Astro worker bundle.
   env: {
     schema: {
       R2_SECRET_ACCESS_KEY: envField.string({ context: 'server', access: 'secret' }),

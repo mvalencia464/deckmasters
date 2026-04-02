@@ -67,7 +67,7 @@ The homepage hero (`src/components/Hero.astro`) uses `src/assets/vibrant.webp` v
 Connect the repo in [Cloudflare Dashboard](https://dash.cloudflare.com) → Workers & Pages → Pages → Connect to Git.
 
 - **Build command:** `npm run build`
-- **Build output directory:** `dist`
+- **Build output directory:** `dist` (static HTML + assets only—no `@astrojs/cloudflare` worker, so Pages does not merge an adapter-generated `wrangler.json` that fails validation)
 
 Cloudflare builds and deploys automatically on push. Set **`DATAFORSEO_LOGIN`** and **`DATAFORSEO_PASSWORD`** on the Pages project so `npm run build` can run `sync-reviews.js`. Ensure `wrangler.toml` has `name` and `pages_build_output_dir = "dist"` so the `functions/` API is used.
 

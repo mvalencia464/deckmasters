@@ -8,8 +8,8 @@ compatibility_date = "2026-03-06"
 pages_build_output_dir = "dist"
 
 # Do not add `[assets]` here — Cloudflare Pages rejects this block (Workers-only).
-# In astro.config, `adapter: cloudflare({ prerenderEnvironment: 'node' })` avoids a workerd
-# prerender config that uses the reserved binding name `ASSETS` (Pages also rejects that name).
+# Astro builds pure static files into `dist/` (no @astrojs/cloudflare worker bundle), so deploy
+# does not merge a generated dist/server/wrangler.json that Pages rejects (ASSETS/KV/triggers).
 
 # Do not put API keys or tokens here — this file is usually committed.
 # Set the same variable names in:
