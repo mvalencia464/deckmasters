@@ -38,6 +38,9 @@ const sameAs = [
   site.googleBusinessProfileUrl,
 ].filter((u) => u && String(u).trim() !== '');
 
+/** Set true when a YouTube/Vimeo embed is ready for the owner intro. */
+const showOwnerIntroVideo = false;
+
 const aboutSchema = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -184,17 +187,21 @@ const h1 = `About ${site.businessName} — Your Local ${site.primaryCity} ${prim
         </div>
       </div>
 
-      <div class="mt-16 rounded-none border border-neutral-200 bg-neutral-100/80 p-8 text-center">
-        <h2 class="font-display text-xl font-bold uppercase tracking-tight text-neutral-800">Video introduction</h2>
-        <p class="mt-2 text-sm text-neutral-600">
-          Watch {site.ownerName} introduce {site.businessName} — embed your YouTube or Vimeo video here when ready.
-        </p>
-        <div
-          class="mt-6 aspect-video max-w-2xl mx-auto border-2 border-dashed border-neutral-300 bg-neutral-200/50 flex items-center justify-center text-sm text-neutral-500"
-        >
-          Video placeholder
-        </div>
-      </div>
+      {
+        showOwnerIntroVideo && (
+          <div class="mt-16 rounded-none border border-neutral-200 bg-neutral-100/80 p-8 text-center">
+            <h2 class="font-display text-xl font-bold uppercase tracking-tight text-neutral-800">Video introduction</h2>
+            <p class="mt-2 text-sm text-neutral-600">
+              Watch {site.ownerName} introduce {site.businessName} — embed your YouTube or Vimeo video here when ready.
+            </p>
+            <div
+              class="mt-6 aspect-video max-w-2xl mx-auto border-2 border-dashed border-neutral-300 bg-neutral-200/50 flex items-center justify-center text-sm text-neutral-500"
+            >
+              Video placeholder
+            </div>
+          </div>
+        )
+      }
 
       <h2 class="mt-16 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
         {mc.servingH2}
