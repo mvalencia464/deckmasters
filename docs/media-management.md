@@ -1,165 +1,137 @@
 # Media management (R2 + Astro) — SOP
 
-This document describes how **Deck Masters AK** (and sibling Stoke Leads sites using the same pattern) store, name, upload, and reference project imagery. Follow it so every deployment stays predictable and multi-tenant buckets stay organized.
+How **Deck Masters AK** (and sibling Stoke Leads sites using the same pattern) store, upload, and reference project imagery. Follow this so deploys stay predictable and shared buckets stay organized.
 
 ---
 
 ## Goals
 
-- **One shared R2 bucket** can serve many client sites; each site uses a **site slug** prefix so object keys never collide.
-- **Markdown stays portable**: front matter stores **relative object keys** (not full URLs). The build prepends `R2_PUBLIC_BASE_URL` (and optional `R2_SITE_SLUG`).
-- **Large binaries do not live in Git**: local staging under `media/raw/` is gitignored; **R2 is the system of record** for shipped project photos.
-- **Astro `<Image />`** can optimize remote files from an **allowlisted host** (`astro.config.mjs` → `image.domains`).
+- **One R2 bucket** can serve multiple contractor sites; optional **`R2_SITE_SLUG`** prefixes keys so tenants do not collide.
+- **Markdown stays portable**: project front matter uses **relative keys** (`projects/...`). The build turns them into public URLs using **`R2_PUBLIC_BASE_URL`** and optional **`R2_SITE_SLUG`**.
+- **Large binaries stay out of Git**: local staging under **`media/raw/`** is gitignored; **R2 is the system of record** for shipped project photos.
+- **Build-time images**: this site uses **static output** (no `@astrojs/cloudflare` adapter). Astro **`Image`** + **`image.domains`** fetch remotes during **`astro build`** (Node) and emit optimized assets into **`dist/`**.
 
 ---
 
 ## Concepts
 
 | Term | Meaning |
-|------|--------|
+|------|---------|
 | **Bucket** | Cloudflare R2 bucket (e.g. `media`). S3-compatible API. |
-| **Object key** | Path inside the bucket, e.g. `deckmastersak/projects/keller/001-aerial-wraparound.webp`. |
+| **Object key** | Full path in the bucket, e.g. `projects/keller/005-aerial-wide.webp` or `deckmastersak/projects/keller/005-aerial-wide.webp` if using a site prefix. |
 | **Public URL** | `R2_PUBLIC_BASE_URL` + `/` + object key (custom domain or `r2.dev`). |
-| **Site slug** | Short id for *this* deployed site in a shared bucket (`R2_SITE_SLUG`), e.g. `deckmastersak`. Aligns with domain branding, not necessarily the Pages project name. |
-| **Client slug** | Folder under `projects/`, e.g. `keller`, `derek-clark`, `matt-blakeslee`. |
+| **Site slug** | Optional top-level prefix (`R2_SITE_SLUG`) for multi-tenant buckets. Must match where objects **actually** live. |
+| **Client slug** | Folder under `projects/` in keys, e.g. `keller`, `matt-blakeslee`. |
 
 ---
 
-## Object key layout (canonical)
+## Production today (Deck Masters AK)
 
-With **`R2_SITE_SLUG` set** (recommended for multi-site buckets):
+Objects are stored at:
+
+`https://<R2_PUBLIC_HOST>/projects/<clientSlug>/<file>`
+
+So **`R2_SITE_SLUG` must be omitted** from `.env` and **Cloudflare Pages** build variables until every object is copied or uploaded under a prefixed path such as `deckmastersak/projects/...`. If the slug is set but keys are only under `projects/...`, **`astro build` will 404** when optimizing remote images.
+
+---
+
+## Object key layout
+
+**With `R2_SITE_SLUG` set** (multi-site / new uploads under a prefix):
 
 ```text
 <siteSlug>/projects/<clientSlug>/<filename>
 ```
 
-Example:
-
-```text
-deckmastersak/projects/derek-clark/composite-stairs-angle.jpg
-```
-
-With **`R2_SITE_SLUG` empty** (single-site or legacy):
+**With `R2_SITE_SLUG` unset** (legacy single-prefix layout):
 
 ```text
 projects/<clientSlug>/<filename>
 ```
 
-The R2 dashboard shows “folders” by splitting keys on `/`; that is normal—R2 has flat keys with `/` in the name.
+R2’s UI shows “folders” by splitting keys on `/`; keys are still flat strings.
 
 ---
 
 ## Local folder layout (before upload)
 
-**Source of truth for upload:** `media/raw/`
+**Staging for uploads:** `media/raw/`
 
-Mirror the **object key** under `media/raw/`, without the site slug (the upload script adds the slug):
+Mirror the key **without** the site slug (the upload script adds it when `R2_SITE_SLUG` is set):
 
 ```text
 media/raw/projects/<clientSlug>/<filename>
 ```
 
-Example on disk:
-
-```text
-media/raw/projects/keller/001-aerial-wraparound.webp
-media/raw/projects/derek-clark/composite-stairs-angle.jpg
-```
-
-**Do not commit `media/raw/`** — it is gitignored to keep the repo small. Keep a backup copy elsewhere if needed (Drive, R2 versioning, etc.).
-
-Optional: keep **smaller** copies or working files under `src/assets/projects/` for local reference; production URLs still come from R2 keys in content.
+**Do not commit `media/raw/`** — gitignored. Optional small reference copies under `src/assets/projects/` are fine; production URLs still come from R2 keys in content.
 
 ---
 
 ## Environment variables
 
-Copy from **`.env.example`** into **`.env`** locally (never commit `.env`).
+Copy **`.env.example`** → **`.env`** locally (never commit `.env`).
 
 | Variable | Required | Purpose |
 |----------|----------|---------|
-| `R2_ACCOUNT_ID` | Yes (upload + build loader) | Cloudflare account id for S3 endpoint. |
-| `R2_ACCESS_KEY_ID` | Yes | S3 API access key id (short id, not the endpoint URL). |
-| `R2_SECRET_ACCESS_KEY` | Yes | S3 API secret. |
-| `R2_BUCKET_NAME` | Yes | Target bucket name. |
-| `R2_PUBLIC_BASE_URL` | Yes | Public origin, e.g. `https://media.stokeleads.com` (no trailing slash). Must match `image.domains` in Astro for `<Image />`. |
-| `R2_SITE_SLUG` | No | e.g. `deckmastersak`. If set, keys and URLs use `<siteSlug>/projects/...`. |
+| `R2_ACCOUNT_ID` | Yes (upload + r2-loader) | S3 endpoint account id. |
+| `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY` | Yes | S3 API credentials (short access key id, not the endpoint URL). |
+| `R2_BUCKET_NAME` | Yes | Bucket name. |
+| `R2_PUBLIC_BASE_URL` | Yes | Public origin, e.g. `https://media.stokeleads.com` (no trailing path). Hostname must appear in **`astro.config.mjs` → `image.domains`**. |
+| `R2_SITE_SLUG` | No | Only if objects live under `<slug>/projects/...`. Omit entirely for legacy `projects/...` keys. |
 
-**Cloudflare Pages:** set the same variables for **Production** (and **Preview** if previews must match). Build-time vars must be present when `npm run build` runs. Secrets stay encrypted in the dashboard; see team policy for Wrangler vs dashboard ([Cloudflare: Wrangler as source of truth](https://developers.cloudflare.com/pages/functions/wrangler-configuration/#source-of-truth)).
+**Cloudflare Pages:** set the same build variables for **Production** (and **Preview** if previews must match production media). See [Pages env](https://developers.cloudflare.com/pages/configuration/build-configuration/).
 
 ---
 
 ## Upload procedure
 
-1. Place or copy files into `media/raw/projects/<clientSlug>/` with **stable, descriptive filenames** (lowercase, hyphens).
-2. Confirm `.env` has correct `R2_*` and optional `R2_SITE_SLUG`.
-3. Dry run (optional):
+1. Place files under `media/raw/projects/<clientSlug>/` with stable, descriptive names (lowercase, hyphens).
+2. Ensure `.env` has correct `R2_*` and optional `R2_SITE_SLUG` (only if uploading to a prefixed layout).
+3. Optional: `npm run media:upload -- --dry-run`
+4. `npm run media:upload`
 
-   ```bash
-   npm run media:upload -- --dry-run
-   ```
-
-4. Upload:
-
-   ```bash
-   npm run media:upload
-   ```
-
-The script (`scripts/media-upload-r2.mjs`) walks `media/raw/`, computes keys as paths relative to `media/raw/`, then prefixes with `R2_SITE_SLUG` when set. It skips re-upload when remote size matches unless `--force`.
-
-**Custom root** (advanced):
-
-```bash
-npm run media:upload -- --root /path/to/folder
-```
-
-Keys are still **relative to that root**; prefer the default so keys stay `projects/...` before the slug prefix.
+Script: **`scripts/media-upload-r2.mjs`** (prefixes keys with `R2_SITE_SLUG` when set).
 
 ---
 
-## Content (Markdown) — what editors put in front matter
+## Content (Markdown)
 
-In `src/content/projects/*.md`, use **keys only**, not full URLs:
+In **`src/content/projects/*.md`**, use **keys**, not full URLs:
 
 ```yaml
-featuredImage: "projects/keller/001-aerial-wraparound.webp"
+featuredImage: "projects/keller/005-aerial-wide.webp"
 galleryImages:
-  - "projects/keller/002-aerial-view-new.webp"
+  - "projects/keller/003-aerial-detail.webp"
 ```
 
-At build time, `src/content.config.ts` turns those into:
+**`src/content.config.ts`** resolves to:
 
-`https://<R2_PUBLIC_BASE_URL>/<R2_SITE_SLUG>/projects/...` when `R2_SITE_SLUG` is set.
+- `https://<R2_PUBLIC_BASE_URL>/<key>` when `R2_SITE_SLUG` is unset.
+- `https://<R2_PUBLIC_BASE_URL>/<R2_SITE_SLUG>/<key>` when set (and key is not already prefixed).
 
-You may still use a full `https://...` URL in an emergency; the schema leaves absolute URLs unchanged.
-
----
-
-## Astro / build behavior (reference)
-
-- **Projects collection** — Zod transform resolves relative keys to public URLs.
-- **`projectImages` collection** — `src/loaders/r2-loader.ts` lists objects under the prefix `(<siteSlug>/)projects/` for tooling; optional for pages.
-- **`astro.config.mjs`** — `env.schema` includes `R2_*` and optional `R2_SITE_SLUG`; `image.domains` must include the hostname of `R2_PUBLIC_BASE_URL`.
+Absolute `https://...` URLs are passed through unchanged.
 
 ---
 
-## Multi-site / shared bucket (why `R2_SITE_SLUG` exists)
+## Astro / build behavior
 
-Stoke Leads may host **multiple** contractor sites that share one R2 bucket and one public hostname (e.g. `media.stokeleads.com`). Prefixing by `R2_SITE_SLUG`:
+- **Output:** static HTML in **`dist/`** — no `@astrojs/cloudflare` worker bundle (avoids Pages + generated `wrangler.json` issues).
+- **Projects collection** — Zod transform resolves keys to URLs.
+- **`projectImages` collection** — **`src/loaders/r2-loader.ts`** lists objects under `projects/` or `<slug>/projects/` for the content layer.
+- **`astro.config.mjs`** — `env.schema` for `R2_*` / `R2_SITE_SLUG`; **`image.domains`** for remote optimization.
 
-- Keeps each site’s objects under its own top-level “folder” in the dashboard.
-- Avoids key collisions between clients on different sites.
-- Lets each Pages project set a different slug while reusing the same bucket and upload script.
+---
+
+## Multi-site / shared bucket
+
+For **multiple contractor sites** on one bucket and hostname, set a distinct **`R2_SITE_SLUG`** per **Cloudflare Pages** project and upload keys under that prefix. Align slug, R2 keys, and Markdown before enabling the slug in env.
 
 ---
 
 ## What not to commit
 
-- **`.env`**, **`.dev.vars`** — secrets and local overrides.
-- **`media/raw/`** — large local staging; objects belong in R2.
-- **`media/dist/`** — optional generated outputs; gitignored.
-
-Use **`.env.example`** as the checklist for variable *names* only.
+- **`.env`**, **`.dev.vars`**
+- **`media/raw/`**, optional **`media/dist/`**
 
 ---
 
@@ -167,11 +139,10 @@ Use **`.env.example`** as the checklist for variable *names* only.
 
 | Symptom | Check |
 |--------|--------|
-| `Failed to load remote image` / **404** during `astro build` (image optimization) | **`R2_SITE_SLUG` mismatch.** If the bucket has `projects/...` keys, **omit** `R2_SITE_SLUG` from `.env` and Pages (not the same as setting `R2_SITE_SLUG=`). If the slug is set, public URLs become `<base>/<slug>/projects/...` — that path must exist in R2. After changing slug, run a clean build (`rm -rf .astro dist`) so cached content URLs are not reused. |
-| Build says r2-loader loaded `0` images | Keys in bucket must start with `<siteSlug>/projects/` when slug is set; verify with R2 dashboard or `npm run media:upload -- --dry-run`. |
-| Images 403 in dev/build | Host must be in `astro.config.mjs` → `image.domains`. |
-| Wrong folder in R2 | Upload used wrong `--root`; default should be `media/raw` so relative paths start with `projects/`. |
-| Full URL in Markdown works but keys don’t | Typo in key vs actual object name; slug prefix mismatch (`R2_SITE_SLUG` changed after upload). |
+| **404** on remote image during `astro build` | **`R2_SITE_SLUG`** must match R2 keys. For `projects/...` only, **omit** the variable (here and on Pages). After changing slug, clean: `rm -rf .astro dist`. |
+| r2-loader loaded **0** images | Prefix in bucket must match `(<slug>/)projects/` for your env. |
+| **403** on images | Host in `image.domains`. |
+| Wrong objects in R2 | Wrong `--root` on upload; default should mirror `projects/...` under `media/raw/`. |
 
 ---
 
@@ -179,15 +150,15 @@ Use **`.env.example`** as the checklist for variable *names* only.
 
 | File | Role |
 |------|------|
-| `scripts/media-upload-r2.mjs` | Sync `media/raw` → R2. |
-| `src/content.config.ts` | Key → URL transform; `projectImages` loader prefix. |
-| `src/loaders/r2-loader.ts` | Lists R2 objects for the content layer. |
-| `astro.config.mjs` | `env.schema`, `image.domains`. |
-| `.env.example` | Variable template. |
-| `wrangler.toml` | Pages deploy / bindings (not for storing API secrets). |
+| `scripts/media-upload-r2.mjs` | Upload `media/raw` → R2. |
+| `src/content.config.ts` | Key → URL; `projectImages` loader prefix. |
+| `src/loaders/r2-loader.ts` | List R2 objects for content layer. |
+| `astro.config.mjs` | Env schema, `image.domains`. |
+| `.env.example` | Variable names and notes. |
+| `wrangler.toml` | Pages project name, `pages_build_output_dir`, R2 binding for **Functions** (not Astro build). |
 
 ---
 
-## Versioning note
+## Changing `R2_SITE_SLUG` after upload
 
-If you **change** `R2_SITE_SLUG` after objects were uploaded without it, existing keys under `projects/...` will not match new URLs under `<siteSlug>/projects/...`. Re-upload to the new prefix or copy objects in R2, then rebuild.
+If you add a slug later, existing **`projects/...`** keys will not match new URLs under **`<slug>/projects/...`**. Copy or re-upload objects to the new prefix, then rebuild.

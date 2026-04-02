@@ -1,38 +1,33 @@
-# Upgrade & Integration Walkthrough (March 2026)
+# Maintenance & stack snapshot
 
-This document captures the details of the Astro 6 upgrade and HighLevel integration configuration to ensure the technical settings are preserved.
+Operational notes for **Deck Masters AK** — Astro build, Tailwind 4, Cloudflare Pages, and the quote **Pages Function**.
 
-## 1. Technical Stack
-- **Framework**: Astro 6.0.4
-- **CSS Engine**: Tailwind CSS 4.0.0 (Native Vite Plugin)
-- **Deployment**: Cloudflare Pages (Static + Functions)
-- **Runtime**: Node.js v22+
+## Stack
 
-## 2. Tailwind 4 Configuration
-We moved from the deprecated `@astrojs/tailwind` integration to the native `@tailwindcss/vite` plugin.
-- **Config Storage**: Custom theme settings are now in `src/styles/global.css` using the `@theme` block.
-- **Legacy File**: `tailwind.config.mjs` has been removed.
+| Item | Version / notes |
+|------|-----------------|
+| Framework | Astro 6.x |
+| CSS | Tailwind CSS 4 via `@tailwindcss/vite` — theme in `src/styles/global.css` (`@theme`) |
+| Deploy | Cloudflare Pages — static **`dist/`** + **`functions/`** |
+| Node | **22+** for local build and CI |
 
-## 3. HighLevel & Image Integration
-Form submissions are handled by `functions/api/submit-quote.js`.
+## Tailwind 4
 
-### Features:
-- **Image Hosting**: Photos are uploaded to Cloudflare R2 and served via `https://media.stokeleads.com/`.
-- **GHL Custom Fields**:
-  - `Quote Image`: Stores the direct URL of the uploaded image.
-  - `Project Description`: Stores text + image URL link for redundancy.
+- No `@astrojs/tailwind`; use the Vite plugin and **`global.css`**.
+- Legacy root `tailwind.config.mjs` removed in favor of `@theme`.
 
-### Configuration Snapshot (`wrangler.toml`):
-The following IDs are required for the API to function. They are managed in the `[vars]` section of `wrangler.toml`:
+## Quote API (`functions/api/submit-quote.js`)
 
-- **Location ID**: `tV8qFLdWkBLBfjh64cFV`
-- **Quote Image Field ID**: `4umRt0qz4rRZPDhjVQAD`
-- **Description Field ID**: `cVY04IeJOEfpC42bqury`
+- **POST /api/submit-quote** — optional image upload to R2, GoHighLevel contact create/update.
+- **`HIGHLEVEL_TOKEN`** — Cloudflare Pages **secret** (never commit).
+- **`HIGHLEVEL_LOCATION_ID`**, **`HIGHLEVEL_CUSTOM_FIELD_*`** — set as Pages **environment variables** (or `.dev.vars` for local Wrangler). Same names as **`.env.example`**.
+- **`IMG_BUCKET`** — R2 binding name; bucket declared in **`wrangler.toml`** (`[[r2_buckets]]`). Production values are configured in the **Cloudflare dashboard**, not by committing secrets into the repo.
 
-> [!IMPORTANT]
-> The **HIGHLEVEL_TOKEN** must be managed as a **Secret** in the Cloudflare Pages Dashboard. It should NOT be added to `wrangler.toml`.
+## R2 media (build)
 
-## 4. Maintenance Notes
-- **LCP Optimization**: Hero images are loaded conditionally based on screen size (AVIF preferred).
-- **Service Selection**: The form is currently simplified (no service dropdown) to maximize conversion.
-- **Node Requirement**: If deploying via a local terminal or custom CI, ensure Node v22 or higher is used.
+Build-time vars **`R2_*`** / optional **`R2_SITE_SLUG`** must match how objects are stored. See **`docs/media-management.md`**.
+
+## Optional housekeeping
+
+- **LCP:** Hero imagery uses responsive `Image` / formats as implemented in components.
+- **Node:** Use v22+ everywhere the app is built.
