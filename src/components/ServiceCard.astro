@@ -1,18 +1,37 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro/dist/assets/types.js';
+
 interface Props {
   title: string;
   description?: string;
   href?: string;
+  /** Legacy public / remote URL when no imported asset is provided */
   imageUrl?: string;
+  /** Build-optimized import (category cards); takes precedence over imageUrl */
+  imageAsset?: ImageMetadata;
 }
 
-const { title, description, href = '/services', imageUrl } = Astro.props;
+const { title, description, href = '/services', imageUrl, imageAsset } = Astro.props;
 ---
 
 <article class="group rounded-none border border-neutral-200 bg-surface-elevated overflow-hidden shadow-sm transition-[box-shadow,border-color] duration-200 hover:border-brand-orange/35 hover:shadow-md">
   <a href={href} class="block focus-ring">
-    {imageUrl ? (
-      <div class="aspect-[4/3] overflow-hidden bg-neutral-100">
+    {imageAsset ? (
+      <div class="aspect-4/3 overflow-hidden bg-neutral-100">
+        <Image
+          src={imageAsset}
+          alt=""
+          width={400}
+          height={300}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+        />
+      </div>
+    ) : imageUrl ? (
+      <div class="aspect-4/3 overflow-hidden bg-neutral-100">
         <img
           src={imageUrl}
           alt=""
@@ -23,7 +42,7 @@ const { title, description, href = '/services', imageUrl } = Astro.props;
         />
       </div>
     ) : (
-      <div class="aspect-[4/3] bg-wood-light flex items-center justify-center border-b border-neutral-100" aria-hidden="true">
+      <div class="aspect-4/3 bg-wood-light flex items-center justify-center border-b border-neutral-100" aria-hidden="true">
         <span class="text-3xl text-brand-orange/40">◆</span>
       </div>
     )}

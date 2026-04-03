@@ -8,6 +8,7 @@ import {
   getServiceGroupsForCategory,
 } from '../data/siteArchitecture';
 import { serviceImages } from '../data/serviceImages';
+import { serviceCategoryCardAssets } from '../data/serviceCategoryCardImages';
 import { servicesPageCopy } from '../data/marketingPagesCopy';
 import { homepageTrustStripItems, testimonialPulls } from '../data/copywritingLibrary';
 
@@ -112,6 +113,7 @@ const description = mc.description;
               <ServiceCard
                 title={catPage.title}
                 href={`/services/${catPage.slug}`}
+                imageAsset={serviceCategoryCardAssets[catPage.title]}
                 imageUrl={serviceImages[catPage.title]}
               />
             </li>

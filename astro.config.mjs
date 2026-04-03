@@ -70,6 +70,9 @@ export default defineConfig({
     inlineStylesheets: 'auto',
   },
   image: {
+    service: {
+      entrypoint: './src/image-services/sharp-saturated.ts',
+    },
     formats: ['avif', 'webp'],
     domains: ['media.stokeleads.com'],
   },

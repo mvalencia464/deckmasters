@@ -28,10 +28,7 @@ function buildServiceImages(): Record<string, string> {
     return '/projects/009-masterpiece-main.avif';
   };
 
-  /** Category hub cards on /services (representative child heroes) */
-  out['Deck Builder'] = pick('New Deck Construction', 'Custom Deck Design');
-  out['Deck Repair & Maintenance'] = pick('Structural Deck Repair', 'Deck Board Replacement');
-  out['General Contracting'] = pick('Exterior Home Renovations', 'Residential General Contracting');
+  /** Category hub cards: Deck Builder, Deck Repair, General Contracting use `serviceCategoryCardImages` + Astro Image. */
   out['Outdoor Living'] = pick('Custom Staircases and Landings', 'Elevated Deck Systems');
 
   return out;

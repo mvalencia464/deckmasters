@@ -15,6 +15,7 @@ import { homeMeta, getWhyChooseUs, homeFaqs, getFinalCta, homeServicesSectionLea
 
 const site = (await import('../data/site.json')).default;
 const { serviceImages } = await import('../data/serviceImages.ts');
+const { serviceCategoryCardAssets } = await import('../data/serviceCategoryCardImages.ts');
 const googleData = (await import('../data/google-reviews.json')).default;
 const googleRaw = googleData.rawReviews ?? [];
 const josephLeman = googleRaw.find((r: { author: string }) => r.author === 'Joseph Leman') ?? null;
@@ -120,7 +121,12 @@ const structuredDataJson = { '@context': 'https://schema.org', '@graph': graph }
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
         {featuredServices.map((name) => (
           <li>
-            <ServiceCard title={name} href="/services" imageUrl={serviceImages[name]} />
+            <ServiceCard
+              title={name}
+              href="/services"
+              imageAsset={serviceCategoryCardAssets[name]}
+              imageUrl={serviceImages[name]}
+            />
           </li>
         ))}
       </ul>

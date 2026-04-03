@@ -5,6 +5,7 @@ import { alaskaLandingCopy } from '../../data/marketingPagesCopy';
 
 const site = (await import('../../data/site.json')).default;
 const { serviceImages } = await import('../../data/serviceImages.ts');
+const { serviceCategoryCardAssets } = await import('../../data/serviceCategoryCardImages.ts');
 const primaryCategory = site.categories.find((c: { isPrimary: boolean }) => c.isPrimary);
 const deckServices = primaryCategory
   ? primaryCategory.services.filter((s: { selected: boolean }) => s.selected).slice(0, 9)
@@ -45,7 +46,12 @@ const mc = alaskaLandingCopy({
         <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
           {deckServices.map((s: { name: string }) => (
             <li>
-              <ServiceCard title={s.name} href="/contact#quote" imageUrl={serviceImages[s.name]} />
+              <ServiceCard
+                title={s.name}
+                href="/contact#quote"
+                imageAsset={serviceCategoryCardAssets[s.name]}
+                imageUrl={serviceImages[s.name]}
+              />
             </li>
           ))}
         </ul>
