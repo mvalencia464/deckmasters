@@ -22,7 +22,7 @@ export const PROJECT_IMAGE_POOL = [
   '/projects/009-masterpiece-main.avif',
   '/projects/017-contemporary-design.avif',
   '/projects/002-aerial-view-new.avif',
-  '/projects/046-ground-level-1.avif',
+  '/projects/045-wraparound-angle.avif',
   '/projects/050-bonus-1.avif',
   '/projects/composite-decking-texture.avif',
   '/projects/021-custom-entrance.avif',
