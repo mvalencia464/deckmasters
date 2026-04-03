@@ -66,7 +66,7 @@ Before a single headline, here's what your customers actually said. These are th
 > Stop settling for contractors who ghost. Start here.
 
 **Subheadline (supports H1):**
-> Deck Masters builds decks that exceed expectations, handle Alaska's winters, and come with a team that actually picks up the phone — even 9 months after the job is done.
+> Deck Masters builds more than decks — we're building trust — with work that exceeds expectations, stands up to Alaska's winters, and a team that actually picks up the phone — even 9 months after the job is done.
 
 **CTA Button (Top of page — Call to Action):**
 > Get My Free Estimate
