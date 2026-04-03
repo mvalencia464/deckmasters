@@ -1,11 +1,17 @@
 ---
 /**
- * Portfolio gallery: real project images from public/projects.
- * Uses local avif/webp with <picture> for best performance and Lighthouse scores.
- * Lazy loading and explicit dimensions prevent CLS.
+ * Portfolio gallery: most tiles use /projects/*.avif|webp from public.
+ * Slugs listed in `astroOptimizedSlugs` use src/assets + Astro <Image /> for build-time AVIF/WebP.
  */
+import { Image } from 'astro:assets';
+import img023CustomRailing from '../assets/projects/023-custom-railing.png';
+
 const projectsData = (await import('../data/projects.json')).default;
 const images = projectsData.images ?? [];
+
+const astroImageBySlug: Record<string, ImageMetadata> = {
+  '023-custom-railing': img023CustomRailing,
+};
 ---
 
 <section class="py-12 sm:py-16 lg:py-24 bg-surface-muted border-t border-neutral-200" aria-label="Project gallery">
@@ -18,23 +24,38 @@ const images = projectsData.images ?? [];
       </p>
     </div>
     <ul class="grid grid-cols-2 md:grid-cols-3 gap-4" role="list">
-      {images.map((img: { slug: string; alt: string }) => (
-        <li>
-          <picture>
-            <source type="image/avif" srcset={`/projects/${img.slug}.avif`} />
-            <source type="image/webp" srcset={`/projects/${img.slug}.webp`} />
-            <img
-              src={`/projects/${img.slug}.webp`}
-              alt={img.alt}
-              width={600}
-              height={400}
-              loading="lazy"
-              decoding="async"
-              class="rounded-none w-full aspect-[3/2] object-cover border border-neutral-200 shadow-sm"
-            />
-          </picture>
-        </li>
-      ))}
+      {images.map((img: { slug: string; alt: string }) => {
+        const optimized = astroImageBySlug[img.slug];
+        return (
+          <li>
+            {optimized ? (
+              <Image
+                src={optimized}
+                alt={img.alt}
+                widths={[400, 600, 900]}
+                sizes="(max-width: 768px) 50vw, 33vw"
+                loading="lazy"
+                decoding="async"
+                class="rounded-none w-full aspect-[3/2] object-cover border border-neutral-200 shadow-sm"
+              />
+            ) : (
+              <picture>
+                <source type="image/avif" srcset={`/projects/${img.slug}.avif`} />
+                <source type="image/webp" srcset={`/projects/${img.slug}.webp`} />
+                <img
+                  src={`/projects/${img.slug}.webp`}
+                  alt={img.alt}
+                  width={600}
+                  height={400}
+                  loading="lazy"
+                  decoding="async"
+                  class="rounded-none w-full aspect-[3/2] object-cover border border-neutral-200 shadow-sm"
+                />
+              </picture>
+            )}
+          </li>
+        );
+      })}
     </ul>
   </div>
 </section>
