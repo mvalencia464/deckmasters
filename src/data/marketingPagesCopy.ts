@@ -152,6 +152,22 @@ export function alaskaLandingCopy(s: SiteForMarketingCopy) {
   };
 }
 
+export function customerMapPageCopy(s: SiteForMarketingCopy) {
+  const { businessName, primaryCity, primaryPhone } = s;
+  return {
+    title: `Customer Map | Where We Build in ${primaryCity} — ${businessName}`,
+    description: `Explore an interactive map of ${businessName} customer projects in and around ${primaryCity}. Free estimates. ${primaryPhone}.`,
+    h1: 'Where we build',
+    lead: `Every pin represents a real homeowner who trusted us with their deck or exterior work. Use the map to see the breadth of projects we have completed across ${primaryCity} and the surrounding area.`,
+    sectionEyebrow: 'Service area',
+    sectionH2: 'Customer project map',
+    mapHelp:
+      'The interactive map loads in this page only (lazy iframe). The rest of the site does not download or run Felt until someone opens this URL.',
+    attribution:
+      'Interactive map provided by Felt. Pins reflect customer projects over time; not every job may appear on the map.',
+  };
+}
+
 export function blogIndexCopy(s: SiteForMarketingCopy) {
   return {
     title: `Blog | Deck & Outdoor Living Tips — ${s.businessName}`,
