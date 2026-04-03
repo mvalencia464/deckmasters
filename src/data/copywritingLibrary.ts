@@ -78,7 +78,7 @@ export const heroHeadlines: HeroBlock[] = [
       'Reviews in three words: “They do what they say — then they over deliver.”',
     ],
     subheadline:
-      'Deck Masters builds decks that exceed expectations, handle Alaska\'s winters, and come with a team that actually picks up the phone — even 9 months after the job is done.',
+      'Deck Masters builds more than decks — we\'re building trust — with work that exceeds expectations, stands up to Alaska\'s winters, and a team that actually picks up the phone — even 9 months after the job is done.',
     ctaTop: 'Get My Free Estimate',
     ctaMid: 'See What My Deck Could Look Like',
   },
@@ -554,7 +554,7 @@ export const homepagePublicSeo = {
 export const publicHomepageHero = {
   h1: 'New decks, replacements, and repairs — built for Anchorage homes.',
   subhead:
-    'Deck Masters builds decks that exceed expectations, handle Alaska\'s winters, and come with a team that actually picks up the phone — even 9 months after the job is done.',
+    'Deck Masters builds more than decks — we\'re building trust — with work that exceeds expectations, stands up to Alaska\'s winters, and a team that actually picks up the phone — even 9 months after the job is done.',
   ctaPrimary: 'Get My Free Estimate',
   ctaMidPage: 'See What My Deck Could Look Like',
 } as const;
