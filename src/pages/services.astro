@@ -35,6 +35,13 @@ const description = mc.description;
       aria-hidden="true"
     >
     </div>
+    <!-- Depth cue aligned with homepage hero (orange / teal ambient) -->
+    <div
+      class="pointer-events-none absolute inset-0 z-[1] opacity-90"
+      style="background: radial-gradient(ellipse 80% 55% at 15% 10%, rgba(232,90,7,0.18) 0%, transparent 52%), radial-gradient(ellipse 65% 45% at 85% 92%, rgba(13,148,136,0.12) 0%, transparent 48%)"
+      aria-hidden="true"
+    >
+    </div>
     <div class="relative z-10 mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight max-w-4xl">
         {mc.h1}
@@ -71,13 +78,13 @@ const description = mc.description;
   </section>
 
   <section class="border-b border-neutral-200 bg-surface-muted">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <ul class="grid gap-8 sm:grid-cols-3" role="list">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
+      <ul class="grid gap-6 sm:gap-8 sm:grid-cols-3" role="list">
         {
           mc.heroPillars.map((pillar) => (
-            <li class="border-l-4 border-brand-orange pl-4">
+            <li class="flex flex-col border border-neutral-200 bg-white p-6 shadow-sm border-l-4 border-l-brand-orange">
               <p class="font-display text-sm font-bold uppercase tracking-wide text-neutral-800">{pillar.title}</p>
-              <p class="mt-2 text-sm leading-relaxed text-neutral-600">{pillar.body}</p>
+              <p class="mt-3 text-sm leading-relaxed text-neutral-600 grow">{pillar.body}</p>
             </li>
           ))
         }
@@ -85,111 +92,137 @@ const description = mc.description;
     </div>
   </section>
 
-  <section class="py-20 lg:py-28 bg-surface">
+  <section class="py-16 lg:py-24 bg-surface">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div>
+      <header class="max-w-3xl">
         <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange">Services</p>
-        <h2 class="mt-2 text-2xl font-semibold text-neutral-800">Browse by category</h2>
-        <p class="mt-3 text-neutral-600 max-w-2xl text-sm leading-relaxed">
+        <h2 class="mt-2 font-display text-3xl md:text-4xl font-bold text-neutral-800 uppercase tracking-tight">
+          Browse by category
+        </h2>
+        <p class="mt-3 text-neutral-600 max-w-2xl text-sm sm:text-base leading-relaxed">
           Pick the lane that fits your job — then use the lists below to open a dedicated page for any line item.
         </p>
-        <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
-          {serviceCategoryOrder.map((categoryId) => {
-            const catPage = getServicePage(categoryId);
-            if (!catPage) return null;
-            return (
-              <li>
-                <ServiceCard
-                  title={catPage.title}
-                  href={`/services/${catPage.slug}`}
-                  imageUrl={serviceImages[catPage.title]}
-                />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      {
-        serviceCategoryOrder.map((categoryId) => {
+      </header>
+      <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
+        {serviceCategoryOrder.map((categoryId) => {
           const catPage = getServicePage(categoryId);
           if (!catPage) return null;
-          const groups = getServiceGroupsForCategory(categoryId);
-
           return (
-            <div class="mt-16 pt-12 border-t border-neutral-200">
-              <div class="flex flex-wrap items-end justify-between gap-4 border-b border-neutral-200 pb-3">
-                <h2 class="text-2xl font-semibold text-neutral-800">{catPage.title}</h2>
-                <a
-                  href={`/services/${catPage.slug}`}
-                  class="text-sm font-medium uppercase tracking-wider text-brand-orange hover:underline"
-                >
-                  View {catPage.title} hub →
-                </a>
-              </div>
-
-              <div class="mt-8 space-y-10">
-                {groups.map((group) => (
-                  <div>
-                    {group.core && (
-                      <h3 class="text-base font-semibold text-neutral-800">
-                        <a href={`/services/${group.core.slug}`} class="text-brand-orange hover:underline">
-                          {group.core.title}
-                        </a>
-                      </h3>
-                    )}
-                    <ul
-                      class:list={[
-                        'grid gap-x-8 gap-y-2 text-sm list-none p-0 m-0 sm:grid-cols-2 lg:grid-cols-3',
-                        group.core ? 'mt-3' : 'mt-0',
-                      ]}
-                      role="list"
-                    >
-                      {group.leaves.map((leaf) => (
-                        <li>
-                          <a
-                            href={`/services/${leaf.slug}`}
-                            class="text-neutral-800 hover:text-brand-orange transition-colors underline-offset-2 hover:underline"
-                          >
-                            {leaf.title}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <li>
+              <ServiceCard
+                title={catPage.title}
+                href={`/services/${catPage.slug}`}
+                imageUrl={serviceImages[catPage.title]}
+              />
+            </li>
           );
-        })
-      }
+        })}
+      </ul>
 
-      <div class="mt-16 pt-10 border-t border-neutral-200">
-        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange mb-2">{mc.waterfrontEyebrow}</p>
-        <h2 class="text-2xl font-semibold text-neutral-800">{mc.waterfrontH2}</h2>
-        <p class="mt-3 text-neutral-600 max-w-2xl">
+      <div class="mt-14 lg:mt-18 space-y-10 lg:space-y-12">
+        {
+          serviceCategoryOrder.map((categoryId) => {
+            const catPage = getServicePage(categoryId);
+            if (!catPage) return null;
+            const groups = getServiceGroupsForCategory(categoryId);
+
+            return (
+              <article class="overflow-hidden rounded-none border border-neutral-200 bg-surface-elevated shadow-sm">
+                <div class="border-b border-neutral-200 bg-surface-muted/90 px-5 py-5 sm:px-6 sm:py-6">
+                  <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="flex min-w-0 items-start gap-4">
+                      <span class="mt-1 h-10 w-1 shrink-0 bg-brand-orange sm:h-12" aria-hidden="true" />
+                      <div class="min-w-0">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange">Category</p>
+                        <h2 class="font-display mt-1 text-2xl font-bold uppercase tracking-tight text-neutral-800 md:text-3xl">
+                          {catPage.title}
+                        </h2>
+                      </div>
+                    </div>
+                    <a
+                      href={`/services/${catPage.slug}`}
+                      class="focus-ring inline-flex shrink-0 items-center justify-center border-2 border-brand-orange bg-brand-orange px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-colors duration-200 hover:bg-orange-800 hover:border-orange-800"
+                    >
+                      View hub →
+                    </a>
+                  </div>
+                </div>
+
+                <div class="space-y-8 px-5 py-7 sm:px-6 sm:py-8">
+                  {groups.map((group) => (
+                    <div class="border-l-4 border-neutral-200 pl-4 transition-colors duration-200 hover:border-l-brand-orange sm:pl-5">
+                      {group.core && (
+                        <h3 class="text-base font-bold text-neutral-800 md:text-lg">
+                          <a
+                            href={`/services/${group.core.slug}`}
+                            class="text-brand-orange underline-offset-2 transition-colors hover:underline"
+                          >
+                            {group.core.title}
+                          </a>
+                        </h3>
+                      )}
+                      <ul
+                        class:list={[
+                          'm-0 grid list-none gap-2 p-0 sm:grid-cols-2 lg:grid-cols-3',
+                          group.core ? 'mt-4' : 'mt-0',
+                        ]}
+                        role="list"
+                      >
+                        {group.leaves.map((leaf) => (
+                          <li>
+                            <a
+                              href={`/services/${leaf.slug}`}
+                              class="focus-ring group/svc flex min-h-[2.75rem] items-center justify-between gap-3 border border-neutral-200 bg-white px-3.5 py-2.5 text-sm font-medium text-neutral-800 shadow-sm transition-[border-color,box-shadow,color,background-color] duration-200 hover:border-brand-orange/45 hover:bg-white hover:text-brand-orange hover:shadow-md"
+                            >
+                              <span class="leading-snug">{leaf.title}</span>
+                              <span
+                                class="shrink-0 text-neutral-400 transition-colors group-hover/svc:text-brand-orange"
+                                aria-hidden="true"
+                              >
+                                →
+                              </span>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+
+      <aside class="mt-14 overflow-hidden rounded-none border border-neutral-200 border-l-4 border-l-brand-orange bg-white p-6 shadow-sm sm:p-8 lg:mt-16">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-orange">{mc.waterfrontEyebrow}</p>
+        <h2 class="mt-2 font-display text-2xl font-bold uppercase tracking-tight text-neutral-800 md:text-3xl">
+          {mc.waterfrontH2}
+        </h2>
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-600 sm:text-base">
           {mc.waterfrontLead}
         </p>
-        <ul class="mt-6 text-sm list-none p-0 m-0 space-y-2" role="list">
+        <ul class="mt-6 m-0 list-none space-y-2 p-0" role="list">
           <li>
             <a
               href="/dock-building"
-              class="text-neutral-800 hover:text-brand-orange transition-colors underline-offset-2 hover:underline font-medium"
+              class="focus-ring inline-flex min-h-[2.75rem] w-full max-w-md items-center justify-between gap-3 border border-neutral-200 bg-surface px-3.5 py-2.5 text-sm font-semibold text-neutral-800 shadow-sm transition-[border-color,box-shadow,color] duration-200 hover:border-brand-orange/45 hover:text-brand-orange hover:shadow-md sm:w-auto sm:min-w-[14rem]"
             >
               Dock Building
+              <span class="text-neutral-400" aria-hidden="true">→</span>
             </a>
           </li>
         </ul>
-      </div>
+      </aside>
     </div>
   </section>
   <Gallery />
-  <section class="py-20 bg-surface-muted">
+  <section class="py-16 sm:py-20 bg-surface-muted border-t border-neutral-200">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-neutral-600 max-w-xl mx-auto">{mc.ctaLead}</p>
+      <p class="text-neutral-600 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">{mc.ctaLead}</p>
       <a
         href="/contact#quote"
-        class="mt-4 inline-flex rounded-none bg-brand-orange px-6 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-orange-800 focus-ring"
+        class="mt-6 inline-flex rounded-none bg-brand-orange px-8 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-colors duration-200 hover:bg-orange-800 focus-ring shadow-md"
       >
         {mc.ctaButton}
       </a>
