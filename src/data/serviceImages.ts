@@ -1,6 +1,7 @@
 /**
- * Service name → card image URL (homepage + /services hub grids).
+ * Service name → card image URL (homepage + /services category cards).
  * Leaf services use the same image as their /services/[slug] hero for visual consistency.
+ * Category titles (`Deck Builder`, etc.) map to representative imagery for hub cards only.
  */
 import { childPageCopy } from './childPageCopy';
 import { servicePages, type ChildServiceSlug } from './siteArchitecture';
@@ -18,6 +19,20 @@ function buildServiceImages(): Record<string, string> {
       out[p.title] = bundle.heroImage;
     }
   }
+
+  const pick = (...titles: string[]) => {
+    for (const t of titles) {
+      const url = out[t];
+      if (url) return url;
+    }
+    return '/projects/009-masterpiece-main.avif';
+  };
+
+  /** Category hub cards on /services (representative child heroes) */
+  out['Deck Builder'] = pick('New Deck Construction', 'Custom Deck Design');
+  out['Deck Repair & Maintenance'] = pick('Structural Deck Repair', 'Deck Board Replacement');
+  out['General Contracting'] = pick('Exterior Home Renovations', 'Residential General Contracting');
+  out['Outdoor Living'] = pick('Custom Staircases and Landings', 'Elevated Deck Systems');
 
   return out;
 }
