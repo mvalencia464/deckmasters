@@ -87,3 +87,38 @@
     rgba(0, 0, 0, 0.035) 6px
   );
 }
+
+/* Mobile header: very soft “attention” pulse on call button (no JS; respects reduced motion) */
+@keyframes phone-cta-soft-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.12),
+      0 2px 4px -2px rgb(0 0 0 / 0.08),
+      0 0 0 0 rgb(232 90 7 / 0.35);
+  }
+  55% {
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.12),
+      0 2px 4px -2px rgb(0 0 0 / 0.08),
+      0 0 0 10px rgb(232 90 7 / 0);
+  }
+}
+
+/* Static shadow when user prefers reduced motion (animation block below skipped) */
+.phone-cta-soft-pulse {
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.12),
+    0 2px 4px -2px rgb(0 0 0 / 0.08);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .phone-cta-soft-pulse {
+    animation: phone-cta-soft-pulse 2.75s ease-out infinite;
+  }
+
+  .phone-cta-soft-pulse:hover,
+  .phone-cta-soft-pulse:focus-visible {
+    animation-play-state: paused;
+  }
+}
