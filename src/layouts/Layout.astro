@@ -65,9 +65,8 @@ const logoRest = logoParts.slice(1).join('');
               <li><a href="/about" class="block py-4 text-lg font-medium text-neutral-800 hover:text-brand-orange border-b border-neutral-100">About</a></li>
               <li><a href="/contact" class="block py-4 text-lg font-medium text-neutral-800 hover:text-brand-orange border-b border-neutral-100">Contact</a></li>
             </ul>
-            <a href="/#quote" class="mt-8 mx-auto w-full max-w-xs bg-brand-orange hover:bg-orange-800 text-white px-6 py-4 font-bold text-sm uppercase tracking-wider text-center transition-colors focus-ring rounded-none">
-              <span class="hidden sm:inline">Get My Free Estimate →</span>
-              <span class="sm:hidden">Free estimate →</span>
+            <a href="/#quote" class="mt-8 mx-auto w-full max-w-xs bg-brand-orange hover:bg-orange-800 text-white px-6 py-4 font-bold text-sm uppercase tracking-wider text-center transition-colors focus-ring rounded-lg border-2 border-white/25 shadow-lg">
+              Click for free estimate →
             </a>
           </div>
         </div>
@@ -114,11 +113,10 @@ const logoRest = logoParts.slice(1).join('');
     </main>
     <a
       href="/#quote"
-      class="fixed left-0 right-0 z-40 md:hidden flex items-center justify-center gap-2 bg-brand-orange text-white font-bold text-sm py-3 rounded-none shadow-lg hover:bg-orange-800 active:scale-[0.98] transition-all focus-ring min-h-[52px] bottom-0 [padding-bottom:max(0.75rem,env(safe-area-inset-bottom))] [padding-left:max(1rem,env(safe-area-inset-left))] [padding-right:max(1rem,env(safe-area-inset-right))]"
-      aria-label="Get a free estimate"
+      class="fixed z-40 md:hidden flex items-center justify-center gap-2 bg-brand-orange text-white font-bold text-sm uppercase tracking-wider py-3.5 px-5 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.22)] border-2 border-white/30 ring-1 ring-black/10 hover:bg-orange-800 hover:border-white/40 active:scale-[0.98] transition-[transform,colors,box-shadow] focus-ring min-h-[52px] max-w-md w-[calc(100%-2rem)] min-w-0 left-1/2 -translate-x-1/2 touch-manipulation bottom-[max(1rem,env(safe-area-inset-bottom))]"
+      aria-label="Click for free estimate"
     >
-      <span class="hidden sm:inline">Get My Free Estimate →</span>
-      <span class="sm:hidden">Free estimate →</span>
+      Click for free estimate →
     </a>
     <Footer />
   </body>
