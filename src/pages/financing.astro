@@ -1,0 +1,209 @@
+---
+import Layout from '../layouts/Layout.astro';
+import iconSvg from '../assets/icon.svg';
+
+const site = (await import('../data/site.json')).default;
+const tel = site.primaryPhone.replace(/\D/g, '');
+const title = `Deck Financing in ${site.primaryCity} | ${site.businessName}`;
+const description = `Finance your new deck with affordable monthly payments through Upgrade. Easy application, flexible terms, and local ${site.primaryCity} builders you can talk to — ${site.businessName}.`;
+const siteOrigin = Astro.site?.origin ?? 'https://deckmastersak.com';
+const iconSrc = typeof iconSvg === 'string' ? iconSvg : iconSvg.src;
+const logoParts = site.businessName.split(' ').filter((p: string) => p !== 'AK');
+const logoFirst = logoParts[0] ?? '';
+const logoRest = logoParts.slice(1).join('');
+
+const upgradeUrl = 'https://www.upgrade.com/';
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: `${siteOrigin}/financing/`,
+  description,
+  about: { '@id': `${siteOrigin}/#business` },
+};
+
+const whyFinance = [
+  'Build your new outdoor space with affordable monthly payments',
+  'Straightforward application process and a customer dashboard to track upcoming payments',
+  'No prepayment or cancellation fees',
+  'No impact on credit for loan pre-approval',
+  'Keep more cash on hand and keep enjoying the lifestyle you want',
+];
+
+const rateRows = [
+  {
+    label: 'Promotional option',
+    detail: '0% interest and no payments for 12 months*',
+    note: '29.49% interest accrues during the promotional period if the balance is not paid in full when due — see your loan agreement.',
+  },
+  {
+    label: '7-year terms',
+    detail: '10.99% – 16.99% APR',
+  },
+  {
+    label: '10-year terms',
+    detail: '10.99% – 16.99% APR',
+  },
+  {
+    label: '15-year terms',
+    detail: '15.99% – 19.99% APR',
+  },
+];
+
+const pillars = [
+  {
+    title: 'Backed by real people',
+    body: `You will not get bounced between bots and distant call centers. You will talk to someone who knows your name, your project, and how to help you move forward in ${site.primaryCity}.`,
+  },
+  {
+    title: 'No pressure or guesswork',
+    body: 'We keep it simple. If financing is a fit, we will explain how it works — no confusing terms, no buried fees, and no pushy sales tactics.',
+  },
+  {
+    title: 'Options that work with real budgets',
+    body: 'Life is expensive. Flexible solutions help you start now and pay over time — without draining your savings all at once.',
+  },
+];
+---
+
+<Layout title={title} description={description} verbatimTitle>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(webPageSchema)} />
+
+  <section class="relative border-b border-neutral-200 bg-neutral-900 text-white overflow-hidden">
+    <div
+      class="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-700 via-neutral-900 to-neutral-900"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative z-10 mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight max-w-4xl">
+        Finance your new deck without delaying the life you want to live
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-neutral-200 leading-relaxed">
+        Dreaming of the perfect deck? Reach out and let&rsquo;s talk about building your ideal outdoor space in {site.primaryCity}{' '}
+        without putting your lifestyle on hold.
+      </p>
+      <div class="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+        <div class="flex items-center gap-3">
+          <img src={iconSrc} alt="" width="48" height="44" class="h-11 w-auto opacity-95" />
+          <span class="font-display text-xl font-bold uppercase tracking-tight text-white">
+            {logoFirst}<span class="brand-text-gradient">{logoRest}</span>
+          </span>
+        </div>
+        <span class="hidden sm:inline text-neutral-500 text-2xl font-light" aria-hidden="true">+</span>
+        <div class="flex items-baseline gap-2">
+          <span class="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">Financing through</span>
+          <a
+            href={upgradeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-display text-2xl font-bold text-white hover:text-brand-orange transition-colors"
+          >
+            Upgrade
+          </a>
+        </div>
+      </div>
+      <div class="mt-10 flex flex-wrap gap-4 items-center">
+        <a
+          href={`tel:${tel}`}
+          class="inline-flex rounded-none bg-brand-orange px-6 py-3 text-base font-bold uppercase tracking-wider text-white hover:bg-orange-800 transition-colors focus-ring"
+        >
+          Call to discuss financing
+        </a>
+        <a href="/contact#quote" class="inline-flex rounded-none border border-white/30 px-6 py-3 text-base font-bold uppercase tracking-wider text-white hover:border-brand-orange hover:text-brand-orange transition-colors focus-ring">
+          Request a quote
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <article class="bg-surface">
+    <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+      <h2 class="font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+        Why get your dream deck financed?
+      </h2>
+      <ul class="mt-8 space-y-4" role="list">
+        {
+          whyFinance.map((line) => (
+            <li class="flex gap-3">
+              <span class="mt-1 text-brand-orange shrink-0" aria-hidden="true">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </span>
+              <span class="text-neutral-600 leading-relaxed">{line}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-12 rounded-none border border-neutral-200 bg-surface-muted p-6 sm:p-8">
+        <h2 class="font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-neutral-800">
+          Sample terms &amp; promotional offers
+        </h2>
+        <p class="mt-2 text-sm text-neutral-600 leading-relaxed">
+          Rates and offers are set by Upgrade and depend on creditworthiness and other factors. The summary below is for planning — always
+          refer to your official loan documents.
+        </p>
+        <ul class="mt-6 space-y-4" role="list">
+          {
+            rateRows.map((row) => (
+              <li class="border-b border-neutral-200 pb-4 last:border-0 last:pb-0">
+                <p class="font-semibold text-neutral-800">{row.label}</p>
+                <p class="mt-1 text-neutral-700">{row.detail}</p>
+                {row.note && <p class="mt-2 text-sm text-neutral-600">{row.note}</p>}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed">
+          * Promotional and APR details are provided by Upgrade. {site.businessName} is not a lender. Financing is subject to credit
+          approval. See Upgrade&rsquo;s disclosures and your loan agreement for full terms, fees, and conditions.
+        </p>
+      </div>
+
+      <h2 class="mt-16 font-display text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-800">
+        Get your dream deck
+      </h2>
+      <p class="mt-4 text-lg font-semibold text-neutral-800">An easy financing option, made for real-life scenarios</p>
+      <p class="mt-4 text-neutral-600 leading-relaxed">
+        We have made financing as simple as the build itself. Reach out and we will walk you through everything so you can have the outdoor
+        space you want without a stressful price tag hanging over your head.
+      </p>
+
+      <div class="mt-12 grid gap-6 sm:grid-cols-1">
+        {
+          pillars.map((p) => (
+            <div class="rounded-none border border-neutral-200 bg-white p-6 shadow-sm">
+              <h3 class="font-display text-lg font-bold uppercase tracking-tight text-neutral-800">{p.title}</h3>
+              <p class="mt-3 text-neutral-600 leading-relaxed">{p.body}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-14 rounded-none border border-neutral-200 bg-surface-muted p-6 text-center">
+        <p class="text-neutral-800 font-semibold">Ready to explore your deck and payment options?</p>
+        <p class="mt-2 text-sm text-neutral-600">
+          Call {site.businessName} to talk through your project — we will help you understand next steps with{' '}
+          <a href={upgradeUrl} target="_blank" rel="noopener noreferrer" class="font-medium text-brand-orange hover:underline">
+            Upgrade
+          </a>
+          {' '}financing when it makes sense for you.
+        </p>
+        <div class="mt-5 flex flex-wrap justify-center gap-3">
+          <a href={`tel:${tel}`} class="inline-flex rounded-none bg-brand-orange px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-orange-800">
+            Call {site.primaryPhone}
+          </a>
+          <a
+            href="/contact#quote"
+            class="inline-flex rounded-none border-2 border-neutral-300 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-neutral-800 hover:border-brand-orange hover:text-brand-orange"
+          >
+            Free estimate
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
