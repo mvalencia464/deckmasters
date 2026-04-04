@@ -1,23 +1,9 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { R2_PUBLIC_BASE_URL, R2_SITE_SLUG } from 'astro:env/server';
+import { R2_SITE_SLUG } from 'astro:env/server';
 import { r2Loader } from './loaders/r2-loader';
-
-/** R2 object key or absolute URL → absolute URL for <Image /> and <img>. */
-function mediaPublicUrl(keyOrUrl: string): string {
-  const raw = keyOrUrl.trim();
-  if (/^https?:\/\//i.test(raw)) return raw;
-  const base = R2_PUBLIC_BASE_URL.replace(/\/+$/, '');
-  const key = raw.replace(/^\/+/, '');
-
-  const siteSlug = (R2_SITE_SLUG ?? '').trim().replace(/^\/+|\/+$/g, '');
-  if (!siteSlug) return `${base}/${key}`;
-
-  // If the key is already prefixed, don't double-prefix.
-  if (key.startsWith(`${siteSlug}/`)) return `${base}/${key}`;
-  return `${base}/${siteSlug}/${key}`;
-}
+import { mediaPublicUrl } from './utils/media';
 
 const r2MediaSrc = z.string().transform(mediaPublicUrl);
 
@@ -51,10 +37,11 @@ const projects = defineCollection({
     location: z.string().default('Anchorage, Alaska'),
     deckType: z.string(),
     keyFeatures: z.string(),
-    /** R2 key relative to bucket (e.g. projects/keller/hero.webp) or absolute image URL */
+    /** R2 key: <clientSlug>/<file.ext> or absolute URL */
     featuredImage: r2MediaSrc,
     galleryImages: z.array(r2MediaSrc),
-    video: z.string().optional(),
+    /** R2 key or absolute URL for walkthrough / hero video */
+    video: r2MediaSrc.optional(),
     /**
      * hero: video replaces featured image under the title (default).
      * afterGallery: keep featured image at top; show video below the photo grid.
@@ -69,10 +56,19 @@ const projects = defineCollection({
 });
 
 const siteSlugForR2 = (R2_SITE_SLUG ?? '').trim().replace(/^\/+|\/+$/g, '');
-const projectImagesPrefix = siteSlugForR2 ? `${siteSlugForR2}/projects/` : 'projects/';
+/** ListObjects prefix: whole tenant prefix (flat keys: <slug>/<client>/<file>). */
+const projectMediaListPrefix = siteSlugForR2 ? `${siteSlugForR2}/` : '';
 
 const projectImages = defineCollection({
-  loader: r2Loader({ folder: projectImagesPrefix }),
+  loader: r2Loader({ folder: projectMediaListPrefix }),
+  schema: z.object({
+    id: z.string(),
+    key: z.string(),
+    url: z.string(),
+    kind: z.enum(['image', 'video']),
+    lastModified: z.coerce.date().optional(),
+    size: z.number().optional(),
+  }),
 });
 
 export const collections = { blog, projects, projectImages };

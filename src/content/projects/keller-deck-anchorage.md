@@ -9,13 +9,13 @@ p2: "You see cedar posts and stainless steel cable railing with a composite top 
 location: "Anchorage, Alaska"
 deckType: "~1,037 sq ft Trex Enhance — PT framing, steel piles, cable rail"
 keyFeatures: "Picture-frame Trex, cedar & stainless cable rail, wide PT stairs, steel piles, scenic overlook"
-featuredImage: "projects/keller/001-aerial-wraparound.webp"
+featuredImage: "keller/001-aerial-wraparound.webp"
 galleryImages:
-  - "projects/keller/002-aerial-view-new.webp"
-  - "projects/keller/003-aerial-detail.webp"
-  - "projects/keller/004-aerial-landscape.webp"
-  - "projects/keller/005-aerial-wide.webp"
-  - "projects/keller/006-aerial-composite.webp"
-video: "https://media.stokeleads.com/deckmasters/videos/keller.mp4"
+  - "keller/002-aerial-view-new.webp"
+  - "keller/003-aerial-detail.webp"
+  - "keller/004-aerial-landscape.webp"
+  - "keller/005-aerial-wide.webp"
+  - "keller/006-aerial-composite.webp"
+video: "keller/keller.mp4"
 isFeatured: true
 ---

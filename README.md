@@ -33,7 +33,7 @@ Static marketing site for a cold-climate deck builder and general contractor. **
 
 ## Project media (Cloudflare R2)
 
-Project photos use **object keys** in Markdown front matter; the build resolves them with `R2_PUBLIC_BASE_URL` and optional **`R2_SITE_SLUG`**. Production today uses legacy keys under **`projects/...`** (omit `R2_SITE_SLUG` in `.env` and on Pages until objects exist under a site prefix). Full workflow: **`docs/media-management.md`**.
+Project photos use **flat object keys** in Markdown front matter (`<clientSlug>/<file>`); the build resolves them with `R2_PUBLIC_BASE_URL` and optional **`R2_SITE_SLUG`**. Full workflow: **`docs/media-management.md`**.
 
 ---
 
@@ -72,7 +72,7 @@ Connect the repo: **Workers & Pages → Pages → Connect to Git**.
 
 **Functions / secrets:** **`HIGHLEVEL_*`** and **`HIGHLEVEL_TOKEN`** (encrypted) for `functions/api/submit-quote.js` — set in the same Pages project (not committed). **`wrangler.toml`** in this repo names the Pages project, `pages_build_output_dir`, and the **`IMG_BUCKET`** R2 binding for Functions; it does **not** store API tokens.
 
-**`R2_SITE_SLUG`:** Leave unset on Pages if your R2 objects live at `projects/...`. Setting a slug without uploading to `<slug>/projects/...` causes **404** during image optimization.
+**`R2_SITE_SLUG`:** Must match the prefix of keys in R2 (e.g. `deckmasters/...`). A mismatch causes **404** during image optimization.
 
 ---
 

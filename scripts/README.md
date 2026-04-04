@@ -68,7 +68,7 @@ node --env-file=.env scripts/sync-reviews.js acme-contracting
 
 ## R2 media pipeline (optimize → upload)
 
-**Layout:** Put originals under `media/raw/projects/{slug}/` with **semantic names** (e.g. `hero-aerial-wide-01.jpg`). The optimize step writes **AVIF** to `media/dist/projects/{slug}/` with the **same basename** (`.avif`). `media/dist/` is gitignored.
+**Layout:** Put originals under `media/raw/{clientSlug}/` (or legacy `media/raw/projects/{clientSlug}/`) with **semantic names**; uploads flatten to R2 keys `{clientSlug}/<kebab-name>.<ext>`. The optimize step writes **AVIF** to `media/dist/...` with the **same basename** (`.avif`). `media/dist/` is gitignored.
 
 1. **Rename** camera files in `media/raw/...` before optimizing (lowercase, hyphens, optional `01` suffixes).
 2. **Optimize:** `npm run media:optimize` (defaults: `media/raw` → `media/dist`, max long edge 2560px, AVIF quality 62).  
@@ -77,5 +77,5 @@ node --env-file=.env scripts/sync-reviews.js acme-contracting
    - `npm run media:optimize -- --max 0` — no resize  
 3. **Upload to R2:** Set `R2_*` vars in `.env` (see `.env.example`).  
    - `npm run media:upload -- --dry-run` — list keys  
-   - `npm run media:upload -- --only projects/keller` — only that prefix  
-4. **Site URLs:** Reference `R2_PUBLIC_BASE_URL` + path, e.g. `{PUBLIC_MEDIA_BASE}/projects/keller/hero-aerial-wide-01.avif` (configure `PUBLIC_MEDIA_BASE` in Astro env when you switch off `public/` copies).
+   - `npm run media:upload -- --only keller` — only that client folder  
+4. **Site URLs:** Resolved from keys via `src/utils/media.ts`, e.g. `https://media.example.com/<optional-site-slug>/keller/hero-aerial-wide-01.avif`.

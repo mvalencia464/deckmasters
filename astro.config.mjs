@@ -17,13 +17,19 @@ export default defineConfig({
       R2_ACCOUNT_ID: envField.string({ context: 'server', access: 'public' }),
       R2_PUBLIC_BASE_URL: envField.string({ context: 'server', access: 'public' }),
       // Optional prefix for multi-site media isolation in R2.
-      // When set, we upload + resolve objects under: <siteSlug>/projects/...
-      // When empty, we keep the current behavior: projects/...
+      // When set, keys are <siteSlug>/<clientSlug>/<filename>.
       R2_SITE_SLUG: envField.string({
         context: 'server',
         access: 'public',
         optional: true,
         default: '',
+      }),
+      /** Until R2 objects are migrated off `projects/…`, set true so flat keys resolve to `projects/<client>/<file>`. */
+      R2_LEGACY_PREPEND_PROJECTS: envField.boolean({
+        context: 'server',
+        access: 'public',
+        optional: true,
+        default: false,
       }),
     },
   },
