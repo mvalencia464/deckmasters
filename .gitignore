@@ -20,7 +20,7 @@ dist/
 # Wrangler
 .wrangler/
 
-# Local media pipeline: rename in media/raw → npm run media:optimize → media/dist (AVIF) → npm run media:upload
+# Optional local AVIF output before upload (not required; astro build optimizes R2 remotes)
 media/dist/
 # Large local upload staging (sync to R2 with npm run media:upload; do not commit binaries)
 media/raw/

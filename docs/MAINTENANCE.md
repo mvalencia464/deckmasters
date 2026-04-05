@@ -25,7 +25,7 @@ Operational notes for **Deck Masters AK** — Astro build, Tailwind 4, Cloudflar
 
 ## R2 media (build)
 
-Build-time vars **`R2_*`** / optional **`R2_SITE_SLUG`** must match how objects are stored. See **`docs/media-management.md`**.
+Build-time **`R2_*`**, **`R2_SITE_SLUG`** (if used), and **`R2_LEGACY_PREPEND_PROJECTS`** must match real object keys and URL expectations. **`docs/media-management.md`** · **`scripts/README.md`** (R2 section).
 
 ## Optional housekeeping
 

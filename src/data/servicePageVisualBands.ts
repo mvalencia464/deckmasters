@@ -33,7 +33,7 @@ export const PROJECT_IMAGE_POOL = [
   '/projects/005-aerial-wide.avif',
   /** Client project folders (see src/assets/projects/{derek-clark,doug-mcneil,matt-blakeslee,olivia-grill}) */
   '/projects/derek-clark-timbertech-cable.jpeg',
-  '/projects/derek-clark-deck-overview.jpg',
+  '/projects/derek-clark-deck-overview.avif',
   '/projects/doug-mcneil-trex-pergola.jpg',
   '/projects/doug-mcneil-deck-rail-detail.jpeg',
   '/projects/matt-blakeslee-multi-level.jpg',

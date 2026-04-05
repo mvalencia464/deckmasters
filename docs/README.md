@@ -2,9 +2,9 @@
 
 | File | Description |
 |------|-------------|
-| **[media-management.md](./media-management.md)** | R2 keys, uploads, `R2_SITE_SLUG`, Pages env, troubleshooting |
+| **[media-management.md](./media-management.md)** | R2 flat keys, upload, migrate-flat, backfill site prefix, env, troubleshooting |
 | **[MAINTENANCE.md](./MAINTENANCE.md)** | Stack, Tailwind 4, GHL quote function, Node 22 |
 | **[MIGRATION-SEO-ADS-PLAYBOOK.md](./MIGRATION-SEO-ADS-PLAYBOOK.md)** | SEO/ads migration from legacy WordPress |
 | **[site-architecture-prompt-0.md](./site-architecture-prompt-0.md)** | Site hierarchy / URLs for content planning (Core30-era reference) |
 
-Project root **[README.md](../README.md)** covers commands, deploy, and links here.
+Project root **[README.md](../README.md)** covers commands and deploy. **`scripts/README.md`** lists every script (reviews + R2).

@@ -9,7 +9,8 @@
     "deploy": "npm run build && npx wrangler pages deploy dist",
     "sync-reviews": "node scripts/sync-reviews.js",
     "media:upload": "node scripts/media-upload-r2.mjs",
-    "media:migrate-flat": "node scripts/r2-migrate-flat.mjs"
+    "media:migrate-flat": "node scripts/r2-migrate-flat.mjs",
+    "media:backfill-site-prefix": "node scripts/r2-backfill-site-prefix.mjs"
   },
   "dependencies": {
     "astro": "^6.0.4",

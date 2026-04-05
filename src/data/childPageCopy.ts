@@ -39,7 +39,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'custom-deck-design': {
     browserTitle: metaSeoRows.find((r) => r.page === 'Custom Deck Design')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'Custom Deck Design')!.description,
-    heroImage: '/projects/derek-clark-deck-overview.jpg',
+    heroImage: '/projects/derek-clark-deck-overview.avif',
     h1Benefit: 'Plans That Fit Your Lot and Code',
     heroSubhead:
       'Unsure where stairs, landings, or guardrails should go? Call {phone} — we measure your space and sketch real options you can build against.',
@@ -309,7 +309,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Custom Railing Design Anchorage AK | Guards That Fit the View',
     metaDescription:
       'Custom railing design in Anchorage: height, strength, and style that meets code without blocking your deck. Deck Masters AK.',
-    heroImage: '/projects/derek-clark-deck-overview.jpg',
+    heroImage: '/projects/derek-clark-deck-overview.avif',
     h1Benefit: 'Guards That Match the Deck',
     heroSubhead:
       'Rails are safety gear and curb appeal. Call {phone} — we balance code minimums with sightlines you actually want.',
@@ -709,7 +709,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Storm Damage Deck Repair Anchorage AK | Wind, Snow & Impact',
     metaDescription:
       'Storm damage deck repair in Anchorage: wind-lifted rails, broken posts, and snow-load issues. Fast assessments from Deck Masters AK.',
-    heroImage: '/projects/derek-clark-deck-overview.jpg',
+    heroImage: '/projects/derek-clark-deck-overview.avif',
     h1Benefit: 'Recover After Weather Hits',
     heroSubhead:
       'Storms expose weak connections. Call {phone} — we secure what’s loose and replace what bent or broke.',
@@ -1204,7 +1204,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Finish Carpentry Anchorage AK | Trim, Stairs & Details',
     metaDescription:
       'Finish carpentry in Anchorage: trim, skirt boards, stair details, and refined exterior woodwork. Deck Masters AK.',
-    heroImage: '/projects/derek-clark-deck-overview.jpg',
+    heroImage: '/projects/derek-clark-deck-overview.avif',
     h1Benefit: 'Details That Look Intentional',
     heroSubhead:
       'Finish work is what you see daily. Call {phone} — we miter, scribe, and sand to standards that last outdoors.',

@@ -80,7 +80,7 @@ Copy **`.env.example`** → **`.env`** locally (never commit `.env`).
 | `R2_BUCKET_NAME` | Yes | Bucket name. |
 | `R2_PUBLIC_BASE_URL` | Yes | Public origin, e.g. `https://media.stokeleads.com` (no trailing path). Hostname must appear in **`astro.config.mjs` → `image.domains`**. |
 | `R2_SITE_SLUG` | No | Set when objects live under `<slug>/...` at the bucket root. |
-| `R2_LEGACY_PREPEND_PROJECTS` | No | `true` only while objects still live under `projects/<client>/…` (before migration). Flat keys in Markdown then resolve to `…/projects/<client>/<file>`. Set `false` after **`npm run media:migrate-flat`**. |
+| `R2_LEGACY_PREPEND_PROJECTS` | No | `true` only as a **temporary bridge** while URLs must hit bucket-root `projects/<client>/…`. Set **`false`** once objects exist at `<siteSlug>/<client>/…` (after **backfill** / upload). Not a substitute for copying objects into the site prefix. |
 
 **Cloudflare Pages:** set the same build variables for **Production** (and **Preview** if previews must match production media). See [Pages env](https://developers.cloudflare.com/pages/configuration/build-configuration/).
 
@@ -110,6 +110,15 @@ npm run media:migrate-flat -- --execute
 ```
 
 Use `--map oldKey=newKey` when the automatic rule is wrong (e.g. moving a video into a specific client folder). The script copies, verifies size, then deletes the source.
+
+**Site prefix (`R2_SITE_SLUG`) vs bucket-root `projects/`:** If files still live only under `projects/<client>/...` at the bucket root (no `deckmasters/` segment), Astro will request `https://…/deckmasters/<client>/…` and get **404** until you copy them:
+
+```bash
+npm run media:backfill-site-prefix -- --dry-run
+npm run media:backfill-site-prefix -- --execute
+```
+
+That copies `projects/keller/photo.webp` → `deckmasters/keller/photo.webp` without renaming. Optionally add `--delete-source` after you confirm the site build.
 
 ---
 
@@ -159,10 +168,11 @@ For **multiple contractor sites** on one bucket and hostname, set a distinct **`
 
 | Symptom | Check |
 |--------|--------|
-| **404** on remote image during `astro build` | **`R2_SITE_SLUG`** must match R2 keys. After changing slug, clean: `rm -rf .astro dist`. |
+| **404** on remote image during `astro build` | Object missing at built URL. Confirm key in R2 (e.g. `deckmasters/keller/…` vs `projects/keller/…`). Run **`media:backfill-site-prefix`** if needed. **`R2_SITE_SLUG`** must match. Clean: `rm -rf .astro dist`. |
 | r2-loader loaded **0** objects | Keys must be flat `client/file` under your prefix; nested paths are skipped. |
 | **403** on images | Host in `image.domains`. |
 | Wrong objects in R2 | Wrong `--root` or duplicate basenames under one client (upload aborts on collision). |
+| Migrate script says “no prefix” locally | **Cloudflare env is not loaded** for CLI—set **`R2_SITE_SLUG`** in `.env` or pass **`--prefix`**. |
 
 ---
 
@@ -171,7 +181,8 @@ For **multiple contractor sites** on one bucket and hostname, set a distinct **`
 | File | Role |
 |------|------|
 | `scripts/media-upload-r2.mjs` | Upload `media/raw` → R2 (flat keys). |
-| `scripts/r2-migrate-flat.mjs` | One-time copy/delete migration for legacy paths. |
+| `scripts/r2-migrate-flat.mjs` | One-time copy/delete: strip `projects/` / flatten `videos/` under an existing prefix. |
+| `scripts/r2-backfill-site-prefix.mjs` | Copy `projects/<client>/…` → `<siteSlug>/<client>/…` at bucket root. |
 | `scripts/lib/r2-naming.mjs` | Kebab-case basename helpers. |
 | `src/utils/media.ts` | Key → public URL. |
 | `src/content.config.ts` | Zod + `projectImages` loader prefix. |
@@ -185,3 +196,12 @@ For **multiple contractor sites** on one bucket and hostname, set a distinct **`
 ## Changing `R2_SITE_SLUG` after upload
 
 If you add a slug later, existing keys without that prefix will not resolve. Copy or re-upload objects under `<slug>/...`, then rebuild.
+
+---
+
+## Operational learnings (multi-tenant R2)
+
+- **`R2_SITE_SLUG` is not decorative** — Astro builds URLs as `R2_PUBLIC_BASE_URL` + `/` + `R2_SITE_SLUG` + `/` + key. Objects must exist under that prefix in the bucket (e.g. `deckmasters/keller/…`), or the build gets **404** on remote image fetch.
+- **Bucket-root `projects/` ≠ site prefix** — If historical uploads used only `projects/<client>/…` at the bucket root, **`media:backfill-site-prefix`** copies them to `<slug>/<client>/…`. **`media:migrate-flat`** handles different problems (dropping `projects/` *inside* keys that already include your site prefix, flattening `videos/`, etc.).
+- **CLI uses local env** — `npm run media:*` loads **`.env`** on your machine, not Cloudflare Pages. Set **`R2_SITE_SLUG`** locally for migrations.
+- **`R2_LEGACY_PREPEND_PROJECTS`** — Short-term bridge so flat Markdown keys map to legacy `…/projects/<client>/…` URLs. Set **`false`** once objects live at flat paths under the site prefix.

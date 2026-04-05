@@ -37,7 +37,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Custom Decks & Design Anchorage AK | Plans, Layouts & New Builds',
     metaDescription:
       'Custom deck design and new construction in Anchorage, AK. Layouts built for snow, wind, and your lot. Free estimates. Call Deck Masters AK.',
-    heroImage: '/projects/derek-clark-deck-overview.jpg',
+    heroImage: '/projects/derek-clark-deck-overview.avif',
     h1Benefit: 'Layouts That Match Your Lot and How You Live Outside',
     heroSubhead:
       'Waiting until “later” usually means a rushed season and fewer material choices. Call {phone} — we will pencil a real timeline and a clear design path before you commit.',

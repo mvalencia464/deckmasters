@@ -1,8 +1,22 @@
-# DataForSEO Google Reviews sync
+# Scripts
+
+| Script | npm | Purpose |
+|--------|-----|---------|
+| `sync-reviews.js` | `npm run sync-reviews` | Google Reviews via DataForSEO (see below) |
+| `media-upload-r2.mjs` | `npm run media:upload` | Upload `media/raw/` → R2 with flat keys + kebab basenames |
+| `r2-migrate-flat.mjs` | `npm run media:migrate-flat` | One-time: rewrite legacy paths (`projects/`, `videos/`, etc.) inside R2 |
+| `r2-backfill-site-prefix.mjs` | `npm run media:backfill-site-prefix` | Copy bucket-root `projects/<client>/…` → `<R2_SITE_SLUG>/<client>/…` |
+| `lib/r2-naming.mjs` | (imported) | Shared kebab-case helpers for upload |
+
+**Full R2 SOP:** **`docs/media-management.md`**.
+
+---
+
+## DataForSEO Google Reviews sync
 
 Sync Google Reviews by **business name** (keyword). Multi-client ready.
 
-## Setup
+### Setup
 
 1. **Credentials** — In project root, create `.env` (see `.env.example`):
    - `DATAFORSEO_LOGIN` — your DataForSEO login
@@ -12,7 +26,7 @@ Sync Google Reviews by **business name** (keyword). Multi-client ready.
    - `defaultSlug` — client used when you run the script with no argument
    - `clients[]` — one object per business
 
-## Running
+### Running
 
 ```bash
 # Sync default client (e.g. Deck Masters)
@@ -24,7 +38,7 @@ node scripts/sync-reviews.js deck-masters
 
 `npm run build` runs this script automatically before `astro build` (set `DATAFORSEO_*` in Cloudflare Pages build env).
 
-## Adding another client
+### Adding another client
 
 Add an entry to `clients` in `reviews-clients.json`:
 
@@ -52,7 +66,7 @@ Then run:
 node --env-file=.env scripts/sync-reviews.js acme-contracting
 ```
 
-## Flow
+### Flow
 
 1. **task_post** — Creates a task with keyword + location + language.
 2. **Poll task_get** — Waits until the task is done (polling every few seconds).
@@ -66,16 +80,13 @@ node --env-file=.env scripts/sync-reviews.js acme-contracting
 
 ---
 
-## R2 media pipeline (optimize → upload)
+## R2 media pipeline (upload → optional migration)
 
-**Layout:** Put originals under `media/raw/{clientSlug}/` (or legacy `media/raw/projects/{clientSlug}/`) with **semantic names**; uploads flatten to R2 keys `{clientSlug}/<kebab-name>.<ext>`. The optimize step writes **AVIF** to `media/dist/...` with the **same basename** (`.avif`). `media/dist/` is gitignored.
+1. **Stage files** under `media/raw/<clientSlug>/` (or legacy `media/raw/projects/<clientSlug>/`). The upload script flattens nested folders to **kebab-case basenames** only in the object key.
+2. **Optional local AVIF** — There is no `media:optimize` script in this repo. If you pre-encode to `media/dist/`, mirror basenames you expect on R2; otherwise upload originals and let **`astro build`** fetch and optimize remotes.
+3. **Upload:** `npm run media:upload -- --dry-run` then `npm run media:upload` (needs `R2_*` in `.env`). Use `--only <clientSlug>` for one folder.
+4. **One-time bucket fixes** (run from a machine with `.env`, not from Cloudflare’s build):
+   - **`media:migrate-flat`** — Strips `projects/` / rewrites `videos/` *inside* keys already under your site prefix (e.g. `deckmasters/projects/...` → `deckmasters/...`).
+   - **`media:backfill-site-prefix`** — If files only existed at **`projects/<client>/...`** at the bucket root, copies them to **`<R2_SITE_SLUG>/<client>/...`** so Astro’s URLs resolve. Optional **`--execute --delete-source`** after you verify.
 
-1. **Rename** camera files in `media/raw/...` before optimizing (lowercase, hyphens, optional `01` suffixes).
-2. **Optimize:** `npm run media:optimize` (defaults: `media/raw` → `media/dist`, max long edge 2560px, AVIF quality 62).  
-   - `npm run media:optimize -- --dry-run` — preview outputs  
-   - `npm run media:optimize -- --force` — re-encode everything  
-   - `npm run media:optimize -- --max 0` — no resize  
-3. **Upload to R2:** Set `R2_*` vars in `.env` (see `.env.example`).  
-   - `npm run media:upload -- --dry-run` — list keys  
-   - `npm run media:upload -- --only keller` — only that client folder  
-4. **Site URLs:** Resolved from keys via `src/utils/media.ts`, e.g. `https://media.example.com/<optional-site-slug>/keller/hero-aerial-wide-01.avif`.
+**Resolved URLs** are implemented in **`src/utils/media.ts`** (see **`docs/media-management.md`**).
