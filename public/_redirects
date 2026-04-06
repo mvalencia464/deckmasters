@@ -32,11 +32,9 @@
 /about-us/           /about    301
 /contact-us          /contact  301
 /contact-us/         /contact  301
-/deck-benefits             /deck-benefits    301
-/best-decking-materials    /best-decking-materials    301
-/10-cool-backyard-deck-design-ideas   /10-cool-backyard-deck-design-ideas    301
-/is-trex-decking-right-for-you        /is-trex-decking-right-for-you    301
-/deck-masters-introduction            /deck-masters-introduction    301
+
+# (No self-redirects for blog slugs — e.g. `/deck-benefits` → `/deck-benefits` caused redirect
+# loops with Cloudflare trailing-slash handling; `/slug/` → `/slug` is enough; see block above.)
 
 # Legacy archive patterns seen in crawl exports
 /tag/*               /blog    301
