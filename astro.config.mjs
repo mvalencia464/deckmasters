@@ -2,6 +2,7 @@ import { defineConfig, fontProviders, envField } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { sitemapSerialize } from './sitemap-serialize.mjs';
+import { rehypeGoogleReviewStats } from './rehype-google-review-stats.mjs';
 
 export default defineConfig({
   site: 'https://deckmastersak.com',
@@ -71,6 +72,9 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+  },
+  markdown: {
+    rehypePlugins: [rehypeGoogleReviewStats],
   },
   build: {
     inlineStylesheets: 'auto',

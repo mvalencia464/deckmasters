@@ -12,6 +12,7 @@ import ReviewsSection from '../components/ReviewsSection.astro';
 import { Image } from 'astro:assets';
 import ownerImg from '../assets/jordanwebb.png';
 import { homeMeta, getWhyChooseUs, homeFaqs, getFinalCta, homeServicesSectionLead } from '../data/homepageCopy';
+import { getGoogleReviewStats } from '../utils/googleReviewStats';
 
 const site = (await import('../data/site.json')).default;
 const { serviceImages } = await import('../data/serviceImages.ts');
@@ -20,13 +21,9 @@ const googleData = (await import('../data/google-reviews.json')).default;
 const googleRaw = googleData.rawReviews ?? [];
 const josephLeman = googleRaw.find((r: { author: string }) => r.author === 'Joseph Leman') ?? null;
 
-const statsGoogle = googleRaw.filter((r: { source?: string; rating?: number }) =>
-  String(r.source ?? '').toLowerCase().includes('google') && Number(r.rating) > 0
-);
-const googleReviewCount = statsGoogle.length;
-const googleAverageRating = statsGoogle.length
-  ? (statsGoogle.reduce((a: number, r: { rating?: number }) => a + Number(r.rating), 0) / googleReviewCount).toFixed(1)
-  : '5.0';
+const reviewStats = await getGoogleReviewStats();
+const googleReviewCount = reviewStats.count;
+const googleAverageRating = reviewStats.count ? reviewStats.average : '5.0';
 
 const whyChooseItems = getWhyChooseUs(googleReviewCount, googleAverageRating);
 const finalCta = getFinalCta(site.primaryPhone);

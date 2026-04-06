@@ -29,7 +29,7 @@ In the video above, Jordan walks through what to expect when you work with Deck 
 
 ## Client reviews and transparency
 
-- Our [reviews](/wall-of-love) are from **real clients** on Google—you can look them up. We have **46+ reviews** (I said 46 in the video—now it’s **125 reviews and counting!**) and a **4.9-star** average.
+- Our [reviews](/wall-of-love) are from **real clients** on Google—you can look them up. We have **46+ reviews** (I said 46 in the video—now it’s **{{GR_COUNT}} reviews and counting!**) and a **{{GR_AVG}}-star** average.
 - We’re not perfect. We had a one-star review from Matthew; we’ve refunded him, taken responsibility, and tried to make it right. When we make a mistake, **we own it**.
 - We operate with **high integrity, honesty, and transparency**. When you hire us, you’re hiring a specialty contractor who cares—and you can trust the team at your home.
 
