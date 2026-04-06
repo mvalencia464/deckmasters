@@ -19,7 +19,7 @@ export const topLevelSiteRoutes: { href: string; label: string }[] = [
   { href: '/schedule', label: 'Get a quote / schedule' },
   { href: '/gallery', label: 'Gallery' },
   { href: '/wall-of-love', label: 'Reviews (Wall of Love)' },
-  { href: '/blog', label: 'Blog index' },
+  { href: '/blog/', label: 'Blog index' },
   { href: '/alaska', label: 'Alaska landing' },
   { href: '/featured-project', label: 'Featured project' },
   { href: '/dock-building', label: 'Dock building' },
