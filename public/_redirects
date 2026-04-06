@@ -25,8 +25,7 @@
 /is-trex-decking-right-for-you/        /is-trex-decking-right-for-you    301
 /deck-masters-introduction/            /deck-masters-introduction    301
 
-# /blog/post-name → /post-name (posts are generated at root; this avoids duplicate indexing in prod)
-/blog/* /:splat 301
+# (Do not add `/blog/* → /:splat`: it matches `/blog` and redirects the blog index to `/`.)
 
 # Common WordPress / legacy paths → Astro
 /about-us            /about    301
