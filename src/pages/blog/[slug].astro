@@ -1,0 +1,27 @@
+---
+/**
+ * WordPress-style `/blog/post-slug` URLs. Canonical points at root `/post-slug` (same as sitemap).
+ */
+import Layout from '../../layouts/Layout.astro';
+import BlogPostArticle from '../../components/BlogPostArticle.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const site = (await import('../../data/site.json')).default;
+const title = `${post.data.title} | Blog — ${site.businessName}`;
+const description = post.data.description;
+const siteOrigin = Astro.site?.origin ?? 'https://deckmastersak.com';
+const canonicalUrl = new URL(`/${post.id}/`, siteOrigin).href;
+---
+
+<Layout title={title} description={description} canonicalUrl={canonicalUrl}>
+  <BlogPostArticle post={post} />
+</Layout>

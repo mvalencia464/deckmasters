@@ -11,16 +11,23 @@ interface Props {
   verbatimTitle?: boolean;
   /** Force noindex (e.g. internal admin pages). Ignores PUBLIC_NO_INDEX for this page only. */
   noindex?: boolean;
+  /**
+   * Override canonical + og:url when the same HTML is reachable at multiple paths
+   * (e.g. `/blog/post` vs `/post` — prefer the root post URL).
+   */
+  canonicalUrl?: string;
 }
 
-const { title, description, verbatimTitle, noindex: forceNoIndex } = Astro.props;
+const { title, description, verbatimTitle, noindex: forceNoIndex, canonicalUrl: canonicalUrlProp } = Astro.props;
 const site = (await import('../data/site.json')).default;
 const fullTitle = verbatimTitle ? title : `${title} | ${site.businessName}`;
 const metaDescription = description ?? `${site.tagline} Custom decks, repairs & outdoor living in ${site.primaryCity}. Free estimates.`;
 /** Always point to production (`astro.config` `site`) so staging/dev match GBP & Ads final URLs. */
-const canonicalUrl = Astro.site
-  ? new URL(Astro.url.pathname, Astro.site).href
-  : new URL(Astro.url.pathname, Astro.url.origin).href;
+const canonicalUrl =
+  canonicalUrlProp ??
+  (Astro.site
+    ? new URL(Astro.url.pathname, Astro.site).href
+    : new URL(Astro.url.pathname, Astro.url.origin).href);
 const envNoIndex = import.meta.env.PUBLIC_NO_INDEX === 'true' || import.meta.env.PUBLIC_NO_INDEX === '1';
 const noIndex = forceNoIndex || envNoIndex;
 const logoParts = site.businessName.split(' ').filter((p: string) => p !== 'AK');
