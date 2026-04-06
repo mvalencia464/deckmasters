@@ -18,12 +18,8 @@
 /tag/pressure-treated-wood    /blog    301
 /tag/pressure-treated-wood/   /blog    301
 
-# Trailing slash → no trailing slash (posts served at root; same URL as old site)
-/deck-benefits/               /deck-benefits    301
-/best-decking-materials/      /best-decking-materials    301
-/10-cool-backyard-deck-design-ideas/   /10-cool-backyard-deck-design-ideas    301
-/is-trex-decking-right-for-you/        /is-trex-decking-right-for-you    301
-/deck-masters-introduction/            /deck-masters-introduction    301
+# Do not add `/slug/` → `/slug` for blog posts: Cloudflare Pages 308s to trailing-slash URLs for
+# directory indexes, so stripping creates an infinite redirect loop for those five legacy slugs.
 
 # (Do not add `/blog/* → /:splat`: it matches `/blog` and redirects the blog index to `/`.)
 
