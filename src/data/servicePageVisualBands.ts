@@ -34,12 +34,12 @@ export const PROJECT_IMAGE_POOL = [
   /** Client project folders (see src/assets/projects/{derek-clark,doug-mcneil,matt-blakeslee,olivia-grill}) */
   '/projects/derek-clark-timbertech-cable.jpeg',
   '/projects/derek-clark-deck-overview.avif',
-  '/projects/doug-mcneil-trex-pergola.jpg',
+  '/projects/doug-mcneil-trex-pergola.avif',
   '/projects/doug-mcneil-deck-rail-detail.jpeg',
-  '/projects/matt-blakeslee-multi-level.jpg',
+  '/projects/matt-blakeslee-multi-level.avif',
   '/projects/matt-blakeslee-framing-deck.jpeg',
-  '/projects/olivia-grill-trex-cable.jpg',
-  '/projects/olivia-grill-deck-angle.jpg',
+  '/projects/olivia-grill-trex-cable.avif',
+  '/projects/olivia-grill-deck-angle.avif',
 ] as const;
 
 function hashString(s: string): number {

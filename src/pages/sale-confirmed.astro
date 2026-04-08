@@ -1,0 +1,76 @@
+---
+/**
+ * /sale-confirmed
+ * ---------------
+ * Internal-use page for recording a closed sale in GA4, Google Ads, and Meta.
+ *
+ * After marking a job won in your CRM / notes, open:
+ *   https://deckmastersak.com/sale-confirmed?email=customer@email.com&value=4500&order=JOB-123
+ *
+ * The page fires trackSale() automatically, then shows a confirmation message.
+ *
+ * SECURITY: This page is noindex and requires a ?token= query param that matches
+ * the SALE_CONFIRM_TOKEN environment variable. Set that variable in Cloudflare Pages
+ * or your .env file. Without it, the page renders but fires no tracking.
+ */
+import Layout from '../layouts/Layout.astro';
+
+const token = Astro.url.searchParams.get('token') ?? '';
+const expectedToken = import.meta.env.SALE_CONFIRM_TOKEN ?? '';
+const authorized = expectedToken !== '' && token === expectedToken;
+
+const email = Astro.url.searchParams.get('email') ?? '';
+const value = parseFloat(Astro.url.searchParams.get('value') ?? '0');
+const orderId = Astro.url.searchParams.get('order') ?? '';
+---
+
+<Layout
+  title="Sale Confirmed"
+  description="Internal sale confirmation page."
+  noindex={true}
+>
+  <section class="mx-auto max-w-lg px-6 py-24 text-center">
+    {authorized && email ? (
+      <>
+        <div class="text-5xl mb-6">✅</div>
+        <h1 class="font-display text-3xl font-bold uppercase mb-4">Sale Recorded</h1>
+        <p class="text-neutral-600 mb-2">Tracking fired for:</p>
+        <p class="font-mono text-sm text-neutral-800 bg-neutral-100 rounded px-4 py-2 inline-block mb-2">{email}</p>
+        {value > 0 && (
+          <p class="text-neutral-600 text-sm mt-2">Value: <strong>${value.toLocaleString()}</strong></p>
+        )}
+        {orderId && (
+          <p class="text-neutral-600 text-sm">Order: <strong>{orderId}</strong></p>
+        )}
+      </>
+    ) : (
+      <>
+        <h1 class="font-display text-3xl font-bold uppercase mb-4">Access Denied</h1>
+        <p class="text-neutral-600">Missing or invalid token. No tracking was fired.</p>
+      </>
+    )}
+  </section>
+</Layout>
+
+{authorized && email && (
+  <>
+    {/* Pass sale data to the client script via a hidden data element */}
+    <div
+      id="sale-data"
+      data-email={email}
+      data-value={String(value)}
+      data-order={orderId}
+      hidden
+    />
+    <script>
+      import { trackSale } from "@/lib/zaraz-tracking";
+      const el = document.getElementById("sale-data");
+      if (el) {
+        const saleEmail = el.dataset.email ?? "";
+        const saleValue = parseFloat(el.dataset.value ?? "0");
+        const saleOrder = el.dataset.order ?? "";
+        trackSale(saleEmail, saleValue, saleOrder).catch(() => {});
+      }
+    </script>
+  </>
+)}

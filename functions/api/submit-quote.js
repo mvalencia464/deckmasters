@@ -8,6 +8,18 @@ const GHL_BASE = 'https://services.leadconnectorhq.com';
 /** GHL HTTP timeout — avoids hanging until the Workers/Pages CPU wall and surfacing as a Cloudflare 502 HTML page. */
 const GHL_FETCH_TIMEOUT_MS = 25_000;
 
+/**
+ * Resolve env var from a list of aliases.
+ * This keeps production resilient if variable names differ between environments.
+ */
+const resolveEnv = (env, keys) => {
+  for (const key of keys) {
+    const value = env?.[key];
+    if (typeof value === 'string' && value.trim()) return value.trim();
+  }
+  return '';
+};
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   const requestId =
@@ -26,11 +38,31 @@ export async function onRequestPost(context) {
     });
 
   try {
-    const token = env.HIGHLEVEL_TOKEN;
-    const locationId = env.HIGHLEVEL_LOCATION_ID;
+    const token = resolveEnv(env, [
+      'HIGHLEVEL_TOKEN',
+      'GHL_TOKEN',
+      'GHL_API_KEY',
+      'LEADCONNECTOR_TOKEN',
+    ]);
+    const locationId = resolveEnv(env, [
+      'HIGHLEVEL_LOCATION_ID',
+      'GHL_LOCATION_ID',
+      'LEADCONNECTOR_LOCATION_ID',
+    ]);
 
     if (!token || !locationId) {
-      console.error(`[submit-quote:${requestId}] Missing required server configuration`);
+      console.error(
+        `[submit-quote:${requestId}] Missing required server configuration`,
+        JSON.stringify({
+          hasHighlevelToken: Boolean(env.HIGHLEVEL_TOKEN),
+          hasGhlToken: Boolean(env.GHL_TOKEN),
+          hasGhlApiKey: Boolean(env.GHL_API_KEY),
+          hasLeadconnectorToken: Boolean(env.LEADCONNECTOR_TOKEN),
+          hasHighlevelLocationId: Boolean(env.HIGHLEVEL_LOCATION_ID),
+          hasGhlLocationId: Boolean(env.GHL_LOCATION_ID),
+          hasLeadconnectorLocationId: Boolean(env.LEADCONNECTOR_LOCATION_ID),
+        })
+      );
       return respond({ success: false, error: 'Server configuration error' }, 500);
     }
 
@@ -134,8 +166,14 @@ export async function onRequestPost(context) {
   }
 
   const customFields = [];
-  const projectDescriptionFieldId = env.HIGHLEVEL_CUSTOM_FIELD_PROJECT_DESCRIPTION;
-  const quoteImageFieldId = env.HIGHLEVEL_CUSTOM_FIELD_QUOTE_IMAGE;
+  const projectDescriptionFieldId = resolveEnv(env, [
+    'HIGHLEVEL_CUSTOM_FIELD_PROJECT_DESCRIPTION',
+    'GHL_CUSTOM_FIELD_PROJECT_DESCRIPTION',
+  ]);
+  const quoteImageFieldId = resolveEnv(env, [
+    'HIGHLEVEL_CUSTOM_FIELD_QUOTE_IMAGE',
+    'GHL_CUSTOM_FIELD_QUOTE_IMAGE',
+  ]);
 
   if (projectDescriptionFieldId && projectDescription) {
     customFields.push({ id: projectDescriptionFieldId, value: projectDescription });

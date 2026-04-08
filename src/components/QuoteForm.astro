@@ -253,6 +253,8 @@ const googleAverageRating = googleReviews.length
 </script>
 
 <script>
+  import { trackFormLead } from "@/lib/zaraz-tracking";
+
   const form = document.getElementById('quote-form') as HTMLFormElement | null;
   const submitBtn = document.getElementById('quote-submit-btn') as HTMLButtonElement | null;
   const messageEl = document.getElementById('form-message') as HTMLParagraphElement | null;
@@ -352,6 +354,12 @@ const googleAverageRating = googleReviews.length
         }
         return payload;
       };
+
+      const emailValue = getValue('[name="email"]');
+      const nameValue = getValue('[name="name"]');
+
+      // Fire Zaraz lead event (hashes email client-side → GA4 + Google Ads + Meta)
+      trackFormLead(emailValue, nameValue).catch(() => {});
 
       const maxAttempts = 2;
       const retryDelayMs = (n: number) => 900 * (n + 1);

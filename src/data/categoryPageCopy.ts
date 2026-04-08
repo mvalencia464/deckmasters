@@ -41,7 +41,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
   'deck-building': {
     browserTitle: seo('Deck Building').title,
     metaDescription: seo('Deck Building').description,
-    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
+    heroImage: '/projects/matt-blakeslee-multi-level.avif',
     h1Benefit: 'Custom Decks & Railings Built for Snow and Ice',
     heroSubhead:
       'New builds, replacements, and structural work — scoped for Anchorage loads and freeze-thaw. Questions? Call {phone} for a straight answer and a clear next step.',
@@ -91,7 +91,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
   'deck-repair': {
     browserTitle: seo('Deck Repair').title,
     metaDescription: seo('Deck Repair').description,
-    heroImage: '/projects/olivia-grill-deck-angle.jpg',
+    heroImage: '/projects/olivia-grill-deck-angle.avif',
     h1Benefit: 'Fast, Honest Repairs Before Small Issues Grow',
     heroSubhead:
       'Soft boards, shaky railings, and storm damage do not get cheaper if you wait. Call {phone} — we will tell you what needs fixing now and what can wait.',
@@ -131,7 +131,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
   'general-contracting': {
     browserTitle: seo('General Contracting').title,
     metaDescription: seo('General Contracting').description,
-    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
+    heroImage: '/projects/matt-blakeslee-multi-level.avif',
     h1Benefit: 'Exterior and Structural Work With One Responsible Crew',
     heroSubhead:
       'When siding, roof edges, or structure fail, you need a plan that ties materials, code, and sequencing together. Start with {phone} — we will outline realistic options.',
@@ -178,7 +178,7 @@ export const categoryPageCopy: Record<ServiceCategoryId, CategoryPageBundle> = {
     browserTitle: 'Outdoor Living Anchorage AK — Stairs, Landings & Elevated Deck Systems',
     metaDescription:
       'Outdoor living in Anchorage: custom stairs, landings, and elevated deck systems. Built for snow load and daily use. Deck Masters AK — free estimates.',
-    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
+    heroImage: '/projects/matt-blakeslee-multi-level.avif',
     h1Benefit: 'Stairs, Landings & Elevated Systems That Feel Solid',
     heroSubhead:
       'Elevated decks and custom stairs need clean load paths and safe railings in Alaska conditions. Call {phone} to talk through height, access, and materials.',

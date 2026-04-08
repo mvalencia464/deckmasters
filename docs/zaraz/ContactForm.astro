@@ -1,0 +1,60 @@
+---
+/**
+ * ContactForm.astro
+ * -----------------
+ * Drop-in contact form for deckmastersak.com.
+ * Fires Zaraz form_submit event with hashed email on submit.
+ * Replace the fetch() call with your actual form backend / email service.
+ */
+---
+
+<form id="contact-form" novalidate>
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required />
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required />
+  </div>
+  <div>
+    <label for="phone">Phone</label>
+    <input type="tel" id="phone" name="phone" />
+  </div>
+  <div>
+    <label for="message">Tell us about your project</label>
+    <textarea id="message" name="message" rows="4"></textarea>
+  </div>
+  <button type="submit">Get a Free Estimate</button>
+  <p id="form-status" aria-live="polite"></p>
+</form>
+
+<script>
+  import { trackFormLead } from "@/lib/zaraz-tracking";
+
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const status = document.getElementById("form-status")!;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = (document.getElementById("email") as HTMLInputElement).value;
+    const name = (document.getElementById("name") as HTMLInputElement).value;
+
+    // 1. Fire Zaraz lead event (hashes email client-side, sends to GA4 + Google Ads + Meta)
+    await trackFormLead(email, name);
+
+    // 2. Submit to your backend (replace with your actual endpoint)
+    try {
+      const formData = new FormData(form);
+      await fetch("/api/contact", {
+        method: "POST",
+        body: formData,
+      });
+      status.textContent = "Thanks! We'll be in touch soon.";
+      form.reset();
+    } catch {
+      status.textContent = "Something went wrong. Please call us directly.";
+    }
+  });
+</script>

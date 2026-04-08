@@ -126,5 +126,10 @@ const logoRest = logoParts.slice(1).join('');
       Click for free estimate →
     </a>
     <Footer />
+
+    <script>
+      import { autoTrackPhoneLinks } from "@/lib/zaraz-tracking";
+      document.addEventListener("DOMContentLoaded", autoTrackPhoneLinks);
+    </script>
   </body>
 </html>

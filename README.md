@@ -74,7 +74,9 @@ Connect the repo: **Workers & Pages → Pages → Connect to Git**.
 
 **Build-time env (Pages → Settings → Environment variables):** at minimum **`DATAFORSEO_*`**, **`PUBLIC_GOOGLE_MAPS_API_KEY`**, and **R2 vars** as in **`.env.example`** (`R2_PUBLIC_BASE_URL`, **`R2_SITE_SLUG`** if you use a site prefix, **`R2_LEGACY_PREPEND_PROJECTS=false`** after migration).
 
-**Functions / secrets:** **`HIGHLEVEL_*`** and **`HIGHLEVEL_TOKEN`** (encrypted) for `functions/api/submit-quote.js` — set in the same Pages project (not committed). **`wrangler.toml`** in this repo names the Pages project, `pages_build_output_dir`, and the **`IMG_BUCKET`** R2 binding for Functions; it does **not** store API tokens.
+**Pages Functions (`functions/`):** The quote API runs as a **Pages Function**, not a separate Workers project. It reads **`env` from Cloudflare Pages → your project → Settings → Environment variables** (set for **Production** and **Preview** as needed). Nothing injects GoHighLevel credentials automatically—you must configure them here.
+
+**Required for quote submissions:** **`HIGHLEVEL_TOKEN`** (use **Encrypt** / secret) and **`HIGHLEVEL_LOCATION_ID`** (plain text; the GHL sub-account / location UUID from the HighLevel app URL or location settings). Optional: **`HIGHLEVEL_CUSTOM_FIELD_*`** for custom fields. Same names as **`.env.example`**. **`wrangler.toml`** names the Pages project, `pages_build_output_dir`, and the **`IMG_BUCKET`** R2 binding; it does **not** store API tokens or the location ID.
 
 **`R2_SITE_SLUG`:** Must match the prefix of keys in R2 (e.g. `deckmasters/...`). A mismatch causes **404** during image optimization.
 
@@ -82,12 +84,12 @@ Connect the repo: **Workers & Pages → Pages → Connect to Git**.
 
 ## Quote form → GHL
 
-Browser posts to **POST /api/submit-quote**. The Function can upload photos to R2 and create/update a **GoHighLevel** contact (tags, custom fields). Configure IDs and token via Pages (see **`docs/MAINTENANCE.md`**).
+Browser posts to **POST /api/submit-quote**. The Function can upload photos to R2 and create/update a **GoHighLevel** contact (tags, custom fields). **Token and location ID** must both be set on the **Pages** project (dashboard env vars)—they are not supplied by R2 bindings or by deploying `wrangler.toml` alone. See **`docs/MAINTENANCE.md`**.
 
 ---
 
 ## Troubleshooting
 
-- **500** on quote submit — Missing **`HIGHLEVEL_*`** or R2 binding / secrets in Pages.
+- **500** “Server configuration error” on quote submit — Usually missing **`HIGHLEVEL_TOKEN`** and/or **`HIGHLEVEL_LOCATION_ID`** in Pages → Environment variables (Production). R2 photo upload optional; missing **`IMG_BUCKET`** binding only affects uploads, not the GHL env check.
 - **404 on remote images during build** — Object missing at the URL Astro builds (check **`R2_SITE_SLUG`** vs keys, run **`media:backfill-site-prefix`** if files still sit under bucket-root `projects/`). See **`docs/media-management.md`**.
 - **Styles look wrong** — Tailwind 4 uses **`@theme`** in `global.css`; do not add a legacy `tailwind.config` for v3-style setup.

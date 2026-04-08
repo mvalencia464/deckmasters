@@ -1,6 +1,7 @@
 ---
 import type { ServiceVisualBand } from '../data/servicePageVisualBands';
 import VocQuoteCard from './VocQuoteCard.astro';
+import ProjectPicture from './ProjectPicture.astro';
 
 interface Props {
   band: ServiceVisualBand;
@@ -23,14 +24,14 @@ const { image, reverse, eyebrow, headline, paragraphs, proof } = band;
         ]}
       >
         <div class="aspect-[4/3] w-full">
-          <img
+          <ProjectPicture
             src={image}
             alt=""
+            pictureClass="block h-full w-full"
+            imgClass="h-full w-full object-cover"
             width={960}
             height={720}
-            class="h-full w-full object-cover"
             loading="lazy"
-            decoding="async"
           />
         </div>
       </div>

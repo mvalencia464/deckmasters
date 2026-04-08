@@ -1,0 +1,49 @@
+---
+import { getProjectResponsiveSet } from '../utils/projectResponsiveImage';
+
+interface Props {
+  src: string;
+  alt?: string;
+  /** Classes on `<picture>` when responsive; omit if not needed. */
+  pictureClass?: string;
+  /** Classes on final `<img>` (and on fallback `<img>`). */
+  imgClass?: string;
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const { src, alt = '', pictureClass = '', imgClass = '', width, height, loading, fetchpriority } = Astro.props;
+const set = getProjectResponsiveSet(src);
+---
+
+{
+  set ? (
+    <picture class={pictureClass}>
+      <source type="image/avif" srcset={set.avif} />
+      <source type="image/webp" srcset={set.webp} />
+      <img
+        src={set.fallback}
+        alt={alt}
+        width={width}
+        height={height}
+        class={imgClass}
+        loading={loading}
+        fetchpriority={fetchpriority}
+        decoding="async"
+      />
+    </picture>
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      class={imgClass}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      decoding="async"
+    />
+  )
+}

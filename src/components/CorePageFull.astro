@@ -11,6 +11,7 @@ import { getCoreVisualBand } from '../data/servicePageVisualBands';
 import FascinationBulletsBand from './FascinationBulletsBand.astro';
 import { getFascinationForPage } from '../data/servicePageFascination';
 import ServicePageTrustBand from './ServicePageTrustBand.astro';
+import ProjectPicture from './ProjectPicture.astro';
 
 interface Props {
   page: ServicePageEntry;
@@ -50,12 +51,13 @@ const fascination = getFascinationForPage(page);
 ---
 
 <section class="relative min-h-[min(52vh,480px)] flex flex-col justify-end overflow-hidden border-b border-neutral-200">
-  <img
+  <ProjectPicture
     src={copy.heroImage}
     alt=""
+    pictureClass="absolute inset-0 block h-full w-full"
+    imgClass="h-full w-full object-cover"
     width={1920}
     height={1080}
-    class="absolute inset-0 h-full w-full object-cover"
     loading="eager"
     fetchpriority="high"
   />

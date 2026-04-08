@@ -1,0 +1,181 @@
+{
+  "comment": "Zaraz configuration for deckmastersak.com",
+  "comment2": "Import via: Cloudflare Dashboard > Zaraz > Tools Configuration > Import/Export",
+  "tools": {
+    "ga4": {
+      "name": "Google Analytics 4",
+      "type": "GA4",
+      "enabled": true,
+      "settings": {
+        "measurementId": "REPLACE_WITH_YOUR_G-XXXXXXXX"
+      },
+      "actions": {
+        "pageview": {
+          "name": "Pageview",
+          "firingTriggers": ["Pageview"],
+          "type": "pageview"
+        },
+        "form_lead": {
+          "name": "Form Lead",
+          "firingTriggers": ["FormSubmit"],
+          "type": "event",
+          "settings": {
+            "eventName": "generate_lead",
+            "fields": {
+              "method": "website_form"
+            }
+          }
+        },
+        "phone_call": {
+          "name": "Phone Call",
+          "firingTriggers": ["PhoneCallClick"],
+          "type": "event",
+          "settings": {
+            "eventName": "generate_lead",
+            "fields": {
+              "method": "phone_call"
+            }
+          }
+        },
+        "sale": {
+          "name": "Sale / Purchase",
+          "firingTriggers": ["SaleComplete"],
+          "type": "event",
+          "settings": {
+            "eventName": "purchase",
+            "fields": {
+              "currency": "USD",
+              "value": "{{ client.sale_value }}"
+            }
+          }
+        }
+      }
+    },
+    "google_ads": {
+      "name": "Google Ads",
+      "type": "GOOGLE_ADS",
+      "enabled": true,
+      "settings": {
+        "conversionId": "REPLACE_WITH_YOUR_AW-XXXXXXXXXX"
+      },
+      "actions": {
+        "call_conversion": {
+          "name": "Phone Call Conversion",
+          "firingTriggers": ["PhoneCallClick"],
+          "type": "conversion",
+          "settings": {
+            "conversionLabel": "REPLACE_CALL_LABEL",
+            "enhancedConversions": true,
+            "userEmail": "{{ client.hashed_email }}"
+          }
+        },
+        "lead_conversion": {
+          "name": "Form Lead Conversion",
+          "firingTriggers": ["FormSubmit"],
+          "type": "conversion",
+          "settings": {
+            "conversionLabel": "REPLACE_LEAD_LABEL",
+            "enhancedConversions": true,
+            "userEmail": "{{ client.hashed_email }}"
+          }
+        },
+        "sale_conversion": {
+          "name": "Sale Conversion",
+          "firingTriggers": ["SaleComplete"],
+          "type": "conversion",
+          "settings": {
+            "conversionLabel": "REPLACE_SALE_LABEL",
+            "enhancedConversions": true,
+            "userEmail": "{{ client.hashed_email }}",
+            "conversionValue": "{{ client.sale_value }}"
+          }
+        }
+      }
+    },
+    "meta_pixel": {
+      "name": "Meta Pixel",
+      "type": "META_PIXEL",
+      "enabled": true,
+      "settings": {
+        "pixelId": "REPLACE_WITH_YOUR_META_PIXEL_ID"
+      },
+      "actions": {
+        "pageview": {
+          "name": "Pageview",
+          "firingTriggers": ["Pageview"],
+          "type": "PageView"
+        },
+        "lead": {
+          "name": "Lead (Form Submit)",
+          "firingTriggers": ["FormSubmit"],
+          "type": "Lead",
+          "settings": {
+            "userEmail": "{{ client.hashed_email }}"
+          }
+        },
+        "purchase": {
+          "name": "Purchase / Sale",
+          "firingTriggers": ["SaleComplete"],
+          "type": "Purchase",
+          "settings": {
+            "value": "{{ client.sale_value }}",
+            "currency": "USD"
+          }
+        }
+      }
+    }
+  },
+  "triggers": {
+    "Pageview": {
+      "name": "Pageview",
+      "rules": [
+        {
+          "type": "match",
+          "variable": "Event Name",
+          "operator": "equals",
+          "value": "Pageview"
+        }
+      ]
+    },
+    "FormSubmit": {
+      "name": "Form Submit",
+      "rules": [
+        {
+          "type": "match",
+          "variable": "Event Name",
+          "operator": "equals",
+          "value": "form_submit"
+        }
+      ]
+    },
+    "PhoneCallClick": {
+      "name": "Phone Call Click",
+      "rules": [
+        {
+          "type": "match",
+          "variable": "Event Name",
+          "operator": "equals",
+          "value": "phone_click"
+        }
+      ]
+    },
+    "SaleComplete": {
+      "name": "Sale Complete",
+      "rules": [
+        {
+          "type": "match",
+          "variable": "Event Name",
+          "operator": "equals",
+          "value": "sale_complete"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "hashed_email": {
+      "name": "hashed_email",
+      "type": "worker",
+      "comment": "Create a Zaraz Worker Variable that SHA-256 hashes the email. See zaraz-email-hasher-worker.js"
+    }
+  }
+}

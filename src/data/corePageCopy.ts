@@ -94,7 +94,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Deck Replacement & Decking Anchorage AK | Composite, Wood & Resurface',
     metaDescription:
       'Deck replacement and new decking in Anchorage: composite, wood, and full tear-off when the frame is done. Honest scopes. Deck Masters AK — call for a free estimate.',
-    heroImage: '/projects/olivia-grill-deck-angle.jpg',
+    heroImage: '/projects/olivia-grill-deck-angle.avif',
     h1Benefit: 'Replace What Failed — Surface, Frame, or Both',
     heroSubhead:
       'Spongy boards and rusty hardware do not fix themselves. Call {phone} — we will tell you if you need new decking only, sistered joists, or a full reset.',
@@ -263,7 +263,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Exterior Renovations & Roofing Anchorage AK | Siding, Roof Lines & Garages',
     metaDescription:
       'Exterior renovations in Anchorage: siding, roofing edges, fascia, soffit, and garage rebuilds. Water-tight layers. Deck Masters AK — free estimates.',
-    heroImage: '/projects/doug-mcneil-trex-pergola.jpg',
+    heroImage: '/projects/doug-mcneil-trex-pergola.avif',
     h1Benefit: 'Stop Water Before It Reaches the Wall Cavity',
     heroSubhead:
       'Stains, peeling paint, and garage leaks do not fix themselves after thaw. Call {phone} — we trace the stain to the failure and sequence repairs correctly.',
@@ -324,7 +324,7 @@ export const corePageCopy: Record<CoreServiceSlug, CorePageBundle> = {
     browserTitle: 'Contracting & Project Services Anchorage AK | GC, Permits & Carpentry',
     metaDescription:
       'Residential GC, permits, demolition, carpentry, and code compliance in Anchorage. One crew, clear paperwork. Deck Masters AK — estimates and scheduling.',
-    heroImage: '/projects/matt-blakeslee-multi-level.jpg',
+    heroImage: '/projects/matt-blakeslee-multi-level.avif',
     h1Benefit: 'Planning, Permits, and Build Discipline in One Scope',
     heroSubhead:
       'Big repairs stall when nobody owns the whole chain. Call {phone} — we line up demo, structure, materials, and inspections so you are not chasing three crews.',

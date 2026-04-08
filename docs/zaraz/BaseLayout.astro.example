@@ -1,0 +1,32 @@
+---
+/**
+ * BaseLayout.astro  (or your existing layout file)
+ * -------------------------------------------------
+ * Zaraz is loaded automatically by Cloudflare — you do NOT add
+ * a <script> tag for it. Cloudflare injects zaraz.js on every HTML
+ * response that passes through your zone.
+ *
+ * What you DO need is:
+ *   1. The auto phone-link tracker (below)
+ *   2. Your contact form wired to trackFormLead()
+ *   3. Your sale confirmation page wired to trackSale()
+ */
+---
+
+<!-- Your normal layout HTML here -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Deck Masters AK</title>
+    <!-- Cloudflare Zaraz is injected automatically — nothing to add here -->
+  </head>
+  <body>
+    <slot />
+
+    <!-- Auto-wire all tel: links to Zaraz phone_click event -->
+    <script>
+      import { autoTrackPhoneLinks } from "@/lib/zaraz-tracking";
+      document.addEventListener("DOMContentLoaded", autoTrackPhoneLinks);
+    </script>
+  </body>
+</html>
