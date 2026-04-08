@@ -1,6 +1,6 @@
 # Docs archival policy
 
-This project keeps older planning and migration documents for historical context, while keeping day-to-day docs focused on current operations.
+This project keeps older planning documents for historical context, while keeping day-to-day docs focused on current operations.
 
 ## What "archival" means
 
@@ -16,7 +16,6 @@ This project keeps older planning and migration documents for historical context
 
 ## Current archival set
 
-- `docs/MIGRATION-SEO-ADS-PLAYBOOK.md`
 - `docs/site-architecture-prompt-0.md`
 - `docs/Core30.md`
 - `docs/Copywriting.md`

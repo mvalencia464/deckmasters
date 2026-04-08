@@ -28,7 +28,6 @@ Static marketing site for a cold-climate deck builder and general contractor. **
 | **`docs/media-management.md`** | R2 flat keys, upload, migration/backfill, `R2_SITE_SLUG`, Pages env |
 | **`docs/MAINTENANCE.md`** | Stack snapshot, Tailwind 4, GHL quote function, Node 22+ |
 | **`scripts/README.md`** | DataForSEO sync, `reviews-clients.json`, adding clients |
-| **`docs/MIGRATION-SEO-ADS-PLAYBOOK.md`** | SEO/ads migration notes (legacy WP → Astro) |
 | **`docs/site-architecture-prompt-0.md`** | Site hierarchy / internal linking (content planning reference) |
 
 ---

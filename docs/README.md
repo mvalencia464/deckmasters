@@ -13,7 +13,6 @@
 
 | File | Description |
 |------|-------------|
-| **[MIGRATION-SEO-ADS-PLAYBOOK.md](./MIGRATION-SEO-ADS-PLAYBOOK.md)** | Legacy migration/launch playbook from WordPress transition period |
 | **[site-architecture-prompt-0.md](./site-architecture-prompt-0.md)** | Core30-era architecture planning snapshot |
 | **[Core30.md](./Core30.md)** | Prompt framework and planning templates from earlier site architecture workflow |
 | **[Copywriting.md](./Copywriting.md)** | General copywriting framework notes (superseded by project-specific copy library) |
