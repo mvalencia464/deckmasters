@@ -39,7 +39,7 @@ async function hashEmail(email: string): Promise<string> {
  * Call this as early as possible after you know the user's email.
  */
 export async function setUserEmail(email: string) {
-  if (!window.zaraz) return;
+  if (typeof window === "undefined" || !window.zaraz) return;
   const hashed = await hashEmail(email);
   window.zaraz.set("hashed_email", hashed);
 }
@@ -52,11 +52,11 @@ export async function setUserEmail(email: string) {
  *   <a href="tel:+19075550100" onclick="window.trackPhoneClick?.()">
  */
 export function trackPhoneClick(email?: string) {
-  if (!window.zaraz) return;
+  if (typeof window === "undefined" || !window.zaraz) return;
   const fire = () =>
     window.zaraz!.track("phone_click", {
       event_category: "contact",
-      event_label: "header_phone",
+      event_label: "phone_link",
     });
 
   if (email) {
@@ -78,12 +78,12 @@ export function trackPhoneClick(email?: string) {
  *   };
  */
 export async function trackFormLead(email: string, name?: string) {
-  if (!window.zaraz) return;
+  if (typeof window === "undefined" || !window.zaraz) return;
   await setUserEmail(email);
   window.zaraz.track("form_submit", {
     event_category: "lead",
-    event_label: "contact_form",
-    lead_name: name || "",
+    event_label: "quote_form",
+    lead_name: name ?? "",
   });
 }
 
@@ -101,7 +101,7 @@ export async function trackSale(
   value: number,
   orderId: string
 ) {
-  if (!window.zaraz) return;
+  if (typeof window === "undefined" || !window.zaraz) return;
   await setUserEmail(email);
   window.zaraz.track("sale_complete", {
     sale_value: value,

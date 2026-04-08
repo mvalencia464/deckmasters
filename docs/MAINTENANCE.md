@@ -9,6 +9,8 @@ Operational notes for **Deck Masters AK** — Astro build, Tailwind 4, Cloudflar
 | Framework | Astro 6.x |
 | CSS | Tailwind CSS 4 via `@tailwindcss/vite` — theme in `src/styles/global.css` (`@theme`) |
 | Deploy | Cloudflare Pages — static **`dist/`** + **`functions/`** |
+| Tracking | Cloudflare Zaraz via `src/lib/zaraz-tracking.ts` (events: `phone_click`, `form_submit`, `sale_complete`) |
+| Reviews | DataForSEO sync to static `src/data/google-reviews.json` during build |
 | Node | **22+** for local build and CI |
 
 ## Tailwind 4
@@ -38,6 +40,20 @@ Local Wrangler: use **`.dev.vars`** with the same names as **`.env.example`**.
 ## R2 media (build)
 
 Build-time **`R2_*`**, **`R2_SITE_SLUG`** (if used), and **`R2_LEGACY_PREPEND_PROJECTS`** must match real object keys and URL expectations. **`docs/media-management.md`** · **`scripts/README.md`** (R2 section).
+
+## Tracking & attribution
+
+- Zaraz helper source of truth: `src/lib/zaraz-tracking.ts`.
+- Auto phone click tracking is wired in `src/layouts/Layout.astro`.
+- Internal sale tracking page: `src/pages/sale-confirmed.astro` (guarded by `SALE_CONFIRM_TOKEN`).
+- Webhook sale endpoint: `src/pages/api/sale-webhook.ts` (requires `X-Webhook-Token` = `SALE_WEBHOOK_TOKEN`).
+- Tracking docs and templates live in `docs/zaraz/` (see `docs/zaraz/README.md`).
+
+## Reviews automation
+
+- `npm run build` runs `scripts/sync-reviews.js` before Astro build.
+- Scheduled refresh: `.github/workflows/scheduled-pages-deploy.yml` triggers a Pages deploy hook daily.
+- Fallback/strict controls for API issues are handled by `SYNC_REVIEWS_STRICT`, `SYNC_REVIEWS_ALLOW_STALE_ON_TIMEOUT`, and `SKIP_SYNC_REVIEWS`.
 
 ## Optional housekeeping
 

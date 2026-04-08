@@ -101,8 +101,14 @@ src/
     api/
       sale-webhook.ts       ← CRM webhook endpoint (optional)
   layouts/
-    BaseLayout.astro        ← add autoTrackPhoneLinks() call (see BaseLayout.astro.example)
+    Layout.astro            ← add autoTrackPhoneLinks() call
 ```
+
+In this repo, these are already implemented in:
+- `src/lib/zaraz-tracking.ts`
+- `src/layouts/Layout.astro`
+- `src/pages/sale-confirmed.astro`
+- `src/pages/api/sale-webhook.ts`
 
 ---
 
@@ -122,9 +128,9 @@ Since deck sales close offline (phone/in-person), you have two options:
 ### Option A: Protected confirmation page (simplest)
 - Create `/sale-confirmed` page in Astro
 - After marking job won in your CRM/notes, open:  
-  `https://deckmastersak.com/sale-confirmed?email=customer@email.com&value=4500&order=JOB-123`
+  `https://deckmastersak.com/sale-confirmed?token=YOUR_SALE_CONFIRM_TOKEN&email=customer@email.com&value=4500&order=JOB-123`
 - Page fires `trackSale()` automatically
-- Protect with a simple password or IP allowlist
+- Guard with `SALE_CONFIRM_TOKEN` (query param token must match env var)
 
 ### Option B: Google Ads Offline Conversion Import
 - Export won jobs monthly from your CRM as CSV

@@ -7,7 +7,8 @@
  *
  * Your CRM sends:  POST /api/sale-webhook  { email, value, orderId }
  *
- * SECURITY: Add a shared secret header check before deploying.
+ * SECURITY: Requests must include:
+ *   X-Webhook-Token: <value of SALE_WEBHOOK_TOKEN env var>
  *
  * Alternative approach: If your CRM can't hit a webhook, create a
  * "Sale Confirmed" page in your Astro site and redirect the customer
@@ -17,12 +18,23 @@
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ request }) => {
+  const expectedToken = import.meta.env.SALE_WEBHOOK_TOKEN ?? "";
+  const incomingToken = request.headers.get("x-webhook-token") ?? "";
+
+  if (!expectedToken || incomingToken !== expectedToken) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   const body = await request.json().catch(() => null);
 
-  if (!body?.email || !body?.value || !body?.orderId) {
-    return new Response(JSON.stringify({ error: "Missing fields" }), {
-      status: 400,
-    });
+  if (!body?.email || body?.value == null || !body?.orderId) {
+    return new Response(
+      JSON.stringify({ error: "Missing required fields: email, value, orderId" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
   }
 
   // Return an HTML snippet that fires the Zaraz sale event client-side.
@@ -33,15 +45,14 @@ export const POST: APIRoute = async ({ request }) => {
 <head><title>Sale Confirmed</title></head>
 <body>
 <script type="module">
-  import { trackSale } from "/zaraz-tracking.js";
+  import { trackSale } from "/src/lib/zaraz-tracking.ts";
   await trackSale(
     ${JSON.stringify(body.email)},
     ${Number(body.value)},
     ${JSON.stringify(body.orderId)}
   );
-  // Optional: redirect to thank-you page
-  // window.location.href = "/thank-you";
 <\/script>
+<p style="font-family:sans-serif;padding:2rem;">Sale recorded. You can close this window.</p>
 </body>
 </html>`;
 
