@@ -39,7 +39,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'custom-deck-design': {
     browserTitle: metaSeoRows.find((r) => r.page === 'Custom Deck Design')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'Custom Deck Design')!.description,
-    heroImage: '/projects/derek-clark-deck-overview.avif',
+    heroImage: '/projects/multi-level-decking.jpg',
     h1Benefit: 'Plans That Fit Your Lot and Code',
     heroSubhead:
       'Unsure where stairs, landings, or guardrails should go? Call {phone} — we measure your space and sketch real options you can build against.',
@@ -73,7 +73,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'New Deck Construction Anchorage AK | Ground-Up Builds',
     metaDescription:
       'New deck construction in Anchorage: footings, framing, decking, and railings built for Alaska weather. Free estimates from Deck Masters AK.',
-    heroImage: '/projects/doug-mcneil-trex-pergola.avif',
+    heroImage: '/projects/finished-deck-view.jpeg',
     h1Benefit: 'Ground-Up Builds Done Right',
     heroSubhead:
       'Starting from dirt or a blank ledger? Call {phone} — we sequence footings, framing, and finishes so your new deck is solid from day one.',
@@ -139,7 +139,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
   'deck-replacement': {
     browserTitle: metaSeoRows.find((r) => r.page === 'Deck Replacement')!.title,
     metaDescription: metaSeoRows.find((r) => r.page === 'Deck Replacement')!.description,
-    heroImage: '/projects/olivia-grill-deck-angle.avif',
+    heroImage: '/projects/026-custom-landscape.avif',
     h1Benefit: 'Replace What Failed — Build What Lasts',
     heroSubhead:
       'Rotten rim or tired framing? Call {phone} — we strip to structure, fix what hid underneath, and rebuild for decades of use.',

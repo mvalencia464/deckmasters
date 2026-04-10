@@ -3,14 +3,31 @@
 
 ---
 
-## Prerequisites — IDs you need before starting
+## Your IDs (already filled in `zaraz-config.json`)
 
-| What | Where to find it |
+| What | Value |
 |---|---|
-| GA4 Measurement ID (`G-XXXXXXXX`) | GA4 > Admin > Data Streams > your stream |
-| Google Ads Conversion ID (`AW-XXXXXXXXXX`) | Google Ads > Goals > Conversions > top of page |
-| Google Ads Conversion Labels (3×) | Google Ads > Goals > each conversion action > Tag Setup |
-| Meta Pixel ID | Meta Events Manager > your pixel |
+| GA4 Stream ID | `5964125496` |
+| GA4 Measurement ID | `G-CLD2MQ2F7L` |
+| Google Ads Conversion ID | `AW-879524969` (confirmed — "Form Fill" tag snippet shows this ID) |
+| Meta Pixel ID | `492022321570146` |
+
+---
+
+## Google Ads Conversion Actions — What Exists and What Goes Where
+
+| Conversion Action | Status in Google Ads | Managed by |
+|---|---|---|
+| **Form Fill** | Needs attention (tag not installed) | ✅ Zaraz → fires on `form_submit` — fix by adding label to Zaraz |
+| **various - form** | No recent conversions | ⚠️ Likely old/MCC-level duplicate — check label, set to Secondary or remove |
+| **Calls from Ads** | Active, working | 🔁 Google auto-forwarding number — no Zaraz tag needed |
+| **Contact** | Active | 🔁 GBP click — no Zaraz tag needed |
+| **Get directions** | Active | 🔁 GBP action — no Zaraz tag needed |
+| **Download** | Misconfigured | ❌ Ignore / remove |
+
+> **Phone calls from website (tel: link clicks)** — "Calls from Ads" is Google's call forwarding number, not a website click tracker. A separate "Phone Calls from Website" conversion action needs to be created (category: Phone call lead, type: Website) to track tel: link clicks via Zaraz.
+
+> **To get the conversion label for "Form Fill":** Google Ads → Goals → Conversions → Form Fill → Tag Setup → the label is a short alphanumeric string (e.g. `AbCdEfGhIjKl`). Add it to `zaraz-config.json` → `google_ads.actions.lead_conversion.settings.conversionLabel`.
 
 ---
 
@@ -18,10 +35,14 @@
 
 Navigate to: **Cloudflare Dashboard → deckmastersak.com → Zaraz**
 
-### 1a. Add Google Analytics 4
+> **Fastest path:** Use the pre-filled `docs/zaraz/zaraz-config.json` file.
+> Go to **Tools Configuration → ⋮ menu (top right) → Import** and paste the file contents.
+> Then skip to Step 2 to create triggers, and Step 3 for the email hasher variable.
+
+### 1a. Add Google Analytics 4 (manual)
 
 1. Tools Configuration → Third-party tools → **Add tool** → Google Analytics 4
-2. Enter your `G-XXXXXXXX` Measurement ID
+2. Enter Measurement ID: **`G-CLD2MQ2F7L`**
 3. Enable **Automatic Events** (pageview is handled automatically)
 4. Add these Custom Actions (Tools → GA4 → Edit → Add Action):
 
@@ -31,22 +52,22 @@ Navigate to: **Cloudflare Dashboard → deckmastersak.com → Zaraz**
 | Phone Call | PhoneCallClick | `generate_lead` | `method: phone_call` |
 | Sale | SaleComplete | `purchase` | `value: {{ client.sale_value }}`, `currency: USD` |
 
-### 1b. Add Google Ads
+### 1b. Add Google Ads (manual)
 
 1. Add tool → **Google Ads**
-2. Enter your `AW-XXXXXXXXXX` Conversion ID
+2. Enter Conversion ID: **`AW-879524969`** (confirmed — "Form Fill" tag snippet shows this ID)
 3. Add these Conversion Actions:
 
 | Action Name | Firing Trigger | Conversion Label | Enhanced Conv. |
 |---|---|---|---|
-| Phone Call | PhoneCallClick | (your call label) | ✅ `{{ client.hashed_email }}` |
-| Form Lead | FormSubmit | (your lead label) | ✅ `{{ client.hashed_email }}` |
-| Sale | SaleComplete | (your sale label) | ✅ `{{ client.hashed_email }}` |
+| Phone Calls from Website | PhoneCallClick | `Phone Calls from Website` | ✅ `{{ client.hashed_email }}` |
+| Quote Form Lead | FormSubmit | `JZz9CKWE3KUBEOn4saMD` | ✅ `{{ client.hashed_email }}` |
+| Sale | SaleComplete | `JZz9CKWE3KUBEOn4saMD` | ✅ `{{ client.hashed_email }}` + `{{ client.sale_value }}` |
 
-### 1c. Add Meta Pixel
+### 1c. Add Meta Pixel (manual)
 
 1. Add tool → **Meta Pixel**
-2. Enter your Pixel ID
+2. Enter Pixel ID: **`492022321570146`**
 3. Add Actions:
 
 | Action Name | Firing Trigger | Event Type |
@@ -89,35 +110,27 @@ This variable is referenced as `{{ client.hashed_email }}` in all Enhanced Conve
 
 ---
 
-## Step 4 — Add files to your Astro project
+## Step 4 — Astro project files (already done)
 
-```
-src/
-  lib/
-    zaraz-tracking.ts       ← tracking utility (copy from zaraz-tracking.ts)
-  components/
-    ContactForm.astro       ← form with Zaraz wired in (copy from ContactForm.astro)
-  pages/
-    api/
-      sale-webhook.ts       ← CRM webhook endpoint (optional)
-  layouts/
-    Layout.astro            ← add autoTrackPhoneLinks() call
-```
-
-In this repo, these are already implemented in:
-- `src/lib/zaraz-tracking.ts`
-- `src/layouts/Layout.astro`
-- `src/pages/sale-confirmed.astro`
-- `src/pages/api/sale-webhook.ts`
+These are already implemented:
+- `src/lib/zaraz-tracking.ts` — typed helpers for all conversion events
+- `src/layouts/Layout.astro` — auto-tracks all `tel:` link clicks
+- `src/components/QuoteForm.astro` — fires `form_submit` on quote form submit
+- `src/pages/sale-confirmed.astro` — fires `sale_complete` (token-protected)
+- `src/pages/api/sale-webhook.ts` — CRM webhook endpoint (optional)
 
 ---
 
-## Step 5 — Google Ads Enhanced Conversions
+## Step 5 — Google Ads Enhanced Conversions (TODO)
 
 In Google Ads:
-1. Goals → Conversions → Settings → **Enhanced conversions for leads** → Turn ON
-2. Select **Manually set up enhanced conversions** (Zaraz handles the tag)
-3. For each conversion action → Tag Setup → confirm the hashed email field maps to `email`
+1. **Goals → Conversions → Settings → Enhanced conversions for leads → Turn ON**
+2. Select **"Manually set up enhanced conversions"** (Zaraz handles the tag)
+3. For each conversion action → **Tag Setup** → confirm the hashed email field maps to `email`
+
+> This must be done before enhanced conversion data will appear in Google Ads reports.
+> Zaraz already passes `{{ client.hashed_email }}` on every conversion — the Google Ads
+> side just needs to be told to accept it.
 
 ---
 
@@ -125,12 +138,13 @@ In Google Ads:
 
 Since deck sales close offline (phone/in-person), you have two options:
 
-### Option A: Protected confirmation page (simplest)
-- Create `/sale-confirmed` page in Astro
-- After marking job won in your CRM/notes, open:  
-  `https://deckmastersak.com/sale-confirmed?token=YOUR_SALE_CONFIRM_TOKEN&email=customer@email.com&value=4500&order=JOB-123`
+### Option A: Protected confirmation page (simplest — already built)
+After marking a job won in your CRM/notes, open:
+```
+https://deckmastersak.com/sale-confirmed?token=YOUR_SALE_CONFIRM_TOKEN&email=customer@email.com&value=4500&order=JOB-123
+```
 - Page fires `trackSale()` automatically
-- Guard with `SALE_CONFIRM_TOKEN` (query param token must match env var)
+- `SALE_CONFIRM_TOKEN` must be set in Cloudflare Pages → Settings → Environment variables
 
 ### Option B: Google Ads Offline Conversion Import
 - Export won jobs monthly from your CRM as CSV
@@ -142,7 +156,7 @@ Since deck sales close offline (phone/in-person), you have two options:
 ## Step 7 — Meta Pixel (Future)
 
 When you're ready to run Meta ads:
-- The Pixel is already installed via Zaraz
+- The Pixel is already installed via Zaraz (`492022321570146`)
 - `Lead` event fires on form submit automatically
 - For Meta lead forms: set up Meta's native lead form integration separately — those leads come through Meta's own system, not your website
 - For landing page campaigns: Zaraz CAPI (Conversions API) can be enabled in Meta Pixel settings in Zaraz for server-side deduplication
@@ -160,13 +174,14 @@ When you're ready to run Meta ads:
 
 ---
 
-## ID Replacement Checklist
+## ID Reference (all real values)
 
-Replace these placeholders in `zaraz-config.json` before importing:
-
-- [ ] `REPLACE_WITH_YOUR_G-XXXXXXXX` → your GA4 Measurement ID
-- [ ] `REPLACE_WITH_YOUR_AW-XXXXXXXXXX` → your Google Ads Conversion ID
-- [ ] `REPLACE_CALL_LABEL` → Google Ads call conversion label
-- [ ] `REPLACE_LEAD_LABEL` → Google Ads lead conversion label
-- [ ] `REPLACE_SALE_LABEL` → Google Ads sale conversion label
-- [ ] `REPLACE_WITH_YOUR_META_PIXEL_ID` → your Meta Pixel ID
+| Variable | Value |
+|---|---|
+| `GA4_STREAM_ID` | `5964125496` |
+| `GA4_MEASUREMENT_ID` | `G-CLD2MQ2F7L` |
+| `GOOGLE_ADS_CONVERSION_ID` | `AW-879524969` (confirmed — "Form Fill" conversion action lives here) |
+| `GOOGLE_ADS_OTHER_ID` | `AW-8713494041` (separate account — ignore for Zaraz) |
+| `META_PIXEL_ID` | `492022321570146` |
+| Zaraz phone label | `Phone Calls from Website` |
+| Zaraz quote form label | `JZz9CKWE3KUBEOn4saMD` (from "Form Fill" conversion action) |

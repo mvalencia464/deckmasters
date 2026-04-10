@@ -6,6 +6,7 @@
 |------|-------------|
 | **[media-management.md](./media-management.md)** | R2 flat keys, upload, migrate-flat, backfill site prefix, env, troubleshooting |
 | **[MAINTENANCE.md](./MAINTENANCE.md)** | Current stack, runtime/deploy notes, tracking + attribution, and reviews automation |
+| **[netlify-vite-to-cloudflare-astro6-migration-playbook.md](./netlify-vite-to-cloudflare-astro6-migration-playbook.md)** | Step-by-step migration template for moving a site from Netlify + Vite to Astro 6 on Cloudflare Pages |
 | **[zaraz/README.md](./zaraz/README.md)** | Zaraz tracking docs index (setup, config export, worker hasher, and event helper templates) |
 | **[DeckMasters-Copywriting-Library.md](./DeckMasters-Copywriting-Library.md)** | Voice-of-customer mined messaging asset library used for on-site copy |
 
