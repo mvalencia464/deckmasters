@@ -37,7 +37,11 @@ Navigate to: **Cloudflare Dashboard → deckmastersak.com → Zaraz**
 
 > **Fastest path:** Use the pre-filled `docs/zaraz/zaraz-config.json` file.
 > Go to **Tools Configuration → ⋮ menu (top right) → Import** and paste the file contents.
-> Then skip to Step 2 to create triggers, and Step 3 for the email hasher variable.
+> Then skip to Step 3 for the email hasher variable (triggers are already in the JSON).
+>
+> **Import format (Cloudflare API / dashboard import):** Each trigger must include `excludeRules` (often `[]`) and **`loadRules`**, not `rules`. Match rules use `id`, `match` (variable label such as `Event Name`), **`op`** in uppercase (`EQUALS`, `CONTAINS`, …), and `value`. Path-based rules use the same shape with `match` set to the property path (for example `system.page.url.pathname` in exports) instead of `Event Name`.
+>
+> **Managed tools (GA4, Google Ads, Meta):** Each tool in `tools` must look like a **Zaraz managed component**: `type` must be `"component"` (not `"GA4"` / `"GOOGLE_ADS"`). Include **`component`** (`google-analytics-4`, `google-ads`, `facebook-pixel`), **`blockingTriggers`**: `[]`, **`permissions`**: `[]`, and **`defaultFields`**: `{}` (or fields copied from a dashboard **Export**). Each **`actions[...]`** entry needs **`blockingTriggers`**: `[]` and the **NeoEvent** fields **`actionType`**, **`firingTriggers`**, and **`data`** (object; `{}` when there are no extra fields). Dashboard “settings” belong inside **`data`**, not a sibling `settings` key. If import still fails, export your current Zaraz JSON once and copy the exact `tools` / `actions` shape from that file, then merge in our IDs and triggers.
 
 ### 1a. Add Google Analytics 4 (manual)
 
@@ -78,9 +82,16 @@ Navigate to: **Cloudflare Dashboard → deckmastersak.com → Zaraz**
 
 ---
 
-## Step 2 — Create Triggers
+## Step 2 — Create Triggers (or use `zaraz-config.json`)
 
-Zaraz → Tools Configuration → **Triggers** → Create trigger:
+If you **import** `zaraz-config.json`, triggers are already defined with `loadRules` matching `zaraz.track()` from the site.
+
+To create them manually: Zaraz → Tools Configuration → **Triggers** → Create trigger:
+
+### Trigger: Pageview
+| Rule type | Variable name | Match operation | Match string |
+|---|---|---|---|
+| Match rule | Event Name | Equals | `Pageview` |
 
 ### Trigger: FormSubmit
 | Rule type | Variable name | Match operation | Match string |
@@ -99,14 +110,30 @@ Zaraz → Tools Configuration → **Triggers** → Create trigger:
 
 ---
 
-## Step 3 — Create the Email Hasher Worker Variable
+## Step 3 — Email hasher: deploy a Worker, then attach it in Zaraz
 
-Zaraz → Tools Configuration → **Variables** → Create variable:
-- **Name:** `hashed_email`
-- **Type:** Worker
-- **Code:** paste contents of `zaraz-email-hasher-worker.js`
+`zaraz-config.json` ships with **`variables`: `{}`** so import does not fail. Worker variables are wired to a **real Cloudflare Worker** — Zaraz does **not** show a code editor on the Variables screen. When you choose **Worker**, you only get a **dropdown of Workers already deployed** on your account (for example `form4exhibit`, `beta`). That is expected.
 
-This variable is referenced as `{{ client.hashed_email }}` in all Enhanced Conversion fields above.
+### 3a — Deploy the Worker (where the code goes)
+
+1. Cloudflare dashboard → **Workers & Pages** → **Create application** → **Create Worker**.
+2. Name it something clear, e.g. **`zaraz-hashed-email`** (or any unused name).
+3. **Replace** the default “Hello world” code with the full contents of **`docs/zaraz/zaraz-email-hasher-worker.js`**.
+4. **Save and deploy.**
+
+Official reference: [Worker Variables](https://developers.cloudflare.com/zaraz/variables/worker-variables/) (Zaraz sends `{ system, client }` as JSON POST; the Worker’s **response body** is the variable value).
+
+### 3b — Create the Zaraz variable (dropdown only)
+
+1. **Zaraz** → your site → **Tag setup** → **Variables** → **Create variable**.
+2. **Variable name:** `hashed_email`
+3. **Variable type:** **Worker**
+4. **Worker:** choose **`zaraz-hashed-email`** (the Worker you just deployed) — not unrelated apps like `form4exhibit` unless that Worker is intentionally the same logic.
+5. **Save.**
+
+Do **not** use type **String** for this; that only stores a fixed text value, not a Worker.
+
+This variable is referenced as `{{ client.hashed_email }}` in Enhanced Conversion fields. The site sets `zaraz.set("hashed_email", …)` from `src/lib/zaraz-tracking.ts`; the deployed Worker reads `client` from the [Zaraz Context](https://developers.cloudflare.com/zaraz/reference/context/) and returns the hash for tools that need it.
 
 ---
 

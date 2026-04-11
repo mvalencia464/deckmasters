@@ -1,25 +1,31 @@
 {
   "comment": "Zaraz configuration for deckmastersak.com",
   "comment2": "Import via: Cloudflare Dashboard > Zaraz > Tools Configuration > Import/Export",
+  "comment3": "variables is {} on purpose: Worker variables need value.workerTag + value.escapedWorkerName from a deployed Worker. After import, add hashed_email in Zaraz > Variables (see SETUP-GUIDE Step 3 + zaraz-email-hasher-worker.js).",
   "tools": {
     "ga4": {
+      "type": "component",
+      "component": "google-analytics-4",
       "name": "Google Analytics 4",
-      "type": "GA4",
       "enabled": true,
+      "blockingTriggers": [],
+      "permissions": [],
+      "defaultFields": {},
       "settings": {
         "measurementId": "G-CLD2MQ2F7L"
       },
       "actions": {
         "pageview": {
-          "name": "Pageview",
+          "actionType": "pageview",
+          "blockingTriggers": [],
           "firingTriggers": ["Pageview"],
-          "type": "pageview"
+          "data": {}
         },
         "form_lead": {
-          "name": "Form Lead",
+          "actionType": "event",
+          "blockingTriggers": [],
           "firingTriggers": ["FormSubmit"],
-          "type": "event",
-          "settings": {
+          "data": {
             "eventName": "generate_lead",
             "fields": {
               "method": "website_form"
@@ -27,10 +33,10 @@
           }
         },
         "phone_call": {
-          "name": "Phone Call",
+          "actionType": "event",
+          "blockingTriggers": [],
           "firingTriggers": ["PhoneCallClick"],
-          "type": "event",
-          "settings": {
+          "data": {
             "eventName": "generate_lead",
             "fields": {
               "method": "phone_call"
@@ -38,10 +44,10 @@
           }
         },
         "sale": {
-          "name": "Sale / Purchase",
+          "actionType": "event",
+          "blockingTriggers": [],
           "firingTriggers": ["SaleComplete"],
-          "type": "event",
-          "settings": {
+          "data": {
             "eventName": "purchase",
             "fields": {
               "currency": "USD",
@@ -52,38 +58,42 @@
       }
     },
     "google_ads": {
+      "type": "component",
+      "component": "google-ads",
       "name": "Google Ads",
-      "type": "GOOGLE_ADS",
       "enabled": true,
+      "blockingTriggers": [],
+      "permissions": [],
+      "defaultFields": {},
       "settings": {
         "conversionId": "AW-879524969"
       },
       "actions": {
         "call_conversion": {
-          "name": "Phone Calls from Website",
+          "actionType": "conversion",
+          "blockingTriggers": [],
           "firingTriggers": ["PhoneCallClick"],
-          "type": "conversion",
-          "settings": {
+          "data": {
             "conversionLabel": "Phone Calls from Website",
             "enhancedConversions": true,
             "userEmail": "{{ client.hashed_email }}"
           }
         },
         "lead_conversion": {
-          "name": "Quote Form Lead",
+          "actionType": "conversion",
+          "blockingTriggers": [],
           "firingTriggers": ["FormSubmit"],
-          "type": "conversion",
-          "settings": {
+          "data": {
             "conversionLabel": "JZz9CKWE3KUBEOn4saMD",
             "enhancedConversions": true,
             "userEmail": "{{ client.hashed_email }}"
           }
         },
         "sale_conversion": {
-          "name": "Sale Conversion",
+          "actionType": "conversion",
+          "blockingTriggers": [],
           "firingTriggers": ["SaleComplete"],
-          "type": "conversion",
-          "settings": {
+          "data": {
             "conversionLabel": "JZz9CKWE3KUBEOn4saMD",
             "enhancedConversions": true,
             "userEmail": "{{ client.hashed_email }}",
@@ -93,31 +103,36 @@
       }
     },
     "meta_pixel": {
+      "type": "component",
+      "component": "facebook-pixel",
       "name": "Meta Pixel",
-      "type": "META_PIXEL",
       "enabled": true,
+      "blockingTriggers": [],
+      "permissions": [],
+      "defaultFields": {},
       "settings": {
         "pixelId": "492022321570146"
       },
       "actions": {
         "pageview": {
-          "name": "Pageview",
+          "actionType": "PageView",
+          "blockingTriggers": [],
           "firingTriggers": ["Pageview"],
-          "type": "PageView"
+          "data": {}
         },
         "lead": {
-          "name": "Lead (Form Submit)",
+          "actionType": "Lead",
+          "blockingTriggers": [],
           "firingTriggers": ["FormSubmit"],
-          "type": "Lead",
-          "settings": {
+          "data": {
             "userEmail": "{{ client.hashed_email }}"
           }
         },
         "purchase": {
-          "name": "Purchase / Sale",
+          "actionType": "Purchase",
+          "blockingTriggers": [],
           "firingTriggers": ["SaleComplete"],
-          "type": "Purchase",
-          "settings": {
+          "data": {
             "value": "{{ client.sale_value }}",
             "currency": "USD"
           }
@@ -128,54 +143,52 @@
   "triggers": {
     "Pageview": {
       "name": "Pageview",
-      "rules": [
+      "excludeRules": [],
+      "loadRules": [
         {
-          "type": "match",
-          "variable": "Event Name",
-          "operator": "equals",
+          "id": "rule-pageview-event-name",
+          "match": "Event Name",
+          "op": "EQUALS",
           "value": "Pageview"
         }
       ]
     },
     "FormSubmit": {
       "name": "Form Submit",
-      "rules": [
+      "excludeRules": [],
+      "loadRules": [
         {
-          "type": "match",
-          "variable": "Event Name",
-          "operator": "equals",
+          "id": "rule-form-submit-event-name",
+          "match": "Event Name",
+          "op": "EQUALS",
           "value": "form_submit"
         }
       ]
     },
     "PhoneCallClick": {
       "name": "Phone Call Click",
-      "rules": [
+      "excludeRules": [],
+      "loadRules": [
         {
-          "type": "match",
-          "variable": "Event Name",
-          "operator": "equals",
+          "id": "rule-phone-click-event-name",
+          "match": "Event Name",
+          "op": "EQUALS",
           "value": "phone_click"
         }
       ]
     },
     "SaleComplete": {
       "name": "Sale Complete",
-      "rules": [
+      "excludeRules": [],
+      "loadRules": [
         {
-          "type": "match",
-          "variable": "Event Name",
-          "operator": "equals",
+          "id": "rule-sale-complete-event-name",
+          "match": "Event Name",
+          "op": "EQUALS",
           "value": "sale_complete"
         }
       ]
     }
   },
-  "variables": {
-    "hashed_email": {
-      "name": "hashed_email",
-      "type": "worker",
-      "comment": "Create a Zaraz Worker Variable that SHA-256 hashes the email. See zaraz-email-hasher-worker.js"
-    }
-  }
+  "variables": {}
 }
