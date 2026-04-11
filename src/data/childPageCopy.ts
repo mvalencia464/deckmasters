@@ -210,7 +210,7 @@ export const childPageCopy: Record<ChildServiceSlug, ChildPageBundle> = {
     browserTitle: 'Wood Decking Installation Anchorage AK | Cedar & Treated Decks',
     metaDescription:
       'Wood decking installation in Anchorage: proper gaps, screw patterns, and durable species for northern weather. Deck Masters AK.',
-    heroImage: '/projects/021-custom-entrance.avif',
+    heroImage: '/projects/wood-decking-fire-pit.avif',
     h1Benefit: 'Natural Boards, Solid Detail',
     heroSubhead:
       'Want the warmth of real wood? Call {phone} — we set crown, gap for drainage, and fasten for a quiet, firm walk.',
