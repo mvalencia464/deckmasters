@@ -27,6 +27,7 @@ type MasonryReview = {
   images?: string[];
   videoUrl?: string;
   videoThumbnailUrl?: string;
+  captionsUrl?: string;
 };
 
 const ericaVideoReview = curated.find(isEricaVideoReview) as MasonryReview | undefined;
@@ -125,6 +126,7 @@ const reviewsWithAvatars = await Promise.all(
               projectImageUrls={r.projectImageUrls}
               videoUrl={r.videoUrl}
               videoThumbnailUrl={r.videoThumbnailUrl}
+              captionsUrl={r.captionsUrl}
             />
           </div>
         ))

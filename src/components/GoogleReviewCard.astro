@@ -8,9 +8,11 @@ interface Props {
   projectImageUrls?: string[];
   videoUrl?: string;
   videoThumbnailUrl?: string;
+  captionsUrl?: string;
 }
 
-const { text, author, rating, source, avatarUrl, projectImageUrls, videoUrl, videoThumbnailUrl } = Astro.props;
+const { text, author, rating, source, avatarUrl, projectImageUrls, videoUrl, videoThumbnailUrl, captionsUrl } =
+  Astro.props;
 const initial = (author || '?').charAt(0).toUpperCase();
 const hasProjectImages = Array.isArray(projectImageUrls) && projectImageUrls.length > 0;
 const coverImage = hasProjectImages ? projectImageUrls[0] : null;
@@ -32,10 +34,11 @@ const isEricaVerticalVideo =
         playsinline
       >
         <source src={videoUrl} type="video/mp4" />
+        {captionsUrl && <track kind="captions" srclang="en" label="English" src={captionsUrl} default />}
       </video>
       <div class="pointer-events-none absolute inset-x-0 top-0 bg-linear-to-b from-black/85 via-black/45 to-transparent px-4 pb-10 pt-4">
         <p class="font-semibold text-white text-sm">{author}</p>
-        <div class="flex text-amber-400 text-sm" aria-label={`${rating} out of 5 stars`}>
+        <div class="flex text-amber-400 text-sm" role="img" aria-label={`${rating} out of 5 stars`}>
           {[1, 2, 3, 4, 5].map((i) => (
             <span class={i <= rating ? 'text-amber-400' : 'text-white/35'}>★</span>
           ))}
@@ -44,7 +47,7 @@ const isEricaVerticalVideo =
     </div>
   ) : (
     <>
-      <div class="flex text-amber-500 text-sm mb-2" aria-label={`${rating} out of 5 stars`}>
+      <div class="flex text-amber-500 text-sm mb-2" role="img" aria-label={`${rating} out of 5 stars`}>
         {[1, 2, 3, 4, 5].map((i) => (
           <span class={i <= rating ? 'text-amber-500' : 'text-neutral-300'}>★</span>
         ))}
@@ -60,11 +63,12 @@ const isEricaVerticalVideo =
             playsinline
           >
             <source src={videoUrl} type="video/mp4" />
+            {captionsUrl && <track kind="captions" srclang="en" label="English" src={captionsUrl} default />}
           </video>
         </div>
       )}
       {!isVideoReview && coverImage && (
-        <div class="-mx-5 mb-4" aria-label="Project photos">
+        <div class="-mx-5 mb-4" role="group" aria-label="Project photos">
           <img src={coverImage} alt="" class="w-full aspect-video object-cover" width="400" height="225" loading="lazy" decoding="async" />
           {restImages.length > 0 && (
             <div class="mt-1 grid grid-cols-2 gap-0.5">

@@ -27,7 +27,8 @@
   --color-accent-muted: #5EEAD4;
   --color-accent-dark: #0F766E;
 
-  --color-brand-orange: #E85A07;
+  /* Slightly deeper than legacy #E85A07 so white UI text meets ~4.5:1 on filled CTAs */
+  --color-brand-orange: #c14e0a;
   --color-brand-dark: #262626;
   --color-brand-wood: #4a3728;
 
@@ -63,13 +64,13 @@
 
 /* Brand gradient text (CSS only); padding prevents clip from cutting off K's and other glyphs */
 .brand-text-gradient {
-  color: #E85A07;
+  color: #c14e0a;
   padding-right: 2px;
   display: inline-block;
 }
 @supports (background-clip: text) or (-webkit-background-clip: text) {
   .brand-text-gradient {
-    background: linear-gradient(135deg, #E85A07 0%, #c2410c 100%);
+    background: linear-gradient(135deg, #c14e0a 0%, #9a3412 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -95,13 +96,13 @@
     box-shadow:
       0 4px 6px -1px rgb(0 0 0 / 0.12),
       0 2px 4px -2px rgb(0 0 0 / 0.08),
-      0 0 0 0 rgb(232 90 7 / 0.35);
+      0 0 0 0 rgb(193 78 10 / 0.35);
   }
   55% {
     box-shadow:
       0 4px 6px -1px rgb(0 0 0 / 0.12),
       0 2px 4px -2px rgb(0 0 0 / 0.08),
-      0 0 0 10px rgb(232 90 7 / 0);
+      0 0 0 10px rgb(193 78 10 / 0);
   }
 }
 

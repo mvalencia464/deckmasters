@@ -59,7 +59,13 @@ const logoRest = logoParts.slice(1).join('');
   <body>
     <header class="sticky top-0 z-50 w-full bg-white border-b border-neutral-200/80">
       <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" aria-label="Main">
-        <input type="checkbox" id="menu-toggle" class="peer sr-only" aria-hidden="true" />
+        <input
+          type="checkbox"
+          id="menu-toggle"
+          class="peer sr-only"
+          aria-label="Open or close main menu"
+          aria-expanded="false"
+        />
         <!-- Full-screen menu canvas (mobile) -->
         <div class="fixed inset-0 z-40 bg-white transform translate-x-full transition-transform duration-300 ease-out peer-checked:translate-x-0 md:translate-x-0 md:static md:hidden md:pointer-events-none" aria-hidden="true">
           <div class="flex flex-col min-h-full pt-24 pb-8 px-6">
@@ -85,7 +91,7 @@ const logoRest = logoParts.slice(1).join('');
               <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
             </label>
             <a href="/" class="flex items-center justify-center gap-1.5 transition-opacity duration-200 hover:opacity-90 focus-ring rounded-sm shrink-0 min-w-0 justify-self-center">
-              <img src={typeof iconSvg === 'string' ? iconSvg : iconSvg.src} alt="DeckMasters" width="36" height="32" class="h-8 w-auto shrink-0" fetchpriority="high" />
+              <img src={typeof iconSvg === 'string' ? iconSvg : iconSvg.src} alt="" width="36" height="32" class="h-8 w-auto shrink-0" fetchpriority="high" />
               <span class="font-display text-2xl font-bold text-neutral-800 uppercase tracking-tight pr-px overflow-visible">{logoFirst}<span class="brand-text-gradient">{logoRest}</span></span>
             </a>
             <a href={`tel:${site.primaryPhone.replace(/\D/g, '')}`} class="phone-cta-soft-pulse flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full bg-brand-orange text-white hover:bg-orange-800 focus-ring transition-colors justify-self-end" aria-label={`Call ${site.primaryPhone}`}>
@@ -94,7 +100,7 @@ const logoRest = logoParts.slice(1).join('');
           </div>
           <!-- Desktop: logo (left) -->
           <a href="/" class="hidden md:flex items-center gap-2 sm:gap-2.5 transition-opacity duration-200 hover:opacity-90 focus-ring rounded-sm overflow-visible shrink-0 min-w-0">
-            <img src={typeof iconSvg === 'string' ? iconSvg : iconSvg.src} alt="DeckMasters" width="36" height="32" class="h-8 w-auto shrink-0" fetchpriority="high" />
+            <img src={typeof iconSvg === 'string' ? iconSvg : iconSvg.src} alt="" width="36" height="32" class="h-8 w-auto shrink-0" fetchpriority="high" />
             <span class="font-display text-3xl font-bold text-neutral-800 uppercase tracking-tight pr-px overflow-visible">{logoFirst}<span class="brand-text-gradient">{logoRest}</span></span>
           </a>
           <div class="hidden md:flex items-center gap-8 font-medium text-xs uppercase tracking-[0.2em] text-neutral-600">
@@ -105,7 +111,7 @@ const logoRest = logoParts.slice(1).join('');
           </div>
           <div class="hidden md:flex items-center gap-4 sm:gap-6">
             <div class="hidden lg:flex flex-col items-end">
-              <span class="text-[10px] uppercase text-neutral-400 font-bold">Call us</span>
+              <span class="text-[10px] uppercase text-neutral-600 font-bold">Call us</span>
               <a href={`tel:${site.primaryPhone.replace(/\D/g, '')}`} class="text-sm font-bold text-brand-dark hover:text-brand-orange transition-colors">{site.primaryPhone}</a>
             </div>
             <a href="/#quote" class="hidden md:inline-flex shrink-0 bg-brand-orange hover:bg-orange-800 text-white px-5 py-3 font-bold text-sm uppercase tracking-wider transition-all shadow-md focus-ring rounded-none">
@@ -121,7 +127,7 @@ const logoRest = logoParts.slice(1).join('');
     <a
       href="/#quote"
       class="fixed z-40 md:hidden flex items-center justify-center gap-2 bg-brand-orange text-white font-bold text-sm uppercase tracking-wider py-3.5 px-5 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.22)] border-2 border-white/30 ring-1 ring-black/10 hover:bg-orange-800 hover:border-white/40 active:scale-[0.98] transition-[transform,colors,box-shadow] focus-ring min-h-[52px] max-w-md w-[calc(100%-2rem)] min-w-0 left-1/2 -translate-x-1/2 touch-manipulation bottom-[max(1rem,env(safe-area-inset-bottom))]"
-      aria-label="Click for free estimate"
+      aria-label="Click for free estimate →"
     >
       Click for free estimate →
     </a>
@@ -129,7 +135,17 @@ const logoRest = logoParts.slice(1).join('');
 
     <script>
       import { autoTrackPhoneLinks } from "@/lib/zaraz-tracking";
-      document.addEventListener("DOMContentLoaded", autoTrackPhoneLinks);
+      document.addEventListener("DOMContentLoaded", () => {
+        autoTrackPhoneLinks();
+        const menuToggle = document.getElementById("menu-toggle");
+        if (menuToggle instanceof HTMLInputElement) {
+          const syncMenuExpanded = () => {
+            menuToggle.setAttribute("aria-expanded", menuToggle.checked ? "true" : "false");
+          };
+          syncMenuExpanded();
+          menuToggle.addEventListener("change", syncMenuExpanded);
+        }
+      });
     </script>
   </body>
 </html>

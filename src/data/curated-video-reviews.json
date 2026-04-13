@@ -8,7 +8,8 @@
       "source": "Video Testimonial",
       "avatarUrl": "/testimonials/videos/erica-leman-thumb.avif",
       "videoUrl": "/testimonials/videos/erica-leman.mp4",
-      "videoThumbnailUrl": "/testimonials/videos/erica-leman-thumb.avif"
+      "videoThumbnailUrl": "/testimonials/videos/erica-leman-thumb.avif",
+      "captionsUrl": "/testimonials/videos/erica-leman.vtt"
     }
   ]
 }

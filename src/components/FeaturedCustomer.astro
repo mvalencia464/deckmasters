@@ -73,7 +73,7 @@ const resolvedJosephAvatar = josephReview?.avatarUrl ? await resolveAvatar(josep
       <div class="space-y-4 lg:pl-4">
         {josephReview && (
           <article class="rounded-none border border-neutral-200 bg-surface-elevated p-5 shadow-sm">
-            <div class="flex text-amber-500 text-sm mb-2" aria-label={`${josephReview.rating} out of 5 stars`}>
+            <div class="flex text-amber-500 text-sm mb-2" role="img" aria-label={`${josephReview.rating} out of 5 stars`}>
               {[1, 2, 3, 4, 5].map((i) => (
                 <span class={i <= josephReview.rating ? 'text-amber-500' : 'text-neutral-300'}>★</span>
               ))}
