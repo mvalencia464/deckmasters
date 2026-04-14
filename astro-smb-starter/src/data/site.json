@@ -1,0 +1,14 @@
+{
+  "businessName": "Your Business Name",
+  "tagline": "Short line for default meta description and footer.",
+  "primaryCity": "Your City",
+  "primaryPhone": "(555) 555-5555",
+  "primaryEmail": "hello@example.com",
+  "nav": [
+    { "label": "About", "href": "/about" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+  "footerNav": [
+    { "label": "Privacy", "href": "/privacy" }
+  ]
+}

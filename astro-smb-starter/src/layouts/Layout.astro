@@ -1,0 +1,71 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import iconSvg from '../assets/icon.svg';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  verbatimTitle?: boolean;
+  noindex?: boolean;
+  canonicalUrl?: string;
+}
+
+const { title, description, verbatimTitle, noindex: forceNoIndex, canonicalUrl: canonicalUrlProp } = Astro.props;
+const site = (await import('../data/site.json')).default;
+const fullTitle = verbatimTitle ? title : `${title} | ${site.businessName}`;
+const metaDescription =
+  description ?? `${site.tagline} Serving ${site.primaryCity}.`;
+const canonicalUrl =
+  canonicalUrlProp ??
+  (Astro.site
+    ? new URL(Astro.url.pathname, Astro.site).href
+    : new URL(Astro.url.pathname, Astro.url.origin).href);
+const envNoIndex = import.meta.env.PUBLIC_NO_INDEX === 'true' || import.meta.env.PUBLIC_NO_INDEX === '1';
+const noIndex = forceNoIndex || envNoIndex;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={metaDescription} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <link rel="icon" type="image/svg+xml" href={typeof iconSvg === 'string' ? iconSvg : iconSvg.src} sizes="any" />
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-oswald" />
+    <slot name="head" />
+  </head>
+  <body>
+    <SiteHeader />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const menuToggle = document.getElementById('menu-toggle');
+        if (menuToggle instanceof HTMLInputElement) {
+          const syncMenuExpanded = () => {
+            menuToggle.setAttribute('aria-expanded', menuToggle.checked ? 'true' : 'false');
+          };
+          syncMenuExpanded();
+          menuToggle.addEventListener('change', syncMenuExpanded);
+        }
+      });
+    </script>
+  </body>
+</html>

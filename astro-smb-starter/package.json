@@ -1,0 +1,21 @@
+{
+  "name": "astro-smb-starter",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Opinionated Astro + Tailwind v4 starter for small business marketing sites (based on deckmasters-astro patterns).",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^6.0.4",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "@tailwindcss/vite": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
