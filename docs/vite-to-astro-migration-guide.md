@@ -52,7 +52,7 @@ Your other project might not need every integration (sitemap, custom image servi
 
 ### Option A — Use the repo starter (fastest)
 
-This repository includes **`astro-smb-starter/`**: a minimal Astro + Tailwind v4 layout aligned with the patterns above (static build, `@theme`, `Layout.astro`, `site.json`, sitemap). Copy that folder into a new repo and follow its `README.md`, or bootstrap manually below.
+This repository includes **Astro Stoke Starter** (`astro-stoke-starter/`): a minimal Astro + Tailwind v4 layout aligned with the patterns above (static build, `@theme`, `Layout.astro`, `site.json`, sitemap). Copy that folder into a new repo and follow its `README.md`, or bootstrap manually below.
 
 ### 1. Create the project
 

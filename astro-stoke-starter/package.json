@@ -1,9 +1,9 @@
 {
-  "name": "astro-smb-starter",
+  "name": "astro-stoke-starter",
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "Opinionated Astro + Tailwind v4 starter for small business marketing sites (based on deckmasters-astro patterns).",
+  "description": "Astro Stoke Starter — Astro + Tailwind v4 template for StokeLeads client sites (deckmasters-astro patterns).",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

@@ -1,25 +1,28 @@
-# Astro SMB starter
+# Astro Stoke Starter
 
-Opinionated **Astro 6** + **Tailwind CSS v4** starter for small business marketing sites. Patterns match the parent **deckmasters-astro** codebase: static output, `@theme` tokens, shared layout with SEO defaults, Google fonts via Astro Fonts, and a simple `site.json` for business fields. If you copied this folder into its own repository, delete this paragraph or point it at your own reference project.
+Opinionated **Astro 6** + **Tailwind CSS v4** starter for StokeLeads client marketing sites. Patterns match the parent **deckmasters-astro** codebase: static output, `@theme` tokens, shared layout with SEO defaults, Google fonts via Astro Fonts, and a simple `site.json` for business fields. If you copied this folder into its own repository, delete this paragraph or point it at your own reference project.
 
 ## Quick start
 
+From the repo root (or after copying this folder out on its own):
+
 ```bash
-cd astro-smb-starter
+cd astro-stoke-starter
 npm install
 npm run dev
 ```
 
-Open the local URL shown in the terminal. Production build:
+Open the local URL shown in the terminal.
 
-```bash
-npm run build
-npm run preview
-```
+| Command | What it does |
+|--------|----------------|
+| `npm run dev` | Local dev server (hot reload) |
+| `npm run build` | Production build → `dist/` |
+| `npm run preview` | Serve the `dist/` build locally |
 
 ## Using this as a template for a new site
 
-1. **Copy the folder** `astro-smb-starter/` into a new repository (or use GitHub “Use this template” if you publish it as a template repo).
+1. **Copy the folder** `astro-stoke-starter/` into a new repository (or use GitHub “Use this template” if you publish it as a template repo).
 2. **Search and replace** placeholders:
    - `astro.config.mjs` → set `site` to your production URL (canonical links + sitemap).
    - `src/data/site.json` → business name, phone, email, city, tagline, `nav` and `footerNav`.
