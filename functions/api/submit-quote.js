@@ -129,10 +129,10 @@ export async function onRequestPost(context) {
   }
 
   /**
-   * Street-only lines (e.g. test data "1588 Not Real") never parse into city/state/zip.
-   * JobTread/GHL integrations often show those as null. Optional Pages env vars fill the
-   * primary service area when all three are still empty — set in Cloudflare if you want
-   * that behavior (QUOTE_FALLBACK_CITY, QUOTE_FALLBACK_STATE, QUOTE_FALLBACK_POSTAL_CODE).
+   * Street-only lines never parse into city/state/zip. Optional env fallbacks fill one
+   * default metro when all three are still empty — only if you accept that tradeoff (e.g.
+   * testing). Serving multiple areas (Anchorage, Wasilla, Mat-Su, etc.) usually means
+   * leaving fallbacks unset so bad defaults are not applied to out-of-area leads.
    */
   const hasStreetLine = Boolean(addressLine1 || projectAddress);
   const fbCity = resolveEnv(env, ['QUOTE_FALLBACK_CITY', 'GHL_FALLBACK_CITY']);
