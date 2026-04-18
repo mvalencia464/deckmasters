@@ -20,6 +20,28 @@ const resolveEnv = (env, keys) => {
   return '';
 };
 
+/**
+ * When the browser never filled hidden city/state/zip (no Places selection, or incomplete
+ * address_components), recover structured fields from a typical US formatted address.
+ * The greedy leading group yields street when the tail matches ", City, ST ZIP".
+ * Example: "625 W 59th Ave Unit J, Anchorage, AK 99518, USA"
+ */
+function parseUsAddressFromFreeform(text) {
+  if (!text || typeof text !== 'string') return null;
+  const trimmed = text
+    .trim()
+    .replace(/,\s*(USA|United States)\s*$/i, '')
+    .trim();
+  const m = trimmed.match(/^(.*),\s*([^,]+),\s*([A-Za-z]{2})\s+(\d{5})(?:-\d{4})?\s*$/);
+  if (!m) return null;
+  const line1 = m[1].trim();
+  const city = m[2].trim();
+  const state = m[3].toUpperCase();
+  const zip = m[4];
+  if (!city || !line1 || !/^[A-Z]{2}$/.test(state) || !/^\d{5}$/.test(zip)) return null;
+  return { line1, city, state, zip };
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   const requestId =
@@ -92,11 +114,19 @@ export async function onRequestPost(context) {
   let projectDescription = String(data.projectDescription || '').trim();
   const neighborhood = String(data.neighborhood || '').trim();
   const projectAddress = String(data.projectAddress || '').trim();
-  const addressLine1 = String(data.addressLine1 || '').trim();
-  const addressCity = String(data.addressCity || '').trim();
-  const addressState = String(data.addressState || '').trim();
-  const addressZip = String(data.addressZip || '').trim();
+  let addressLine1 = String(data.addressLine1 || '').trim();
+  let addressCity = String(data.addressCity || '').trim();
+  let addressState = String(data.addressState || '').trim();
+  let addressZip = String(data.addressZip || '').trim();
   const addressCountry = String(data.addressCountry || '').trim();
+
+  const inferred = parseUsAddressFromFreeform(projectAddress);
+  if (inferred) {
+    if (!addressCity) addressCity = inferred.city;
+    if (!addressState) addressState = inferred.state;
+    if (!addressZip) addressZip = inferred.zip;
+    if (!addressLine1) addressLine1 = inferred.line1;
+  }
 
   let fileUrl = '';
   // Handle Photo Upload (R2)

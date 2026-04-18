@@ -178,10 +178,14 @@ const googleAverageRating = googleReviews.length
     const streetNumber = get('street_number')?.long_name ?? '';
     const route = get('route')?.long_name ?? '';
     const line1 = [streetNumber, route].filter(Boolean).join(' ').trim();
+    // locality is often missing for some addresses (e.g. CDPs, boroughs); try broader types
     const city =
       get('locality')?.long_name ??
       get('sublocality')?.long_name ??
+      get('sublocality_level_1')?.long_name ??
+      get('neighborhood')?.long_name ??
       get('administrative_area_level_3')?.long_name ??
+      get('administrative_area_level_2')?.long_name ??
       '';
     const state = get('administrative_area_level_1')?.short_name ?? '';
     const zip = get('postal_code')?.long_name ?? '';
