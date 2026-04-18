@@ -262,6 +262,7 @@ const googleAverageRating = googleReviews.length
 
 <script>
   import { trackFormLead } from "@/lib/zaraz-tracking";
+  import { isQuoteAddressComplete, parseUsAddressFromFreeform } from "../../functions/lib/parseUsAddress.js";
 
   const form = document.getElementById('quote-form') as HTMLFormElement | null;
   const submitBtn = document.getElementById('quote-submit-btn') as HTMLButtonElement | null;
@@ -339,6 +340,41 @@ const googleAverageRating = googleReviews.length
         const field = formEl.querySelector(selector) as HTMLInputElement | null;
         return !!field?.checked;
       };
+
+      const projectAddressRaw = getValue('[name="projectAddress"]');
+      const addressCityRaw = getValue('[name="addressCity"]');
+      const addressStateRaw = getValue('[name="addressState"]');
+      const addressZipRaw = getValue('[name="addressZip"]');
+
+      if (
+        !isQuoteAddressComplete({
+          addressCity: addressCityRaw,
+          addressState: addressStateRaw,
+          addressZip: addressZipRaw,
+          projectAddress: projectAddressRaw,
+        })
+      ) {
+        showMessage(
+          'Please include city, state, and ZIP (for example: 123 Main St, Wasilla, AK 99654), or choose your address from the suggestions.',
+          true
+        );
+        if (submitBtn) submitBtn.disabled = false;
+        return;
+      }
+
+      const parsedFreeform = parseUsAddressFromFreeform(projectAddressRaw);
+      if (parsedFreeform) {
+        const setHidden = (id: string, value: string) => {
+          const el = document.getElementById(id) as HTMLInputElement | null;
+          if (el) el.value = value;
+        };
+        setHidden('address-line1', parsedFreeform.line1);
+        setHidden('address-city', parsedFreeform.city);
+        setHidden('address-state', parsedFreeform.state);
+        setHidden('address-zip', parsedFreeform.zip);
+        const countryEl = document.getElementById('address-country') as HTMLInputElement | null;
+        if (countryEl && !countryEl.value.trim()) countryEl.value = 'US';
+      }
 
       const buildFormData = () => {
         const payload = new FormData();

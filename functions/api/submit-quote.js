@@ -3,6 +3,8 @@
  * Receives quote form JSON and creates a contact in GoHighLevel (GHL).
  * Env vars (set in Cloudflare Pages): HIGHLEVEL_TOKEN, HIGHLEVEL_LOCATION_ID
  */
+import { parseUsAddressFromFreeform } from '../lib/parseUsAddress.js';
+
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 
 /** GHL HTTP timeout — avoids hanging until the Workers/Pages CPU wall and surfacing as a Cloudflare 502 HTML page. */
@@ -19,28 +21,6 @@ const resolveEnv = (env, keys) => {
   }
   return '';
 };
-
-/**
- * When the browser never filled hidden city/state/zip (no Places selection, or incomplete
- * address_components), recover structured fields from a typical US formatted address.
- * The greedy leading group yields street when the tail matches ", City, ST ZIP".
- * Example: "625 W 59th Ave Unit J, Anchorage, AK 99518, USA"
- */
-function parseUsAddressFromFreeform(text) {
-  if (!text || typeof text !== 'string') return null;
-  const trimmed = text
-    .trim()
-    .replace(/,\s*(USA|United States)\s*$/i, '')
-    .trim();
-  const m = trimmed.match(/^(.*),\s*([^,]+),\s*([A-Za-z]{2})\s+(\d{5})(?:-\d{4})?\s*$/);
-  if (!m) return null;
-  const line1 = m[1].trim();
-  const city = m[2].trim();
-  const state = m[3].toUpperCase();
-  const zip = m[4];
-  if (!city || !line1 || !/^[A-Z]{2}$/.test(state) || !/^\d{5}$/.test(zip)) return null;
-  return { line1, city, state, zip };
-}
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -142,6 +122,18 @@ export async function onRequestPost(context) {
     addressCity = fbCity;
     addressState = fbState;
     addressZip = fbZip;
+  }
+
+  const hasAddressIntent = Boolean(addressLine1 || projectAddress);
+  if (hasAddressIntent && (!addressCity || !addressState || !addressZip)) {
+    return respond(
+      {
+        success: false,
+        error:
+          'Please include city, state, and ZIP in your project address (for example: 123 Main St, Wasilla, AK 99654), or choose your address from the suggestions.',
+      },
+      400
+    );
   }
 
   let fileUrl = '';
