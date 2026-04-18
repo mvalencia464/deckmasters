@@ -128,6 +128,22 @@ export async function onRequestPost(context) {
     if (!addressLine1) addressLine1 = inferred.line1;
   }
 
+  /**
+   * Street-only lines (e.g. test data "1588 Not Real") never parse into city/state/zip.
+   * JobTread/GHL integrations often show those as null. Optional Pages env vars fill the
+   * primary service area when all three are still empty — set in Cloudflare if you want
+   * that behavior (QUOTE_FALLBACK_CITY, QUOTE_FALLBACK_STATE, QUOTE_FALLBACK_POSTAL_CODE).
+   */
+  const hasStreetLine = Boolean(addressLine1 || projectAddress);
+  const fbCity = resolveEnv(env, ['QUOTE_FALLBACK_CITY', 'GHL_FALLBACK_CITY']);
+  const fbState = resolveEnv(env, ['QUOTE_FALLBACK_STATE', 'GHL_FALLBACK_STATE']);
+  const fbZip = resolveEnv(env, ['QUOTE_FALLBACK_POSTAL_CODE', 'GHL_FALLBACK_POSTAL_CODE']);
+  if (hasStreetLine && !addressCity && !addressState && !addressZip && fbCity && fbState && fbZip) {
+    addressCity = fbCity;
+    addressState = fbState;
+    addressZip = fbZip;
+  }
+
   let fileUrl = '';
   // Handle Photo Upload (R2)
   if (photoFile && photoFile.name && photoFile.size > 0 && env.IMG_BUCKET) {
