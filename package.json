@@ -10,7 +10,8 @@
     "sync-reviews": "node scripts/sync-reviews.js",
     "media:upload": "node scripts/media-upload-r2.mjs",
     "media:migrate-flat": "node scripts/r2-migrate-flat.mjs",
-    "media:backfill-site-prefix": "node scripts/r2-backfill-site-prefix.mjs"
+    "media:backfill-site-prefix": "node scripts/r2-backfill-site-prefix.mjs",
+    "generate-favicon": "node scripts/generate-favicon.mjs"
   },
   "dependencies": {
     "astro": "^6.0.4",
@@ -22,6 +23,7 @@
     "@tailwindcss/vite": "^4.0.0",
     "dotenv": "^17.3.1",
     "sharp": "^0.34.5",
+    "to-ico": "^1.1.5",
     "typescript": "^5.0.0"
   }
 }
